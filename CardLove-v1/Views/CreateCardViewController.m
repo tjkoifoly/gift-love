@@ -20,6 +20,8 @@
 #define kPackages       @"Packages"
 #define kDowndloads     @"Downloads"
 
+#define kIndex          @"index.tjkoifoly"
+
 #define kCanvasSize     200
 
 const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -96,7 +98,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     _pathResources = [self dataFilePath:kNewProject];
     NSLog(@"PATH = %@", _pathResources);
-    _pathConf = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:@"index.tjkoifoly"]];
+    _pathConf = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:kIndex]];
 
     BOOL isDir;
     if ([fileManager fileExistsAtPath:_pathResources isDirectory:&isDir]) {
