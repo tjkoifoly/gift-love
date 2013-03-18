@@ -136,6 +136,8 @@
 		661EBD7916F735B4006436C9 /* REMenuContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 661EBD7316F735B4006436C9 /* REMenuContainerView.m */; };
 		661EBD7A16F735B4006436C9 /* REMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 661EBD7516F735B4006436C9 /* REMenuItem.m */; };
 		661EBD7B16F735B4006436C9 /* REMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 661EBD7716F735B4006436C9 /* REMenuItemView.m */; };
+		661EBD7F16F73BB4006436C9 /* ViewGiftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 661EBD7D16F73BB4006436C9 /* ViewGiftViewController.m */; };
+		661EBD8016F73BB4006436C9 /* ViewGiftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 661EBD7E16F73BB4006436C9 /* ViewGiftViewController.xib */; };
 		661F4E4616E836A20005B8F0 /* avarta.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 661F4E4516E836A20005B8F0 /* avarta.jpg */; };
 		661F4E4D16E838700005B8F0 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 661F4E4716E838700005B8F0 /* facebook.png */; };
 		661F4E4E16E838700005B8F0 /* facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 661F4E4816E838700005B8F0 /* facebook@2x.png */; };
@@ -674,6 +676,9 @@
 		661EBD7516F735B4006436C9 /* REMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenuItem.m; sourceTree = "<group>"; };
 		661EBD7616F735B4006436C9 /* REMenuItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenuItemView.h; sourceTree = "<group>"; };
 		661EBD7716F735B4006436C9 /* REMenuItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenuItemView.m; sourceTree = "<group>"; };
+		661EBD7C16F73BB4006436C9 /* ViewGiftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewGiftViewController.h; path = Views/ViewGiftViewController.h; sourceTree = "<group>"; };
+		661EBD7D16F73BB4006436C9 /* ViewGiftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewGiftViewController.m; path = Views/ViewGiftViewController.m; sourceTree = "<group>"; };
+		661EBD7E16F73BB4006436C9 /* ViewGiftViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewGiftViewController.xib; path = Views/ViewGiftViewController.xib; sourceTree = "<group>"; };
 		661F4E4516E836A20005B8F0 /* avarta.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = avarta.jpg; path = Resources/avarta.jpg; sourceTree = "<group>"; };
 		661F4E4716E838700005B8F0 /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = facebook.png; path = Resources/facebook.png; sourceTree = "<group>"; };
 		661F4E4816E838700005B8F0 /* facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "facebook@2x.png"; path = "Resources/facebook@2x.png"; sourceTree = "<group>"; };
@@ -1844,6 +1849,9 @@
 				6604FA6116DBCB7E00295209 /* CreateCardViewController.h */,
 				6604FA6216DBCB7E00295209 /* CreateCardViewController.m */,
 				6604FA6316DBCB7E00295209 /* CreateCardViewController.xib */,
+				661EBD7C16F73BB4006436C9 /* ViewGiftViewController.h */,
+				661EBD7D16F73BB4006436C9 /* ViewGiftViewController.m */,
+				661EBD7E16F73BB4006436C9 /* ViewGiftViewController.xib */,
 				6632E9F516E22F3200770AEF /* ViewCardViewController.h */,
 				6632E9F616E22F3200770AEF /* ViewCardViewController.m */,
 				6632E9F716E22F3200770AEF /* ViewCardViewController.xib */,
@@ -2524,6 +2532,7 @@
 				661EBD6B16F7356B006436C9 /* Icon_Home@2x.png in Resources */,
 				661EBD6C16F7356B006436C9 /* Icon_Profile.png in Resources */,
 				661EBD6D16F7356B006436C9 /* Icon_Profile@2x.png in Resources */,
+				661EBD8016F73BB4006436C9 /* ViewGiftViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2725,6 +2734,7 @@
 				661EBD7916F735B4006436C9 /* REMenuContainerView.m in Sources */,
 				661EBD7A16F735B4006436C9 /* REMenuItem.m in Sources */,
 				661EBD7B16F735B4006436C9 /* REMenuItemView.m in Sources */,
+				661EBD7F16F73BB4006436C9 /* ViewGiftViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

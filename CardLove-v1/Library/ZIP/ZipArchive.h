@@ -35,6 +35,7 @@
 -(BOOL) CreateZipFile2:(NSString*) zipFile;
 -(BOOL) CreateZipFile2:(NSString*) zipFile Password:(NSString*) password;
 -(BOOL) addFileToZip:(NSString*) file newname:(NSString*) newname;
+-(BOOL) addDirectoryToZip: (NSString *) filePath;
 -(BOOL) CloseZipFile2;
 
 -(BOOL) UnzipOpenFile:(NSString*) zipFile;

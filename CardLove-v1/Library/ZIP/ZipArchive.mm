@@ -129,6 +129,23 @@
 	return YES;
 }
 
+-(BOOL) addDirectoryToZip: (NSString *) filePath
+{
+    NSArray *filesInDirectory = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:filePath error:NULL];
+    for(id file in filesInDirectory)
+    {
+        NSLog(@"Adding file = %@ ...", file);
+//        BOOL result = [self addFileToZip:[filePath stringByAppendingPathComponent:file] newname:file];
+//
+//        if (!result) {
+//            return NO;
+//        }
+    }
+    
+    return YES;
+}
+
+
 -(BOOL) CloseZipFile2
 {
 	_password = nil;

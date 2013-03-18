@@ -77,7 +77,7 @@
     self.font = [UIFont boldSystemFontOfSize:21];
     self.subtitleFont = [UIFont systemFontOfSize:14];
     
-    self.backgroundColor = [UIColor colorWithRed:53/255.0 green:53/255.0 blue:52/255.0 alpha:1];
+    self.backgroundColor = [UIColor colorWithRed:53/255.0 green:53/255.0 blue:52/255.0 alpha:0.8];
     self.separatorColor = [UIColor colorWithPatternImage:self.separatorImage];
     self.textColor = [UIColor colorWithRed:128/255.0 green:126/255.0 blue:124/255.0 alpha:1];
     self.textShadowColor = [UIColor blackColor];

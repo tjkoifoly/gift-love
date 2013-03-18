@@ -7,14 +7,20 @@
 //
 
 #import "CreateCardViewController.h"
+#import "ViewGiftViewController.h"
 #import "GestureImageView.h"
 #import "GiftItemManager.h"
 #import "MBProgressHUD.h"
+#import "ZipArchive.h"
 #import <QuartzCore/QuartzCore.h>
 
-#define kNewProject @"NewTemplate"
+#define kNewProject     @"NewTemplate"
+#define kProjects       @"Projects"
+#define kCards          @"Cards"
+#define kPackages       @"Packages"
+#define kDowndloads     @"Downloads"
 
-#define kCanvasSize 200
+#define kCanvasSize     200
 
 const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -99,8 +105,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         }
     }else
     {
-        [self createNewFolder];
+        [self createNewFolder:kNewProject];
     }
+    [self createNewFolder:kProjects];
 }
 
 -(void) backPreviousView
@@ -139,7 +146,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     return  [docsDir stringByAppendingPathComponent:comp];
 }
 
--(void)createNewFolder
+-(void)createNewFolder: (NSString *)foleder
 {
     NSFileManager *filemgr;
     NSArray *dirPaths;
@@ -153,19 +160,25 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     
     docsDir = [dirPaths objectAtIndex:0];
     
-    newDir = [docsDir stringByAppendingPathComponent:kNewProject];
-    _pathResources = newDir;
+    newDir = [docsDir stringByAppendingPathComponent:foleder];
     
-    if ([filemgr createDirectoryAtPath:newDir withIntermediateDirectories:YES attributes:nil error: NULL] == NO)
+    BOOL isDir;
+    if([filemgr fileExistsAtPath:newDir isDirectory:&isDir])
+    {
+        if (!isDir) {
+            if ([filemgr createDirectoryAtPath:newDir withIntermediateDirectories:YES attributes:nil error: NULL] == NO)
+            {
+                // Failed to create directory
+                NSLog(@" Failed to create directory");
+            }
+        }
+    }else if ([filemgr createDirectoryAtPath:newDir withIntermediateDirectories:YES attributes:nil error: NULL] == NO)
     {
         // Failed to create directory
         NSLog(@" Failed to create directory");
-    }else
-    {
-        _pathConf = [newDir stringByAppendingPathComponent:[NSString stringWithFormat:@"index.tjkoifoly"]];
-        NSLog(@"PATH = %@", _pathConf);
     }
 }
+
 
 #pragma mark - Instance Methods
 
@@ -207,8 +220,8 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
                                                           NSLog(@"Item: %@", item);
                                                       }];
     
-    REMenuItem *exploreItem = [[REMenuItem alloc] initWithTitle:@"Save as image"
-                                                       subtitle:@"Save gift as image to send by email"
+    REMenuItem *exploreItem = [[REMenuItem alloc] initWithTitle:@"Export as image"
+                                                       subtitle:@"Rending gift as image"
                                                           image:[UIImage imageNamed:@"Icon_Explore"]
                                                highlightedImage:nil
                                                          action:^(REMenuItem *item) {
@@ -221,21 +234,24 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
                                                 highlightedImage:nil
                                                           action:^(REMenuItem *item) {
                                                               NSLog(@"Item: %@", item);
+                                                              [self saveAsZip];
                                                           }];
     
-    REMenuItem *profileItem = [[REMenuItem alloc] initWithTitle:@"Send gift"
+    REMenuItem *saveProjectItem = [[REMenuItem alloc] initWithTitle:@"Send gift"
+                                                           subtitle:@"Send gift to your friend"
                                                           image:[UIImage imageNamed:@"Icon_Profile"]
                                                highlightedImage:nil
                                                          action:^(REMenuItem *item) {
                                                              NSLog(@"Item: %@", item);
+                                                             [self sendGift];
                                                          }];
     
     homeItem.tag = 0;
     exploreItem.tag = 1;
     activityItem.tag = 2;
-    profileItem.tag = 3;
+    saveProjectItem.tag = 3;
     
-    _exportMenu = [[REMenu alloc] initWithItems:@[homeItem, exploreItem, activityItem, profileItem]];
+    _exportMenu = [[REMenu alloc] initWithItems:@[ homeItem, exploreItem, activityItem, saveProjectItem]];
     _exportMenu.cornerRadius = 4;
     _exportMenu.shadowColor = [UIColor blackColor];
     _exportMenu.shadowOffset = CGSizeMake(0, 1);
@@ -245,20 +261,86 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [_exportMenu showFromNavigationController:self.navigationController];
 }
 
+-(NSString *) saveAsZip
+{
+    [self createNewFolder:kPackages];
+    NSString *docspath = [self dataFilePath:kPackages];
+    NSString *projectPath = [self dataFilePath:kNewProject];
+    
+    NSString *zipFile = [docspath stringByAppendingPathComponent:@"newzipfile.zip"];
+    
+    ZipArchive *za = [[ZipArchive alloc] init];
+    [za CreateZipFile2:zipFile];
+    
+    //[za addDirectoryToZip:projectPath];
+    NSArray *filesInDirectory = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:projectPath error:NULL];
+    NSMutableArray *mutFiles = [NSMutableArray arrayWithArray:filesInDirectory];
+  
+    for(id file in mutFiles)
+    {
+        NSLog(@"Adding file = %@ ...", file);
+        [za addFileToZip:[projectPath stringByAppendingPathComponent:file] newname:file];
+    }
+    
+    BOOL success = [za CloseZipFile2];
+    
+    NSLog(@"Zipped file with result %d",success);
+    NSLog(@"Zip Path = %@", zipFile);
+    
+    return zipFile;
+}
+
+-(void) saveAsImage
+{
+    
+}
+
+-(void) runDemo
+{
+    ViewGiftViewController *vgvc = [[ViewGiftViewController alloc] initWithNibName:@"" bundle:nil];
+    [self.navigationController pushViewController:vgvc animated:YES];
+}
+
+-(void) sendGift
+{
+    NSString *docspath = [self dataFilePath:kPackages];
+    NSString *zipFile = [docspath stringByAppendingPathComponent:@"newzipfile.zip"];
+    
+    NSString *projectPath = [self dataFilePath:kProjects];
+    NSString *unzipPath = [projectPath stringByAppendingPathComponent:@"UnZip"];
+    NSFileManager *fmgr = [[NSFileManager alloc] init] ;
+    
+   [fmgr createDirectoryAtPath:unzipPath withIntermediateDirectories:YES attributes:nil error:NULL];
+    
+    if ([fmgr fileExistsAtPath:unzipPath]) {
+        ZipArchive *za = [[ZipArchive alloc] init];
+        if ([za UnzipOpenFile:zipFile]) {
+           BOOL ret = [za UnzipFileTo:unzipPath overWrite:YES];
+            if (NO == ret){} [za UnzipCloseFile];
+        }
+    }
+    
+}
+
 -(void) removeImageView
 {
+    if (!currentPhoto) {
+        return;
+    }
     [UIView animateWithDuration:0.5 animations:^{
-        
         
         NSFileManager *fmgr = [[NSFileManager alloc] init];
         NSError *error = nil;
         
         if ([fmgr removeItemAtPath:currentPhoto.imgURL error:&error]) {
             NSLog(@"Removed photo.");
+            
+            GiftItem *itemDeleted = (GiftItem*) [[GiftItemManager sharedManager] findGiftByImageURL:currentPhoto.imgURL];
+            NSLog(@"Delete Item = %@", [itemDeleted.photo lastPathComponent] );
+            [[GiftItemManager sharedManager] removeItem:itemDeleted];
         }
         
         [currentPhoto removeFromSuperview];
-        
         
     }];
 }
@@ -312,6 +394,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [imvPhoto showShadow:YES];
     imvPhoto.delegate = self;
     
+    GiftItem *item = [[GiftItem alloc] initWithView:imvPhoto];
+    [[GiftItemManager sharedManager] addItem:item];
+    
     [self.viewCard addSubview:imvPhoto];
     currentPhoto = imvPhoto;
 }
@@ -339,6 +424,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     imvPhoto.delegate = self;
     imvPhoto.imgURL = strURL;
     
+    GiftItem *item = [[GiftItem alloc] initWithView:imvPhoto];
+    [[GiftItemManager sharedManager] addItem:item];
+    
     [self.viewCard addSubview:imvPhoto];
     currentPhoto = imvPhoto;
 }
@@ -354,6 +442,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     imvPhoto.transform = transform;
     [imvPhoto showShadow:YES];
     imvPhoto.delegate = self;
+    
+    GiftItem *item = [[GiftItem alloc] initWithView:imvPhoto];
+    [[GiftItemManager sharedManager] addItem:item];
     
     [self.viewCard addSubview:imvPhoto];
 }

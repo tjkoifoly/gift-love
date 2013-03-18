@@ -22,6 +22,9 @@
 - (BOOL) saveList : (NSArray *) list toPath: (NSString *)path;
 - (void) addItem: (GiftItem *)item;
 - (void) removeItem: (GiftItem *)item;
+- (void) removeItemAtIndex: (NSInteger)index;
+
+-(id) findGiftByImageURL: (NSString *) imageURL;
 
 
 @end

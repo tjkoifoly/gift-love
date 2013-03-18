@@ -69,5 +69,20 @@
     [self saveList];
 }
 
+- (void) removeItemAtIndex: (NSInteger)index
+{
+    [_listItems removeObjectAtIndex:index];
+    [self saveList];
+}
+
+-(id) findGiftByImageURL: (NSString *) imageURL
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", kPhoto, imageURL];
+    NSMutableArray *result = [NSMutableArray arrayWithArray:_listItems];
+    [result filterUsingPredicate:predicate];
+    return [result objectAtIndex:0];
+    
+}
+
 
 @end
