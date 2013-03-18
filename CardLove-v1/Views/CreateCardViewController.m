@@ -36,6 +36,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 @synthesize toolBar;
 @synthesize pathConf = _pathConf;
 @synthesize pathResources =_pathResources;
+@synthesize exportMenu =_exportMenu;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -65,7 +66,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 //    
 //    NSArray *arrButtons = [NSArray arrayWithObjects:[[UIBarButtonItem alloc] initWithCustomView:btnSend], [[UIBarButtonItem alloc] initWithCustomView:btnSave], nil];
     UIBarButtonItem *btnSave = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveCard)];
-    UIBarButtonItem *btnSend = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(sendCard)];
+    UIBarButtonItem *btnSend = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(showExportMenu)];
     NSArray *arrButtons = [NSArray arrayWithObjects:btnSave, btnSend, nil];
     
     self.navigationItem.rightBarButtonItems = arrButtons;
@@ -121,7 +122,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) loadGiftView
 {
-    [[GiftItemManager sharedManager] setPath:_pathConf];
+    [[GiftItemManager sharedManager] setPathData:_pathConf];
     NSArray *listItems = [[GiftItemManager sharedManager] getListItems];
     
     for(GiftItem *gi in listItems)
@@ -193,9 +194,55 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     NSLog(@"PHOTOS = %@", listItems);
 }
 
--(void)sendCard
+-(void)showExportMenu
 {
-    NSLog(@"Send Card.");
+    if (_exportMenu.isOpen)
+        return [_exportMenu close];
+    
+    REMenuItem *homeItem = [[REMenuItem alloc] initWithTitle:@"Run Demo"
+                                                    subtitle:@"Run demo of gift"
+                                                       image:[UIImage imageNamed:@"Icon_Home"]
+                                            highlightedImage:nil
+                                                      action:^(REMenuItem *item) {
+                                                          NSLog(@"Item: %@", item);
+                                                      }];
+    
+    REMenuItem *exploreItem = [[REMenuItem alloc] initWithTitle:@"Save as image"
+                                                       subtitle:@"Save gift as image to send by email"
+                                                          image:[UIImage imageNamed:@"Icon_Explore"]
+                                               highlightedImage:nil
+                                                         action:^(REMenuItem *item) {
+                                                             NSLog(@"Item: %@", item);
+                                                         }];
+    
+    REMenuItem *activityItem = [[REMenuItem alloc] initWithTitle:@"Package gift"
+                                                        subtitle:@"Package gift as a zip file"
+                                                           image:[UIImage imageNamed:@"Icon_Activity"]
+                                                highlightedImage:nil
+                                                          action:^(REMenuItem *item) {
+                                                              NSLog(@"Item: %@", item);
+                                                          }];
+    
+    REMenuItem *profileItem = [[REMenuItem alloc] initWithTitle:@"Send gift"
+                                                          image:[UIImage imageNamed:@"Icon_Profile"]
+                                               highlightedImage:nil
+                                                         action:^(REMenuItem *item) {
+                                                             NSLog(@"Item: %@", item);
+                                                         }];
+    
+    homeItem.tag = 0;
+    exploreItem.tag = 1;
+    activityItem.tag = 2;
+    profileItem.tag = 3;
+    
+    _exportMenu = [[REMenu alloc] initWithItems:@[homeItem, exploreItem, activityItem, profileItem]];
+    _exportMenu.cornerRadius = 4;
+    _exportMenu.shadowColor = [UIColor blackColor];
+    _exportMenu.shadowOffset = CGSizeMake(0, 1);
+    _exportMenu.shadowOpacity = 1;
+    _exportMenu.imageOffset = CGSizeMake(5, -1);
+    
+    [_exportMenu showFromNavigationController:self.navigationController];
 }
 
 -(void) removeImageView

@@ -10,12 +10,14 @@
 #import "GestureImageView.h"
 #import "AFPhotoEditorController.h"
 #import "MBProgressHUD.h"
+#import "REMenu.h"
 
 @interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate>
 {
     MBProgressHUD *HUD;
 }
 
+@property (strong, nonatomic) REMenu *exportMenu;
 @property (strong, nonatomic) IBOutlet UIView *toolBar;
 @property (weak, nonatomic) IBOutlet UIView *viewCard;
 

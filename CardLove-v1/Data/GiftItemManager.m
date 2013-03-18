@@ -10,7 +10,7 @@
 
 @implementation GiftItemManager
 
-@synthesize path = _path;
+@synthesize pathData = _pathData;
 @synthesize listItems = _listItems;
 
 + (id)sharedManager
@@ -35,7 +35,7 @@
 
 
 - (void)loadItems {
-    _listItems = [NSKeyedUnarchiver unarchiveObjectWithFile:_path] ;
+    _listItems = [NSKeyedUnarchiver unarchiveObjectWithFile:_pathData] ;
     if (!_listItems) {
         _listItems = [NSMutableArray array];
     }
@@ -50,7 +50,7 @@
 
 -(BOOL)saveList
 {
-    return [NSKeyedArchiver archiveRootObject:_listItems toFile:_path];
+    return [NSKeyedArchiver archiveRootObject:_listItems toFile:_pathData];
 }
 
 - (BOOL) saveList : (NSArray *) list toPath: (NSString *)path

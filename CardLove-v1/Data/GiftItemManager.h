@@ -11,7 +11,7 @@
 
 @interface GiftItemManager : NSObject
 
-@property (strong, nonatomic) NSString *path;
+@property (strong, nonatomic) NSString *pathData;
 @property (strong, nonatomic) NSMutableArray *listItems;
 
 + (id)sharedManager;
