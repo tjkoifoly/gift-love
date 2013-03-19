@@ -23,6 +23,7 @@
 #define kIndex          @"index.tjkoifoly"
 
 #define kCanvasSize     200
+#define kImageMaxSize   400
 
 const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -110,6 +111,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         [self createNewFolder:kNewProject];
     }
     [self createNewFolder:kProjects];
+    [self createNewFolder:kCards];
 }
 
 -(void) backPreviousView
@@ -220,6 +222,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
                                             highlightedImage:nil
                                                       action:^(REMenuItem *item) {
                                                           NSLog(@"Item: %@", item);
+                                                          [self runDemo];
                                                       }];
     
     REMenuItem *exploreItem = [[REMenuItem alloc] initWithTitle:@"Export as image"
@@ -228,6 +231,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
                                                highlightedImage:nil
                                                          action:^(REMenuItem *item) {
                                                              NSLog(@"Item: %@", item);
+                                                             [self saveAsImage];
                                                          }];
     
     REMenuItem *activityItem = [[REMenuItem alloc] initWithTitle:@"Package gift"
@@ -294,7 +298,15 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) saveAsImage
 {
+    NSString *cardsPath = [self dataFilePath:kCards];
+    NSString *fileName = [NSString stringWithFormat:@"card-love.png"];
+    NSString *filePath = [cardsPath stringByAppendingPathComponent:fileName];
     
+    UIImage *imageSaved = [self imageCaptureSave:self.viewCard];
+    
+    NSData *dataImage = [NSData dataWithData:UIImagePNGRepresentation(imageSaved)];
+    
+    [dataImage writeToFile:filePath atomically:YES];
 }
 
 -(void) runDemo
@@ -329,22 +341,29 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     if (!currentPhoto) {
         return;
     }
+    
+    NSFileManager *fmgr = [[NSFileManager alloc] init];
+    NSError *error = nil;
+    
+    if ([fmgr removeItemAtPath:currentPhoto.imgURL error:&error]) {
+        NSLog(@"Removed photo.");
+        
+        GiftItem *itemDeleted = (GiftItem*) [[GiftItemManager sharedManager] findGiftByImageURL:currentPhoto.imgURL];
+        NSLog(@"Delete Item = %@", [itemDeleted.photo lastPathComponent] );
+        [[GiftItemManager sharedManager] removeItem:itemDeleted];
+    }
+
     [UIView animateWithDuration:0.5 animations:^{
-        
-        NSFileManager *fmgr = [[NSFileManager alloc] init];
-        NSError *error = nil;
-        
-        if ([fmgr removeItemAtPath:currentPhoto.imgURL error:&error]) {
-            NSLog(@"Removed photo.");
-            
-            GiftItem *itemDeleted = (GiftItem*) [[GiftItemManager sharedManager] findGiftByImageURL:currentPhoto.imgURL];
-            NSLog(@"Delete Item = %@", [itemDeleted.photo lastPathComponent] );
-            [[GiftItemManager sharedManager] removeItem:itemDeleted];
-        }
-        
+        currentPhoto.transform =
+        CGAffineTransformMakeTranslation(
+                                         currentPhoto.frame.origin.x,
+                                         480.0f + (currentPhoto.frame.size.height/2)  // move the whole view offscreen
+                                         );
+        currentPhoto.alpha = 0; // also fade to transparent
+    } completion:^(BOOL finished) {
         [currentPhoto removeFromSuperview];
-        
     }];
+
 }
 
 -(void)showToolBar
@@ -380,10 +399,37 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         pngFilePath = [_pathResources stringByAppendingPathComponent:pngFileName];
     } while ([fileManager fileExistsAtPath:pngFilePath]);
     
-    NSData *data1 = [NSData dataWithData:UIImagePNGRepresentation(image)];
+    UIImage *imageBySize = [self imageBySize:image];
+    
+    NSData *data1 = [NSData dataWithData:UIImagePNGRepresentation(imageBySize)];
     [data1 writeToFile:pngFilePath atomically:YES];
     
     return pngFilePath;
+}
+
+-(UIImage *)imageCaptureSave: (UIView *)viewInput
+{
+    CGSize viewSize = viewInput.bounds.size;
+    UIGraphicsBeginImageContextWithOptions(viewSize, NO, 1.0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [viewInput.layer renderInContext:context];
+    UIImage *imageX = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return imageX;
+}
+
+- (UIImage *)imageBySize:(UIImage *)image
+
+{
+    CGSize sizeRatio = [self resizeImage:image toMax:kImageMaxSize];
+    
+    UIImageView *canvasView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, sizeRatio.width, sizeRatio.height)];
+    canvasView.image = image;
+    canvasView.contentMode = UIViewContentModeScaleAspectFit;
+    UIImage *result = [self imageCaptureSave:canvasView];
+    
+    return result;
+    
 }
 
 -(void) addPhotoView: (UIImage *)image
@@ -400,6 +446,18 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [[GiftItemManager sharedManager] addItem:item];
     
     [self.viewCard addSubview:imvPhoto];
+    
+    CABasicAnimation *animation =
+    [CABasicAnimation animationWithKeyPath:@"position"];
+    [animation setDuration:0.1];
+    [animation setRepeatCount:4];
+    [animation setAutoreverses:YES];
+    [animation setFromValue:[NSValue valueWithCGPoint:
+                             CGPointMake([imvPhoto center].x - 20.0f, [imvPhoto center].y)]];
+    [animation setToValue:[NSValue valueWithCGPoint:
+                           CGPointMake([imvPhoto center].x + 20.0f, [imvPhoto center].y)]];
+    [[imvPhoto layer] addAnimation:animation forKey:@"position"];
+    
     currentPhoto = imvPhoto;
 }
 
@@ -451,18 +509,31 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self.viewCard addSubview:imvPhoto];
 }
 
--(void) flxibleFrameImage: (UIImage*) image withMaxValue:(CGFloat)maxValue forView: (UIView *)view inView: (UIView *) containerView
+-(CGSize) resizeImage: (UIImage *)image toMax: (CGFloat) maxValue
 {
     CGSize sizeImage = image.size;
     CGSize sizeRatio;
     if (sizeImage.width > sizeImage.height) {
+        if (sizeImage.width <= maxValue) {
+            return image.size;
+        }
         sizeRatio.width = maxValue;
         sizeRatio.height = sizeImage.height/sizeImage.width * maxValue;
     }else
     {
+        if (sizeImage.height <= maxValue) {
+            return image.size;
+        }
         sizeRatio.height = maxValue;
         sizeRatio.width = sizeImage.width/sizeImage.height * maxValue;
     }
+
+    return sizeRatio;
+}
+
+-(void) flxibleFrameImage: (UIImage*) image withMaxValue:(CGFloat)maxValue forView: (UIView *)view inView: (UIView *) containerView
+{
+    CGSize sizeRatio = [self resizeImage:image toMax:maxValue];
     [view setFrame:CGRectMake(0,0, sizeRatio.width, sizeRatio.height)];
     view.center = CGPointMake(containerView.bounds.size.width/2, containerView.bounds.size.height/2);
 }
