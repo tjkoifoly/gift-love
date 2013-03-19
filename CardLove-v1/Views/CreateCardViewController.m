@@ -62,18 +62,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     // Do any additional setup after loading the view from its nib.
     
     self.navigationItem.title = @"New Gift";
-    
-//    UIButton *btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [btnSave setBackgroundImage:[UIImage imageNamed:@"save-button.png"] forState:UIControlStateNormal];
-//    btnSave.frame = CGRectMake(0, 0, 30, 30);
-//    [btnSave addTarget:self action:@selector(saveCard) forControlEvents:UIControlEventTouchUpInside];
-//
-//    UIButton *btnSend = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [btnSend setBackgroundImage:[UIImage imageNamed:@"mail-button.png"] forState:UIControlStateNormal];
-//    btnSend.frame = CGRectMake(0, 0, 30, 30);
-//    [btnSend addTarget:self action:@selector(sendCard) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    NSArray *arrButtons = [NSArray arrayWithObjects:[[UIBarButtonItem alloc] initWithCustomView:btnSend], [[UIBarButtonItem alloc] initWithCustomView:btnSave], nil];
+
     UIBarButtonItem *btnSave = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveCard)];
     UIBarButtonItem *btnSend = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(showExportMenu)];
     NSArray *arrButtons = [NSArray arrayWithObjects:btnSave, btnSend, nil];
@@ -112,6 +101,24 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     }
     [self createNewFolder:kProjects];
     [self createNewFolder:kCards];
+    
+//    // Create a blinking text
+//    UILabel* labelText = [[UILabel alloc] initWithFrame:CGRectMake(50, 200, 200, 50)];
+//    labelText.text = @"Tap to start";
+//    labelText.backgroundColor = [UIColor clearColor];
+//    [self.viewCard addSubview:labelText];
+//    
+//    
+//    void (^animationLabel) (void) = ^{
+//        labelText.alpha = 0;
+//    };
+//    void (^completionLabel) (BOOL) = ^(BOOL f) {
+//        labelText.alpha = 1;
+//    };
+//    
+//    NSUInteger opts =  UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat;
+//    [UIView animateWithDuration:1.f delay:0 options:opts
+//                     animations:animationLabel completion:completionLabel];
 }
 
 -(void) backPreviousView
