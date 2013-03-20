@@ -196,6 +196,11 @@
 		6620BD2416F33F04004A4B22 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 6620BD1B16F33F04004A4B22 /* unzip.c */; };
 		6620BD2516F33F04004A4B22 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 6620BD1D16F33F04004A4B22 /* zip.c */; };
 		6620BD2616F33F04004A4B22 /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6620BD2016F33F04004A4B22 /* ZipArchive.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6622CC4716F96337002FC8EC /* GestureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622CC4616F96337002FC8EC /* GestureView.m */; };
+		6622CC4A16F96609002FC8EC /* GestureLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622CC4916F96609002FC8EC /* GestureLabel.m */; };
+		6622CC5016F96D78002FC8EC /* UILabel+dynamicSizeMe.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622CC4F16F96D78002FC8EC /* UILabel+dynamicSizeMe.m */; };
+		6622CC5316F974DB002FC8EC /* btn-delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 6622CC5116F974DB002FC8EC /* btn-delete.png */; };
+		6622CC5416F974DB002FC8EC /* btn-delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6622CC5216F974DB002FC8EC /* btn-delete@2x.png */; };
 		662D0E4C16DFA05A000B3364 /* BackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 662D0E4216DFA05A000B3364 /* BackButton.png */; };
 		662D0E4D16DFA05A000B3364 /* BackButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 662D0E4316DFA05A000B3364 /* BackButton@2x.png */; };
 		662D0E4E16DFA05A000B3364 /* BackgoundNavigation.png in Resources */ = {isa = PBXBuildFile; fileRef = 662D0E4416DFA05A000B3364 /* BackgoundNavigation.png */; };
@@ -769,6 +774,14 @@
 		6620BD1E16F33F04004A4B22 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
 		6620BD1F16F33F04004A4B22 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
 		6620BD2016F33F04004A4B22 /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ZipArchive.mm; sourceTree = "<group>"; };
+		6622CC4516F96337002FC8EC /* GestureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GestureView.h; path = Custom/CustomView/GestureView.h; sourceTree = "<group>"; };
+		6622CC4616F96337002FC8EC /* GestureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GestureView.m; path = Custom/CustomView/GestureView.m; sourceTree = "<group>"; };
+		6622CC4816F96609002FC8EC /* GestureLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GestureLabel.h; path = Custom/CustomView/GestureLabel.h; sourceTree = "<group>"; };
+		6622CC4916F96609002FC8EC /* GestureLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GestureLabel.m; path = Custom/CustomView/GestureLabel.m; sourceTree = "<group>"; };
+		6622CC4E16F96D78002FC8EC /* UILabel+dynamicSizeMe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UILabel+dynamicSizeMe.h"; path = "Custom/CustomView/UILabel+dynamicSizeMe.h"; sourceTree = "<group>"; };
+		6622CC4F16F96D78002FC8EC /* UILabel+dynamicSizeMe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+dynamicSizeMe.m"; path = "Custom/CustomView/UILabel+dynamicSizeMe.m"; sourceTree = "<group>"; };
+		6622CC5116F974DB002FC8EC /* btn-delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn-delete.png"; path = "Resources/btn-delete.png"; sourceTree = "<group>"; };
+		6622CC5216F974DB002FC8EC /* btn-delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn-delete@2x.png"; path = "Resources/btn-delete@2x.png"; sourceTree = "<group>"; };
 		662D0E4216DFA05A000B3364 /* BackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BackButton.png; path = Resources/BackButton.png; sourceTree = "<group>"; };
 		662D0E4316DFA05A000B3364 /* BackButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BackButton@2x.png"; path = "Resources/BackButton@2x.png"; sourceTree = "<group>"; };
 		662D0E4416DFA05A000B3364 /* BackgoundNavigation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BackgoundNavigation.png; path = Resources/BackgoundNavigation.png; sourceTree = "<group>"; };
@@ -1095,13 +1108,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6604FA5216DBC70800295209 /* CoreText.framework in Frameworks */,
 				6604FA4E16DBC6F400295209 /* libz.1.2.5.dylib in Frameworks */,
 				6604FA5416DBC71100295209 /* OpenGLES.framework in Frameworks */,
 				661B87A316EF714900AE542D /* MapKit.framework in Frameworks */,
 				661B879F16EF712600AE542D /* MessageUI.framework in Frameworks */,
 				6604FA5816DBC8C300295209 /* AssetsLibrary.framework in Frameworks */,
 				6604FA5616DBC8BB00295209 /* SystemConfiguration.framework in Frameworks */,
-				6604FA5216DBC70800295209 /* CoreText.framework in Frameworks */,
 				6604FA5016DBC6FE00295209 /* StoreKit.framework in Frameworks */,
 				6604FA4C16DBC6EA00295209 /* libsqlite3.0.dylib in Frameworks */,
 				6604FA4A16DBC6DC00295209 /* Accelerate.framework in Frameworks */,
@@ -1454,6 +1467,8 @@
 		661EBD6E16F7357E006436C9 /* General */ = {
 			isa = PBXGroup;
 			children = (
+				6622CC5116F974DB002FC8EC /* btn-delete.png */,
+				6622CC5216F974DB002FC8EC /* btn-delete@2x.png */,
 				66D4C66E16F587DD004DC5A4 /* 37x-Checkmark.png */,
 				66D4C66F16F587DD004DC5A4 /* 37x-Checkmark@2x.png */,
 				6653731716EB4560000648B3 /* check.png */,
@@ -2150,6 +2165,12 @@
 			children = (
 				66F1B92016EAE991003FEA7F /* GestureImageView.h */,
 				66F1B92116EAE991003FEA7F /* GestureImageView.m */,
+				6622CC4516F96337002FC8EC /* GestureView.h */,
+				6622CC4616F96337002FC8EC /* GestureView.m */,
+				6622CC4816F96609002FC8EC /* GestureLabel.h */,
+				6622CC4916F96609002FC8EC /* GestureLabel.m */,
+				6622CC4E16F96D78002FC8EC /* UILabel+dynamicSizeMe.h */,
+				6622CC4F16F96D78002FC8EC /* UILabel+dynamicSizeMe.m */,
 			);
 			name = CustomView;
 			sourceTree = "<group>";
@@ -2533,6 +2554,8 @@
 				661EBD6C16F7356B006436C9 /* Icon_Profile.png in Resources */,
 				661EBD6D16F7356B006436C9 /* Icon_Profile@2x.png in Resources */,
 				661EBD8016F73BB4006436C9 /* ViewGiftViewController.xib in Resources */,
+				6622CC5316F974DB002FC8EC /* btn-delete.png in Resources */,
+				6622CC5416F974DB002FC8EC /* btn-delete@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2735,6 +2758,9 @@
 				661EBD7A16F735B4006436C9 /* REMenuItem.m in Sources */,
 				661EBD7B16F735B4006436C9 /* REMenuItemView.m in Sources */,
 				661EBD7F16F73BB4006436C9 /* ViewGiftViewController.m in Sources */,
+				6622CC4716F96337002FC8EC /* GestureView.m in Sources */,
+				6622CC4A16F96609002FC8EC /* GestureLabel.m in Sources */,
+				6622CC5016F96D78002FC8EC /* UILabel+dynamicSizeMe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

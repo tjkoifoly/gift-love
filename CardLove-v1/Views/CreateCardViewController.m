@@ -12,6 +12,8 @@
 #import "GiftItemManager.h"
 #import "MBProgressHUD.h"
 #import "ZipArchive.h"
+#import "GestureLabel.h"
+#import "UILabel+dynamicSizeMe.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define kNewProject     @"NewTemplate"
@@ -102,12 +104,20 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self createNewFolder:kProjects];
     [self createNewFolder:kCards];
     
-//    // Create a blinking text
-//    UILabel* labelText = [[UILabel alloc] initWithFrame:CGRectMake(50, 200, 200, 50)];
-//    labelText.text = @"Tap to start";
-//    labelText.backgroundColor = [UIColor clearColor];
-//    [self.viewCard addSubview:labelText];
-//    
+    // Create a blinking text
+    GestureLabel* labelText = [[GestureLabel alloc] initWithFrame:CGRectMake(50, 200, 0, 50)];
+    labelText.text = @"Tap to start";
+    labelText.backgroundColor = [UIColor grayColor];
+
+
+    [labelText resizeToFit];
+    [self.viewCard addSubview:labelText];
+    CGRect frame1 = labelText.frame;
+    frame1.size.width = 100;
+    labelText.frame = frame1;
+    [labelText resizeToFit];
+
+    
 //    
 //    void (^animationLabel) (void) = ^{
 //        labelText.alpha = 0;
