@@ -93,14 +93,14 @@
 
     self.frame = frame;
     
-    NSString *theText = @"A long string";
+    NSString *theText = self.text;
     CGRect labelRect = self.frame;
     self.adjustsFontSizeToFitWidth = NO;
     self.numberOfLines = 0;
     
     CGFloat fontSize = 1000;
     UIFont *font = self.font;
-    while (fontSize > 0.0)
+    while (fontSize > 4)
     {
         CGSize size = [theText sizeWithFont:[UIFont fontWithName:font.fontName size:fontSize] constrainedToSize:CGSizeMake(labelRect.size.width, 10000) lineBreakMode:UILineBreakModeWordWrap];
         
