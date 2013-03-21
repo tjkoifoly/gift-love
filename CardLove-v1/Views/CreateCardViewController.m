@@ -107,7 +107,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     // Create a blinking text
     GestureLabel* labelText = [[GestureLabel alloc] initWithFrame:CGRectMake(50, 200, 0, 50)];
     labelText.text = @"Tap to start tap to start Tap to start";
-    labelText.backgroundColor = [UIColor grayColor];
+    labelText.backgroundColor = [UIColor clearColor];
 
 
     [labelText resizeToFit];
@@ -739,6 +739,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self currentItemDeslected:currentPhoto];
+    
 }
 
 -(void)currentItemDeslected : (GestureImageView *)currentItem

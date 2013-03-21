@@ -10,6 +10,8 @@
 
 @implementation GestureLabel
 
+@synthesize resizeImage = _resizeImage;
+@synthesize panRecognizer = _panRecognizer;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -46,9 +48,9 @@
     self.userInteractionEnabled = YES;
     self.textAlignment = UITextAlignmentCenter;
     
-    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panDetected:)];
-    [self addGestureRecognizer:panRecognizer];
-    panRecognizer.delegate = self;
+    _panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panDetected:)];
+    [self addGestureRecognizer:_panRecognizer];
+    _panRecognizer.delegate = self;
     
     UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchDetected:)];
     [self addGestureRecognizer:pinchRecognizer];
@@ -74,6 +76,33 @@
 
 - (void)panDetected:(UIPanGestureRecognizer *)panRecognizer
 {
+    if (_resizeImage) {
+        CGPoint touchPoint = [panRecognizer locationInView:self];
+        if (touchPoint.x > _resizeImage.frame.origin.x && touchPoint.y > _resizeImage.frame.origin.y) {
+            CGPoint translation = [panRecognizer translationInView:self.superview];
+            
+            CGRect frame = [self frame];
+            frame.size.width += translation.x;
+            if (frame.size.width < _resizeImage.bounds.size.width) {
+                frame.size.width = _resizeImage.bounds.size.width;
+            }
+            
+            frame.size.height += translation.y;
+            if (frame.size.height < _resizeImage.bounds.size.height) {
+                frame.size.height = _resizeImage.bounds.size.height;
+            }
+
+            self.frame = frame;
+            [self autoFitTextWithFrame];
+            
+            UIImage *image = [UIImage imageNamed:@"resize.png"];
+            _resizeImage.center = CGPointMake(self.bounds.size.width - image.size.width/2 , self.bounds.size.height - image.size.height/2);
+            
+            [panRecognizer setTranslation:CGPointZero inView:self.superview];
+            return;
+        }
+    }
+    
     CGPoint translation = [panRecognizer translationInView:self.superview];
     CGPoint imageViewPosition = self.center;
     imageViewPosition.x += translation.x;
@@ -93,24 +122,14 @@
 
     self.frame = frame;
     
-    NSString *theText = self.text;
-    CGRect labelRect = self.frame;
-    self.adjustsFontSizeToFitWidth = NO;
-    self.numberOfLines = 0;
+    [self autoFitTextWithFrame];
     
-    CGFloat fontSize = 1000;
-    UIFont *font = self.font;
-    while (fontSize > 4)
-    {
-        CGSize size = [theText sizeWithFont:[UIFont fontWithName:font.fontName size:fontSize] constrainedToSize:CGSizeMake(labelRect.size.width, 10000) lineBreakMode:UILineBreakModeWordWrap];
-        
-        if (size.height <= labelRect.size.height) break;
-        
-        fontSize -= 1.0;
+    if (_resizeImage) {
+        UIImage *image = [UIImage imageNamed:@"resize.png"];
+        [UIView animateWithDuration:0.1 animations:^{
+            _resizeImage.center = CGPointMake(self.bounds.size.width - image.size.width/2 , self.bounds.size.height - image.size.height/2);
+        }];
     }
-    
-    //set font size
-    self.font = [UIFont fontWithName:font.fontName size:fontSize];
     
 //    self.transform = CGAffineTransformScale(self.transform, scale, scale);
     pinchRecognizer.scale = 1.0;
@@ -125,7 +144,7 @@
 
 - (void)tapDetected:(UITapGestureRecognizer *)tapRecognizer
 {
-    
+    [self labelDeselected];
 }
 -(void) tapSingleDetected :(UITapGestureRecognizer *)tapSigleRecognizer
 {
@@ -133,37 +152,53 @@
         [self.superview bringSubviewToFront:self];
         
     } completion:^(BOOL finished) {
-        
-//        UIImage *image = [UIImage imageNamed:@"btn-delete@2x.png"];
-//        CALayer *imageLayer = [CALayer layer];
-//        
-//        imageLayer.frame = self.frame;
-//        imageLayer.position = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
-//        imageLayer.cornerRadius = 10.0;
-//        imageLayer.contents = (id) image.CGImage;
-//        imageLayer.masksToBounds = NO;
-//        
-//        [self.layer addSublayer:imageLayer];
-//        
-//        [self.layer setNeedsDisplay];
-        
+        [self labelSelected];
     }];
 }
 
--(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+-(void) autoFitTextWithFrame
 {
-    UITouch *touch = [[event allTouches] anyObject];
-    CGPoint location = [touch locationInView: touch.view];
+    NSString *theText = self.text;
+    CGRect labelRect = self.frame;
+    self.adjustsFontSizeToFitWidth = NO;
+    self.numberOfLines = 0;
+    
+    CGFloat fontSize = 100;
+    UIFont *font = self.font;
+    while (fontSize > 4)
+    {
+        CGSize size = [theText sizeWithFont:[UIFont fontWithName:font.fontName size:fontSize] constrainedToSize:CGSizeMake(labelRect.size.width, 10000) lineBreakMode:UILineBreakModeWordWrap];
+        
+        if (size.height <= labelRect.size.height) break;
+        
+        fontSize -= 1.0;
+    }
+    
+    //set font size
+    self.font = [UIFont fontWithName:font.fontName size:fontSize];
 }
 
--(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+-(void) labelSelected
 {
+    [self setBackgroundColor:[UIColor colorWithRed:115/255 green:115/255 blue:115/255 alpha:0.5]];
+    self.layer.borderWidth = 1.0f;
+    self.layer.cornerRadius = 3.0f;
+    self.layer.borderColor = [UIColor blackColor].CGColor;
     
+    if (!_resizeImage) {
+        UIImage *image = [UIImage imageNamed:@"resize.png"];
+        _resizeImage = [[UIImageView alloc] initWithImage:image];
+        _resizeImage.center = CGPointMake(self.bounds.size.width - image.size.width/2 , self.bounds.size.height - image.size.height/2);
+        [self addSubview:_resizeImage];
+    }
 }
 
--(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+-(void) labelDeselected
 {
-    
+    [self setBackgroundColor:[UIColor clearColor]];
+    self.layer.borderWidth = 0.0f;
+    [self.resizeImage removeFromSuperview];
+    self.resizeImage = nil;
 }
 
 

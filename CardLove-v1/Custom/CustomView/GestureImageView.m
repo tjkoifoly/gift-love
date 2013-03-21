@@ -10,6 +10,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 @implementation GestureImageView
+{
+    CALayer *_maskingLayer;
+}
 
 @synthesize delegate;
 @synthesize imgURL;
@@ -91,19 +94,34 @@
 
 -(void) showBorder: (BOOL) show
 {
-    self.layer.borderColor = [UIColor whiteColor].CGColor;
     if (show) {
-        self.layer.borderWidth += 3.0f;
         [self addMaskLayer];
     }else{
-        self.layer.borderWidth = 0.0f;
+        [self removeMaskLayer];
     }
     
 }
 
 - (void) addMaskLayer
 {
-    
+    if (_maskingLayer) {
+        return;
+    }
+    _maskingLayer = [CALayer layer];
+    _maskingLayer.frame = self.bounds;
+    CGColorRef colorRef = [UIColor whiteColor].CGColor;
+    _maskingLayer.borderColor = colorRef;
+    _maskingLayer.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5].CGColor;
+    _maskingLayer.borderWidth = 2.0f;
+    _maskingLayer.cornerRadius = self.layer.cornerRadius;
+    _maskingLayer.masksToBounds = NO;
+    [self.layer addSublayer:_maskingLayer];
+}
+
+-(void) removeMaskLayer
+{
+    [_maskingLayer removeFromSuperlayer];
+    _maskingLayer = nil;
 }
 
 #pragma mark - Gesture Delegate
