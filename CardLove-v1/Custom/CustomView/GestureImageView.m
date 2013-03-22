@@ -40,6 +40,7 @@
     // Initialization code
     
     self.userInteractionEnabled = YES;
+    self.layer.masksToBounds = YES;
     
     UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panDetected:)];
     [self addGestureRecognizer:panRecognizer];
@@ -79,11 +80,10 @@
 {
     if(show)
     {
-        self.layer.masksToBounds = NO;
         self.layer.shadowColor = [UIColor blackColor].CGColor;
         self.layer.shadowOffset = CGSizeMake(1.0, 1.0);
-        self.layer.shadowOpacity = 1.0f;
-        self.layer.shadowRadius = 3.0f;
+        self.layer.shadowOpacity = self.layer.opacity;
+        self.layer.shadowRadius = self.layer.cornerRadius;
         self.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.bounds].CGPath;
     }else
     {
@@ -109,10 +109,11 @@
     }
     _maskingLayer = [CALayer layer];
     _maskingLayer.frame = self.bounds;
-    CGColorRef colorRef = [UIColor whiteColor].CGColor;
-    _maskingLayer.borderColor = colorRef;
+//    CGColorRef colorRef = [UIColor whiteColor].CGColor;
+//    _maskingLayer.borderColor = colorRef;
+//    _maskingLayer.borderWidth = 2.0f;
     _maskingLayer.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5].CGColor;
-    _maskingLayer.borderWidth = 2.0f;
+    
     _maskingLayer.cornerRadius = self.layer.cornerRadius;
     _maskingLayer.masksToBounds = NO;
     [self.layer addSublayer:_maskingLayer];

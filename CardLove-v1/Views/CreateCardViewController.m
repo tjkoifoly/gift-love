@@ -62,11 +62,11 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 - (void)viewDidLoad
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        toolViewStyle = [[[NSBundle mainBundle] loadNibNamed:@"ViewStyle" owner:self options:nil] objectAtIndex:0];
-        [toolViewStyle setFrame:CGRectMake(0, 480, 320, 300)];
-        [self.view addSubview:toolViewStyle];
-    });
+
+    toolViewStyle = [[[NSBundle mainBundle] loadNibNamed:@"ViewStyle" owner:self options:nil] objectAtIndex:0];
+    [toolViewStyle setFrame:CGRectMake(0, 480, 320, 300)];
+    [self.view addSubview:toolViewStyle];
+   
     
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -669,7 +669,17 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 - (IBAction)addAnimation:(id)sender {
 }
 - (IBAction)editPhoto:(id)sender {
-    [self hideToolBarWithView:nil];
+    
+    if (currentPhoto) {
+        if (toolViewStyle.frame.origin.y > 460) {
+            toolViewStyle.viewToEdit = currentPhoto;
+            [self showStyleView];
+        }else
+        {
+            [self hideStyleView];
+        }
+    }
+    
 }
 
 - (IBAction)addMusic:(id)sender {
@@ -792,7 +802,6 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void)currentItemDeslected : (GestureImageView *)currentItem
 {
-    [self hideStyleView];
     [currentItem showBorder:NO];
     currentItem = nil;
 }
