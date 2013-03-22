@@ -58,7 +58,7 @@
     [self addGestureRecognizer:tapRecognizer];
     tapRecognizer.delegate = self;
     
-    UITapGestureRecognizer *tapSigleRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapSingleDetected:)];
+    UITapGestureRecognizer *tapSigleRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDCM:)];
     tapSigleRecognizer.numberOfTapsRequired = 1;
     [self addGestureRecognizer:tapSigleRecognizer];
     tapSigleRecognizer.delegate = self;
@@ -166,7 +166,7 @@
     [self.delegate selectImageView:self];
 }
 
--(void) tapSingleDetected :(UITapGestureRecognizer *)tapSigleRecognizer
+-(void) tapDCM :(UITapGestureRecognizer *)tapSigleRecognizer
 {
     [UIView animateWithDuration:0.5 animations:^{
         [self.superview bringSubviewToFront:self];

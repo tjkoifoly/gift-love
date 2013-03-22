@@ -14,6 +14,7 @@
 #import "ZipArchive.h"
 #import "GestureLabel.h"
 #import "UILabel+dynamicSizeMe.h"
+#import "ViewStyle.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define kNewProject     @"NewTemplate"
@@ -34,6 +35,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     GestureImageView* currentPhoto;
     UIAlertView *photoAlert;
     UIAlertView *backAlert;
+    ViewStyle *toolViewStyle;
 }
 @property (strong, nonatomic) NSString *pathResources;
 @property (strong, nonatomic) NSString *pathConf;
@@ -60,6 +62,12 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 - (void)viewDidLoad
 {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        toolViewStyle = [[[NSBundle mainBundle] loadNibNamed:@"ViewStyle" owner:self options:nil] objectAtIndex:0];
+        [toolViewStyle setFrame:CGRectMake(0, 480, 320, 300)];
+        [self.view addSubview:toolViewStyle];
+    });
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
@@ -95,7 +103,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     BOOL isDir;
     if ([fileManager fileExistsAtPath:_pathResources isDirectory:&isDir]) {
         if (isDir) {
+            
             [self loadGiftView];
+            
         }
     }else
     {
@@ -129,6 +139,10 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 //    NSUInteger opts =  UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat;
 //    [UIView animateWithDuration:1.f delay:0 options:opts
 //                     animations:animationLabel completion:completionLabel];
+    
+    //load Tool
+   
+
 }
 
 -(void) backPreviousView
@@ -395,6 +409,33 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     
 }
 
+-(void) showStyleView
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect frame = toolViewStyle.frame;
+        frame.origin.y = 416 - frame.size.height;
+        [toolViewStyle setFrame:frame];
+    }];
+}
+
+-(void) hideStyleView
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        [toolViewStyle setFrame:CGRectMake(0, 480, 320, 300)];
+    } completion:^(BOOL finished) {
+        //[self showToolBar];
+    }];
+}
+
+-(void) hideToolBarWithView: (UIView*) altView
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        //[toolBar setFrame:CGRectMake(0, 480, 320, 54)];
+    } completion:^(BOOL finished) {
+        [self showStyleView];
+    }];
+}
+
 -(NSString *)generateRandomStringWithLength: (int) len
 {
     NSMutableString *randomString = [NSMutableString stringWithCapacity: len];
@@ -617,11 +658,18 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 }
 
 - (IBAction)addText:(id)sender {
+    CMTextStylePickerViewController *textStylePickerViewController = [CMTextStylePickerViewController textStylePickerViewController];
+	textStylePickerViewController.delegate = self;
+		
+	UINavigationController *actionsNavigationController = [[UINavigationController alloc] initWithRootViewController:textStylePickerViewController];
+    
+	[self presentModalViewController:actionsNavigationController animated:YES];
 }
 
 - (IBAction)addAnimation:(id)sender {
 }
 - (IBAction)editPhoto:(id)sender {
+    [self hideToolBarWithView:nil];
 }
 
 - (IBAction)addMusic:(id)sender {
@@ -744,8 +792,38 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void)currentItemDeslected : (GestureImageView *)currentItem
 {
+    [self hideStyleView];
     [currentItem showBorder:NO];
     currentItem = nil;
+}
+
+#pragma mark -
+#pragma mark CMTextStylePickerViewControllerDelegate methods
+
+- (void)textStylePickerViewController:(CMTextStylePickerViewController *)textStylePickerViewController userSelectedFont:(UIFont *)font {
+	
+}
+
+- (void)textStylePickerViewController:(CMTextStylePickerViewController *)textStylePickerViewController userSelectedTextColor:(UIColor *)textColor {
+	
+}
+
+- (void)textStylePickerViewControllerSelectedCustomStyle:(CMTextStylePickerViewController *)textStylePickerViewController {
+	// Use custom text style
+	
+}
+
+- (void)textStylePickerViewControllerSelectedDefaultStyle:(CMTextStylePickerViewController *)textStylePickerViewController {
+	// Use default text style
+	
+}
+
+- (void)textStylePickerViewController:(CMTextStylePickerViewController *)textStylePickerViewController replaceDefaultStyleWithFont:(UIFont *)font textColor:(UIColor *)textColor {
+	
+}
+
+- (void)textStylePickerViewControllerIsDone:(CMTextStylePickerViewController *)textStylePickerViewController {
+	[self dismissModalViewControllerAnimated:YES];
 }
 
 

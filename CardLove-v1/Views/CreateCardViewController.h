@@ -11,8 +11,9 @@
 #import "AFPhotoEditorController.h"
 #import "MBProgressHUD.h"
 #import "REMenu.h"
+#import "CMTextStylePickerViewController.h"
 
-@interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate>
+@interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate>
 {
     MBProgressHUD *HUD;
 }
