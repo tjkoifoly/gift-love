@@ -128,6 +128,7 @@
 
 - (void)panDetected:(UIPanGestureRecognizer *)panRecognizer
 {
+    [self.delegate selectImageView:self];
     CGPoint translation = [panRecognizer translationInView:self.superview];
     CGPoint imageViewPosition = self.center;
     imageViewPosition.x += translation.x;
@@ -139,6 +140,7 @@
 
 - (void)pinchDetected:(UIPinchGestureRecognizer *)pinchRecognizer
 {
+    [self.delegate selectImageView:self];
     CGFloat scale = pinchRecognizer.scale;
     self.transform = CGAffineTransformScale(self.transform, scale, scale);
     pinchRecognizer.scale = 1.0;
@@ -146,9 +148,11 @@
 
 - (void)rotationDetected:(UIRotationGestureRecognizer *)rotationRecognizer
 {
+    [self.delegate selectImageView:self];
     CGFloat angle = rotationRecognizer.rotation;
     self.transform = CGAffineTransformRotate(self.transform, angle);
     rotationRecognizer.rotation = 0.0;
+    
 }
 
 - (void)tapDetected:(UITapGestureRecognizer *)tapRecognizer
@@ -159,12 +163,15 @@
 //        [self.superview bringSubviewToFront:self];
 //    }];
     [self.delegate displayEditor:self forImage:self.image];
+    [self.delegate selectImageView:self];
 }
 
 -(void) tapSingleDetected :(UITapGestureRecognizer *)tapSigleRecognizer
 {
     [UIView animateWithDuration:0.5 animations:^{
         [self.superview bringSubviewToFront:self];
+        
+    }completion:^(BOOL finished) {
         [self.delegate selectImageView:self];
     }];
 }
