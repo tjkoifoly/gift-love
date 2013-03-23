@@ -221,7 +221,9 @@
     switch (segProperty.selectedSegmentIndex) {
         case 0:
         {
-            viewToEdit.layer.cornerRadius = sender.value;
+            CALayer *photoLayer = viewToEdit.layer;
+            photoLayer.cornerRadius = sender.value;
+            [viewToEdit setNeedsDisplay];
         }
             break;
         case 1:

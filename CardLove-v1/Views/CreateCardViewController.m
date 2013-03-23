@@ -9,6 +9,7 @@
 #import "CreateCardViewController.h"
 #import "ViewGiftViewController.h"
 #import "GestureImageView.h"
+#import "GestureView.h"
 #import "GiftItemManager.h"
 #import "MBProgressHUD.h"
 #import "ZipArchive.h"
@@ -32,6 +33,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 @interface CreateCardViewController ()
 {
+    GestureView *focusObject;
     GestureImageView* currentPhoto;
     UIAlertView *photoAlert;
     UIAlertView *backAlert;
@@ -397,6 +399,25 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 }
 
+-(void)removeGestureView
+{
+    if (!focusObject) {
+        return;
+    }
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        focusObject.transform =
+        CGAffineTransformMakeTranslation(
+                                         focusObject.frame.origin.x,
+                                         480.0f + (focusObject.frame.size.height/2)  // move the whole view offscreen
+                                         );
+        focusObject.alpha = 0; // also fade to transparent
+    } completion:^(BOOL finished) {
+        [focusObject removeFromSuperview];
+    }];
+
+}
+
 -(void)showToolBar
 {
     [UIView beginAnimations:nil context:NULL];
@@ -519,6 +540,18 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     currentPhoto = imvPhoto;
 }
 
+-(void) addViewPhoto: (UIImage *)image
+{
+    GestureView *gv = [[GestureView alloc] initWithFrame:CGRectZero];
+    [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:gv inView:self.viewCard];
+    
+    [gv addLayersWithImage:image];
+    gv.delegate = self;
+    
+    [self.viewCard addSubview:gv];
+    
+}
+
 -(void) addPhotoViewWithItem: (GiftItem *) item
 {
     GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:item.photo]];
@@ -613,6 +646,35 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self presentViewController:editorController animated:YES completion:nil];
 }
 
+-(void) selectImageView:(GestureImageView *)gestureImageView
+{
+    if (currentPhoto) {
+        [currentPhoto showBorder:NO];
+    }
+    currentPhoto = gestureImageView;
+    [currentPhoto showBorder:YES];
+}
+
+#pragma mark -
+#pragma mark - GestureViewDelegate
+-(void) displayEditorWith:(GestureView *)gestureView forImage:(UIImage *)imageToEdit
+{
+    focusObject = gestureView;
+    
+    AFPhotoEditorController *editorController = [[AFPhotoEditorController alloc] initWithImage:imageToEdit];
+   [editorController setDelegate:self];
+    [self presentViewController:editorController animated:YES completion:nil];
+}
+
+-(void) selectPhoto:(GestureView *)gestureView
+{
+    if (focusObject) {
+        [focusObject selected:NO];
+    }
+    focusObject = gestureView;
+    [focusObject selected:YES];
+}
+
 #pragma mark - AFPhotoEditor
 - (void)photoEditor:(AFPhotoEditorController *)editor finishedWithImage:(UIImage *)image
 {
@@ -621,24 +683,29 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 //    [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:currentPhoto inView:self.viewCard];
 //    ((GestureImageView *)currentPhoto).image = image;
 //
-    CGPoint center = ((GestureImageView *)currentPhoto).center;
-    CGAffineTransform transform = currentPhoto.transform;
-    [self removeImageView];
+    if (currentPhoto) {
+        CGPoint center = ((GestureImageView *)currentPhoto).center;
+        CGAffineTransform transform = currentPhoto.transform;
+        [self removeImageView];
+        
+        [self addPhotoView:image withCenterPoint:center andTransfrom:transform];
+        [self dismissModalViewControllerAnimated:YES];
+        return;
+    }
     
-    [self addPhotoView:image withCenterPoint:center andTransfrom:transform];
-    [self dismissModalViewControllerAnimated:YES];
+    if (focusObject) {
+
+        [self removeGestureView];
+        
+        [self addViewPhoto:image];
+        [self dismissModalViewControllerAnimated:YES];
+        return;
+    }
+    
     
 }
 
--(void) selectImageView:(GestureImageView *)gestureImageView
-{
-    if (currentPhoto) {
-        [currentPhoto showBorder:NO];
-    }
-    currentPhoto = gestureImageView;
-    [currentPhoto showBorder:YES];
-    NSLog(@"Select image view %@", gestureImageView);
-}
+
 
 - (void)photoEditorCanceled:(AFPhotoEditorController *)editor
 {
@@ -667,6 +734,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 }
 
 - (IBAction)addAnimation:(id)sender {
+    [self addViewPhoto:[UIImage imageNamed:@"228408_3415831849246_1024851406_n.jpg"]];
 }
 - (IBAction)editPhoto:(id)sender {
     

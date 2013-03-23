@@ -52,9 +52,9 @@
     [self addGestureRecognizer:_panRecognizer];
     _panRecognizer.delegate = self;
     
-    UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchDetected:)];
-    [self addGestureRecognizer:pinchRecognizer];
-    pinchRecognizer.delegate = self;
+//    UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchDetected:)];
+//    [self addGestureRecognizer:pinchRecognizer];
+//    pinchRecognizer.delegate = self;
     
     UIRotationGestureRecognizer *rotationRecognizer = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotationDetected:)];
     [self addGestureRecognizer:rotationRecognizer];

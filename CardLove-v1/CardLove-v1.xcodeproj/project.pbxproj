@@ -364,6 +364,8 @@
 		66A327EA16DA811000AB3767 /* GHMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327E516DA811000AB3767 /* GHMenuViewController.m */; };
 		66A327EB16DA811000AB3767 /* GHPushedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327E716DA811000AB3767 /* GHPushedViewController.m */; };
 		66A327EC16DA811000AB3767 /* GHRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327E916DA811000AB3767 /* GHRootViewController.m */; };
+		66AA4F7116FDB8C600F0DE4A /* 228408_3415831849246_1024851406_n.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66AA4F7016FDB8C600F0DE4A /* 228408_3415831849246_1024851406_n.jpg */; };
+		66AA4F7416FDC45D00F0DE4A /* UIView+Selection.m in Sources */ = {isa = PBXBuildFile; fileRef = 66AA4F7316FDC45D00F0DE4A /* UIView+Selection.m */; };
 		66BADF5C16E9CDB300A8E60C /* Back Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 66BADF5A16E9CDB300A8E60C /* Back Button.png */; };
 		66BADF5D16E9CDB300A8E60C /* Back Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66BADF5B16E9CDB300A8E60C /* Back Button@2x.png */; };
 		66BADF6016E9CE4600A8E60C /* Add Item button Dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 66BADF5E16E9CE4600A8E60C /* Add Item button Dark.png */; };
@@ -1054,6 +1056,9 @@
 		66A327E716DA811000AB3767 /* GHPushedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHPushedViewController.m; path = Custom/MenuNav/GHPushedViewController.m; sourceTree = "<group>"; };
 		66A327E816DA811000AB3767 /* GHRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHRootViewController.h; path = Custom/MenuNav/GHRootViewController.h; sourceTree = "<group>"; };
 		66A327E916DA811000AB3767 /* GHRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHRootViewController.m; path = Custom/MenuNav/GHRootViewController.m; sourceTree = "<group>"; };
+		66AA4F7016FDB8C600F0DE4A /* 228408_3415831849246_1024851406_n.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 228408_3415831849246_1024851406_n.jpg; path = ../../../Pictures/228408_3415831849246_1024851406_n.jpg; sourceTree = "<group>"; };
+		66AA4F7216FDC45D00F0DE4A /* UIView+Selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Selection.h"; path = "Custom/CustomView/UIView+Selection.h"; sourceTree = "<group>"; };
+		66AA4F7316FDC45D00F0DE4A /* UIView+Selection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Selection.m"; path = "Custom/CustomView/UIView+Selection.m"; sourceTree = "<group>"; };
 		66BADF5A16E9CDB300A8E60C /* Back Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Back Button.png"; path = "Resources/Back Button.png"; sourceTree = "<group>"; };
 		66BADF5B16E9CDB300A8E60C /* Back Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Back Button@2x.png"; path = "Resources/Back Button@2x.png"; sourceTree = "<group>"; };
 		66BADF5E16E9CE4600A8E60C /* Add Item button Dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Add Item button Dark.png"; path = "Resources/Add Item button Dark.png"; sourceTree = "<group>"; };
@@ -2281,6 +2286,7 @@
 		66B3C01116FC1034007D1339 /* Gift */ = {
 			isa = PBXGroup;
 			children = (
+				66AA4F7016FDB8C600F0DE4A /* 228408_3415831849246_1024851406_n.jpg */,
 				6604FA6116DBCB7E00295209 /* CreateCardViewController.h */,
 				6604FA6216DBCB7E00295209 /* CreateCardViewController.m */,
 				6604FA6316DBCB7E00295209 /* CreateCardViewController.xib */,
@@ -2373,6 +2379,8 @@
 				66F892BB16FC2DD8002EAA28 /* ViewStyle.h */,
 				66F892BC16FC2DD8002EAA28 /* ViewStyle.m */,
 				66F892BE16FC2DEF002EAA28 /* ViewStyle.xib */,
+				66AA4F7216FDC45D00F0DE4A /* UIView+Selection.h */,
+				66AA4F7316FDC45D00F0DE4A /* UIView+Selection.m */,
 			);
 			name = CustomView;
 			sourceTree = "<group>";
@@ -2906,6 +2914,7 @@
 				66F8932316FC2F07002EAA28 /* thumb_style_7.png in Resources */,
 				66F8932416FC2F07002EAA28 /* thumb_style_8.png in Resources */,
 				66F8932516FC2F07002EAA28 /* thumb_style_9.png in Resources */,
+				66AA4F7116FDB8C600F0DE4A /* 228408_3415831849246_1024851406_n.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3118,6 +3127,7 @@
 				66F892B816FC16DD002EAA28 /* CMTextStylePickerViewController.m in Sources */,
 				66F892BA16FC16DD002EAA28 /* CMUpDownControl.m in Sources */,
 				66F892BD16FC2DD8002EAA28 /* ViewStyle.m in Sources */,
+				66AA4F7416FDC45D00F0DE4A /* UIView+Selection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
