@@ -9,6 +9,9 @@
 #import "GestureLabel.h"
 
 @implementation GestureLabel
+{
+    BOOL _resizing;
+}
 
 @synthesize resizeImage = _resizeImage;
 @synthesize panRecognizer = _panRecognizer;
@@ -76,40 +79,68 @@
 
 - (void)panDetected:(UIPanGestureRecognizer *)panRecognizer
 {
-    if (_resizeImage) {
-        CGPoint touchPoint = [panRecognizer locationInView:self];
-        if (touchPoint.x > _resizeImage.frame.origin.x && touchPoint.y > _resizeImage.frame.origin.y) {
+    if (panRecognizer.state == UIGestureRecognizerStateBegan) {
+        if (_resizeImage) {
+            CGPoint touchPoint = [panRecognizer locationInView:self];
+            if (touchPoint.x > _resizeImage.frame.origin.x && touchPoint.y > _resizeImage.frame.origin.y) {
+                _resizing = YES;
+            }else
+            {
+                _resizing = NO;
+            }
+        }
+
+    }else if (panRecognizer.state == UIGestureRecognizerStateChanged)
+    {
+        if (_resizing) {
             CGPoint translation = [panRecognizer translationInView:self.superview];
             
-            CGRect frame = [self frame];
-            frame.size.width += translation.x;
-            if (frame.size.width < _resizeImage.bounds.size.width) {
-                frame.size.width = _resizeImage.bounds.size.width;
+            CGFloat translationX = translation.x ;
+            CGFloat translationY = translation.y ;
+            
+            CGRect bounds = [self bounds];
+            CGPoint center = self.center;
+            
+            bounds.size.width += translationX;
+            if (bounds.size.width < _resizeImage.bounds.size.width) {
+                bounds.size.width = _resizeImage.bounds.size.width;
             }
             
-            frame.size.height += translation.y;
-            if (frame.size.height < _resizeImage.bounds.size.height) {
-                frame.size.height = _resizeImage.bounds.size.height;
+            //frame.size.height += translation.y;
+            bounds.size.height += translationY;
+            if (bounds.size.height < _resizeImage.bounds.size.height) {
+                bounds.size.height = _resizeImage.bounds.size.height;
             }
-
-            self.frame = frame;
+            
+            self.bounds = bounds;
+            
+            center.x += translationX/2;
+            center.y += translationY/2;
+            self.center = center;
+            
+            
             [self autoFitTextWithFrame];
             
             UIImage *image = [UIImage imageNamed:@"resize.png"];
             _resizeImage.center = CGPointMake(self.bounds.size.width - image.size.width/2 , self.bounds.size.height - image.size.height/2);
             
             [panRecognizer setTranslation:CGPointZero inView:self.superview];
-            return;
+        }else{
+            CGPoint translation = [panRecognizer translationInView:self.superview];
+            CGPoint imageViewPosition = self.center;
+            imageViewPosition.x += translation.x;
+            imageViewPosition.y += translation.y;
+            
+            self.center = imageViewPosition;
+            [panRecognizer setTranslation:CGPointZero inView:self.superview];
         }
+    }else if (panRecognizer.state == UIGestureRecognizerStateEnded)
+    {
+        _resizing = NO;
+    }else if (panRecognizer.state == UIGestureRecognizerStateCancelled)
+    {
+        _resizing = NO;
     }
-    
-    CGPoint translation = [panRecognizer translationInView:self.superview];
-    CGPoint imageViewPosition = self.center;
-    imageViewPosition.x += translation.x;
-    imageViewPosition.y += translation.y;
-    
-    self.center = imageViewPosition;
-    [panRecognizer setTranslation:CGPointZero inView:self.superview];
 }
 
 - (void)pinchDetected:(UIPinchGestureRecognizer *)pinchRecognizer
@@ -139,6 +170,12 @@
 {
     CGFloat angle = rotationRecognizer.rotation;
     self.transform = CGAffineTransformRotate(self.transform, angle);
+    
+    CGFloat radiansAlpha = atan2f(self.transform.b, self.transform.a);
+    CGFloat degrees = radiansAlpha * (180 / M_PI);
+    NSLog(@"DCM %f", degrees);
+    
+    //NSLog(@"Angle = %f", angle);
     rotationRecognizer.rotation = 0.0;
 }
 
@@ -159,7 +196,7 @@
 -(void) autoFitTextWithFrame
 {
     NSString *theText = self.text;
-    CGRect labelRect = self.frame;
+    CGRect labelRect = self.bounds;
     self.adjustsFontSizeToFitWidth = NO;
     self.numberOfLines = 0;
     
