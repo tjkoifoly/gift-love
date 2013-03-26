@@ -15,6 +15,7 @@
 
 @synthesize resizeImage = _resizeImage;
 @synthesize panRecognizer = _panRecognizer;
+@synthesize delegate;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -95,8 +96,13 @@
         if (_resizing) {
             CGPoint translation = [panRecognizer translationInView:self.superview];
             
-            CGFloat translationX = translation.x ;
-            CGFloat translationY = translation.y ;
+            CGFloat radiansAlpha = atan2f(self.transform.b, self.transform.a);
+            CGFloat radiansBeta = radiansAlpha;
+            CGFloat degrees = radiansAlpha * (180 / M_PI);
+            NSLog(@"DCM %f", degrees);
+            
+            CGFloat translationX = translation.x *cos(radiansBeta) + translation.y *sin(radiansBeta);
+            CGFloat translationY = translation.y *cos(radiansBeta) - translation.x *sin(radiansBeta);
             
             CGRect bounds = [self bounds];
             CGPoint center = self.center;
@@ -114,8 +120,8 @@
             
             self.bounds = bounds;
             
-            center.x += translationX/2;
-            center.y += translationY/2;
+            center.x += translationX/2.0f;
+            center.y += translationY/2.0f;
             self.center = center;
             
             
@@ -182,6 +188,7 @@
 - (void)tapDetected:(UITapGestureRecognizer *)tapRecognizer
 {
     [self labelDeselected];
+    [self.delegate displayEditorFor:self];
 }
 -(void) tapSingleDetected :(UITapGestureRecognizer *)tapSigleRecognizer
 {

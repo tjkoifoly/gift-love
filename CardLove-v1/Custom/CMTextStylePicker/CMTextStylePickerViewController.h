@@ -34,7 +34,7 @@
 @class CMColourBlockView;
 @protocol CMTextStylePickerViewControllerDelegate;
 
-@interface CMTextStylePickerViewController : UITableViewController <CMFontSelectTableViewControllerDelegate, CMColourSelectTableViewControllerDelegate> {
+@interface CMTextStylePickerViewController : UITableViewController <CMFontSelectTableViewControllerDelegate, CMColourSelectTableViewControllerDelegate, UITextFieldDelegate> {
 
 }
 
@@ -55,10 +55,19 @@
 @property (nonatomic, retain)	IBOutlet	CMUpDownControl		*fontSizeControl;
 @property (nonatomic, retain)	IBOutlet	UITableViewCell		*sizeCell;
 
+@property (strong, nonatomic) IBOutlet  UITableViewCell     *previewCell;
+@property (strong, nonatomic) IBOutlet  UIScrollView        *previewScrollView;
+@property (strong, nonatomic) IBOutlet  UITableViewCell     *textLabelCell;
+@property (strong, nonatomic) IBOutlet  UITextField         *textfieldLabel;
+@property (strong, nonatomic) IBOutlet  UILabel             *labelPreview;
+
+@property (assign, nonatomic)          UILabel          *labelToEdit;
+
 + (CMTextStylePickerViewController *)textStylePickerViewController;
 - (IBAction)doneAction;
 - (IBAction)defaultTextSettingsAction:(UISwitch *)defaultSwitch;
 - (IBAction)fontSizeValueChanged:(CMUpDownControl *)control;
+-(IBAction)resignKeyboard:(id)sender;
 
 @end
 

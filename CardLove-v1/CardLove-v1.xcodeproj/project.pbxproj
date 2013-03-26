@@ -408,6 +408,7 @@
 		66D4C67116F587DD004DC5A4 /* 37x-Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66D4C66F16F587DD004DC5A4 /* 37x-Checkmark@2x.png */; };
 		66D4C67616F59D14004DC5A4 /* AUISelectiveBordersLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D4C67316F59D14004DC5A4 /* AUISelectiveBordersLayer.m */; };
 		66D4C67716F59D14004DC5A4 /* UIView+AUISelectiveBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D4C67516F59D14004DC5A4 /* UIView+AUISelectiveBorder.m */; };
+		66D70C04170149D100E12D42 /* KGStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D70C03170149D100E12D42 /* KGStatusBar.m */; };
 		66E0E34C16DB11DF0085AA12 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E0E34A16DB11DF0085AA12 /* AboutViewController.m */; };
 		66E0E34D16DB11DF0085AA12 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E0E34B16DB11DF0085AA12 /* AboutViewController.xib */; };
 		66E0E35616DB13A50085AA12 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E0E35416DB13A40085AA12 /* MessagesViewController.m */; };
@@ -1111,6 +1112,8 @@
 		66D4C67316F59D14004DC5A4 /* AUISelectiveBordersLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUISelectiveBordersLayer.m; sourceTree = "<group>"; };
 		66D4C67416F59D14004DC5A4 /* UIView+AUISelectiveBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AUISelectiveBorder.h"; sourceTree = "<group>"; };
 		66D4C67516F59D14004DC5A4 /* UIView+AUISelectiveBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+AUISelectiveBorder.m"; sourceTree = "<group>"; };
+		66D70C02170149D100E12D42 /* KGStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGStatusBar.h; sourceTree = "<group>"; };
+		66D70C03170149D100E12D42 /* KGStatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGStatusBar.m; sourceTree = "<group>"; };
 		66E0E34916DB11DF0085AA12 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutViewController.h; path = Views/AboutViewController.h; sourceTree = "<group>"; };
 		66E0E34A16DB11DF0085AA12 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutViewController.m; path = Views/AboutViewController.m; sourceTree = "<group>"; };
 		66E0E34B16DB11DF0085AA12 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AboutViewController.xib; path = Views/AboutViewController.xib; sourceTree = "<group>"; };
@@ -1992,6 +1995,7 @@
 		66310ACF16D9A37900AC9DC8 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				66D70C01170149D100E12D42 /* KGStatusBar */,
 				661EBD6F16F735B4006436C9 /* REMenu */,
 				6620BD1316F33F04004A4B22 /* ZIP */,
 				6620BD0116F33596004A4B22 /* Ftutils */,
@@ -2363,6 +2367,16 @@
 			);
 			name = CollectionView;
 			path = Library/CollectionView;
+			sourceTree = "<group>";
+		};
+		66D70C01170149D100E12D42 /* KGStatusBar */ = {
+			isa = PBXGroup;
+			children = (
+				66D70C02170149D100E12D42 /* KGStatusBar.h */,
+				66D70C03170149D100E12D42 /* KGStatusBar.m */,
+			);
+			name = KGStatusBar;
+			path = Library/KGStatusBar;
 			sourceTree = "<group>";
 		};
 		66F1B92316EAE996003FEA7F /* CustomView */ = {
@@ -3128,6 +3142,7 @@
 				66F892BA16FC16DD002EAA28 /* CMUpDownControl.m in Sources */,
 				66F892BD16FC2DD8002EAA28 /* ViewStyle.m in Sources */,
 				66AA4F7416FDC45D00F0DE4A /* UIView+Selection.m in Sources */,
+				66D70C04170149D100E12D42 /* KGStatusBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

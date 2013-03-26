@@ -636,6 +636,19 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     view.center = centerPoint;
 }
 
+#pragma mark -
+#pragma mark - Gesture Label Delegate
+-(void) displayEditorFor:(GestureLabel *)label
+{
+    CMTextStylePickerViewController *textStylePickerViewController = [CMTextStylePickerViewController textStylePickerViewController];
+    textStylePickerViewController.delegate = self;
+    textStylePickerViewController.labelToEdit = label;
+		
+    UINavigationController *actionsNavigationController = [[UINavigationController alloc] initWithRootViewController:textStylePickerViewController];
+
+    [self presentModalViewController:actionsNavigationController animated:YES];
+}
+
 #pragma mark - GestureImage Delegate
 -(void) displayEditor: (GestureImageView *)gestureImageView forImage:(UIImage *)imageToEdit
 {

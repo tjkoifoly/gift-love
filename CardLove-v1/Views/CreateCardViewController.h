@@ -13,8 +13,9 @@
 #import "REMenu.h"
 #import "CMTextStylePickerViewController.h"
 #import "GestureView.h"
+#import "GestureLabel.h"
 
-@interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate>
+@interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate, GestureLabelDelegate>
 {
     MBProgressHUD *HUD;
 }

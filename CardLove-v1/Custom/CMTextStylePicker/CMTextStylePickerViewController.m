@@ -28,6 +28,7 @@
 
 #import "CMColourBlockView.h"
 #import "CMUpDownControl.h"
+#import "UILabel+dynamicSizeMe.h"
 
 #define kDisabledCellAlpha		0.4
 
@@ -49,6 +50,13 @@
 @synthesize tableLayout, fontSizeControl;
 @synthesize sizeCell, colourCell, fontCell, defaultSettingsCell, applyAsDefaultCell, fontNameLabel, defaultSettingsSwitch;
 @synthesize colourView, doneButtonItem;
+
+@synthesize previewCell;
+@synthesize previewScrollView;
+@synthesize labelToEdit;
+@synthesize textfieldLabel;
+@synthesize textLabelCell;
+@synthesize labelPreview ;
 
 + (CMTextStylePickerViewController *)textStylePickerViewController {
 	CMTextStylePickerViewController *textStylePickerViewController = [[CMTextStylePickerViewController alloc] initWithNibName:@"CMTextStylePickerViewController" bundle:nil];
@@ -184,10 +192,17 @@
 		
 	self.fontSizeControl.minimumAllowedValue = 8;
 	self.fontSizeControl.maximumAllowedValue = 72;
+    self.previewScrollView.scrollEnabled = YES;
 	
 	[self updateFontColourSelections];
 	
 	self.tableLayout = [NSArray arrayWithObjects:
+                        [NSArray arrayWithObjects:
+						 self.previewCell,
+						 nil],
+                        [NSArray arrayWithObjects:
+						 self.textLabelCell,
+						 nil],
 						[NSArray arrayWithObjects:
 						 self.defaultSettingsCell,
 						 nil],
@@ -382,9 +397,53 @@
 	}
 }
 
+#pragma mark - 
+#pragma mark - TextField Delegate
+
+- (BOOL) textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    NSString * theString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    labelPreview.text = theString;
+    [labelPreview resizeToFit];
+    
+    return YES;
+}
+
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+ 
+}
+
+-(void) textFieldDidEndEditing:(UITextField *)textField
+{
+    labelPreview.text = textField.text;
+    [labelPreview resizeToFit];
+    self.previewScrollView.scrollEnabled = YES;
+
+}
+
+-(IBAction)resignKeyboard:(id)sender
+{
+    [sender resignFirstResponder];
+}
+
+
 
 #pragma mark -
 #pragma mark Memory management
+
+- (void)awakeFromNib
+{
+    //assume textField is an ivar that is connected to the textfield in IB
+    [textfieldLabel setDelegate:self];
+    [super awakeFromNib];
+}
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
@@ -407,6 +466,11 @@
 	self.fontNameLabel = nil;
 	self.fontSizeControl = nil;
 	self.sizeCell = nil;
+    self.previewCell = nil;
+    self.previewScrollView = nil;
+    self.textLabelCell = nil;
+    self.textfieldLabel = nil;
+    self.labelPreview = nil;
 }
 
 
@@ -424,7 +488,12 @@
 	[selectedFont release];
 	[sizeCell release];
 	[tableLayout release];
-	
+	[previewCell release];
+    [previewScrollView release];
+    [textfieldLabel release];
+    [textLabelCell release];
+    [labelPreview release];
+    
     [super dealloc];
 }
 

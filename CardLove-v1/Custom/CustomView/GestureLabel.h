@@ -10,10 +10,19 @@
 #import "UILabel+dynamicSizeMe.h"
 #import <QuartzCore/QuartzCore.h>
 
+@class GestureLabel;
+@protocol GestureLabelDelegate <NSObject>
+
+-(void) displayEditorFor: (GestureLabel *) label ;
+
+@end
+
 @interface GestureLabel : UILabel <UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) UIImageView *resizeImage;
 @property (strong, nonatomic) UIGestureRecognizer *panRecognizer;
+
+@property (assign, nonatomic) id<GestureLabelDelegate> delegate;
 
 -(void) labelSelected;
 -(void) labelDeselected;

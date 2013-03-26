@@ -30,5 +30,27 @@
     return expectedLabelSize.height;
 }
 
+-(void) autoFitTextWithFrame
+{
+    NSString *theText = self.text;
+    CGRect labelRect = self.bounds;
+    self.adjustsFontSizeToFitWidth = NO;
+    self.numberOfLines = 0;
+    
+    CGFloat fontSize = 100;
+    UIFont *font = self.font;
+    while (fontSize > 4)
+    {
+        CGSize size = [theText sizeWithFont:[UIFont fontWithName:font.fontName size:fontSize] constrainedToSize:CGSizeMake(labelRect.size.width, 10000) lineBreakMode:UILineBreakModeWordWrap];
+        
+        if (size.height <= labelRect.size.height) break;
+        
+        fontSize -= 1.0;
+    }
+    
+    //set font size
+    self.font = [UIFont fontWithName:font.fontName size:fontSize];
+}
+
 
 @end

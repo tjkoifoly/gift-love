@@ -12,5 +12,6 @@
 
 -(float)resizeToFit;
 -(float)expectedHeight;
+-(void) autoFitTextWithFrame;
 
 @end
