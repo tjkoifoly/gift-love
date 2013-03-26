@@ -86,7 +86,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [btnBack setFrame:CGRectMake(0, 0, 54, 34)];
     [btnBack addTarget:self action:@selector(backPreviousView) forControlEvents:UIControlEventTouchUpInside];
     
-    UIBarButtonItem *btnRemove = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(removeImageView)];
+    UIBarButtonItem *btnRemove = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(removeGestureView)];
     
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:[[UIBarButtonItem alloc] initWithCustomView:btnBack], btnRemove, nil] ;
@@ -171,7 +171,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     
     for(GiftItem *gi in listItems)
     {
-        [self addPhotoViewWithItem:gi];
+        [self addViewPhotoWithItem:gi];
     }
 }
 
@@ -227,11 +227,11 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     
     for(UIView *subview in arrPhotos)
     {
-        if([subview isKindOfClass:[GestureImageView class]])
+        if([subview isKindOfClass:[GestureView class]])
         {
-            GestureImageView *temp = (GestureImageView *) subview;
+            GestureView *temp = (GestureView *) subview;
             
-            GiftItem *gi = [[GiftItem alloc] initWithView:temp];
+            GiftItem *gi = [[GiftItem alloc] initWithGestureView:temp];
             [listItems addObject:gi];
         }
     }
@@ -368,7 +368,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     }
     
 }
-
+/* ------------------------------------------------------------------------------------------- */
 -(void) removeImageView
 {
     if (!currentPhoto) {
@@ -511,6 +511,8 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     
 }
 
+/* ----------------------------------------------------------------------------------*/
+
 -(void) addPhotoView: (UIImage *)image
 {
     GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:image];
@@ -543,14 +545,20 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 -(void) addViewPhoto: (UIImage *)image
 {
     GestureView *gv = [[GestureView alloc] initWithFrame:CGRectZero];
+    gv.imgURL = [self saveImagetoResources:image];
     [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:gv inView:self.viewCard];
     
     [gv addLayersWithImage:image];
-    gv.delegate = self;
+    gv.delegate = self;    
+
+    GiftItem *item = [[GiftItem alloc] initWithGestureView:gv];
+    [[GiftItemManager sharedManager] addItem:item];
     
     [self.viewCard addSubview:gv];
     
 }
+
+/* ----------------------------------------------------------------------------------*/
 
 -(void) addPhotoViewWithItem: (GiftItem *) item
 {
@@ -565,6 +573,25 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     
     [self.viewCard addSubview:imvPhoto];
 }
+
+-(void) addViewPhotoWithItem: (GiftItem *) item
+{
+    GestureView *imvPhoto = [[GestureView alloc] initWithFrame:CGRectZero];
+    UIImage *image = [UIImage imageWithContentsOfFile:item.photo];
+    
+    imvPhoto.bounds = CGRectFromString(item.bounds);
+    imvPhoto.center = CGPointFromString(item.center);
+    imvPhoto.transform = CGAffineTransformFromString(item.transform);
+    imvPhoto.imgURL = item.photo;
+    
+   [imvPhoto addLayersWithImage:image];
+    imvPhoto.delegate = self;
+    
+    [self.viewCard addSubview:imvPhoto];
+}
+
+/* ----------------------------------------------------------------------------------*/
+
 
 -(void) addPhotoView: (UIImage *)image withURL:(NSString *) strURL
 {
@@ -581,6 +608,27 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self.viewCard addSubview:imvPhoto];
     currentPhoto = imvPhoto;
 }
+
+-(void) addViewPhoto: (UIImage *)image withURL:(NSString *) strURL
+{
+    GestureView *imvPhoto = [[GestureView alloc] initWithFrame:CGRectZero];
+    
+    [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:imvPhoto inView:self.viewCard];
+    
+    [imvPhoto addLayersWithImage:image];
+    imvPhoto.delegate = self;
+    imvPhoto.imgURL = strURL;
+    
+    GiftItem *item = [[GiftItem alloc] initWithGestureView:imvPhoto];
+    [[GiftItemManager sharedManager] addItem:item];
+    
+    [self.viewCard addSubview:imvPhoto];
+
+    [imvPhoto tapSingleDetected:nil];
+
+}
+
+/* ----------------------------------------------------------------------------------*/
 
 -(void) addPhotoView:(UIImage *)image withCenterPoint: (CGPoint)centerPoint andTransfrom: (CGAffineTransform) transform
 {
@@ -599,6 +647,27 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     
     [self.viewCard addSubview:imvPhoto];
 }
+
+-(void) addViewPhoto:(UIImage *)image withCenterPoint: (CGPoint)centerPoint andTransfrom: (CGAffineTransform) transform
+{
+    GestureView *imvPhoto = [[GestureView alloc] initWithFrame:CGRectZero];
+    
+    imvPhoto.imgURL = [self saveImagetoResources:image];
+    
+    [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:imvPhoto inView:self.viewCard];
+    imvPhoto.center = centerPoint;
+    imvPhoto.transform = transform;
+    
+    [imvPhoto addLayersWithImage:image];
+    imvPhoto.delegate = self;
+    
+    GiftItem *item = [[GiftItem alloc] initWithGestureView:imvPhoto];
+    [[GiftItemManager sharedManager] addItem:item];
+    
+    [self.viewCard addSubview:imvPhoto];
+}
+
+/* ----------------------------------------------------------------------------------*/
 
 -(CGSize) resizeImage: (UIImage *)image toMax: (CGFloat) maxValue
 {
@@ -707,10 +776,12 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     }
     
     if (focusObject) {
+        CGPoint center = ((GestureView *)focusObject).center;
+        CGAffineTransform transform = focusObject.transform;
 
         [self removeGestureView];
         
-        [self addViewPhoto:image];
+        [self addViewPhoto:image withCenterPoint:center andTransfrom:transform];
         [self dismissModalViewControllerAnimated:YES];
         return;
     }
@@ -747,7 +818,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 }
 
 - (IBAction)addAnimation:(id)sender {
-    [self addViewPhoto:[UIImage imageNamed:@"228408_3415831849246_1024851406_n.jpg"]];
+    
 }
 - (IBAction)editPhoto:(id)sender {
     
@@ -818,7 +889,8 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     //NSLog(@"KEY = %@", [info allKeys]);
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     //NSString *imgURL = [[info objectForKey:UIImagePickerControllerMediaURL] absoluteString];
-    [self addPhotoView:image];
+    //[self addPhotoView:image];
+    [self addViewPhoto:image];
     NSLog(@"Add image = %@", image);
 }
 
@@ -878,6 +950,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self currentItemDeslected:currentPhoto];
+    [self focusItemDeslected:focusObject];
     
 }
 
@@ -885,6 +958,11 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 {
     [currentItem showBorder:NO];
     currentItem = nil;
+}
+-(void)focusItemDeslected : (GestureView *)focusItem
+{
+    [focusItem selected:NO];
+    focusObject = nil;
 }
 
 #pragma mark -

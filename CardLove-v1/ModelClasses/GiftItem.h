@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GestureImageView.h"
+#import "GestureView.h"
 
 #define kClass @"ofClass"
 #define kFrame @"frame"
@@ -26,5 +27,6 @@
 @property (strong, nonatomic) NSString *photo;
 
 - (id) initWithView:(GestureImageView*) imv;
+- (id) initWithGestureView:(GestureView*) imv;
 
 @end

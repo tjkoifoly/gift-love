@@ -46,6 +46,23 @@
     return self;
 }
 
+- (id) initWithGestureView:(GestureView*) imv
+{
+    self = [super init];
+    if (self) {
+        self.ofClass = NSStringFromClass(imv.class);
+        self.frame = NSStringFromCGRect(imv.frame);
+        self.transform = NSStringFromCGAffineTransform(imv.transform);
+        self.bounds = NSStringFromCGRect(imv.bounds);
+        self.center = NSStringFromCGPoint(imv.center);
+        
+        NSLog(@"TRANSFORM = %@", self.transform);
+        
+        self.photo = imv.imgURL;
+    }
+    return self;
+}
+
 -(void) encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:self.ofClass forKey:kClass];

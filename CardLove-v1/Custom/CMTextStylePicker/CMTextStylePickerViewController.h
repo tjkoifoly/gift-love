@@ -29,6 +29,7 @@
 #import "CMColourSelectTableViewController.h"
 #import "CMFontSelectTableViewController.h"
 #import "CMUpDownControl.h"
+#import "GestureLabel.h"
 
 
 @class CMColourBlockView;

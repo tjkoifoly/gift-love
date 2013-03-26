@@ -193,7 +193,8 @@
 	self.fontSizeControl.minimumAllowedValue = 8;
 	self.fontSizeControl.maximumAllowedValue = 72;
     self.previewScrollView.scrollEnabled = YES;
-	
+   // [previewScrollView setContentSize:CGSizeMake(400, 400)];
+    
 	[self updateFontColourSelections];
 	
 	self.tableLayout = [NSArray arrayWithObjects:
@@ -219,11 +220,19 @@
 	if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
 		// iPhone UI
 		self.navigationItem.rightBarButtonItem = self.doneButtonItem;
+        
+        UIBarButtonItem *btnCancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelText)];
+        self.navigationItem.leftBarButtonItem = btnCancel;
 	}
 	else {
 		// iPad UI
 		self.contentSizeForViewInPopover = CGSizeMake(320.0, 330.0);
 	}
+}
+
+-(void) cancelText
+{
+    [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
 /*
@@ -280,6 +289,7 @@
 //    }
     
     UITableViewCell *cell = [[tableLayout objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    NSLog(@"WIDTH = %f", cell.frame.size.width);
     return cell;
 }
 
@@ -410,6 +420,7 @@
     NSString * theString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     labelPreview.text = theString;
     [labelPreview resizeToFit];
+    [previewScrollView setContentSize:labelPreview.bounds.size];
     
     return YES;
 }
@@ -424,7 +435,6 @@
 {
     labelPreview.text = textField.text;
     [labelPreview resizeToFit];
-    self.previewScrollView.scrollEnabled = YES;
 
 }
 
@@ -440,8 +450,7 @@
 
 - (void)awakeFromNib
 {
-    //assume textField is an ivar that is connected to the textfield in IB
-    [textfieldLabel setDelegate:self];
+   
     [super awakeFromNib];
 }
 

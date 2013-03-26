@@ -364,7 +364,6 @@
 		66A327EA16DA811000AB3767 /* GHMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327E516DA811000AB3767 /* GHMenuViewController.m */; };
 		66A327EB16DA811000AB3767 /* GHPushedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327E716DA811000AB3767 /* GHPushedViewController.m */; };
 		66A327EC16DA811000AB3767 /* GHRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327E916DA811000AB3767 /* GHRootViewController.m */; };
-		66AA4F7116FDB8C600F0DE4A /* 228408_3415831849246_1024851406_n.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66AA4F7016FDB8C600F0DE4A /* 228408_3415831849246_1024851406_n.jpg */; };
 		66AA4F7416FDC45D00F0DE4A /* UIView+Selection.m in Sources */ = {isa = PBXBuildFile; fileRef = 66AA4F7316FDC45D00F0DE4A /* UIView+Selection.m */; };
 		66BADF5C16E9CDB300A8E60C /* Back Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 66BADF5A16E9CDB300A8E60C /* Back Button.png */; };
 		66BADF5D16E9CDB300A8E60C /* Back Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66BADF5B16E9CDB300A8E60C /* Back Button@2x.png */; };
@@ -409,6 +408,8 @@
 		66D4C67616F59D14004DC5A4 /* AUISelectiveBordersLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D4C67316F59D14004DC5A4 /* AUISelectiveBordersLayer.m */; };
 		66D4C67716F59D14004DC5A4 /* UIView+AUISelectiveBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D4C67516F59D14004DC5A4 /* UIView+AUISelectiveBorder.m */; };
 		66D70C04170149D100E12D42 /* KGStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D70C03170149D100E12D42 /* KGStatusBar.m */; };
+		66D70C071701829200E12D42 /* PreviewScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D70C061701829200E12D42 /* PreviewScrollView.m */; };
+		66D70C0A170182D800E12D42 /* PreviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D70C09170182D700E12D42 /* PreviewCell.m */; };
 		66E0E34C16DB11DF0085AA12 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E0E34A16DB11DF0085AA12 /* AboutViewController.m */; };
 		66E0E34D16DB11DF0085AA12 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E0E34B16DB11DF0085AA12 /* AboutViewController.xib */; };
 		66E0E35616DB13A50085AA12 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E0E35416DB13A40085AA12 /* MessagesViewController.m */; };
@@ -1057,7 +1058,6 @@
 		66A327E716DA811000AB3767 /* GHPushedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHPushedViewController.m; path = Custom/MenuNav/GHPushedViewController.m; sourceTree = "<group>"; };
 		66A327E816DA811000AB3767 /* GHRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHRootViewController.h; path = Custom/MenuNav/GHRootViewController.h; sourceTree = "<group>"; };
 		66A327E916DA811000AB3767 /* GHRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHRootViewController.m; path = Custom/MenuNav/GHRootViewController.m; sourceTree = "<group>"; };
-		66AA4F7016FDB8C600F0DE4A /* 228408_3415831849246_1024851406_n.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 228408_3415831849246_1024851406_n.jpg; path = ../../../Pictures/228408_3415831849246_1024851406_n.jpg; sourceTree = "<group>"; };
 		66AA4F7216FDC45D00F0DE4A /* UIView+Selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Selection.h"; path = "Custom/CustomView/UIView+Selection.h"; sourceTree = "<group>"; };
 		66AA4F7316FDC45D00F0DE4A /* UIView+Selection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Selection.m"; path = "Custom/CustomView/UIView+Selection.m"; sourceTree = "<group>"; };
 		66BADF5A16E9CDB300A8E60C /* Back Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Back Button.png"; path = "Resources/Back Button.png"; sourceTree = "<group>"; };
@@ -1114,6 +1114,10 @@
 		66D4C67516F59D14004DC5A4 /* UIView+AUISelectiveBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+AUISelectiveBorder.m"; sourceTree = "<group>"; };
 		66D70C02170149D100E12D42 /* KGStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGStatusBar.h; sourceTree = "<group>"; };
 		66D70C03170149D100E12D42 /* KGStatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGStatusBar.m; sourceTree = "<group>"; };
+		66D70C051701829200E12D42 /* PreviewScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreviewScrollView.h; path = Custom/CustomView/PreviewScrollView.h; sourceTree = "<group>"; };
+		66D70C061701829200E12D42 /* PreviewScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreviewScrollView.m; path = Custom/CustomView/PreviewScrollView.m; sourceTree = "<group>"; };
+		66D70C08170182D700E12D42 /* PreviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreviewCell.h; path = Custom/CustomView/PreviewCell.h; sourceTree = "<group>"; };
+		66D70C09170182D700E12D42 /* PreviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreviewCell.m; path = Custom/CustomView/PreviewCell.m; sourceTree = "<group>"; };
 		66E0E34916DB11DF0085AA12 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutViewController.h; path = Views/AboutViewController.h; sourceTree = "<group>"; };
 		66E0E34A16DB11DF0085AA12 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutViewController.m; path = Views/AboutViewController.m; sourceTree = "<group>"; };
 		66E0E34B16DB11DF0085AA12 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AboutViewController.xib; path = Views/AboutViewController.xib; sourceTree = "<group>"; };
@@ -2290,7 +2294,6 @@
 		66B3C01116FC1034007D1339 /* Gift */ = {
 			isa = PBXGroup;
 			children = (
-				66AA4F7016FDB8C600F0DE4A /* 228408_3415831849246_1024851406_n.jpg */,
 				6604FA6116DBCB7E00295209 /* CreateCardViewController.h */,
 				6604FA6216DBCB7E00295209 /* CreateCardViewController.m */,
 				6604FA6316DBCB7E00295209 /* CreateCardViewController.xib */,
@@ -2395,6 +2398,10 @@
 				66F892BE16FC2DEF002EAA28 /* ViewStyle.xib */,
 				66AA4F7216FDC45D00F0DE4A /* UIView+Selection.h */,
 				66AA4F7316FDC45D00F0DE4A /* UIView+Selection.m */,
+				66D70C051701829200E12D42 /* PreviewScrollView.h */,
+				66D70C061701829200E12D42 /* PreviewScrollView.m */,
+				66D70C08170182D700E12D42 /* PreviewCell.h */,
+				66D70C09170182D700E12D42 /* PreviewCell.m */,
 			);
 			name = CustomView;
 			sourceTree = "<group>";
@@ -2928,7 +2935,6 @@
 				66F8932316FC2F07002EAA28 /* thumb_style_7.png in Resources */,
 				66F8932416FC2F07002EAA28 /* thumb_style_8.png in Resources */,
 				66F8932516FC2F07002EAA28 /* thumb_style_9.png in Resources */,
-				66AA4F7116FDB8C600F0DE4A /* 228408_3415831849246_1024851406_n.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3143,6 +3149,8 @@
 				66F892BD16FC2DD8002EAA28 /* ViewStyle.m in Sources */,
 				66AA4F7416FDC45D00F0DE4A /* UIView+Selection.m in Sources */,
 				66D70C04170149D100E12D42 /* KGStatusBar.m in Sources */,
+				66D70C071701829200E12D42 /* PreviewScrollView.m in Sources */,
+				66D70C0A170182D800E12D42 /* PreviewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
