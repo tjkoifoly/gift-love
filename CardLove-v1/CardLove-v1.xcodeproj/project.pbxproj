@@ -512,6 +512,8 @@
 		66FD83A116E7640000355992 /* TDBadgedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66FD83A016E7640000355992 /* TDBadgedCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66FD83A616E764BF00355992 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 66FD83A516E764BF00355992 /* Friend.m */; };
 		66FD83A916E76ADD00355992 /* FriendsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66FD83A816E76ADD00355992 /* FriendsManager.m */; };
+		66FDB8C617036B0E00967D61 /* card-frame-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 66FDB8C217036B0E00967D61 /* card-frame-3.png */; };
+		66FDB8C717036B0E00967D61 /* card-frame-4.png in Resources */ = {isa = PBXBuildFile; fileRef = 66FDB8C317036B0E00967D61 /* card-frame-4.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1250,6 +1252,8 @@
 		66FD83A516E764BF00355992 /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Friend.m; path = ModelClasses/Friend.m; sourceTree = "<group>"; };
 		66FD83A716E76ADD00355992 /* FriendsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendsManager.h; path = Data/FriendsManager.h; sourceTree = "<group>"; };
 		66FD83A816E76ADD00355992 /* FriendsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsManager.m; path = Data/FriendsManager.m; sourceTree = "<group>"; };
+		66FDB8C217036B0E00967D61 /* card-frame-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "card-frame-3.png"; sourceTree = "<group>"; };
+		66FDB8C317036B0E00967D61 /* card-frame-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "card-frame-4.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2042,6 +2046,7 @@
 		66310AD116D9A6B900AC9DC8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				66FDB8C017036B0E00967D61 /* Card Frames */,
 				66F892C016FC2F07002EAA28 /* colors */,
 				66F892CA16FC2F07002EAA28 /* style */,
 				661EBD6E16F7357E006436C9 /* General */,
@@ -2601,6 +2606,16 @@
 			name = Data;
 			sourceTree = "<group>";
 		};
+		66FDB8C017036B0E00967D61 /* Card Frames */ = {
+			isa = PBXGroup;
+			children = (
+				66FDB8C217036B0E00967D61 /* card-frame-3.png */,
+				66FDB8C317036B0E00967D61 /* card-frame-4.png */,
+			);
+			name = "Card Frames";
+			path = "Resources/Card Frames";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2935,6 +2950,8 @@
 				66F8932316FC2F07002EAA28 /* thumb_style_7.png in Resources */,
 				66F8932416FC2F07002EAA28 /* thumb_style_8.png in Resources */,
 				66F8932516FC2F07002EAA28 /* thumb_style_9.png in Resources */,
+				66FDB8C617036B0E00967D61 /* card-frame-3.png in Resources */,
+				66FDB8C717036B0E00967D61 /* card-frame-4.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

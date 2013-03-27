@@ -26,12 +26,21 @@
 
 #import <Foundation/Foundation.h>
 
+@class CMUpDownControl;
+@protocol UpDownControlDelegate <NSObject>
+
+- (void) fontSizeChangedToValue: (NSInteger) currentValue;
+
+@end
+
 @interface CMUpDownControl : UIControl {
 
 	BOOL _selected;
 	BOOL _topHalfSelected;
 	BOOL _touchNeedsDisplay;
 }
+
+@property (assign, nonatomic) id <UpDownControlDelegate> delegate;
 
 @property (nonatomic, assign)	NSInteger		maximumAllowedValue;
 @property (nonatomic, assign)	NSInteger		minimumAllowedValue;

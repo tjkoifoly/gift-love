@@ -27,6 +27,10 @@
     CGSize expectedLabelSize = [[self text] sizeWithFont:[self font]
                                        constrainedToSize:maximumLabelSize
                                            lineBreakMode:[self lineBreakMode]];
+
+    if (expectedLabelSize.height < 32) {
+        return 32;
+    }
     return expectedLabelSize.height;
 }
 

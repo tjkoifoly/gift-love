@@ -35,7 +35,7 @@
 @class CMColourBlockView;
 @protocol CMTextStylePickerViewControllerDelegate;
 
-@interface CMTextStylePickerViewController : UITableViewController <CMFontSelectTableViewControllerDelegate, CMColourSelectTableViewControllerDelegate, UITextFieldDelegate> {
+@interface CMTextStylePickerViewController : UITableViewController <CMFontSelectTableViewControllerDelegate, CMColourSelectTableViewControllerDelegate, UITextFieldDelegate, UpDownControlDelegate> {
 
 }
 
@@ -84,4 +84,7 @@
 - (void)textStylePickerViewController:(CMTextStylePickerViewController *)textStylePickerViewController replaceDefaultStyleWithFont:(UIFont *)font textColor:(UIColor *)textColor;
 
 - (void)textStylePickerViewControllerIsDone:(CMTextStylePickerViewController *)textStylePickerViewController;
+
+-(void) textStylePickerViewControllerAdd: (CMTextStylePickerViewController *) textStylePickerVC withLabel: (UILabel *) labelToAdd;
+
 @end

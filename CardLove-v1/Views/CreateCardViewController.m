@@ -116,33 +116,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self createNewFolder:kProjects];
     [self createNewFolder:kCards];
     
-    // Create a blinking text
-    GestureLabel* labelText = [[GestureLabel alloc] initWithFrame:CGRectMake(50, 200, 0, 50)];
-    labelText.text = @"Tap to start tap to start Tap to start";
-    labelText.backgroundColor = [UIColor clearColor];
-
-
-    [labelText resizeToFit];
-    [self.viewCard addSubview:labelText];
-    CGRect frame1 = labelText.frame;
-    frame1.size.width = 100;
-    labelText.frame = frame1;
-    [labelText resizeToFit];
-
     
-//    
-//    void (^animationLabel) (void) = ^{
-//        labelText.alpha = 0;
-//    };
-//    void (^completionLabel) (BOOL) = ^(BOOL f) {
-//        labelText.alpha = 1;
-//    };
-//    
-//    NSUInteger opts =  UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat;
-//    [UIView animateWithDuration:1.f delay:0 options:opts
-//                     animations:animationLabel completion:completionLabel];
-    
-    //load Tool
    
 
 }
@@ -404,6 +378,19 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     if (!focusObject) {
         return;
     }
+    
+    
+    NSFileManager *fmgr = [[NSFileManager alloc] init];
+    NSError *error = nil;
+    
+    if ([fmgr removeItemAtPath:focusObject.imgURL error:&error]) {
+        NSLog(@"Removed photo.");
+        
+        GiftItem *itemDeleted = (GiftItem*) [[GiftItemManager sharedManager] findGiftByImageURL:focusObject.imgURL];
+        NSLog(@"Delete Item = %@", [itemDeleted.photo lastPathComponent] );
+        [[GiftItemManager sharedManager] removeItem:itemDeleted];
+    }
+
     
     [UIView animateWithDuration:0.5 animations:^{
         focusObject.transform =
@@ -991,7 +978,49 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 }
 
 - (void)textStylePickerViewControllerIsDone:(CMTextStylePickerViewController *)textStylePickerViewController {
+    
 	[self dismissModalViewControllerAnimated:YES];
+}
+
+-(void) textStylePickerViewControllerAdd:(CMTextStylePickerViewController *)textStylePickerVC withLabel:(UILabel *)labelToAdd
+{
+    [self addGestureLabelWithLabel:labelToAdd];
+}
+
+#pragma mark -
+#pragma mark - Gesture label
+-(void) addGestureLabelWithLabel: (UILabel *) labelToAdd
+{
+    if ([labelToAdd.text isEqualToString:@""]) {
+        return;
+    }
+    
+    // Create a blinking text
+    GestureLabel* labelText = [[GestureLabel alloc] initWithFrame:CGRectMake(50, 200, 0, 50)];
+    labelText.text = labelToAdd.text;
+    labelText.backgroundColor = [UIColor clearColor];
+
+    [self.viewCard addSubview:labelText];
+    CGRect frame1 = labelText.frame;
+    frame1.size.width = labelToAdd.frame.size.width;
+    labelText.frame = frame1;
+    labelText.font = labelToAdd.font;
+    labelText.textColor = labelToAdd.textColor;
+    labelText.center = CGPointMake(self.viewCard.bounds.size.width/2, self.viewCard.bounds.size.height/2);
+    [labelText resizeToFit];
+        
+    //
+    //    void (^animationLabel) (void) = ^{
+    //        labelText.alpha = 0;
+    //    };
+    //    void (^completionLabel) (BOOL) = ^(BOOL f) {
+    //        labelText.alpha = 1;
+    //    };
+    //
+    //    NSUInteger opts =  UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat;
+    //    [UIView animateWithDuration:1.f delay:0 options:opts
+    //                     animations:animationLabel completion:completionLabel];
+    
 }
 
 

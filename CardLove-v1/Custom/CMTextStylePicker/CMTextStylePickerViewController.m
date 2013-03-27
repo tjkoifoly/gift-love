@@ -37,6 +37,9 @@
 #pragma mark Private Interface
 
 @interface CMTextStylePickerViewController ()
+{
+    UIFont *_currentFont;
+}
 @property (nonatomic, retain)	NSArray		*tableLayout;
 @end
 
@@ -129,6 +132,7 @@
 - (IBAction)doneAction {
 	if (delegate && [delegate respondsToSelector:@selector(textStylePickerViewControllerIsDone:)]) {
 		[delegate textStylePickerViewControllerIsDone:self];
+        [self.delegate textStylePickerViewControllerAdd:self withLabel:self.labelPreview];
 	}
 }
 
@@ -168,7 +172,16 @@
 - (void)colourSelectTableViewController:(CMColourSelectTableViewController *)colourSelectTableViewController didSelectColour:(UIColor *)colour {
 	self.selectedTextColour = colour;
 	self.colourView.colour = colour;	// Update the colour swatch
+    self.labelPreview.textColor = colour;
 	[self notifyDelegateSelectedTextColorChanged];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void) setNewFontForPreview: (UIFont *)newFont
+{
+    self.labelPreview.font = newFont;
+    [self.labelPreview resizeToFit];
+     [self.previewScrollView setContentSize:self.labelPreview.bounds.size];
 }
 
 
@@ -178,17 +191,40 @@
 - (void)fontSelectTableViewController:(CMFontSelectTableViewController *)fontSelectTableViewController didSelectFont:(UIFont *)textFont {
 	self.selectedFont = textFont;
 	self.fontNameLabel.text = [textFont fontName];
+   
+    [self setNewFontForPreview:textFont];
+    
 	[self notifyDelegateSelectedFontChanged];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark - 
+#pragma mark - Updown Control Delegate
+-(void) fontSizeChangedToValue:(NSInteger)currentValue
+{
+    UIFont *newFont = [UIFont fontWithName:self.selectedFont.fontName size:currentValue];
+    self.selectedFont = newFont;
+    
+    [self setNewFontForPreview:newFont];
+
+}
 
 #pragma mark -
 #pragma mark View lifecycle
 
 - (void)viewDidLoad {
+    
+    _currentFont = [UIFont fontWithName:@"Helvetica" size:17.0f];
+    self.selectedFont = _currentFont;
+    self.fontNameLabel.text = _currentFont.fontName;
+    self.fontSizeControl.value = _currentFont.pointSize;
+    
+    fontSizeControl.delegate = self;
+    
     [super viewDidLoad];
 
 	self.title = @"Text Style";
+    
 		
 	self.fontSizeControl.minimumAllowedValue = 8;
 	self.fontSizeControl.maximumAllowedValue = 72;

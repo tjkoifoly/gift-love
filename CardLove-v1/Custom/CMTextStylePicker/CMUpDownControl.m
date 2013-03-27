@@ -34,6 +34,7 @@
 @implementation CMUpDownControl
 
 @synthesize maximumAllowedValue, minimumAllowedValue, value;
+@synthesize delegate;
 
 
 - (void)processTouchUp {
@@ -57,6 +58,7 @@
 	if (valueChanged) {
 		[self setNeedsDisplay];
 		[self sendActionsForControlEvents:UIControlEventValueChanged];
+        [self.delegate fontSizeChangedToValue:value];
 	}
 }
 
