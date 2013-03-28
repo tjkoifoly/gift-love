@@ -19,6 +19,7 @@
 
 @interface GestureLabel : UILabel <UIGestureRecognizerDelegate>
 
+@property (assign, nonatomic) NSString* labelID;
 @property (strong, nonatomic) UIImageView *resizeImage;
 @property (strong, nonatomic) UIGestureRecognizer *panRecognizer;
 

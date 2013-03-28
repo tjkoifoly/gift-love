@@ -13,8 +13,9 @@
     BOOL _resizing;
 }
 
-@synthesize resizeImage = _resizeImage;
-@synthesize panRecognizer = _panRecognizer;
+@synthesize resizeImage     = _resizeImage;
+@synthesize panRecognizer   = _panRecognizer;
+@synthesize labelID         = _labelID;
 @synthesize delegate;
 
 - (id)initWithFrame:(CGRect)frame

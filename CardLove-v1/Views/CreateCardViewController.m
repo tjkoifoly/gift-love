@@ -118,10 +118,6 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     }
     [self createNewFolder:kProjects];
     [self createNewFolder:kCards];
-    
-    
-   
-
 }
 
 -(void) backPreviousView
@@ -141,6 +137,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [super viewDidUnload];
 }
 
+#pragma mark - LOAD CARD
 -(void) loadGiftView
 {
     [[GiftItemManager sharedManager] setPathData:_pathConf];
@@ -149,6 +146,19 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     for(GiftItem *gi in listItems)
     {
         [self addViewPhotoWithItem:gi];
+    }
+}
+
+-(void) loadGiftLabels
+{
+    NSString *pathLabels = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:kGiftLabel]];
+    [[GiftLabelsManager sharedManager] setPathData:pathLabels];
+    
+    NSArray *listLabels = [[GiftLabelsManager sharedManager] getListLabels];
+    
+    for(GiftLabel *gl in listLabels)
+    {
+        //Add label to view
     }
 }
 
@@ -999,7 +1009,16 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     }
     
     // Create a blinking text
+    NSInteger randomID ;
+    
     GestureLabel* labelText = [[GestureLabel alloc] initWithFrame:CGRectMake(50, 200, 0, 50)];
+    
+    do {
+        randomID = arc4random() % 1000;
+        NSLog(@"ID = %i", randomID);
+    } while ([[GiftLabelsManager sharedManager] findLabelByID:[NSString stringWithFormat:@"%i", randomID]]);
+    labelText.labelID = [NSString stringWithFormat:@"%i", randomID];
+    
     labelText.text = labelToAdd.text;
     labelText.backgroundColor = [UIColor clearColor];
 

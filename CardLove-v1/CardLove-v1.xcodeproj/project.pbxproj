@@ -515,6 +515,14 @@
 		66FD83A916E76ADD00355992 /* FriendsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66FD83A816E76ADD00355992 /* FriendsManager.m */; };
 		66FDB8C617036B0E00967D61 /* card-frame-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 66FDB8C217036B0E00967D61 /* card-frame-3.png */; };
 		66FDB8C717036B0E00967D61 /* card-frame-4.png in Resources */ = {isa = PBXBuildFile; fileRef = 66FDB8C317036B0E00967D61 /* card-frame-4.png */; };
+		66FDD123170497EE008BD0B7 /* InfColorBarPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 66FDD116170497EE008BD0B7 /* InfColorBarPicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66FDD124170497EE008BD0B7 /* InfColorIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66FDD118170497EE008BD0B7 /* InfColorIndicatorView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66FDD125170497EE008BD0B7 /* InfColorPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66FDD11B170497EE008BD0B7 /* InfColorPickerController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66FDD126170497EE008BD0B7 /* InfColorPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66FDD11C170497EE008BD0B7 /* InfColorPickerView.xib */; };
+		66FDD127170497EE008BD0B7 /* InfColorSquarePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 66FDD11E170497EE008BD0B7 /* InfColorSquarePicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66FDD128170497EE008BD0B7 /* InfHSBSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 66FDD120170497EE008BD0B7 /* InfHSBSupport.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66FDD129170497EE008BD0B7 /* InfSourceColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66FDD122170497EE008BD0B7 /* InfSourceColorView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66FDD12C17049878008BD0B7 /* GiftLabelsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66FDD12B17049878008BD0B7 /* GiftLabelsManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1257,6 +1265,22 @@
 		66FD83A816E76ADD00355992 /* FriendsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsManager.m; path = Data/FriendsManager.m; sourceTree = "<group>"; };
 		66FDB8C217036B0E00967D61 /* card-frame-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "card-frame-3.png"; sourceTree = "<group>"; };
 		66FDB8C317036B0E00967D61 /* card-frame-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "card-frame-4.png"; sourceTree = "<group>"; };
+		66FDD115170497EE008BD0B7 /* InfColorBarPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfColorBarPicker.h; sourceTree = "<group>"; };
+		66FDD116170497EE008BD0B7 /* InfColorBarPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfColorBarPicker.m; sourceTree = "<group>"; };
+		66FDD117170497EE008BD0B7 /* InfColorIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfColorIndicatorView.h; sourceTree = "<group>"; };
+		66FDD118170497EE008BD0B7 /* InfColorIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfColorIndicatorView.m; sourceTree = "<group>"; };
+		66FDD119170497EE008BD0B7 /* InfColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfColorPicker.h; sourceTree = "<group>"; };
+		66FDD11A170497EE008BD0B7 /* InfColorPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfColorPickerController.h; sourceTree = "<group>"; };
+		66FDD11B170497EE008BD0B7 /* InfColorPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfColorPickerController.m; sourceTree = "<group>"; };
+		66FDD11C170497EE008BD0B7 /* InfColorPickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfColorPickerView.xib; sourceTree = "<group>"; };
+		66FDD11D170497EE008BD0B7 /* InfColorSquarePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfColorSquarePicker.h; sourceTree = "<group>"; };
+		66FDD11E170497EE008BD0B7 /* InfColorSquarePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfColorSquarePicker.m; sourceTree = "<group>"; };
+		66FDD11F170497EE008BD0B7 /* InfHSBSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfHSBSupport.h; sourceTree = "<group>"; };
+		66FDD120170497EE008BD0B7 /* InfHSBSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfHSBSupport.m; sourceTree = "<group>"; };
+		66FDD121170497EE008BD0B7 /* InfSourceColorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfSourceColorView.h; sourceTree = "<group>"; };
+		66FDD122170497EE008BD0B7 /* InfSourceColorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfSourceColorView.m; sourceTree = "<group>"; };
+		66FDD12A17049878008BD0B7 /* GiftLabelsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiftLabelsManager.h; path = Data/GiftLabelsManager.h; sourceTree = "<group>"; };
+		66FDD12B17049878008BD0B7 /* GiftLabelsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GiftLabelsManager.m; path = Data/GiftLabelsManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2006,6 +2030,7 @@
 		66310ACF16D9A37900AC9DC8 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				66FDD114170497EE008BD0B7 /* InfColorPicker */,
 				66D70C01170149D100E12D42 /* KGStatusBar */,
 				661EBD6F16F735B4006436C9 /* REMenu */,
 				6620BD1316F33F04004A4B22 /* ZIP */,
@@ -2607,6 +2632,8 @@
 				66FD83A816E76ADD00355992 /* FriendsManager.m */,
 				660A418016F38FA6006F593D /* GiftItemManager.h */,
 				660A418116F38FA6006F593D /* GiftItemManager.m */,
+				66FDD12A17049878008BD0B7 /* GiftLabelsManager.h */,
+				66FDD12B17049878008BD0B7 /* GiftLabelsManager.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -2619,6 +2646,28 @@
 			);
 			name = "Card Frames";
 			path = "Resources/Card Frames";
+			sourceTree = "<group>";
+		};
+		66FDD114170497EE008BD0B7 /* InfColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				66FDD115170497EE008BD0B7 /* InfColorBarPicker.h */,
+				66FDD116170497EE008BD0B7 /* InfColorBarPicker.m */,
+				66FDD117170497EE008BD0B7 /* InfColorIndicatorView.h */,
+				66FDD118170497EE008BD0B7 /* InfColorIndicatorView.m */,
+				66FDD119170497EE008BD0B7 /* InfColorPicker.h */,
+				66FDD11A170497EE008BD0B7 /* InfColorPickerController.h */,
+				66FDD11B170497EE008BD0B7 /* InfColorPickerController.m */,
+				66FDD11C170497EE008BD0B7 /* InfColorPickerView.xib */,
+				66FDD11D170497EE008BD0B7 /* InfColorSquarePicker.h */,
+				66FDD11E170497EE008BD0B7 /* InfColorSquarePicker.m */,
+				66FDD11F170497EE008BD0B7 /* InfHSBSupport.h */,
+				66FDD120170497EE008BD0B7 /* InfHSBSupport.m */,
+				66FDD121170497EE008BD0B7 /* InfSourceColorView.h */,
+				66FDD122170497EE008BD0B7 /* InfSourceColorView.m */,
+			);
+			name = InfColorPicker;
+			path = Library/InfColorPicker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2957,6 +3006,7 @@
 				66F8932516FC2F07002EAA28 /* thumb_style_9.png in Resources */,
 				66FDB8C617036B0E00967D61 /* card-frame-3.png in Resources */,
 				66FDB8C717036B0E00967D61 /* card-frame-4.png in Resources */,
+				66FDD126170497EE008BD0B7 /* InfColorPickerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3174,6 +3224,13 @@
 				66D70C071701829200E12D42 /* PreviewScrollView.m in Sources */,
 				66D70C0A170182D800E12D42 /* PreviewCell.m in Sources */,
 				66F4AFD4170457C600928AA3 /* GiftLabel.m in Sources */,
+				66FDD123170497EE008BD0B7 /* InfColorBarPicker.m in Sources */,
+				66FDD124170497EE008BD0B7 /* InfColorIndicatorView.m in Sources */,
+				66FDD125170497EE008BD0B7 /* InfColorPickerController.m in Sources */,
+				66FDD127170497EE008BD0B7 /* InfColorSquarePicker.m in Sources */,
+				66FDD128170497EE008BD0B7 /* InfHSBSupport.m in Sources */,
+				66FDD129170497EE008BD0B7 /* InfSourceColorView.m in Sources */,
+				66FDD12C17049878008BD0B7 /* GiftLabelsManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,19 +10,20 @@
 
 @implementation GiftLabel
 
-@synthesize bounds, center, transform, text, fontName,fontSize, textColor;
+@synthesize bounds, center, transform, text, fontName,fontSize, textColor, labelID;
 
 -(id) initWithGestureLabel: (GestureLabel *) gLabel
 {
     self = [super init];
     if (self) {
+        self.labelID = gLabel.labelID;
         self.bounds = NSStringFromCGRect(gLabel.bounds);
         self.center = NSStringFromCGPoint(gLabel.center);
         self.transform = NSStringFromCGAffineTransform(gLabel.transform);
         self.text = gLabel.text;
         self.fontName = gLabel.font.fontName;
         self.fontSize = [NSString stringWithFormat:@"%f", gLabel.font.pointSize];
-
+        self.textColor = [NSString stringWithFormat:@"%@", gLabel.textColor];
     }
     
     return self;
@@ -32,6 +33,7 @@
 {
     self = [super init];
     if (self) {
+        self.labelID = [aDecoder decodeObjectForKey:klabelID];
         self.bounds = [aDecoder decodeObjectForKey:kBounds];
         self.center = [aDecoder decodeObjectForKey:kCenter];
         self.transform = [aDecoder decodeObjectForKey:kTransfrom];
@@ -46,6 +48,7 @@
 
 -(void) encodeWithCoder:(NSCoder *)aCoder
 {
+    [aCoder encodeObject:self.labelID forKey:klabelID];
     [aCoder encodeObject:self.bounds forKey:kBounds];
     [aCoder encodeObject:self.center forKey:kCenter];
     [aCoder encodeObject:self.transform forKey:kTransfrom];

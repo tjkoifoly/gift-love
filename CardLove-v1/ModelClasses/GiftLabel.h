@@ -10,6 +10,7 @@
 #import "GestureLabel.h"
 #import "GiftItem.h"
 
+#define klabelID    @"labelID"
 #define kText       @"text"
 #define kFontName   @"fontName"
 #define kFontSize   @"fontSize"
@@ -17,6 +18,7 @@
 
 @interface GiftLabel : NSObject <NSCoding>
 
+@property (strong, nonatomic) NSString *labelID;
 @property (strong, nonatomic) NSString *bounds;
 @property (strong, nonatomic) NSString *center;
 @property (strong, nonatomic) NSString *transform;
