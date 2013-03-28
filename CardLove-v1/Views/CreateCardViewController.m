@@ -65,6 +65,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 - (void)viewDidLoad
 {
 
+    UIColor *c = [UIColor colorWithRed:0.65454 green:0.2454 blue:0.7345 alpha:1];
+    NSLog(@"___COLOR = %@", c);
+    
     toolViewStyle = [[[NSBundle mainBundle] loadNibNamed:@"ViewStyle" owner:self options:nil] objectAtIndex:0];
     [toolViewStyle setFrame:CGRectMake(0, 480, 320, 300)];
     [self.view addSubview:toolViewStyle];

@@ -10,12 +10,12 @@
 #import "GestureImageView.h"
 #import "GestureView.h"
 
-#define kClass @"ofClass"
-#define kFrame @"frame"
-#define kBounds @"bounds"
-#define kCenter @"center"
-#define kTransfrom @"transform"
-#define kPhoto @"photo"
+#define kClass      @"ofClass"
+#define kFrame      @"frame"
+#define kBounds     @"bounds"
+#define kCenter     @"center"
+#define kTransfrom  @"transform"
+#define kPhoto      @"photo"
 
 @interface GiftItem : NSObject <NSCoding>
 

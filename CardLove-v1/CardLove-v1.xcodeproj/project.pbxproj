@@ -441,6 +441,7 @@
 		66F3078516D9B97C00E681AD /* CustomNoiseBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F3077F16D9B97C00E681AD /* CustomNoiseBackgroundView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66F3078616D9B97C00E681AD /* CustomSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F3078116D9B97C00E681AD /* CustomSelectionView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66F3078716D9B97C00E681AD /* CustomTabItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F3078316D9B97C00E681AD /* CustomTabItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66F4AFD4170457C600928AA3 /* GiftLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F4AFD3170457C600928AA3 /* GiftLabel.m */; };
 		66F892B116FC16DD002EAA28 /* CMColourBlockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F892A216FC16DD002EAA28 /* CMColourBlockView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66F892B216FC16DD002EAA28 /* CMColourSelectTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F892A416FC16DD002EAA28 /* CMColourSelectTableViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66F892B316FC16DD002EAA28 /* CMColourSelectTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66F892A516FC16DD002EAA28 /* CMColourSelectTableViewController.xib */; };
@@ -1171,6 +1172,8 @@
 		66F3078116D9B97C00E681AD /* CustomSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSelectionView.m; sourceTree = "<group>"; };
 		66F3078216D9B97C00E681AD /* CustomTabItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTabItem.h; sourceTree = "<group>"; };
 		66F3078316D9B97C00E681AD /* CustomTabItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTabItem.m; sourceTree = "<group>"; };
+		66F4AFD2170457C600928AA3 /* GiftLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiftLabel.h; path = ModelClasses/GiftLabel.h; sourceTree = "<group>"; };
+		66F4AFD3170457C600928AA3 /* GiftLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GiftLabel.m; path = ModelClasses/GiftLabel.m; sourceTree = "<group>"; };
 		66F892A116FC16DD002EAA28 /* CMColourBlockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMColourBlockView.h; sourceTree = "<group>"; };
 		66F892A216FC16DD002EAA28 /* CMColourBlockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMColourBlockView.m; sourceTree = "<group>"; };
 		66F892A316FC16DD002EAA28 /* CMColourSelectTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMColourSelectTableViewController.h; sourceTree = "<group>"; };
@@ -2591,6 +2594,8 @@
 				66FD83A516E764BF00355992 /* Friend.m */,
 				660A417D16F38BA0006F593D /* GiftItem.h */,
 				660A417E16F38BA0006F593D /* GiftItem.m */,
+				66F4AFD2170457C600928AA3 /* GiftLabel.h */,
+				66F4AFD3170457C600928AA3 /* GiftLabel.m */,
 			);
 			name = ModelClasses;
 			sourceTree = "<group>";
@@ -3168,6 +3173,7 @@
 				66D70C04170149D100E12D42 /* KGStatusBar.m in Sources */,
 				66D70C071701829200E12D42 /* PreviewScrollView.m in Sources */,
 				66D70C0A170182D800E12D42 /* PreviewCell.m in Sources */,
+				66F4AFD4170457C600928AA3 /* GiftLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
