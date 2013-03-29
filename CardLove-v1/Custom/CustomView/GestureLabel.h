@@ -14,6 +14,7 @@
 @protocol GestureLabelDelegate <NSObject>
 
 -(void) displayEditorFor: (GestureLabel *) label ;
+-(void) gestureLabelDidSelected: (GestureLabel *) label;
 
 @end
 

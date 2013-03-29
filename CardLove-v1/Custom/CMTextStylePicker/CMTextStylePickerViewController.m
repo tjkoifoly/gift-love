@@ -130,8 +130,29 @@
 }
 
 - (IBAction)doneAction {
+    
+    [delegate textStylePickerViewControllerIsDone:self];
+    
+    if (labelToEdit) {
+        CGPoint center = labelToEdit.center;
+        
+        labelToEdit.text = labelPreview.text;
+        labelToEdit.font = labelPreview.font;
+        labelToEdit.textColor = labelPreview.textColor;
+        
+        CGRect bounds = labelToEdit.bounds;
+        bounds.size.width = labelPreview.frame.size.width;
+        [labelToEdit setBounds:bounds];
+        [labelToEdit setNeedsDisplay];
+        
+        [labelToEdit resizeToFit];
+        labelToEdit.center = center;
+        
+        return;
+    }
+    
 	if (delegate && [delegate respondsToSelector:@selector(textStylePickerViewControllerIsDone:)]) {
-		[delegate textStylePickerViewControllerIsDone:self];
+		
         [self.delegate textStylePickerViewControllerAdd:self withLabel:self.labelPreview];
 	}
 }
@@ -214,7 +235,20 @@
 
 - (void)viewDidLoad {
     
-    _currentFont = [UIFont fontWithName:@"Helvetica" size:17.0f];
+    if (labelToEdit) {
+        _currentFont = [labelToEdit font];
+        labelPreview.text = labelToEdit.text;
+        labelPreview.font = _currentFont;
+        labelPreview.textColor = labelToEdit.textColor;
+        [labelPreview resizeToFit];
+        
+        textfieldLabel.text = labelToEdit.text;
+        
+    }else
+    {
+        _currentFont = [UIFont fontWithName:@"Helvetica" size:17.0f];
+    }
+    
     self.selectedFont = _currentFont;
     self.fontNameLabel.text = _currentFont.fontName;
     self.fontSizeControl.value = _currentFont.pointSize;
@@ -325,7 +359,6 @@
 //    }
     
     UITableViewCell *cell = [[tableLayout objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    NSLog(@"WIDTH = %f", cell.frame.size.width);
     return cell;
 }
 

@@ -40,7 +40,7 @@
     }
 }
 
-- (NSArray *)getListItems {
+- (NSArray *)getListLabels {
     
     [self loadLabels];
     

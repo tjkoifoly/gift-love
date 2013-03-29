@@ -33,12 +33,15 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 @interface CreateCardViewController ()
 {
+    GestureLabel *_selectedLabel;
+    
     GestureView *focusObject;
     GestureImageView* currentPhoto;
     UIAlertView *photoAlert;
     UIAlertView *backAlert;
     ViewStyle *toolViewStyle;
 }
+
 @property (strong, nonatomic) NSString *pathResources;
 @property (strong, nonatomic) NSString *pathConf;
 
@@ -89,7 +92,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [btnBack setFrame:CGRectMake(0, 0, 54, 34)];
     [btnBack addTarget:self action:@selector(backPreviousView) forControlEvents:UIControlEventTouchUpInside];
     
-    UIBarButtonItem *btnRemove = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(removeGestureView)];
+    UIBarButtonItem *btnRemove = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(removeCurrentItem)];
     
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:[[UIBarButtonItem alloc] initWithCustomView:btnBack], btnRemove, nil] ;
@@ -98,7 +101,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self.view addSubview:toolBar];
     [self performSelector:@selector(showToolBar) withObject:nil afterDelay:0.2f];
     
-    self.viewCard.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"font-frame.png"]];
+    //self.viewCard.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"font-frame.png"]];
     
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     _pathResources = [self dataFilePath:kNewProject];
@@ -110,7 +113,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         if (isDir) {
             
             [self loadGiftView];
-            
+            [self loadGiftLabels];
         }
     }else
     {
@@ -152,6 +155,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 -(void) loadGiftLabels
 {
     NSString *pathLabels = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:kGiftLabel]];
+    NSLog(@"PATH Label = %@", pathLabels);
     [[GiftLabelsManager sharedManager] setPathData:pathLabels];
     
     NSArray *listLabels = [[GiftLabelsManager sharedManager] getListLabels];
@@ -386,6 +390,66 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 }
 
+-(void) removeItem: (UIView *)itemToDel
+{
+    if ([itemToDel isKindOfClass:[GestureLabel class]]) {
+        if (!_selectedLabel) {
+            return;
+        }
+        
+        GiftLabel *itemDeleted = (GiftLabel *)[[GiftLabelsManager sharedManager] findLabelByID:_selectedLabel.labelID];
+        [[GiftLabelsManager sharedManager] removeLabel:itemDeleted];
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            _selectedLabel.transform =
+            CGAffineTransformMakeTranslation(
+                                             _selectedLabel.frame.origin.x,
+                                             480.0f + (_selectedLabel.frame.size.height/2)  // move the whole view offscreen
+                                             );
+            _selectedLabel.alpha = 0; // also fade to transparent
+        } completion:^(BOOL finished) {
+            [_selectedLabel removeFromSuperview];
+        }];
+    }else if ([itemToDel isKindOfClass:[GestureView class]])
+    {
+        if (!focusObject) {
+            return;
+        }
+        
+        
+        NSFileManager *fmgr = [[NSFileManager alloc] init];
+        NSError *error = nil;
+        
+        if ([fmgr removeItemAtPath:focusObject.imgURL error:&error]) {
+            NSLog(@"Removed photo.");
+            
+            GiftItem *itemDeleted = (GiftItem*) [[GiftItemManager sharedManager] findGiftByImageURL:focusObject.imgURL];
+            NSLog(@"Delete Item = %@", [itemDeleted.photo lastPathComponent] );
+            [[GiftItemManager sharedManager] removeItem:itemDeleted];
+        }
+        
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            focusObject.transform =
+            CGAffineTransformMakeTranslation(
+                                             focusObject.frame.origin.x,
+                                             480.0f + (focusObject.frame.size.height/2)  // move the whole view offscreen
+                                             );
+            focusObject.alpha = 0; // also fade to transparent
+        } completion:^(BOOL finished) {
+            [focusObject removeFromSuperview];
+        }];
+    }
+    
+    
+}
+
+- (void) removeCurrentItem
+{
+    [self removeItem:_selectedLabel];
+    [self removeItem:focusObject];
+}
+
 -(void)removeGestureView
 {
     if (!focusObject) {
@@ -510,6 +574,8 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     return result;
     
 }
+
+#pragma mark - ADD PHOTO
 
 /* ----------------------------------------------------------------------------------*/
 
@@ -705,6 +771,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     view.center = centerPoint;
 }
 
+//----------------------------------------------------------------------------------------------------//
 #pragma mark -
 #pragma mark - Gesture Label Delegate
 -(void) displayEditorFor:(GestureLabel *)label
@@ -718,6 +785,20 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self presentModalViewController:actionsNavigationController animated:YES];
 }
 
+-(void) gestureLabelDidSelected:(GestureLabel *)label
+{
+    if (!_selectedLabel) {
+        _selectedLabel = label;
+        return;
+    }
+    
+    if (_selectedLabel != nil && _selectedLabel != label) {
+        NSLog(@"DCM");
+        [_selectedLabel labelDeselected];
+        _selectedLabel = label;
+    }
+}
+//----------------------------------------------------------------------------------------------------//
 #pragma mark - GestureImage Delegate
 -(void) displayEditor: (GestureImageView *)gestureImageView forImage:(UIImage *)imageToEdit
 {
@@ -949,9 +1030,27 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 #pragma mark - Touch Event
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self currentItemDeslected:currentPhoto];
-    [self focusItemDeslected:focusObject];
+    if ([[event touchesForView:focusObject] anyObject]) {
+        return;
+    }else
+    {
+        [self focusItemDeslected:focusObject];
+    }
     
+    [self currentItemDeslected:currentPhoto];
+    
+    if ([[event touchesForView:_selectedLabel] anyObject]) {
+        return;
+    }else{
+        [self currentLabelDeselected:_selectedLabel];
+    }
+    
+}
+
+-(void) currentLabelDeselected: (GestureLabel *) currentLabel
+{
+    [currentLabel labelDeselected];
+    currentLabel = nil;
 }
 
 -(void)currentItemDeslected : (GestureImageView *)currentItem
@@ -1018,6 +1117,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         NSLog(@"ID = %i", randomID);
     } while ([[GiftLabelsManager sharedManager] findLabelByID:[NSString stringWithFormat:@"%i", randomID]]);
     labelText.labelID = [NSString stringWithFormat:@"%i", randomID];
+    labelText.delegate = self;
     
     labelText.text = labelToAdd.text;
     labelText.backgroundColor = [UIColor clearColor];
@@ -1030,19 +1130,46 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     labelText.textColor = labelToAdd.textColor;
     labelText.center = CGPointMake(self.viewCard.bounds.size.width/2, self.viewCard.bounds.size.height/2);
     [labelText resizeToFit];
-        
-    //
-    //    void (^animationLabel) (void) = ^{
-    //        labelText.alpha = 0;
-    //    };
-    //    void (^completionLabel) (BOOL) = ^(BOOL f) {
-    //        labelText.alpha = 1;
-    //    };
-    //
-    //    NSUInteger opts =  UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat;
-    //    [UIView animateWithDuration:1.f delay:0 options:opts
-    //                     animations:animationLabel completion:completionLabel];
     
+    GiftLabel *gLabel = [[GiftLabel alloc] initWithGestureLabel:labelText];
+    [[GiftLabelsManager sharedManager] addLabel:gLabel];
+  }
+
+-(void) addGestureLabelWithGiftLabel: (GiftLabel *) gLabel
+{
+    if (!gLabel) {
+        return;
+    }
+    
+    GestureLabel * labelText = [[GestureLabel alloc] initWithFrame:CGRectZero];
+    
+    labelText.bounds = CGRectFromString(gLabel.bounds);
+    labelText.center = CGPointFromString(gLabel.center);
+    labelText.transform = CGAffineTransformFromString(gLabel.transform);
+    labelText.delegate = self;
+    
+    labelText.text = gLabel.text;
+    labelText.font = [UIFont fontWithName:gLabel.fontName size:[gLabel.fontSize floatValue]];
+
+    NSArray *colorRGB = [gLabel.textColor componentsSeparatedByString:@" "];
+    UIColor *colorText = [UIColor colorWithRed:[[colorRGB objectAtIndex:1] floatValue] green:[[colorRGB objectAtIndex:2] floatValue] blue:[[colorRGB objectAtIndex:3] floatValue] alpha:[[colorRGB objectAtIndex:4] floatValue]];
+    labelText.textColor = colorText;
+    
+}
+
+-(void) shakeView: (UIView*) viewToAnimation
+{
+    //
+    void (^animationLabel) (void) = ^{
+            viewToAnimation.alpha = 0;
+    };
+    void (^completionLabel) (BOOL) = ^(BOOL f) {
+        viewToAnimation.alpha = 1;
+    };
+
+    NSUInteger opts =  UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat;
+    [UIView animateWithDuration:1.f delay:0 options:opts
+                    animations:animationLabel completion:completionLabel];
 }
 
 

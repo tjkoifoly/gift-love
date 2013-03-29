@@ -10,6 +10,7 @@
 
 @implementation GestureLabel
 {
+    BOOL _isSelected;
     BOOL _resizing;
 }
 
@@ -36,15 +37,6 @@
     }
     return self;
 }
-
-/*
- // Only override drawRect: if you perform custom drawing.
- // An empty implementation adversely affects performance during animation.
- - (void)drawRect:(CGRect)rect
- {
- // Drawing code
- }
- */
 
 -(void) initialize
 {
@@ -99,8 +91,8 @@
             
             CGFloat radiansAlpha = atan2f(self.transform.b, self.transform.a);
             CGFloat radiansBeta = radiansAlpha;
-            CGFloat degrees = radiansAlpha * (180 / M_PI);
-            NSLog(@"DCM %f", degrees);
+//            CGFloat degrees = radiansAlpha * (180 / M_PI);
+//            NSLog(@"DCM %f", degrees);
             
             CGFloat translationX = translation.x *cos(radiansBeta) + translation.y *sin(radiansBeta);
             CGFloat translationY = translation.y *cos(radiansBeta) - translation.x *sin(radiansBeta);
@@ -130,6 +122,7 @@
             
             UIImage *image = [UIImage imageNamed:@"resize.png"];
             _resizeImage.center = CGPointMake(self.bounds.size.width - image.size.width/2 , self.bounds.size.height - image.size.height/2);
+            [self setNeedsDisplay];
             
             [panRecognizer setTranslation:CGPointZero inView:self.superview];
         }else{
@@ -178,11 +171,8 @@
     CGFloat angle = rotationRecognizer.rotation;
     self.transform = CGAffineTransformRotate(self.transform, angle);
     
-    CGFloat radiansAlpha = atan2f(self.transform.b, self.transform.a);
-    CGFloat degrees = radiansAlpha * (180 / M_PI);
-    NSLog(@"DCM %f", degrees);
-    
-    //NSLog(@"Angle = %f", angle);
+    //CGFloat radiansAlpha = atan2f(self.transform.b, self.transform.a);
+    //CGFloat degrees = radiansAlpha * (180 / M_PI);
     rotationRecognizer.rotation = 0.0;
 }
 
@@ -193,10 +183,15 @@
 }
 -(void) tapSingleDetected :(UITapGestureRecognizer *)tapSigleRecognizer
 {
+    if (_isSelected) {
+        return;
+    }
+    
     [UIView animateWithDuration:0.5 animations:^{
         [self.superview bringSubviewToFront:self];
         
     } completion:^(BOOL finished) {
+        [self.delegate gestureLabelDidSelected:self];
         [self labelSelected];
     }];
 }
@@ -220,11 +215,15 @@
     }
     
     //set font size
-    self.font = [UIFont fontWithName:font.fontName size:fontSize];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.font = [UIFont fontWithName:font.fontName size:fontSize];
+    }];
+    
 }
 
 -(void) labelSelected
 {
+    _isSelected = YES;
     [self setBackgroundColor:[UIColor colorWithRed:115/255 green:115/255 blue:115/255 alpha:0.5]];
     self.layer.borderWidth = 1.0f;
     self.layer.cornerRadius = 3.0f;
@@ -240,6 +239,7 @@
 
 -(void) labelDeselected
 {
+    _isSelected = NO;
     [self setBackgroundColor:[UIColor clearColor]];
     self.layer.borderWidth = 0.0f;
     [self.resizeImage removeFromSuperview];

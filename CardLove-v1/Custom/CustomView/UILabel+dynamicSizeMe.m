@@ -34,6 +34,24 @@
     return expectedLabelSize.height;
 }
 
+-(void)resizeToStretch{
+    float width = [self expectedWidth];
+    CGRect newFrame = [self frame];
+    newFrame.size.width = width;
+    [self setFrame:newFrame];
+}
+
+-(float)expectedWidth{
+    [self setNumberOfLines:1];
+    
+    CGSize maximumLabelSize = CGSizeMake(9999,self.frame.size.height);
+    
+    CGSize expectedLabelSize = [[self text] sizeWithFont:[self font]
+                                       constrainedToSize:maximumLabelSize
+                                           lineBreakMode:[self lineBreakMode]];
+    return expectedLabelSize.width;
+}
+
 -(void) autoFitTextWithFrame
 {
     NSString *theText = self.text;
