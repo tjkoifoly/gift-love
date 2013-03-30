@@ -49,12 +49,19 @@
 
 -(BOOL)saveListLabel
 {
+    NSLog(@"Save data: %@ to path : %@", _listLabels, _pathData );
     return [NSKeyedArchiver archiveRootObject:_listLabels toFile:_pathData];
+}
+
+-(BOOL) saveNewListLabel: (NSArray *) list
+{
+    return [NSKeyedArchiver archiveRootObject:list toFile:_pathData];
 }
 
 -(void) addLabel : (GiftLabel *) gLabel
 {
     [_listLabels addObject:gLabel];
+    NSLog(@"ARRAY = %@", _listLabels);
     [self saveListLabel];
 
 }

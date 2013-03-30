@@ -20,9 +20,13 @@
 
 -(void) loadLabels;
 -(NSArray *) getListLabels;
+
 -(BOOL) saveListLabel;
+-(BOOL) saveNewListLabel: (NSArray *) list;
+
 -(void) addLabel : (GiftLabel *) gLabel;
 -(void) removeLabel: (GiftLabel *) gLabel;
+
 
 -(id) findLabelByID: (NSString *) lID;
 

@@ -171,8 +171,9 @@
     CGFloat angle = rotationRecognizer.rotation;
     self.transform = CGAffineTransformRotate(self.transform, angle);
     
-    //CGFloat radiansAlpha = atan2f(self.transform.b, self.transform.a);
-    //CGFloat degrees = radiansAlpha * (180 / M_PI);
+    CGFloat radiansAlpha = atan2f(self.transform.b, self.transform.a);
+    CGFloat degrees = radiansAlpha * (180 / M_PI);
+    NSLog(@"Nghieng = %f do", degrees);
     rotationRecognizer.rotation = 0.0;
 }
 

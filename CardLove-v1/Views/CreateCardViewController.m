@@ -163,6 +163,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     for(GiftLabel *gl in listLabels)
     {
         //Add label to view
+        [self addGestureLabelWithGiftLabel:gl];
     }
 }
 
@@ -213,6 +214,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 -(void) saveCard
 {
     NSMutableArray *listItems = [[NSMutableArray alloc] init];
+    NSMutableArray *listLabels = [[NSMutableArray alloc] init];
+    
+    
     NSArray *arrPhotos = [self.viewCard subviews];
     NSLog(@"ARR = %@", arrPhotos);
     
@@ -224,13 +228,19 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
             
             GiftItem *gi = [[GiftItem alloc] initWithGestureView:temp];
             [listItems addObject:gi];
+        }else if ([subview isKindOfClass:[GestureLabel class]])
+        {
+            GestureLabel *gtemp = (GestureLabel *) subview;
+            GiftLabel *gl = [[GiftLabel alloc] initWithGestureLabel:gtemp];
+            [listLabels addObject:gl];
         }
     }
     
     if ([[GiftItemManager sharedManager] saveList:listItems toPath:_pathConf]) {
-        [self showMessageWithCompletedView:@"Saved"];
+        if ([[GiftLabelsManager sharedManager] saveNewListLabel:listLabels]) {
+            [self showMessageWithCompletedView:@"Saved"];
+        }
     }
-    
     
     NSLog(@"PHOTOS = %@", listItems);
 }
@@ -1124,7 +1134,15 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
     [self.viewCard addSubview:labelText];
     CGRect frame1 = labelText.frame;
-    frame1.size.width = labelToAdd.frame.size.width;
+    
+    CGFloat width = [labelToAdd.text sizeWithFont:labelToAdd.font].width;
+    if (width < labelToAdd.frame.size.width) {
+        frame1.size.width = width;
+    }else
+    {
+        
+        frame1.size.width = labelToAdd.frame.size.width;
+    }
     labelText.frame = frame1;
     labelText.font = labelToAdd.font;
     labelText.textColor = labelToAdd.textColor;
@@ -1142,7 +1160,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     }
     
     GestureLabel * labelText = [[GestureLabel alloc] initWithFrame:CGRectZero];
+    labelText.backgroundColor = [UIColor clearColor];
     
+    labelText.labelID = gLabel.labelID;
     labelText.bounds = CGRectFromString(gLabel.bounds);
     labelText.center = CGPointFromString(gLabel.center);
     labelText.transform = CGAffineTransformFromString(gLabel.transform);
@@ -1152,8 +1172,18 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     labelText.font = [UIFont fontWithName:gLabel.fontName size:[gLabel.fontSize floatValue]];
 
     NSArray *colorRGB = [gLabel.textColor componentsSeparatedByString:@" "];
-    UIColor *colorText = [UIColor colorWithRed:[[colorRGB objectAtIndex:1] floatValue] green:[[colorRGB objectAtIndex:2] floatValue] blue:[[colorRGB objectAtIndex:3] floatValue] alpha:[[colorRGB objectAtIndex:4] floatValue]];
-    labelText.textColor = colorText;
+    
+    if ([[colorRGB objectAtIndex:0] isEqual:@"UIDeviceRGBColorSpace"]) {
+        UIColor *colorText = [UIColor colorWithRed:[[colorRGB objectAtIndex:1] floatValue] green:[[colorRGB objectAtIndex:2] floatValue] blue:[[colorRGB objectAtIndex:3] floatValue] alpha:[[colorRGB objectAtIndex:4] floatValue]];
+        labelText.textColor = colorText;
+    }else if ([[colorRGB objectAtIndex:0] isEqual:@"UIDeviceWhiteColorSpace"])
+    {
+        UIColor *colorText = [UIColor colorWithWhite:[[colorRGB objectAtIndex:1] floatValue] alpha:[[colorRGB objectAtIndex:2] floatValue]];
+        labelText.textColor = colorText;
+    }
+    [labelText setNumberOfLines:0];
+        
+    [self.viewCard addSubview:labelText];
     
 }
 

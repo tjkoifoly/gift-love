@@ -140,14 +140,27 @@
         labelToEdit.font = labelPreview.font;
         labelToEdit.textColor = labelPreview.textColor;
         
-        CGRect bounds = labelToEdit.bounds;
-        bounds.size.width = labelPreview.frame.size.width;
-        [labelToEdit setBounds:bounds];
+//        CGRect bounds = labelToEdit.bounds;
+//        bounds.size.width = labelPreview.frame.size.width;
+//        [labelToEdit setBounds:bounds];
+//
+        CGFloat radiansAlpha = atan2f(labelToEdit.transform.b, labelToEdit.transform.a);
+        CGRect frame1 = labelToEdit.frame;
+        
+        CGFloat width = [labelPreview.text sizeWithFont:labelPreview.font].width;
+        if (width < labelPreview.frame.size.width) {
+            frame1.size.width = width / cos(radiansAlpha);
+        }else
+        {
+            
+            frame1.size.width = labelPreview.frame.size.width / cos(radiansAlpha);
+        }
+        labelToEdit.frame = frame1;
         [labelToEdit setNeedsDisplay];
         
         [labelToEdit resizeToFit];
         labelToEdit.center = center;
-        
+
         return;
     }
     
@@ -489,7 +502,6 @@
     NSString * theString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     labelPreview.text = theString;
     [labelPreview resizeToFit];
-    [previewScrollView setContentSize:labelPreview.bounds.size];
     
     return YES;
 }
