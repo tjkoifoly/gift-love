@@ -1148,6 +1148,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     labelText.textColor = labelToAdd.textColor;
     labelText.center = CGPointMake(self.viewCard.bounds.size.width/2, self.viewCard.bounds.size.height/2);
     [labelText resizeToFit];
+    NSLog(@"Transform = %@", NSStringFromCGAffineTransform(labelText.transform));
     
     GiftLabel *gLabel = [[GiftLabel alloc] initWithGestureLabel:labelText];
     [[GiftLabelsManager sharedManager] addLabel:gLabel];

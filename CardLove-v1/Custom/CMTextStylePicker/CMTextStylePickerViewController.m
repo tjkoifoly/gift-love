@@ -135,6 +135,9 @@
     
     if (labelToEdit) {
         CGPoint center = labelToEdit.center;
+        CGAffineTransform transform = labelToEdit.transform;
+        CGAffineTransform resetTransform = CGAffineTransformFromString(@"[1, 0, 0, 1, 0, 0]");
+        labelToEdit.transform = resetTransform;
         
         labelToEdit.text = labelPreview.text;
         labelToEdit.font = labelPreview.font;
@@ -144,21 +147,20 @@
 //        bounds.size.width = labelPreview.frame.size.width;
 //        [labelToEdit setBounds:bounds];
 //
-        CGFloat radiansAlpha = atan2f(labelToEdit.transform.b, labelToEdit.transform.a);
         CGRect frame1 = labelToEdit.frame;
         
         CGFloat width = [labelPreview.text sizeWithFont:labelPreview.font].width;
-        if (width < labelPreview.frame.size.width) {
-            frame1.size.width = width / cos(radiansAlpha);
-        }else
+        if (width < labelToEdit.frame.size.width) {
+            frame1.size.width = width;
+        }else if (width < labelPreview.frame.size.width)
         {
-            
-            frame1.size.width = labelPreview.frame.size.width / cos(radiansAlpha);
+            frame1.size.width = labelPreview.frame.size.width;
         }
         labelToEdit.frame = frame1;
         [labelToEdit setNeedsDisplay];
-        
         [labelToEdit resizeToFit];
+        
+        labelToEdit.transform = transform;
         labelToEdit.center = center;
 
         return;
