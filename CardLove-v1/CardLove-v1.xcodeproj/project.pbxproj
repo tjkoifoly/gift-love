@@ -346,8 +346,6 @@
 		669B78E516EA47C600F4437F /* button-editphoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 669B78E116EA47C500F4437F /* button-editphoto.png */; };
 		669B78E616EA47C600F4437F /* button-music.png in Resources */ = {isa = PBXBuildFile; fileRef = 669B78E216EA47C600F4437F /* button-music.png */; };
 		669B78E716EA47C600F4437F /* button-text.png in Resources */ = {isa = PBXBuildFile; fileRef = 669B78E316EA47C600F4437F /* button-text.png */; };
-		66A2114C17055D0E0068C697 /* cover-01.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A2114A17055D0E0068C697 /* cover-01.png */; };
-		66A2114D17055D0E0068C697 /* cover-01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A2114B17055D0E0068C697 /* cover-01@2x.png */; };
 		66A327AA16DA505D00AB3767 /* MSBarButtonIconNavigationPane.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A327A816DA505D00AB3767 /* MSBarButtonIconNavigationPane.png */; };
 		66A327AB16DA505D00AB3767 /* MSBarButtonIconNavigationPane@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A327A916DA505D00AB3767 /* MSBarButtonIconNavigationPane@2x.png */; };
 		66A327B116DA507000AB3767 /* MSDraggableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327AE16DA507000AB3767 /* MSDraggableView.m */; };
@@ -419,6 +417,11 @@
 		66E0E35A16DB16A80085AA12 /* GiftBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E0E35916DB16A80085AA12 /* GiftBoxViewController.m */; };
 		66E0E35E16DB16CC0085AA12 /* StoredCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E0E35C16DB16CB0085AA12 /* StoredCardsViewController.m */; };
 		66E0E35F16DB16CC0085AA12 /* StoredCardsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E0E35D16DB16CC0085AA12 /* StoredCardsViewController.xib */; };
+		66E3B1B617098991006B35E4 /* card-frame-01.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E3B1B117098991006B35E4 /* card-frame-01.png */; };
+		66E3B1B717098991006B35E4 /* cover-01.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E3B1B217098991006B35E4 /* cover-01.png */; };
+		66E3B1B817098991006B35E4 /* cover-01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E3B1B317098991006B35E4 /* cover-01@2x.png */; };
+		66E3B1B917098991006B35E4 /* cover-02.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E3B1B417098991006B35E4 /* cover-02.png */; };
+		66E3B1BA17098991006B35E4 /* cover-02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E3B1B517098991006B35E4 /* cover-02@2x.png */; };
 		66ECB32616F494D400F0B998 /* CreateAEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66ECB32416F494D400F0B998 /* CreateAEventViewController.m */; };
 		66ECB32716F494D400F0B998 /* CreateAEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66ECB32516F494D400F0B998 /* CreateAEventViewController.xib */; };
 		66F1B92216EAE991003FEA7F /* GestureImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1B92116EAE991003FEA7F /* GestureImageView.m */; };
@@ -1042,8 +1045,6 @@
 		669B78E116EA47C500F4437F /* button-editphoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-editphoto.png"; path = "Resources/button-editphoto.png"; sourceTree = "<group>"; };
 		669B78E216EA47C600F4437F /* button-music.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-music.png"; path = "Resources/button-music.png"; sourceTree = "<group>"; };
 		669B78E316EA47C600F4437F /* button-text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-text.png"; path = "Resources/button-text.png"; sourceTree = "<group>"; };
-		66A2114A17055D0E0068C697 /* cover-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cover-01.png"; path = "Resources/cover-01.png"; sourceTree = SOURCE_ROOT; };
-		66A2114B17055D0E0068C697 /* cover-01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cover-01@2x.png"; path = "Resources/cover-01@2x.png"; sourceTree = SOURCE_ROOT; };
 		66A327A816DA505D00AB3767 /* MSBarButtonIconNavigationPane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MSBarButtonIconNavigationPane.png; path = Resources/MSBarButtonIconNavigationPane.png; sourceTree = "<group>"; };
 		66A327A916DA505D00AB3767 /* MSBarButtonIconNavigationPane@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MSBarButtonIconNavigationPane@2x.png"; path = "Resources/MSBarButtonIconNavigationPane@2x.png"; sourceTree = "<group>"; };
 		66A327AD16DA507000AB3767 /* MSDraggableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDraggableView.h; sourceTree = "<group>"; };
@@ -1144,6 +1145,11 @@
 		66E0E35B16DB16CB0085AA12 /* StoredCardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoredCardsViewController.h; path = Views/StoredCardsViewController.h; sourceTree = "<group>"; };
 		66E0E35C16DB16CB0085AA12 /* StoredCardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoredCardsViewController.m; path = Views/StoredCardsViewController.m; sourceTree = "<group>"; };
 		66E0E35D16DB16CC0085AA12 /* StoredCardsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StoredCardsViewController.xib; path = Views/StoredCardsViewController.xib; sourceTree = "<group>"; };
+		66E3B1B117098991006B35E4 /* card-frame-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "card-frame-01.png"; sourceTree = "<group>"; };
+		66E3B1B217098991006B35E4 /* cover-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cover-01.png"; sourceTree = "<group>"; };
+		66E3B1B317098991006B35E4 /* cover-01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cover-01@2x.png"; sourceTree = "<group>"; };
+		66E3B1B417098991006B35E4 /* cover-02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cover-02.png"; sourceTree = "<group>"; };
+		66E3B1B517098991006B35E4 /* cover-02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cover-02@2x.png"; sourceTree = "<group>"; };
 		66ECB32316F494D400F0B998 /* CreateAEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateAEventViewController.h; path = Views/CreateAEventViewController.h; sourceTree = "<group>"; };
 		66ECB32416F494D400F0B998 /* CreateAEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateAEventViewController.m; path = Views/CreateAEventViewController.m; sourceTree = "<group>"; };
 		66ECB32516F494D400F0B998 /* CreateAEventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateAEventViewController.xib; path = Views/CreateAEventViewController.xib; sourceTree = "<group>"; };
@@ -2645,8 +2651,11 @@
 		66FDB8C017036B0E00967D61 /* Card Frames */ = {
 			isa = PBXGroup;
 			children = (
-				66A2114A17055D0E0068C697 /* cover-01.png */,
-				66A2114B17055D0E0068C697 /* cover-01@2x.png */,
+				66E3B1B117098991006B35E4 /* card-frame-01.png */,
+				66E3B1B217098991006B35E4 /* cover-01.png */,
+				66E3B1B317098991006B35E4 /* cover-01@2x.png */,
+				66E3B1B417098991006B35E4 /* cover-02.png */,
+				66E3B1B517098991006B35E4 /* cover-02@2x.png */,
 				66FDB8C217036B0E00967D61 /* card-frame-3.png */,
 				66FDB8C317036B0E00967D61 /* card-frame-4.png */,
 			);
@@ -3013,8 +3022,11 @@
 				66FDB8C617036B0E00967D61 /* card-frame-3.png in Resources */,
 				66FDB8C717036B0E00967D61 /* card-frame-4.png in Resources */,
 				66FDD126170497EE008BD0B7 /* InfColorPickerView.xib in Resources */,
-				66A2114C17055D0E0068C697 /* cover-01.png in Resources */,
-				66A2114D17055D0E0068C697 /* cover-01@2x.png in Resources */,
+				66E3B1B617098991006B35E4 /* card-frame-01.png in Resources */,
+				66E3B1B717098991006B35E4 /* cover-01.png in Resources */,
+				66E3B1B817098991006B35E4 /* cover-01@2x.png in Resources */,
+				66E3B1B917098991006B35E4 /* cover-02.png in Resources */,
+				66E3B1BA17098991006B35E4 /* cover-02@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
