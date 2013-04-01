@@ -15,6 +15,7 @@
 #import "GestureView.h"
 #import "GestureLabel.h"
 #import "GiftLabelsManager.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate, GestureLabelDelegate>
 {

@@ -926,6 +926,15 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 }
 
 - (IBAction)addMusic:(id)sender {
+    
+    NSLog(@"Sound");
+    NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"HappyBirthday" ofType:@"mp3"];
+    NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
+    AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
+    player.numberOfLoops = 1; //infinite
+    player.volume = 1.0f;
+    
+    [player play];
 }
 
 #pragma mark - ActionSheet
