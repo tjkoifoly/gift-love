@@ -16,6 +16,7 @@
 #import "GestureLabel.h"
 #import "UILabel+dynamicSizeMe.h"
 #import "ViewStyle.h"
+#import "MusicViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define kNewProject     @"NewTemplate"
@@ -25,6 +26,8 @@
 #define kDowndloads     @"Downloads"
 
 #define kIndex          @"index.tjkoifoly"
+#define kMusic          @"music.tjkoifoly"
+#define kAnimation      @"animation.tjkoifoly"
 
 #define kCanvasSize     200
 #define kImageMaxSize   400
@@ -40,6 +43,10 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     UIAlertView *photoAlert;
     UIAlertView *backAlert;
     ViewStyle *toolViewStyle;
+    
+    NSString *currentMusic;
+    NSString *strCurrentEffect;
+    UIEffectDesignerView *currentEffect;
 }
 
 @property (strong, nonatomic) NSString *pathResources;
@@ -78,6 +85,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    //Sound Manager
+    [SoundManager sharedManager].allowsBackgroundMusic = YES;
+    [[SoundManager sharedManager] prepareToPlay];
     
     self.navigationItem.title = @"New Gift";
 
@@ -114,6 +124,8 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
             
             [self loadGiftView];
             [self loadGiftLabels];
+            [self loadMusic];
+            [self loadAnimation];
         }
     }else
     {
@@ -137,6 +149,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 - (void)viewDidUnload {
     [self setToolBar:nil];
     [self setViewCard:nil];
+    [self setImvFrameCard:nil];
     [super viewDidUnload];
 }
 
@@ -213,6 +226,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) saveCard
 {
+    [self saveMusic];
+    [self saveAnimation];
+    
     NSMutableArray *listItems = [[NSMutableArray alloc] init];
     NSMutableArray *listLabels = [[NSMutableArray alloc] init];
     
@@ -382,9 +398,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     if ([fmgr removeItemAtPath:currentPhoto.imgURL error:&error]) {
         NSLog(@"Removed photo.");
         
-        GiftItem *itemDeleted = (GiftItem*) [[GiftItemManager sharedManager] findGiftByImageURL:currentPhoto.imgURL];
-        NSLog(@"Delete Item = %@", [itemDeleted.photo lastPathComponent] );
-        [[GiftItemManager sharedManager] removeItem:itemDeleted];
+        GiftItem *itemDeleted1 = (GiftItem*) [[GiftItemManager sharedManager] findGiftByImageURL:currentPhoto.imgURL];
+        NSLog(@"Delete Item = %@", [itemDeleted1.photo lastPathComponent] );
+        [[GiftItemManager sharedManager] removeItem:itemDeleted1];
     }
 
     [UIView animateWithDuration:0.5 animations:^{
@@ -910,6 +926,10 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 - (IBAction)addAnimation:(id)sender {
     
+    strCurrentEffect = @"snowfall.ped";
+    UIEffectDesignerView *effView = [UIEffectDesignerView effectWithFile:@"snowfall.ped"];
+    [self.imvFrameCard addSubview:effView];
+    
 }
 - (IBAction)editPhoto:(id)sender {
     
@@ -927,14 +947,18 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 - (IBAction)addMusic:(id)sender {
     
-    NSLog(@"Sound");
-    NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"HappyBirthday" ofType:@"mp3"];
-    NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
-    AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
-    player.numberOfLoops = 1; //infinite
-    player.volume = 1.0f;
+    NSLog(@"Play Sound");
+    MusicViewController *msvc = [[MusicViewController alloc] initWithNibName:@"MusicViewController" bundle:nil];
+    msvc.selectingMusic = currentMusic;
+    msvc.delegate = self;
+    UINavigationController *navMusic = [[UINavigationController alloc] initWithRootViewController:msvc];
+    [self presentModalViewController:navMusic animated:YES];
+
+    if ([SoundManager sharedManager].isPlayingMusic) {
+        [[SoundManager sharedManager] stopMusic];
+    }
+
     
-    [player play];
 }
 
 #pragma mark - ActionSheet
@@ -1212,7 +1236,83 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
                     animations:animationLabel completion:completionLabel];
 }
 
+#pragma mark - 
+#pragma mark - MUSIC
+-(void) loadMusic
+{
+    NSString *pathMusic = [_pathResources stringByAppendingPathComponent:kMusic];
+    NSError *error;
+    currentMusic = [NSString stringWithContentsOfFile:pathMusic encoding:NSUTF8StringEncoding error:&error];
+    NSLog(@"MUSIC = %@", currentMusic);
+    
+    if (![currentMusic isEqualToString:@""]) {
+        [self playMusic:currentMusic];
+    }
+}
 
+-(void) saveMusic
+{
+    NSString *pathMusic = [_pathResources stringByAppendingPathComponent:kMusic];
+    NSError *error;
+    [currentMusic writeToFile:pathMusic atomically:YES encoding:NSUTF8StringEncoding error:&error];
+}
+
+-(void) playMusic: (NSString *) musicName
+{
+    if ([musicName isEqualToString:@"No Sound"]) {
+        if ([SoundManager sharedManager].isPlayingMusic) {
+            [[SoundManager sharedManager] stopMusic];
+        }
+    }else{
+        [[SoundManager sharedManager] playMusic:musicName looping:YES fadeIn:YES];
+    }
+
+}
+
+-(void) setMusicVolume: (CGFloat) value
+{
+    [[SoundManager sharedManager] setMusicVolume:value];
+}
+
+#pragma mark - Music View Controller Delegate
+-(void) musicViewControllerCancel
+{
+    [self playMusic:currentMusic];
+}
+
+-(void) musicViewControllerDoneActionWithMusic:(NSString *)musicName
+{
+    currentMusic = musicName;
+    [self playMusic:currentMusic];
+}
+
+#pragma mark - Animaion
+-(void) loadAnimation
+{
+    NSString *pathAnimation = [_pathResources stringByAppendingPathComponent:kAnimation];
+    NSError *error;
+    strCurrentEffect = [NSString stringWithContentsOfFile:pathAnimation encoding:NSUTF8StringEncoding error:&error];
+    NSLog(@"ANIMATION = %@", strCurrentEffect);
+    
+    if (![@"" isEqualToString: strCurrentEffect]) {
+        currentEffect = [UIEffectDesignerView effectWithFile:strCurrentEffect];
+        [self.imvFrameCard addSubview:currentEffect];
+    }
+}
+
+-(void) saveAnimation
+{
+    NSString *pathAnimation = [_pathResources stringByAppendingPathComponent:kAnimation];
+    NSError *error;
+    [strCurrentEffect writeToFile:pathAnimation atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    
+}
+
+-(void) noEffectAnitmation
+{
+    [currentEffect removeFromSuperview];
+    strCurrentEffect = @"";
+}
 
 
 

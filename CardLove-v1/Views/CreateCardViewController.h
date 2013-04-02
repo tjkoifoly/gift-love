@@ -16,8 +16,10 @@
 #import "GestureLabel.h"
 #import "GiftLabelsManager.h"
 #import <AVFoundation/AVFoundation.h>
+#import "MusicViewController.h"
+#import "UIEffectDesignerView.h"
 
-@interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate, GestureLabelDelegate>
+@interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate, GestureLabelDelegate, MusicViewControllerDelegate>
 {
     MBProgressHUD *HUD;
 }
@@ -25,5 +27,6 @@
 @property (strong, nonatomic) REMenu *exportMenu;
 @property (strong, nonatomic) IBOutlet UIView *toolBar;
 @property (weak, nonatomic) IBOutlet UIView *viewCard;
+@property (weak, nonatomic) IBOutlet UIImageView *imvFrameCard;
 
 @end
