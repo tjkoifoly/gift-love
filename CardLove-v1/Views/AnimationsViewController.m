@@ -8,6 +8,7 @@
 
 #import "AnimationsViewController.h"
 #import "ThumbnailListView.h"
+#import "UIEffectDesignerView.h"
 
 @interface AnimationsViewController () <ThumbnailListViewDataSource, ThumbnailListViewDelegate>
 
@@ -16,6 +17,9 @@
 @end
 
 @implementation AnimationsViewController
+{
+    UIEffectDesignerView *_currentEffectView;
+}
 
 @synthesize thumbnailListView   = _thumbnailListView;
 @synthesize imageView           = _imageView;
@@ -47,6 +51,14 @@
     
     [_thumbnailListView reloadData];
     [_thumbnailListView selectAtIndex:0];
+    
+    //DATA
+    _listAnimations = [NSArray arrayWithObjects:
+                       @"blurryMayhem",
+                       @"comet",
+                       @"fireball",
+                       @"snowfall",
+                       @"soda",nil];
 }
 
 -(void) cancelMusicController
@@ -82,7 +94,7 @@
 - (NSInteger)numberOfItemsInThumbnailListView:(ThumbnailListView*)thumbnailListView
 {
     NSLog(@"%s",__func__);
-    return 10;
+    return [_listAnimations count];
 }
 
 - (UIImage*)thumbnailListView:(ThumbnailListView*)thumbnailListView
