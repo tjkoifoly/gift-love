@@ -17,6 +17,7 @@
 #import "UILabel+dynamicSizeMe.h"
 #import "ViewStyle.h"
 #import "MusicViewController.h"
+#import "AnimationsViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define kNewProject     @"NewTemplate"
@@ -86,7 +87,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     //Sound Manager
-    [SoundManager sharedManager].allowsBackgroundMusic = YES;
+    [SoundManager sharedManager].allowsBackgroundMusic = NO;
     [[SoundManager sharedManager] prepareToPlay];
     
     self.navigationItem.title = @"New Gift";
@@ -137,7 +138,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) backPreviousView
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [_exportMenu closeWithCompletion:^{
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -361,7 +364,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) runDemo
 {
-    ViewGiftViewController *vgvc = [[ViewGiftViewController alloc] initWithNibName:@"" bundle:nil];
+    ViewGiftViewController *vgvc = [[ViewGiftViewController alloc] initWithNibName:@"ViewGiftViewController" bundle:nil];
     [self.navigationController pushViewController:vgvc animated:YES];
 }
 
@@ -926,9 +929,13 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 - (IBAction)addAnimation:(id)sender {
     
-    strCurrentEffect = @"snowfall.ped";
-    UIEffectDesignerView *effView = [UIEffectDesignerView effectWithFile:@"snowfall.ped"];
-    [self.imvFrameCard addSubview:effView];
+//    strCurrentEffect = @"snowfall.ped";
+//    UIEffectDesignerView *effView = [UIEffectDesignerView effectWithFile:@"bubble.ped"];
+//    [self.imvFrameCard addSubview:effView];
+    
+    AnimationsViewController *avc = [[AnimationsViewController alloc] initWithNibName:@"AnimationsViewController" bundle:nil];
+    UINavigationController *navAnimation = [[UINavigationController alloc] initWithRootViewController:avc];
+    [self presentModalViewController:navAnimation animated:YES];
     
 }
 - (IBAction)editPhoto:(id)sender {

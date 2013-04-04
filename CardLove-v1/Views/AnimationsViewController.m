@@ -19,6 +19,8 @@
 
 @synthesize thumbnailListView   = _thumbnailListView;
 @synthesize imageView           = _imageView;
+@synthesize listAnimations      = _listAnimations;
+@synthesize currentEffect       = _currentEffect;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,6 +36,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelMusicController)];
+    self.navigationItem.leftBarButtonItem = cancelButton;
+    
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction)];
+    self.navigationItem.rightBarButtonItem = doneButton;
+    
     _thumbnailListView.dataSource = self;
     _thumbnailListView.delegate = self;
     
@@ -41,10 +49,30 @@
     [_thumbnailListView selectAtIndex:0];
 }
 
+-(void) cancelMusicController
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+-(void) doneAction
+{
+    
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void) viewDidUnload
+{
+    [self setListAnimations: nil];
+    [self setCurrentEffect:nil];
+    [self setThumbnailListView:nil];
+    [self setImageView:nil];
+    [super  viewDidUnload];
 }
 
 

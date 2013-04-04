@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIEffectDesignerView.h"
 
 @interface AnimationsViewController : UIViewController
+
+@property (strong, nonatomic) NSArray *listAnimations;
+@property (strong, nonatomic) NSString *currentEffect;
 
 @end
