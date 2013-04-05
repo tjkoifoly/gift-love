@@ -50,13 +50,14 @@
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction)];
     self.navigationItem.rightBarButtonItem = doneButton;
     
-    UISlider *slideVolume = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, 100, 10)];
-    slideVolume.minimumValue = 0.0;
-    slideVolume.maximumValue = 1.0f;
-    slideVolume.value = 0.5f;
-    self.navigationItem.titleView = slideVolume;
-    
-    [self setMusicVolume:slideVolume.value];
+//    UISlider *slideVolume = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, 100, 10)];
+//    slideVolume.minimumValue = 0.0;
+//    slideVolume.maximumValue = 1.0f;
+//    slideVolume.value = 0.5f;
+//    self.navigationItem.titleView = slideVolume;
+//    
+//    [self setMusicVolume:slideVolume.value];
+    self.navigationItem.title = @"Music for card";
 }
 
 -(void) viewDidAppear:(BOOL)animated

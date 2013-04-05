@@ -17,9 +17,10 @@
 #import "GiftLabelsManager.h"
 #import <AVFoundation/AVFoundation.h>
 #import "MusicViewController.h"
+#import "AnimationsViewController.h"
 #import "UIEffectDesignerView.h"
 
-@interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate, GestureLabelDelegate, MusicViewControllerDelegate>
+@interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate, GestureLabelDelegate, MusicViewControllerDelegate, AnimationViewControllerDelegate>
 {
     MBProgressHUD *HUD;
 }
@@ -28,5 +29,6 @@
 @property (strong, nonatomic) IBOutlet UIView *toolBar;
 @property (weak, nonatomic) IBOutlet UIView *viewCard;
 @property (weak, nonatomic) IBOutlet UIImageView *imvFrameCard;
+@property (weak, nonatomic) IBOutlet UIView *viewGift;
 
 @end

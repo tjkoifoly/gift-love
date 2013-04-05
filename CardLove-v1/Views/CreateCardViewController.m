@@ -112,7 +112,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self.view addSubview:toolBar];
     [self performSelector:@selector(showToolBar) withObject:nil afterDelay:0.2f];
     
-    //self.viewCard.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"font-frame.png"]];
+    self.viewCard.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cover-01.png"]];
     
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     _pathResources = [self dataFilePath:kNewProject];
@@ -138,9 +138,15 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) backPreviousView
 {
-    [_exportMenu closeWithCompletion:^{
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
+    if ([_exportMenu isOpen]) {
+        [_exportMenu closeWithCompletion:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+    }else
+    {
+         [self.navigationController popViewControllerAnimated:YES];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -153,6 +159,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self setToolBar:nil];
     [self setViewCard:nil];
     [self setImvFrameCard:nil];
+    [self setViewGift:nil];
     [super viewDidUnload];
 }
 
@@ -264,6 +271,10 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     NSLog(@"PHOTOS = %@", listItems);
 }
 
+
+#pragma mark -
+#pragma mark - EXPORT MENU
+
 -(void)showExportMenu
 {
     if (_exportMenu.isOpen)
@@ -356,8 +367,15 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     NSString *filePath = [cardsPath stringByAppendingPathComponent:fileName];
     
     UIImage *imageSaved = [self imageCaptureSave:self.viewCard];
+    UIImageView *imvFrame = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 390)];
+    imvFrame.image = [UIImage imageNamed:@"card-frame-4.png"];
+    UIImageView *imvCard = [[UIImageView alloc] initWithImage:imageSaved];
+    imvCard.center = CGPointMake(imvFrame.bounds.size.width/2, imvFrame.bounds.size.height/2);
+    [imvFrame addSubview:imvCard];
     
-    NSData *dataImage = [NSData dataWithData:UIImagePNGRepresentation(imageSaved)];
+    UIImage *finalImage = [self imageCaptureSave:imvFrame];
+    
+    NSData *dataImage = [NSData dataWithData:UIImagePNGRepresentation(finalImage)];
     
     [dataImage writeToFile:filePath atomically:YES];
 }
@@ -589,6 +607,19 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     UIGraphicsEndImageContext();
     return imageX;
 }
+
+- (UIImage *)imageByCropping:(UIImage *)imageToCrop toRect:(CGRect)rect
+
+{
+    CGImageRef imageRef = CGImageCreateWithImageInRect([imageToCrop CGImage], rect);
+    UIImage *cropped = [UIImage imageWithCGImage:imageRef];
+    
+    CGImageRelease(imageRef);
+    
+    return cropped;
+    
+}
+
 
 - (UIImage *)imageBySize:(UIImage *)image
 
@@ -934,6 +965,8 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 //    [self.imvFrameCard addSubview:effView];
     
     AnimationsViewController *avc = [[AnimationsViewController alloc] initWithNibName:@"AnimationsViewController" bundle:nil];
+    avc.currentEffect = strCurrentEffect;
+    avc.delegate = self;
     UINavigationController *navAnimation = [[UINavigationController alloc] initWithRootViewController:avc];
     [self presentModalViewController:navAnimation animated:YES];
     
@@ -1301,7 +1334,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     strCurrentEffect = [NSString stringWithContentsOfFile:pathAnimation encoding:NSUTF8StringEncoding error:&error];
     NSLog(@"ANIMATION = %@", strCurrentEffect);
     
-    if (![@"" isEqualToString: strCurrentEffect]) {
+    if ((strCurrentEffect != nil) && (![kNoEff isEqualToString: strCurrentEffect])) {
         currentEffect = [UIEffectDesignerView effectWithFile:strCurrentEffect];
         [self.imvFrameCard addSubview:currentEffect];
     }
@@ -1318,10 +1351,29 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 -(void) noEffectAnitmation
 {
     [currentEffect removeFromSuperview];
-    strCurrentEffect = @"";
+    strCurrentEffect = kNoEff;
 }
 
+#pragma mark - Animation Delegate
+-(void) animationViewControllerCancel
+{
+    
+}
 
+-(void) animationVIewControllerDone:(NSString *)strEffect
+{
+    if (![strEffect isEqualToString:strCurrentEffect]) {
+        strCurrentEffect = strEffect;
+        if (currentEffect) {
+            [currentEffect removeFromSuperview];
+        }
+        if (![kNoEff isEqualToString: strCurrentEffect]) {
+            currentEffect = [UIEffectDesignerView effectWithFile:strCurrentEffect];
+            [self.imvFrameCard addSubview:currentEffect];
+        }
+    }
+    
+}
 
 
 @end
