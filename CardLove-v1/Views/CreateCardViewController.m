@@ -290,8 +290,10 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         }
     }
     
-    if ([[GiftItemManager sharedManager] saveList:listItems toPath:_pathConf]) {
-        if ([[GiftLabelsManager sharedManager] saveNewListLabel:listLabels toPath:_pathConf]) {
+    [[GiftItemManager sharedManager] setListItems:listItems];
+    [[GiftLabelsManager sharedManager] setListLabels:listLabels];
+    if ([[GiftItemManager sharedManager] saveList]) {
+        if ([[GiftLabelsManager sharedManager] saveListLabel]) {
             [self showMessageWithCompletedView:@"Saved"];
         }
     }
@@ -368,10 +370,11 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 -(NSString *) saveAsZip
 {
     [self createNewFolder:kPackages];
-    NSString *docspath = [self dataFilePath:kPackages];
-    NSString *projectPath = [self dataFilePath:kNewProject];
+    NSString *projectPath = _pathResources;
     
-    NSString *zipFile = [docspath stringByAppendingPathComponent:@"newzipfile.zip"];
+    NSString *docspath = [self dataFilePath:kPackages];
+    
+    NSString *zipFile = [docspath stringByAppendingPathComponent:_giftName];
     
     ZipArchive *za = [[ZipArchive alloc] init];
     [za CreateZipFile2:zipFile];
@@ -397,7 +400,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 -(void) saveAsImage
 {
     NSString *cardsPath = [self dataFilePath:kCards];
-    NSString *fileName = [NSString stringWithFormat:@"card-love.png"];
+    NSString *fileName = [NSString stringWithFormat:@"%@.png", _giftName];
     NSString *filePath = [cardsPath stringByAppendingPathComponent:fileName];
     
     UIImage *imageSaved = [self imageCaptureSave:self.viewCard];
@@ -425,10 +428,10 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 -(void) sendGift
 {
     NSString *docspath = [self dataFilePath:kPackages];
-    NSString *zipFile = [docspath stringByAppendingPathComponent:@"newzipfile.zip"];
+    NSString *zipFile = [docspath stringByAppendingPathComponent:_giftName];
     
     NSString *projectPath = [self dataFilePath:kGift];
-    NSString *unzipPath = [projectPath stringByAppendingPathComponent:@"UnZip"];
+    NSString *unzipPath = [projectPath stringByAppendingPathComponent:_giftName];
     NSFileManager *fmgr = [[NSFileManager alloc] init] ;
     
    [fmgr createDirectoryAtPath:unzipPath withIntermediateDirectories:YES attributes:nil error:NULL];
@@ -1180,9 +1183,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
                     {
                         GestureView *temp = (GestureView *) subview;
                         
-                        NSMutableString *mPath = [NSMutableString stringWithString:temp.imgURL];
-                        [mPath stringByReplacingOccurrencesOfString:oldDirectoryPath withString:_pathResources];
-                        temp.imgURL = mPath;
+                        NSString *mPath = temp.imgURL;
+                        temp.imgURL = [mPath stringByReplacingOccurrencesOfString:oldDirectoryPath withString:_pathResources];
+                        NSLog(@"URL PHOTO = %@", temp.imgURL);
                         
                     }
                 }
