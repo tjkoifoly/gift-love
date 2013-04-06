@@ -62,10 +62,12 @@
 
 -(void) viewDidAppear:(BOOL)animated
 {
+    
+    [super viewDidAppear:animated];
     if (_selectingMusic) {
+        NSLog(@"Music = %@", _selectingMusic);
         [self playMusic:_selectingMusic];
     }
-    [super viewDidAppear:animated];
 }
 
 -(void) cancelMusicController

@@ -22,6 +22,7 @@
 
 #define kNewProject     @"NewTemplate"
 #define kProjects       @"Projects"
+#define kGift           @"Gifts"
 #define kCards          @"Cards"
 #define kPackages       @"Packages"
 #define kDowndloads     @"Downloads"
@@ -63,6 +64,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 @synthesize pathConf = _pathConf;
 @synthesize pathResources =_pathResources;
 @synthesize exportMenu =_exportMenu;
+@synthesize giftName = _giftName;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -83,9 +85,13 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [toolViewStyle setFrame:CGRectMake(0, 480, 320, 300)];
     [self.view addSubview:toolViewStyle];
    
-    
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    //GIFT NAME
+    if (!_giftName) {
+        _giftName = kNewProject;
+    }
+    
     //Sound Manager
     [SoundManager sharedManager].allowsBackgroundMusic = NO;
     [[SoundManager sharedManager] prepareToPlay];
@@ -115,7 +121,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     self.viewCard.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cover-01.png"]];
     
     NSFileManager *fileManager = [[NSFileManager alloc] init];
-    _pathResources = [self dataFilePath:kNewProject];
+    _pathResources = [self dataFilePath:_giftName];
     NSLog(@"PATH = %@", _pathResources);
     _pathConf = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:kIndex]];
 
@@ -130,14 +136,20 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         }
     }else
     {
-        [self createNewFolder:kNewProject];
+        [self createNewFolder:_giftName];
     }
     [self createNewFolder:kProjects];
     [self createNewFolder:kCards];
+    [self createNewFolder:kGift];
+    [self createNewFolder:kPackages];
 }
 
 -(void) backPreviousView
 {
+    if ([[SoundManager sharedManager] isPlayingMusic]) {
+        [[SoundManager sharedManager] stopMusic];
+    }
+    
     if ([_exportMenu isOpen]) {
         [_exportMenu closeWithCompletion:^{
             [self.navigationController popViewControllerAnimated:YES];
@@ -160,7 +172,16 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self setViewCard:nil];
     [self setImvFrameCard:nil];
     [self setViewGift:nil];
+    [self setGiftName:nil];
+    [self setExportMenu:nil];
+    [self setPathConf:nil];
+    [self setPathResources:nil];
     [super viewDidUnload];
+}
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
 }
 
 #pragma mark - LOAD CARD
@@ -269,6 +290,11 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     }
     
     NSLog(@"PHOTOS = %@", listItems);
+    
+    if ([kNewProject isEqualToString:_giftName]) {
+        //Show popUp to rename
+        
+    }
 }
 
 
@@ -376,8 +402,10 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     UIImage *finalImage = [self imageCaptureSave:imvFrame];
     
     NSData *dataImage = [NSData dataWithData:UIImagePNGRepresentation(finalImage)];
-    
     [dataImage writeToFile:filePath atomically:YES];
+    
+    UIImageWriteToSavedPhotosAlbum(finalImage, nil, nil, nil);
+
 }
 
 -(void) runDemo
@@ -391,7 +419,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     NSString *docspath = [self dataFilePath:kPackages];
     NSString *zipFile = [docspath stringByAppendingPathComponent:@"newzipfile.zip"];
     
-    NSString *projectPath = [self dataFilePath:kProjects];
+    NSString *projectPath = [self dataFilePath:kGift];
     NSString *unzipPath = [projectPath stringByAppendingPathComponent:@"UnZip"];
     NSFileManager *fmgr = [[NSFileManager alloc] init] ;
     

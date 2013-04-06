@@ -31,4 +31,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imvFrameCard;
 @property (weak, nonatomic) IBOutlet UIView *viewGift;
 
+@property (strong, nonatomic) NSString *giftName;
+
 @end
