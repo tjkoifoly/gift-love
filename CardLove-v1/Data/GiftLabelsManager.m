@@ -53,9 +53,9 @@
     return [NSKeyedArchiver archiveRootObject:_listLabels toFile:_pathData];
 }
 
--(BOOL) saveNewListLabel: (NSArray *) list
+-(BOOL) saveNewListLabel: (NSArray *) list toPath: (NSString *) path
 {
-    return [NSKeyedArchiver archiveRootObject:list toFile:_pathData];
+    return [NSKeyedArchiver archiveRootObject:list toFile:path];
 }
 
 -(void) addLabel : (GiftLabel *) gLabel

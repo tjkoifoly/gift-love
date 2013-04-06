@@ -19,6 +19,7 @@
 #import "MusicViewController.h"
 #import "AnimationsViewController.h"
 #import "UIEffectDesignerView.h"
+#import "PromptAlert.h"
 
 @interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate, GestureLabelDelegate, MusicViewControllerDelegate, AnimationViewControllerDelegate>
 {

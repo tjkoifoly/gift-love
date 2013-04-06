@@ -22,7 +22,7 @@
 -(NSArray *) getListLabels;
 
 -(BOOL) saveListLabel;
--(BOOL) saveNewListLabel: (NSArray *) list;
+-(BOOL) saveNewListLabel: (NSArray *) list toPath: (NSString *) path;
 
 -(void) addLabel : (GiftLabel *) gLabel;
 -(void) removeLabel: (GiftLabel *) gLabel;

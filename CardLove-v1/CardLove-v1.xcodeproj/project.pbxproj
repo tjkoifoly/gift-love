@@ -201,6 +201,8 @@
 		6622CC5016F96D78002FC8EC /* UILabel+dynamicSizeMe.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622CC4F16F96D78002FC8EC /* UILabel+dynamicSizeMe.m */; };
 		6622CC5316F974DB002FC8EC /* btn-delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 6622CC5116F974DB002FC8EC /* btn-delete.png */; };
 		6622CC5416F974DB002FC8EC /* btn-delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6622CC5216F974DB002FC8EC /* btn-delete@2x.png */; };
+		662507A4171065AC00FF3F8B /* PromptAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 662507A3171065AC00FF3F8B /* PromptAlert.m */; };
+		662507A717106B0B00FF3F8B /* bg-txt.png in Resources */ = {isa = PBXBuildFile; fileRef = 662507A617106B0B00FF3F8B /* bg-txt.png */; };
 		662D0E4C16DFA05A000B3364 /* BackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 662D0E4216DFA05A000B3364 /* BackButton.png */; };
 		662D0E4D16DFA05A000B3364 /* BackButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 662D0E4316DFA05A000B3364 /* BackButton@2x.png */; };
 		662D0E4E16DFA05A000B3364 /* BackgoundNavigation.png in Resources */ = {isa = PBXBuildFile; fileRef = 662D0E4416DFA05A000B3364 /* BackgoundNavigation.png */; };
@@ -935,6 +937,9 @@
 		6622CC4F16F96D78002FC8EC /* UILabel+dynamicSizeMe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+dynamicSizeMe.m"; path = "Custom/CustomView/UILabel+dynamicSizeMe.m"; sourceTree = "<group>"; };
 		6622CC5116F974DB002FC8EC /* btn-delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn-delete.png"; path = "Resources/btn-delete.png"; sourceTree = "<group>"; };
 		6622CC5216F974DB002FC8EC /* btn-delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn-delete@2x.png"; path = "Resources/btn-delete@2x.png"; sourceTree = "<group>"; };
+		662507A2171065AC00FF3F8B /* PromptAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PromptAlert.h; path = Custom/CustomView/PromptAlert.h; sourceTree = "<group>"; };
+		662507A3171065AC00FF3F8B /* PromptAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PromptAlert.m; path = Custom/CustomView/PromptAlert.m; sourceTree = "<group>"; };
+		662507A617106B0B00FF3F8B /* bg-txt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-txt.png"; sourceTree = "<group>"; };
 		662D0E4216DFA05A000B3364 /* BackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BackButton.png; path = Resources/BackButton.png; sourceTree = "<group>"; };
 		662D0E4316DFA05A000B3364 /* BackButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BackButton@2x.png"; path = "Resources/BackButton@2x.png"; sourceTree = "<group>"; };
 		662D0E4416DFA05A000B3364 /* BackgoundNavigation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BackgoundNavigation.png; path = Resources/BackgoundNavigation.png; sourceTree = "<group>"; };
@@ -2089,6 +2094,15 @@
 			path = minizip;
 			sourceTree = "<group>";
 		};
+		662507A517106B0A00FF3F8B /* _bg */ = {
+			isa = PBXGroup;
+			children = (
+				662507A617106B0B00FF3F8B /* bg-txt.png */,
+			);
+			name = _bg;
+			path = Resources/_bg;
+			sourceTree = "<group>";
+		};
 		662D0E5A16DFA4B5000B3364 /* ToolBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -2232,6 +2246,7 @@
 		66310AD116D9A6B900AC9DC8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				662507A517106B0A00FF3F8B /* _bg */,
 				6684B741170B351A00987AF7 /* _animations */,
 				66F2E9D91709EFF70023A16A /* _sounds */,
 				66F2E9881709E25D0023A16A /* test */,
@@ -2645,6 +2660,8 @@
 				66D70C061701829200E12D42 /* PreviewScrollView.m */,
 				66D70C08170182D700E12D42 /* PreviewCell.h */,
 				66D70C09170182D700E12D42 /* PreviewCell.m */,
+				662507A2171065AC00FF3F8B /* PromptAlert.h */,
+				662507A3171065AC00FF3F8B /* PromptAlert.m */,
 			);
 			name = CustomView;
 			sourceTree = "<group>";
@@ -3360,6 +3377,7 @@
 				66FD4101170E87B800BD5254 /* card-frame-1.png in Resources */,
 				66FD4103170E886500BD5254 /* card-love-sample.png in Resources */,
 				66FD4107170E8DAB00BD5254 /* no-eff.jpg in Resources */,
+				662507A717106B0B00FF3F8B /* bg-txt.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3591,6 +3609,7 @@
 				6684B738170B20E000987AF7 /* MusicViewController.m in Sources */,
 				6684B73F170B346500987AF7 /* NSData+Base64.m in Sources */,
 				6684B740170B346500987AF7 /* UIEffectDesignerView.m in Sources */,
+				662507A4171065AC00FF3F8B /* PromptAlert.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

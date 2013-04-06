@@ -257,6 +257,17 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) saveCard
 {
+    if ([kNewProject isEqualToString:_giftName]) {
+        //Show popUp to rename
+        [self showNameAlertWithTitle:@"Enter a name for gift"];
+    }else
+    {
+        [self saveData];
+    }
+}
+
+-(void) saveData
+{
     [self saveMusic];
     [self saveAnimation];
     
@@ -284,17 +295,18 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     }
     
     if ([[GiftItemManager sharedManager] saveList:listItems toPath:_pathConf]) {
-        if ([[GiftLabelsManager sharedManager] saveNewListLabel:listLabels]) {
+        if ([[GiftLabelsManager sharedManager] saveNewListLabel:listLabels toPath:_pathConf]) {
             [self showMessageWithCompletedView:@"Saved"];
         }
     }
     
     NSLog(@"PHOTOS = %@", listItems);
-    
-    if ([kNewProject isEqualToString:_giftName]) {
-        //Show popUp to rename
-        
-    }
+}
+
+-(void) showNameAlertWithTitle: (NSString *) titleText
+{
+    PromptAlert *pAlert = [[PromptAlert alloc] initWithTitle:titleText delegate:self cancelButtonTitle:@"OK" otherButtonTitle:@"Cancel"];
+    [pAlert show];
 }
 
 
@@ -1105,6 +1117,70 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     }else if (alertView == backAlert)
     {
         
+    }else if ([alertView isKindOfClass:[PromptAlert class]])
+    {
+        
+        switch (buttonIndex) {
+            case 0:
+            {
+                PromptAlert *pAlert = (PromptAlert *) alertView;
+                NSString *nameOfGift = pAlert.filedName.text;
+                
+                if ([nameOfGift rangeOfString:@"/"].location == NSNotFound) {
+                    NSLog(@"Name of gift is %@", nameOfGift);
+                    
+                    [self namingGift:nameOfGift];
+                    [self saveData];
+                    
+                }else
+                {
+                    [self showNameAlertWithTitle: @"Enter a other name"];
+                }
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+}
+
+-(void) namingGift: (NSString *) nameOfGift
+{
+    NSString *oldDirectoryPath = _pathResources;
+    
+    NSString *pathPorjects = [self dataFilePath:kProjects];
+    NSString *pathOfThisGift = [pathPorjects stringByAppendingPathComponent:nameOfGift];
+    if ([[NSFileManager defaultManager] createDirectoryAtPath:pathOfThisGift withIntermediateDirectories:YES attributes:nil error:NULL]) {
+        NSLog(@"Create directory - %@ succcessful", nameOfGift);
+        
+        NSArray *tempArrayForContentsOfDirectory =[[NSFileManager defaultManager] contentsOfDirectoryAtPath:oldDirectoryPath error:nil];
+        
+        for (int i = 0; i < [tempArrayForContentsOfDirectory count]; i++)
+        {
+            
+            NSString *newFilePath = [pathOfThisGift stringByAppendingPathComponent:[tempArrayForContentsOfDirectory objectAtIndex:i]];
+            
+            NSString *oldFilePath = [oldDirectoryPath stringByAppendingPathComponent:[tempArrayForContentsOfDirectory objectAtIndex:i]];
+            
+            NSError *error = nil;
+            [[NSFileManager defaultManager] moveItemAtPath:oldFilePath toPath:newFilePath error:&error];
+            
+            if (error) {
+                // handle error
+                NSLog(@"-----> ERROR move file!");
+            }else
+            {
+                _giftName = nameOfGift;
+                _pathResources = pathOfThisGift;
+                _pathConf = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:kIndex]];
+            }
+            
+        }
+        
+    }else
+    {
+        NSLog(@"Failed to create directory - %@", nameOfGift);
     }
 }
 
