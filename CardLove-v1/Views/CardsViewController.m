@@ -61,8 +61,10 @@
     NSArray *subDirs = [fileMgr contentsOfDirectoryAtPath:pathProjects error:&error];
     
     _listGifts = [NSMutableArray arrayWithArray:subDirs];
-    if ([[_listGifts objectAtIndex:0] isEqual:@".DS_Store"]) {
-        [_listGifts removeObjectAtIndex:0];
+    if ([_listGifts count] >0) {
+        if ([[_listGifts objectAtIndex:0] isEqual:@".DS_Store"]) {
+            [_listGifts removeObjectAtIndex:0];
+        }
     }
     
     [self.collectionView reloadData];
