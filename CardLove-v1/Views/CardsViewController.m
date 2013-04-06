@@ -29,6 +29,9 @@
 
 @implementation CardsViewController
 
+@synthesize listGifts =_listGifts;
+@synthesize delegate;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -44,6 +47,37 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.collectionView.extremitiesStyle = SSCollectionViewExtremitiesStyleScrolling;
+    _listGifts = [[NSMutableArray alloc] init];
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    NSString *pathProjects = [self dataFilePath:kProjects];
+    NSFileManager *fileMgr = [NSFileManager defaultManager];
+    
+    NSError *error = nil;
+    NSArray *subDirs = [fileMgr contentsOfDirectoryAtPath:pathProjects error:&error];
+    
+    _listGifts = [NSMutableArray arrayWithArray:subDirs];
+    
+    [self.collectionView reloadData];
+
+}
+
+-(NSString *) dataFilePath: (NSString *) comp
+{
+    NSArray * dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                             NSUserDomainMask, YES);
+    NSString *docsDir = [dirPaths objectAtIndex:0];
+    return  [docsDir stringByAppendingPathComponent:comp];
+}
+
+-(void) viewDidUnload
+{
+    [self setListGifts:nil];
+    [super viewDidUnload];
 }
 
 - (void)didReceiveMemoryWarning
@@ -127,12 +161,12 @@
 #pragma mark - SSCollectionViewDataSource
 
 - (NSUInteger)numberOfSectionsInCollectionView:(SSCollectionView *)aCollectionView {
-	return 3;
+	return 1;
 }
 
 
 - (NSUInteger)collectionView:(SSCollectionView *)aCollectionView numberOfItemsInSection:(NSUInteger)section {
-	return 5;
+	return [_listGifts count];
 }
 
 
@@ -178,6 +212,9 @@
         item = (SSCollectionViewItem *)[[[NSBundle mainBundle] loadNibNamed:@"SSCollectionViewItem" owner:self options:nil] objectAtIndex:0];
         item.reuseIdentifier = [itemIdentifier copy];
     }
+    id gift = [_listGifts objectAtIndex:indexPath.row];
+    NSLog(@"Gift object = %@", gift);
+    item.titleLabel.text = [NSString stringWithFormat:@"%@", gift ];
     
 	return item;
 }
@@ -222,6 +259,10 @@
     [currentItem setBackgroundColor:[UIColor clearColor]];
     currentItem = itemSelected;
     [itemSelected setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
+    
+    NSString *gift = itemSelected.titleLabel.text;
+    
+    [self.delegate cardViewControllerDidSelected:gift];
 }
 
 

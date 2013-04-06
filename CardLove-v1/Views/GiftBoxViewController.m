@@ -77,6 +77,7 @@
     NSMutableArray *controllers = [[NSMutableArray alloc] init];
     
     CardsViewController *cvc = [[CardsViewController alloc] initWithNibName:@"CardsViewController" bundle:nil];
+    cvc.delegate = self;
     cvc.tabBarItem.image = [UIImage imageNamed:@"cards.png"];
     cvc.tabBarItem.title = @"Inbox";
     UINavigationController *nav3 = [[UINavigationController alloc] initWithRootViewController:cvc];
@@ -130,6 +131,15 @@
     [self.navigationController pushViewController:ccvc animated:YES];
     self.tabBarController.hidesBottomBarWhenPushed = NO;
     
+}
+
+-(void) cardViewControllerDidSelected:(NSString *)giftName
+{
+    CreateCardViewController *ccvc = [[CreateCardViewController alloc] initWithNibName:@"CreateCardViewController" bundle:nil];
+    ccvc.giftName = giftName;
+    self.tabBarController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:ccvc animated:YES];
+    self.tabBarController.hidesBottomBarWhenPushed = NO;
 }
 
 @end

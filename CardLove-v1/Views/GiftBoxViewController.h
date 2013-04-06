@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "GHRootViewController.h"
+#import "CardsViewController.h"
+#import "StoredCardsViewController.h"
 
-@interface GiftBoxViewController : UITabBarController
+@interface GiftBoxViewController : UITabBarController <CardViewControllerDelegate>
 {
 @private
 	RevealBlock _revealBlock;

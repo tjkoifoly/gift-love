@@ -203,6 +203,7 @@
 		6622CC5416F974DB002FC8EC /* btn-delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6622CC5216F974DB002FC8EC /* btn-delete@2x.png */; };
 		662507A4171065AC00FF3F8B /* PromptAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 662507A3171065AC00FF3F8B /* PromptAlert.m */; };
 		662507A717106B0B00FF3F8B /* bg-txt.png in Resources */ = {isa = PBXBuildFile; fileRef = 662507A617106B0B00FF3F8B /* bg-txt.png */; };
+		662507AE1710885500FF3F8B /* FunctionObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 662507AD1710885500FF3F8B /* FunctionObject.m */; };
 		662D0E4C16DFA05A000B3364 /* BackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 662D0E4216DFA05A000B3364 /* BackButton.png */; };
 		662D0E4D16DFA05A000B3364 /* BackButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 662D0E4316DFA05A000B3364 /* BackButton@2x.png */; };
 		662D0E4E16DFA05A000B3364 /* BackgoundNavigation.png in Resources */ = {isa = PBXBuildFile; fileRef = 662D0E4416DFA05A000B3364 /* BackgoundNavigation.png */; };
@@ -940,6 +941,9 @@
 		662507A2171065AC00FF3F8B /* PromptAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PromptAlert.h; path = Custom/CustomView/PromptAlert.h; sourceTree = "<group>"; };
 		662507A3171065AC00FF3F8B /* PromptAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PromptAlert.m; path = Custom/CustomView/PromptAlert.m; sourceTree = "<group>"; };
 		662507A617106B0B00FF3F8B /* bg-txt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-txt.png"; sourceTree = "<group>"; };
+		662507A9171087BF00FF3F8B /* MacroDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MacroDefine.h; path = ModelClasses/MacroDefine.h; sourceTree = "<group>"; };
+		662507AC1710885500FF3F8B /* FunctionObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FunctionObject.h; path = ModelClasses/FunctionObject.h; sourceTree = "<group>"; };
+		662507AD1710885500FF3F8B /* FunctionObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FunctionObject.m; path = ModelClasses/FunctionObject.m; sourceTree = "<group>"; };
 		662D0E4216DFA05A000B3364 /* BackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BackButton.png; path = Resources/BackButton.png; sourceTree = "<group>"; };
 		662D0E4316DFA05A000B3364 /* BackButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BackButton@2x.png"; path = "Resources/BackButton@2x.png"; sourceTree = "<group>"; };
 		662D0E4416DFA05A000B3364 /* BackgoundNavigation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BackgoundNavigation.png; path = Resources/BackgoundNavigation.png; sourceTree = "<group>"; };
@@ -2921,6 +2925,9 @@
 				660A417E16F38BA0006F593D /* GiftItem.m */,
 				66F4AFD2170457C600928AA3 /* GiftLabel.h */,
 				66F4AFD3170457C600928AA3 /* GiftLabel.m */,
+				662507A9171087BF00FF3F8B /* MacroDefine.h */,
+				662507AC1710885500FF3F8B /* FunctionObject.h */,
+				662507AD1710885500FF3F8B /* FunctionObject.m */,
 			);
 			name = ModelClasses;
 			sourceTree = "<group>";
@@ -3610,6 +3617,7 @@
 				6684B73F170B346500987AF7 /* NSData+Base64.m in Sources */,
 				6684B740170B346500987AF7 /* UIEffectDesignerView.m in Sources */,
 				662507A4171065AC00FF3F8B /* PromptAlert.m in Sources */,
+				662507AE1710885500FF3F8B /* FunctionObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,17 +19,7 @@
 #import "MusicViewController.h"
 #import "AnimationsViewController.h"
 #import <QuartzCore/QuartzCore.h>
-
-#define kNewProject     @"NewTemplate"
-#define kProjects       @"Projects"
-#define kGift           @"Gifts"
-#define kCards          @"Cards"
-#define kPackages       @"Packages"
-#define kDowndloads     @"Downloads"
-
-#define kIndex          @"index.tjkoifoly"
-#define kMusic          @"music.tjkoifoly"
-#define kAnimation      @"animation.tjkoifoly"
+#import "MacroDefine.h"
 
 #define kCanvasSize     200
 #define kImageMaxSize   400
@@ -77,7 +67,11 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 - (void)viewDidLoad
 {
-
+    [self createNewFolder:kProjects];
+    [self createNewFolder:kCards];
+    [self createNewFolder:kGift];
+    [self createNewFolder:kPackages];
+    
     UIColor *c = [UIColor colorWithRed:0.65454 green:0.2454 blue:0.7345 alpha:1];
     NSLog(@"___COLOR = %@", c);
     
@@ -90,7 +84,14 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     //GIFT NAME
     if (!_giftName) {
         _giftName = kNewProject;
+        _pathResources = [self dataFilePath:_giftName];
+    }else
+    {
+        NSString *pathProjs = [self dataFilePath:kProjects];
+        _pathResources = [pathProjs stringByAppendingPathComponent:_giftName];
     }
+    NSLog(@"PATH = %@", _pathResources);
+    _pathConf = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:kIndex]];
     
     //Sound Manager
     [SoundManager sharedManager].allowsBackgroundMusic = NO;
@@ -121,9 +122,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     self.viewCard.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cover-01.png"]];
     
     NSFileManager *fileManager = [[NSFileManager alloc] init];
-    _pathResources = [self dataFilePath:_giftName];
-    NSLog(@"PATH = %@", _pathResources);
-    _pathConf = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:kIndex]];
+    
 
     BOOL isDir;
     if ([fileManager fileExistsAtPath:_pathResources isDirectory:&isDir]) {
@@ -138,10 +137,6 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     {
         [self createNewFolder:_giftName];
     }
-    [self createNewFolder:kProjects];
-    [self createNewFolder:kCards];
-    [self createNewFolder:kGift];
-    [self createNewFolder:kPackages];
 }
 
 -(void) backPreviousView
@@ -189,6 +184,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 {
     [[GiftItemManager sharedManager] setPathData:_pathConf];
     NSArray *listItems = [[GiftItemManager sharedManager] getListItems];
+    NSLog(@"LIST = %@", listItems);
     
     for(GiftItem *gi in listItems)
     {
@@ -967,11 +963,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         return;
     }
     
-    
 }
-
-
-
 - (void)photoEditorCanceled:(AFPhotoEditorController *)editor
 {
     // Handle cancelation here
@@ -1174,9 +1166,30 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
                 _giftName = nameOfGift;
                 _pathResources = pathOfThisGift;
                 _pathConf = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:kIndex]];
-            }
+                [[GiftItemManager sharedManager] setPathData:_pathConf];
+                NSString *pathLabels = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:kGiftLabel]];
+                [[GiftLabelsManager sharedManager] setPathData:pathLabels];
+
+                
+                NSArray *arrPhotos = [self.viewCard subviews];
+                NSLog(@"ARR = %@", arrPhotos);
+                
+                for(UIView *subview in arrPhotos)
+                {
+                    if([subview isKindOfClass:[GestureView class]])
+                    {
+                        GestureView *temp = (GestureView *) subview;
+                        
+                        NSMutableString *mPath = [NSMutableString stringWithString:temp.imgURL];
+                        [mPath stringByReplacingOccurrencesOfString:oldDirectoryPath withString:_pathResources];
+                        temp.imgURL = mPath;
+                        
+                    }
+                }
+                //END for
+            }//END if
             
-        }
+        }//END for
         
     }else
     {
