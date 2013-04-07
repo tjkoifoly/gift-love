@@ -135,11 +135,19 @@
 
 -(void) cardViewControllerDidSelected:(NSString *)giftName
 {
-    CreateCardViewController *ccvc = [[CreateCardViewController alloc] initWithNibName:@"CreateCardViewController" bundle:nil];
-    ccvc.giftName = giftName;
-    self.tabBarController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:ccvc animated:YES];
-    self.tabBarController.hidesBottomBarWhenPushed = NO;
+//    CreateCardViewController *ccvc = [[CreateCardViewController alloc] initWithNibName:@"CreateCardViewController" bundle:nil];
+//    ccvc.giftName = giftName;
+//    self.tabBarController.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:ccvc animated:YES];
+//    self.tabBarController.hidesBottomBarWhenPushed = NO;
+    [self viewGiftCard];
+}
+
+-(void) viewGiftCard
+{
+    CGPoint point = CGPointMake(320/2, 416/2);
+    ViewGiftViewController *cvcv = [[ViewGiftViewController alloc] initWithNibName:@"ViewGiftViewController" bundle:nil];
+    [[self navigationController] kt_pushViewController:cvcv explodeFromPoint:point];
 }
 
 @end

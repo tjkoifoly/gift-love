@@ -1112,7 +1112,6 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
                     NSLog(@"Name of gift is %@", nameOfGift);
                     
                     [self namingGift:nameOfGift];
-                    [self saveData];
                     
                 }else
                 {
@@ -1133,6 +1132,16 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     
     NSString *pathPorjects = [self dataFilePath:kProjects];
     NSString *pathOfThisGift = [pathPorjects stringByAppendingPathComponent:nameOfGift];
+    
+    BOOL isDir;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:pathOfThisGift isDirectory:&isDir]) {
+
+        if (isDir) {
+            [self showNameAlertWithTitle: @"Enter a other name"];
+        }
+        return;
+    }
+    
     if ([[NSFileManager defaultManager] createDirectoryAtPath:pathOfThisGift withIntermediateDirectories:YES attributes:nil error:NULL]) {
         NSLog(@"Create directory - %@ succcessful", nameOfGift);
         
@@ -1181,6 +1190,8 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
                     }
                 }
                 //END for
+                
+                [self saveData];
             }//END if
             
         }//END for

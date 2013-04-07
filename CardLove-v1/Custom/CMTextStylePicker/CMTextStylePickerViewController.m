@@ -262,6 +262,7 @@
     }else
     {
         _currentFont = [UIFont fontWithName:@"Helvetica" size:17.0f];
+        [textfieldLabel becomeFirstResponder];
     }
     
     self.selectedFont = _currentFont;

@@ -10,6 +10,8 @@
 #import "GHRootViewController.h"
 #import "CardsViewController.h"
 #import "StoredCardsViewController.h"
+#import "ViewGiftViewController.h"
+#import "UINavigationController+KTTransitions.h"
 
 @interface GiftBoxViewController : UITabBarController <CardViewControllerDelegate>
 {

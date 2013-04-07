@@ -29,7 +29,27 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnBack setBackgroundImage:[UIImage imageNamed:@"Back Button.png"] forState:UIControlStateNormal];
+    [btnBack setFrame:CGRectMake(160, 200, 54, 34)];
+    [btnBack addTarget:self action:@selector(backPreviousView) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btnBack];
+    
     [self loadGiftByName:_giftName];
+    
+}
+
+-(void) backPreviousView
+{
+    CGPoint point = CGPointMake(320/2, 416/2);
+    [[self navigationController] kt_popViewControllerImplodeToPoint:point];
 }
 
 -(void) loadGiftByName: (NSString *) nameOfGift
@@ -47,6 +67,9 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)closeViewGiftController:(id)sender {
+    [self backPreviousView];
 }
 
 @end

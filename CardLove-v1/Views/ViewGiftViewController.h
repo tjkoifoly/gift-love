@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UINavigationController+KTTransitions.h"
 
 @interface ViewGiftViewController : UIViewController
 

@@ -465,6 +465,8 @@
 		66E3B1BA17098991006B35E4 /* cover-02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E3B1B517098991006B35E4 /* cover-02@2x.png */; };
 		66ECB32616F494D400F0B998 /* CreateAEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66ECB32416F494D400F0B998 /* CreateAEventViewController.m */; };
 		66ECB32716F494D400F0B998 /* CreateAEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66ECB32516F494D400F0B998 /* CreateAEventViewController.xib */; };
+		66EEF4971711D9B000F962F1 /* snowflower.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66EEF4951711D9B000F962F1 /* snowflower.jpg */; };
+		66EEF4981711D9B000F962F1 /* snowflower.ped in Resources */ = {isa = PBXBuildFile; fileRef = 66EEF4961711D9B000F962F1 /* snowflower.ped */; };
 		66F1B92216EAE991003FEA7F /* GestureImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1B92116EAE991003FEA7F /* GestureImageView.m */; };
 		66F2E9811709DFED0023A16A /* ThumbnailListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F2E97E1709DFED0023A16A /* ThumbnailListView.m */; };
 		66F2E9821709DFED0023A16A /* UIView+ThumbnailListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F2E9801709DFED0023A16A /* UIView+ThumbnailListView.m */; };
@@ -1309,6 +1311,8 @@
 		66ECB32316F494D400F0B998 /* CreateAEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateAEventViewController.h; path = Views/CreateAEventViewController.h; sourceTree = "<group>"; };
 		66ECB32416F494D400F0B998 /* CreateAEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateAEventViewController.m; path = Views/CreateAEventViewController.m; sourceTree = "<group>"; };
 		66ECB32516F494D400F0B998 /* CreateAEventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateAEventViewController.xib; path = Views/CreateAEventViewController.xib; sourceTree = "<group>"; };
+		66EEF4951711D9B000F962F1 /* snowflower.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = snowflower.jpg; sourceTree = "<group>"; };
+		66EEF4961711D9B000F962F1 /* snowflower.ped */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = snowflower.ped; sourceTree = "<group>"; };
 		66F1B92016EAE991003FEA7F /* GestureImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GestureImageView.h; path = Custom/CustomView/GestureImageView.h; sourceTree = "<group>"; };
 		66F1B92116EAE991003FEA7F /* GestureImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GestureImageView.m; path = Custom/CustomView/GestureImageView.m; sourceTree = "<group>"; };
 		66F2E97D1709DFED0023A16A /* ThumbnailListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailListView.h; sourceTree = "<group>"; };
@@ -2435,6 +2439,8 @@
 		6684B741170B351A00987AF7 /* _animations */ = {
 			isa = PBXGroup;
 			children = (
+				66EEF4951711D9B000F962F1 /* snowflower.jpg */,
+				66EEF4961711D9B000F962F1 /* snowflower.ped */,
 				66FD4106170E8DAB00BD5254 /* no-eff.jpg */,
 				66868D7E170D892D008A056F /* blurryMayhem.jpg */,
 				66868D7C170D846D008A056F /* bubble.ped */,
@@ -3599,6 +3605,8 @@
 				66F5A014171183D600F30D6A /* Flower_vine.gif in Resources */,
 				66F5A015171183D600F30D6A /* flower02.gif in Resources */,
 				66F5A01E1711B51E00F30D6A /* icon-checkmark.png in Resources */,
+				66EEF4971711D9B000F962F1 /* snowflower.jpg in Resources */,
+				66EEF4981711D9B000F962F1 /* snowflower.ped in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
