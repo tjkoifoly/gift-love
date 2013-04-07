@@ -399,6 +399,9 @@
 		66B2C57217113D2900C51CEB /* OLImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C56E17113D2900C51CEB /* OLImage.m */; };
 		66B2C57317113D2900C51CEB /* OLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C57017113D2900C51CEB /* OLImageView.m */; };
 		66B2C57517113DD500C51CEB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66B2C57417113DD500C51CEB /* MobileCoreServices.framework */; };
+		66B2C577171158D100C51CEB /* card-icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66B2C576171158D100C51CEB /* card-icon.jpg */; };
+		66B2C58017115F2300C51CEB /* GiftElementsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C57E17115F2300C51CEB /* GiftElementsViewController.m */; };
+		66B2C58117115F2300C51CEB /* GiftElementsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66B2C57F17115F2300C51CEB /* GiftElementsViewController.xib */; };
 		66BADF5C16E9CDB300A8E60C /* Back Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 66BADF5A16E9CDB300A8E60C /* Back Button.png */; };
 		66BADF5D16E9CDB300A8E60C /* Back Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66BADF5B16E9CDB300A8E60C /* Back Button@2x.png */; };
 		66BADF6016E9CE4600A8E60C /* Add Item button Dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 66BADF5E16E9CE4600A8E60C /* Add Item button Dark.png */; };
@@ -1203,6 +1206,10 @@
 		66B2C56F17113D2900C51CEB /* OLImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLImageView.h; sourceTree = "<group>"; };
 		66B2C57017113D2900C51CEB /* OLImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLImageView.m; sourceTree = "<group>"; };
 		66B2C57417113DD500C51CEB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		66B2C576171158D100C51CEB /* card-icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "card-icon.jpg"; sourceTree = "<group>"; };
+		66B2C57D17115F2300C51CEB /* GiftElementsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiftElementsViewController.h; path = Views/GiftElementsViewController.h; sourceTree = "<group>"; };
+		66B2C57E17115F2300C51CEB /* GiftElementsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GiftElementsViewController.m; path = Views/GiftElementsViewController.m; sourceTree = "<group>"; };
+		66B2C57F17115F2300C51CEB /* GiftElementsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GiftElementsViewController.xib; path = Views/GiftElementsViewController.xib; sourceTree = "<group>"; };
 		66BADF5A16E9CDB300A8E60C /* Back Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Back Button.png"; path = "Resources/Back Button.png"; sourceTree = "<group>"; };
 		66BADF5B16E9CDB300A8E60C /* Back Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Back Button@2x.png"; path = "Resources/Back Button@2x.png"; sourceTree = "<group>"; };
 		66BADF5E16E9CE4600A8E60C /* Add Item button Dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Add Item button Dark.png"; path = "Resources/Add Item button Dark.png"; sourceTree = "<group>"; };
@@ -2127,6 +2134,7 @@
 		662507A517106B0A00FF3F8B /* _bg */ = {
 			isa = PBXGroup;
 			children = (
+				66B2C576171158D100C51CEB /* card-icon.jpg */,
 				662507A617106B0B00FF3F8B /* bg-txt.png */,
 			);
 			name = _bg;
@@ -2644,6 +2652,9 @@
 				6684B735170B20E000987AF7 /* MusicViewController.h */,
 				6684B736170B20E000987AF7 /* MusicViewController.m */,
 				6684B737170B20E000987AF7 /* MusicViewController.xib */,
+				66B2C57D17115F2300C51CEB /* GiftElementsViewController.h */,
+				66B2C57E17115F2300C51CEB /* GiftElementsViewController.m */,
+				66B2C57F17115F2300C51CEB /* GiftElementsViewController.xib */,
 			);
 			name = Gift;
 			sourceTree = "<group>";
@@ -3469,6 +3480,8 @@
 				66FD4107170E8DAB00BD5254 /* no-eff.jpg in Resources */,
 				662507A717106B0B00FF3F8B /* bg-txt.png in Resources */,
 				66B2C5671711305100C51CEB /* anixmas.gif in Resources */,
+				66B2C577171158D100C51CEB /* card-icon.jpg in Resources */,
+				66B2C58117115F2300C51CEB /* GiftElementsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3708,6 +3721,7 @@
 				66B2C57117113D2900C51CEB /* AFImageRequestOperation+OLImage.m in Sources */,
 				66B2C57217113D2900C51CEB /* OLImage.m in Sources */,
 				66B2C57317113D2900C51CEB /* OLImageView.m in Sources */,
+				66B2C58017115F2300C51CEB /* GiftElementsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

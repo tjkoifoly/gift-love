@@ -63,7 +63,7 @@
     [_listItems addObject:item];
     [self saveList];
 }
-- (void) removeItem: (GiftItem *)item
+- (void) removeGiftItem: (GiftItem *)item
 {
     [_listItems removeObject:item];
     [self saveList];

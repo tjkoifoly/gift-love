@@ -220,6 +220,7 @@
     id gift = [_listGifts objectAtIndex:indexPath.row];
     NSLog(@"Gift object = %@", gift);
     item.titleLabel.text = [NSString stringWithFormat:@"%@", gift ];
+    item.imageView.image = [UIImage imageNamed:@"card-icon.jpg"];
     
 	return item;
 }

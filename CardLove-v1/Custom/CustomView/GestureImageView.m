@@ -110,9 +110,6 @@
     }
     _maskingLayer = [CALayer layer];
     _maskingLayer.frame = self.bounds;
-//    CGColorRef colorRef = [UIColor whiteColor].CGColor;
-//    _maskingLayer.borderColor = colorRef;
-//    _maskingLayer.borderWidth = 2.0f;
     _maskingLayer.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5].CGColor;
     
     _maskingLayer.cornerRadius = self.layer.cornerRadius;
@@ -159,12 +156,6 @@
 
 - (void)tapDetected:(UITapGestureRecognizer *)tapRecognizer
 {
-//    [UIView animateWithDuration:0.25 animations:^{
-//        self.center = CGPointMake(CGRectGetMidX(self.superview.bounds), CGRectGetMidY(self.superview.bounds));
-//        self.transform = CGAffineTransformIdentity;
-//        [self.superview bringSubviewToFront:self];
-//    }];
-    [self.delegate displayEditor:self forImage:self.image];
     [self.delegate selectImageView:self];
 }
 

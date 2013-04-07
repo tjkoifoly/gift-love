@@ -49,10 +49,10 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 @implementation CreateCardViewController
 
 @synthesize toolBar;
-@synthesize pathConf = _pathConf;
-@synthesize pathResources =_pathResources;
-@synthesize exportMenu =_exportMenu;
-@synthesize giftName = _giftName;
+@synthesize pathConf        = _pathConf;
+@synthesize pathResources   = _pathResources;
+@synthesize exportMenu      = _exportMenu;
+@synthesize giftName        = _giftName;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -471,7 +471,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         
         GiftItem *itemDeleted1 = (GiftItem*) [[GiftItemManager sharedManager] findGiftByImageURL:currentPhoto.imgURL];
         NSLog(@"Delete Item = %@", [itemDeleted1.photo lastPathComponent] );
-        [[GiftItemManager sharedManager] removeItem:itemDeleted1];
+        [[GiftItemManager sharedManager] removeGiftItem:itemDeleted1];
     }
 
     [UIView animateWithDuration:0.5 animations:^{
@@ -522,7 +522,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
             
             GiftItem *itemDeleted = (GiftItem*) [[GiftItemManager sharedManager] findGiftByImageURL:focusObject.imgURL];
             NSLog(@"Delete Item = %@", [itemDeleted.photo lastPathComponent] );
-            [[GiftItemManager sharedManager] removeItem:itemDeleted];
+            [[GiftItemManager sharedManager] removeGiftItem:itemDeleted];
         }
         
         
@@ -536,15 +536,33 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         } completion:^(BOOL finished) {
             [focusObject removeFromSuperview];
         }];
+    }else if ([itemToDel isKindOfClass:[GestureImageView class]])
+    {
+        if (!currentPhoto) {
+            return;
+        }
+        
+        GiftElement *itemDeleted = (GiftElement *)[[GiftElementsManager sharedManager] findElementGiftByElementID:currentPhoto.elementID];
+        [[GiftElementsManager sharedManager] removeElement:itemDeleted];
+
+        [UIView animateWithDuration:0.5 animations:^{
+            currentPhoto.transform =
+            CGAffineTransformMakeTranslation(
+                                             currentPhoto.frame.origin.x,
+                                             480.0f + (currentPhoto.frame.size.height/2)  // move the whole view offscreen
+                                             );
+            currentPhoto.alpha = 0; // also fade to transparent
+        } completion:^(BOOL finished) {
+            [currentPhoto removeFromSuperview];
+        }];
     }
-    
-    
 }
 
 - (void) removeCurrentItem
 {
     [self removeItem:_selectedLabel];
     [self removeItem:focusObject];
+    [self removeItem:currentPhoto];
 }
 
 -(void)removeGestureView
@@ -562,7 +580,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         
         GiftItem *itemDeleted = (GiftItem*) [[GiftItemManager sharedManager] findGiftByImageURL:focusObject.imgURL];
         NSLog(@"Delete Item = %@", [itemDeleted.photo lastPathComponent] );
-        [[GiftItemManager sharedManager] removeItem:itemDeleted];
+        [[GiftItemManager sharedManager] removeGiftItem:itemDeleted];
     }
 
     
@@ -1211,7 +1229,12 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         [self focusItemDeslected:focusObject];
     }
     
-    [self currentItemDeslected:currentPhoto];
+    if ([[event touchesForView:currentPhoto] anyObject]) {
+        return;
+    }else
+    {
+        [self currentItemDeslected:currentPhoto];
+    }
     
     if ([[event touchesForView:_selectedLabel] anyObject]) {
         return;
@@ -1511,7 +1534,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     } while ([[GiftElementsManager sharedManager] findElementGiftByElementID:[NSString stringWithFormat:@"%i", randomID]]);
     imvPhoto.elementID = [NSString stringWithFormat:@"%i", randomID];
     imvPhoto.imgURL = imageName;
-    
+    imvPhoto.delegate = self;
     [self.viewCard addSubview:imvPhoto];
     
     GiftElement *item = [[GiftElement alloc] initWithGestureImageView:imvPhoto];
@@ -1527,7 +1550,18 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     imvPhoto.center = CGPointFromString(item.center);
     imvPhoto.transform = CGAffineTransformFromString(item.transform);
     imvPhoto.imgURL = item.imageURL;
+    imvPhoto.elementID = item.elementID;
+    imvPhoto.delegate = self;
     [self.viewCard addSubview:imvPhoto];
+
 }
+
+#pragma mark - GiftElementDelegate
+
+-(void) giftElementsViewControllerDidSelected:(NSString *)elementName
+{
+    [self addGifElementWithName:elementName];
+}
+
 
 @end
