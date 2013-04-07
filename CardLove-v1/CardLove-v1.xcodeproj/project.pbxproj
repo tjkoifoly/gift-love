@@ -533,6 +533,13 @@
 		66F3078616D9B97C00E681AD /* CustomSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F3078116D9B97C00E681AD /* CustomSelectionView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66F3078716D9B97C00E681AD /* CustomTabItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F3078316D9B97C00E681AD /* CustomTabItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66F4AFD4170457C600928AA3 /* GiftLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F4AFD3170457C600928AA3 /* GiftLabel.m */; };
+		66F5A00E1711839600F30D6A /* flower01.gif in Resources */ = {isa = PBXBuildFile; fileRef = 66F5A00C1711839600F30D6A /* flower01.gif */; };
+		66F5A00F1711839600F30D6A /* flower32.gif in Resources */ = {isa = PBXBuildFile; fileRef = 66F5A00D1711839600F30D6A /* flower32.gif */; };
+		66F5A013171183D600F30D6A /* Flower_divider.gif in Resources */ = {isa = PBXBuildFile; fileRef = 66F5A010171183D600F30D6A /* Flower_divider.gif */; };
+		66F5A014171183D600F30D6A /* Flower_vine.gif in Resources */ = {isa = PBXBuildFile; fileRef = 66F5A011171183D600F30D6A /* Flower_vine.gif */; };
+		66F5A015171183D600F30D6A /* flower02.gif in Resources */ = {isa = PBXBuildFile; fileRef = 66F5A012171183D600F30D6A /* flower02.gif */; };
+		66F5A018171186E300F30D6A /* GifThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F5A017171186E300F30D6A /* GifThumbnailView.m */; };
+		66F5A01B171187E700F30D6A /* GifThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F5A01A171187E700F30D6A /* GifThumbnailCell.m */; };
 		66F892B116FC16DD002EAA28 /* CMColourBlockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F892A216FC16DD002EAA28 /* CMColourBlockView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66F892B216FC16DD002EAA28 /* CMColourSelectTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F892A416FC16DD002EAA28 /* CMColourSelectTableViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66F892B316FC16DD002EAA28 /* CMColourSelectTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66F892A516FC16DD002EAA28 /* CMColourSelectTableViewController.xib */; };
@@ -1388,6 +1395,15 @@
 		66F3078316D9B97C00E681AD /* CustomTabItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTabItem.m; sourceTree = "<group>"; };
 		66F4AFD2170457C600928AA3 /* GiftLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiftLabel.h; path = ModelClasses/GiftLabel.h; sourceTree = "<group>"; };
 		66F4AFD3170457C600928AA3 /* GiftLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GiftLabel.m; path = ModelClasses/GiftLabel.m; sourceTree = "<group>"; };
+		66F5A00C1711839600F30D6A /* flower01.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = flower01.gif; sourceTree = "<group>"; };
+		66F5A00D1711839600F30D6A /* flower32.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = flower32.gif; sourceTree = "<group>"; };
+		66F5A010171183D600F30D6A /* Flower_divider.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Flower_divider.gif; sourceTree = "<group>"; };
+		66F5A011171183D600F30D6A /* Flower_vine.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Flower_vine.gif; sourceTree = "<group>"; };
+		66F5A012171183D600F30D6A /* flower02.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = flower02.gif; sourceTree = "<group>"; };
+		66F5A016171186E300F30D6A /* GifThumbnailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GifThumbnailView.h; path = Custom/CustomView/GifThumbnailView.h; sourceTree = "<group>"; };
+		66F5A017171186E300F30D6A /* GifThumbnailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GifThumbnailView.m; path = Custom/CustomView/GifThumbnailView.m; sourceTree = "<group>"; };
+		66F5A019171187E700F30D6A /* GifThumbnailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GifThumbnailCell.h; path = Custom/CustomView/GifThumbnailCell.h; sourceTree = "<group>"; };
+		66F5A01A171187E700F30D6A /* GifThumbnailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GifThumbnailCell.m; path = Custom/CustomView/GifThumbnailCell.m; sourceTree = "<group>"; };
 		66F892A116FC16DD002EAA28 /* CMColourBlockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMColourBlockView.h; sourceTree = "<group>"; };
 		66F892A216FC16DD002EAA28 /* CMColourBlockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMColourBlockView.m; sourceTree = "<group>"; };
 		66F892A316FC16DD002EAA28 /* CMColourSelectTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMColourSelectTableViewController.h; sourceTree = "<group>"; };
@@ -2578,6 +2594,7 @@
 		66B2C5641711305100C51CEB /* _gif_images */ = {
 			isa = PBXGroup;
 			children = (
+				66F5A00B1711839600F30D6A /* flowers */,
 				66B2C5651711305100C51CEB /* xmas */,
 			);
 			name = _gif_images;
@@ -2822,6 +2839,10 @@
 				66D70C09170182D700E12D42 /* PreviewCell.m */,
 				662507A2171065AC00FF3F8B /* PromptAlert.h */,
 				662507A3171065AC00FF3F8B /* PromptAlert.m */,
+				66F5A016171186E300F30D6A /* GifThumbnailView.h */,
+				66F5A017171186E300F30D6A /* GifThumbnailView.m */,
+				66F5A019171187E700F30D6A /* GifThumbnailCell.h */,
+				66F5A01A171187E700F30D6A /* GifThumbnailCell.m */,
 			);
 			name = CustomView;
 			sourceTree = "<group>";
@@ -2964,6 +2985,18 @@
 			);
 			name = TabView;
 			path = Custom/TabView;
+			sourceTree = "<group>";
+		};
+		66F5A00B1711839600F30D6A /* flowers */ = {
+			isa = PBXGroup;
+			children = (
+				66F5A010171183D600F30D6A /* Flower_divider.gif */,
+				66F5A011171183D600F30D6A /* Flower_vine.gif */,
+				66F5A012171183D600F30D6A /* flower02.gif */,
+				66F5A00C1711839600F30D6A /* flower01.gif */,
+				66F5A00D1711839600F30D6A /* flower32.gif */,
+			);
+			path = flowers;
 			sourceTree = "<group>";
 		};
 		66F892A016FC16DD002EAA28 /* CMTextStylePicker */ = {
@@ -3548,6 +3581,11 @@
 				66B2C5671711305100C51CEB /* anixmas.gif in Resources */,
 				66B2C577171158D100C51CEB /* card-icon.jpg in Resources */,
 				66B2C58117115F2300C51CEB /* GiftElementsViewController.xib in Resources */,
+				66F5A00E1711839600F30D6A /* flower01.gif in Resources */,
+				66F5A00F1711839600F30D6A /* flower32.gif in Resources */,
+				66F5A013171183D600F30D6A /* Flower_divider.gif in Resources */,
+				66F5A014171183D600F30D6A /* Flower_vine.gif in Resources */,
+				66F5A015171183D600F30D6A /* flower02.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3793,6 +3831,8 @@
 				66B2C5C017116BF200C51CEB /* EGOImageLoadConnection.m in Sources */,
 				66B2C5C117116BF200C51CEB /* EGOImageLoader.m in Sources */,
 				66B2C5C217116BF200C51CEB /* EGOImageView.m in Sources */,
+				66F5A018171186E300F30D6A /* GifThumbnailView.m in Sources */,
+				66F5A01B171187E700F30D6A /* GifThumbnailCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

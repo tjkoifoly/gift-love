@@ -1001,8 +1001,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 //            [self hideStyleView];
 //        }
 //    }
-    
-    [self addGifElementWithName:@"anixmas.gif"];
+    GiftElementsViewController *gevc = [[GiftElementsViewController alloc] initWithNibName:@"GiftElementsViewController" bundle:nil];
+    UINavigationController *navGif = [[UINavigationController alloc] initWithRootViewController:gevc];
+    [self presentModalViewController:navGif animated:YES];
 }
 
 - (IBAction)addMusic:(id)sender {
