@@ -14,7 +14,7 @@
 @class GiftElementsViewController;
 @protocol GiftElementsDelegate <NSObject>
 
--(void) giftElementsViewControllerDidSelected: (UIImage *) element;
+-(void) giftElementsViewControllerDidSelected: (NSString *) element;
 
 @end
 

@@ -28,3 +28,5 @@
 #define kTransfrom  @"transform"
 #define kPhoto      @"photo"
 #define kImgURL     @"imageURL"
+
+#define kNotificationGifSelected @"GifSelectedNotification"

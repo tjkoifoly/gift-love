@@ -18,13 +18,7 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         for (int i=0; i < 4; i++) {
-            
-            UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDetected:)];
-            tapRecognizer.numberOfTapsRequired = 1;
-            tapRecognizer.delegate = self;
-            
             GifThumbnailView *thumbnailView = [[GifThumbnailView alloc] initWithFrame:CGRectMake(6+(72 * i + 6 * i), 6, 72, 72)];
-            [thumbnailView addGestureRecognizer:tapRecognizer];
             [thumbnailView setHidden:YES];
             thumbnailView.tag = i;
             [self addSubview:thumbnailView];
@@ -54,12 +48,5 @@
     return nil;
 }
 
--(void)tapDetected: (UITapGestureRecognizer *) tapRecognizer
-{
-    GifThumbnailView *tapView = (GifThumbnailView *)[tapRecognizer view];
-    tapView.layer.borderColor = [UIColor redColor].CGColor;
-    
-    NSLog(@"DCM");
-}
 
 @end

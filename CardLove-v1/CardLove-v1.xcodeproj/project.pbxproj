@@ -540,6 +540,7 @@
 		66F5A015171183D600F30D6A /* flower02.gif in Resources */ = {isa = PBXBuildFile; fileRef = 66F5A012171183D600F30D6A /* flower02.gif */; };
 		66F5A018171186E300F30D6A /* GifThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F5A017171186E300F30D6A /* GifThumbnailView.m */; };
 		66F5A01B171187E700F30D6A /* GifThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F5A01A171187E700F30D6A /* GifThumbnailCell.m */; };
+		66F5A01E1711B51E00F30D6A /* icon-checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F5A01D1711B51E00F30D6A /* icon-checkmark.png */; };
 		66F892B116FC16DD002EAA28 /* CMColourBlockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F892A216FC16DD002EAA28 /* CMColourBlockView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66F892B216FC16DD002EAA28 /* CMColourSelectTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F892A416FC16DD002EAA28 /* CMColourSelectTableViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66F892B316FC16DD002EAA28 /* CMColourSelectTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66F892A516FC16DD002EAA28 /* CMColourSelectTableViewController.xib */; };
@@ -1404,6 +1405,7 @@
 		66F5A017171186E300F30D6A /* GifThumbnailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GifThumbnailView.m; path = Custom/CustomView/GifThumbnailView.m; sourceTree = "<group>"; };
 		66F5A019171187E700F30D6A /* GifThumbnailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GifThumbnailCell.h; path = Custom/CustomView/GifThumbnailCell.h; sourceTree = "<group>"; };
 		66F5A01A171187E700F30D6A /* GifThumbnailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GifThumbnailCell.m; path = Custom/CustomView/GifThumbnailCell.m; sourceTree = "<group>"; };
+		66F5A01D1711B51E00F30D6A /* icon-checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-checkmark.png"; sourceTree = "<group>"; };
 		66F892A116FC16DD002EAA28 /* CMColourBlockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMColourBlockView.h; sourceTree = "<group>"; };
 		66F892A216FC16DD002EAA28 /* CMColourBlockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMColourBlockView.m; sourceTree = "<group>"; };
 		66F892A316FC16DD002EAA28 /* CMColourSelectTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMColourSelectTableViewController.h; sourceTree = "<group>"; };
@@ -2319,6 +2321,7 @@
 		66310AD116D9A6B900AC9DC8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				66F5A01C1711B51D00F30D6A /* _icons */,
 				66B2C5641711305100C51CEB /* _gif_images */,
 				662507A517106B0A00FF3F8B /* _bg */,
 				6684B741170B351A00987AF7 /* _animations */,
@@ -2999,6 +3002,15 @@
 			path = flowers;
 			sourceTree = "<group>";
 		};
+		66F5A01C1711B51D00F30D6A /* _icons */ = {
+			isa = PBXGroup;
+			children = (
+				66F5A01D1711B51E00F30D6A /* icon-checkmark.png */,
+			);
+			name = _icons;
+			path = Resources/_icons;
+			sourceTree = "<group>";
+		};
 		66F892A016FC16DD002EAA28 /* CMTextStylePicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -3586,6 +3598,7 @@
 				66F5A013171183D600F30D6A /* Flower_divider.gif in Resources */,
 				66F5A014171183D600F30D6A /* Flower_vine.gif in Resources */,
 				66F5A015171183D600F30D6A /* flower02.gif in Resources */,
+				66F5A01E1711B51E00F30D6A /* icon-checkmark.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

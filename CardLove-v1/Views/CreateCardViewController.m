@@ -1002,6 +1002,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 //        }
 //    }
     GiftElementsViewController *gevc = [[GiftElementsViewController alloc] initWithNibName:@"GiftElementsViewController" bundle:nil];
+    gevc.delegate = self;
     UINavigationController *navGif = [[UINavigationController alloc] initWithRootViewController:gevc];
     [self presentModalViewController:navGif animated:YES];
 }

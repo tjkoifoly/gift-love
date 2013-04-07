@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-#import "OLImageView.h"
+#import "MacroDefine.h"
 
-@interface GifThumbnailView : OLImageView
 
-@property (nonatomic, strong) UIColor *borderColor;
+@interface GifThumbnailView : OLImageView <UIGestureRecognizerDelegate>
+
+@property (nonatomic, strong) NSString *imageName;
+
+-(void) selected: (BOOL) select;
 
 @end

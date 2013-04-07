@@ -44,6 +44,8 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self prepareDataSource];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gifElementSelected:) name:kNotificationGifSelected object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,7 +61,9 @@
 
 -(void) doneAction
 {
-    [self.delegate giftElementsViewControllerDidSelected:_selectedItem];
+    if (_selectedItem) {
+        [self.delegate giftElementsViewControllerDidSelected:((GifThumbnailView*)_selectedItem).imageName];
+    }
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -128,6 +132,7 @@
 
         GifThumbnailView *gtv = [cell gifViewByTag:(endIndex - 1 - i)];
         [gtv setImage:image];
+        [gtv setImageName:imageName];
         gtv.hidden = NO;
     }
     
@@ -157,12 +162,25 @@
     return 80;
 }
 
+#pragma mark - Notification Delegate
+-(void) gifElementSelected: (NSNotification *) notification
+{
+    GifThumbnailView *gifEle = (GifThumbnailView *) notification.object;
 
-
+    if (_selectedItem) {
+        [_selectedItem selected:NO];
+    }
+    [gifEle selected:YES];
+    _selectedItem = gifEle;
+    
+    //View Gif
+    
+}
 
 - (void)viewDidUnload {
     [self setTableView:nil];
     [self setDictDataSource:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationGifSelected object:nil];
     [super viewDidUnload];
 }
 @end
