@@ -10,4 +10,30 @@
 
 @implementation FunctionObject
 
++(id) sharedInstance
+{
+    static FunctionObject *__instance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        __instance = [[FunctionObject alloc] init];
+    });
+    
+     return __instance;
+}
+
+- (NSDate *)dateFromString:(NSString *)string
+{
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"MM/dd/yyyy"];
+    return [dateFormat dateFromString:string];
+}
+
+-(NSString *) dataFilePath: (NSString *) comp
+{
+    NSArray * dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                             NSUserDomainMask, YES);
+    NSString *docsDir = [dirPaths objectAtIndex:0];
+    return  [docsDir stringByAppendingPathComponent:comp];
+}
+
 @end

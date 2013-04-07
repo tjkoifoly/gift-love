@@ -10,4 +10,5 @@
 #import "SSCollectionViewController.h"
 @interface NewsViewController : SSCollectionViewController
 
+
 @end

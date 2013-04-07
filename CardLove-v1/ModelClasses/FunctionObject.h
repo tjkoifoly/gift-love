@@ -10,4 +10,9 @@
 
 @interface FunctionObject : NSObject
 
++(id)sharedInstance;
+
+- (NSDate *)dateFromString:(NSString *)string;
+-(NSString *) dataFilePath: (NSString *) comp;
+
 @end
