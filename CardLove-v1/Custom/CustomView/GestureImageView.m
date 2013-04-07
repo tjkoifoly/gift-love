@@ -15,7 +15,8 @@
 }
 
 @synthesize delegate;
-@synthesize imgURL;
+@synthesize imgURL = _imgURL;
+@synthesize elementID = _elementID;
 
 - (id)initWithFrame:(CGRect)frame
 {

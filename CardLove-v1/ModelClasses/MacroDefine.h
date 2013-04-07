@@ -7,6 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UIImage+GIF.h"
+#import "OLImage.h"
+#import "OLImageView.h"
 
 #define kNewProject     @"NewTemplate"
 #define kProjects       @"Projects"
@@ -18,3 +21,10 @@
 #define kIndex          @"index.tjkoifoly"
 #define kMusic          @"music.tjkoifoly"
 #define kAnimation      @"animation.tjkoifoly"
+#define kElements       @"elements.tjkoifoly"
+
+#define kBounds     @"bounds"
+#define kCenter     @"center"
+#define kTransfrom  @"transform"
+#define kPhoto      @"photo"
+#define kImgURL     @"imageURL"

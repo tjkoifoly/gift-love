@@ -390,6 +390,15 @@
 		66A327EB16DA811000AB3767 /* GHPushedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327E716DA811000AB3767 /* GHPushedViewController.m */; };
 		66A327EC16DA811000AB3767 /* GHRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327E916DA811000AB3767 /* GHRootViewController.m */; };
 		66AA4F7416FDC45D00F0DE4A /* UIView+Selection.m in Sources */ = {isa = PBXBuildFile; fileRef = 66AA4F7316FDC45D00F0DE4A /* UIView+Selection.m */; };
+		66B2C55B17112C3800C51CEB /* GiftElementsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C55A17112C3800C51CEB /* GiftElementsManager.m */; };
+		66B2C55E17112C5700C51CEB /* GiftElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C55D17112C5700C51CEB /* GiftElement.m */; };
+		66B2C56317112FE400C51CEB /* UIImage+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C56217112FE400C51CEB /* UIImage+GIF.m */; };
+		66B2C5671711305100C51CEB /* anixmas.gif in Resources */ = {isa = PBXBuildFile; fileRef = 66B2C5661711305100C51CEB /* anixmas.gif */; };
+		66B2C5691711317E00C51CEB /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66B2C5681711317E00C51CEB /* ImageIO.framework */; };
+		66B2C57117113D2900C51CEB /* AFImageRequestOperation+OLImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C56C17113D2900C51CEB /* AFImageRequestOperation+OLImage.m */; };
+		66B2C57217113D2900C51CEB /* OLImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C56E17113D2900C51CEB /* OLImage.m */; };
+		66B2C57317113D2900C51CEB /* OLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C57017113D2900C51CEB /* OLImageView.m */; };
+		66B2C57517113DD500C51CEB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66B2C57417113DD500C51CEB /* MobileCoreServices.framework */; };
 		66BADF5C16E9CDB300A8E60C /* Back Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 66BADF5A16E9CDB300A8E60C /* Back Button.png */; };
 		66BADF5D16E9CDB300A8E60C /* Back Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66BADF5B16E9CDB300A8E60C /* Back Button@2x.png */; };
 		66BADF6016E9CE4600A8E60C /* Add Item button Dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 66BADF5E16E9CE4600A8E60C /* Add Item button Dark.png */; };
@@ -1179,6 +1188,21 @@
 		66A327E916DA811000AB3767 /* GHRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHRootViewController.m; path = Custom/MenuNav/GHRootViewController.m; sourceTree = "<group>"; };
 		66AA4F7216FDC45D00F0DE4A /* UIView+Selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Selection.h"; path = "Custom/CustomView/UIView+Selection.h"; sourceTree = "<group>"; };
 		66AA4F7316FDC45D00F0DE4A /* UIView+Selection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Selection.m"; path = "Custom/CustomView/UIView+Selection.m"; sourceTree = "<group>"; };
+		66B2C55917112C3800C51CEB /* GiftElementsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiftElementsManager.h; path = Data/GiftElementsManager.h; sourceTree = "<group>"; };
+		66B2C55A17112C3800C51CEB /* GiftElementsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GiftElementsManager.m; path = Data/GiftElementsManager.m; sourceTree = "<group>"; };
+		66B2C55C17112C5700C51CEB /* GiftElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiftElement.h; path = ModelClasses/GiftElement.h; sourceTree = "<group>"; };
+		66B2C55D17112C5700C51CEB /* GiftElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GiftElement.m; path = ModelClasses/GiftElement.m; sourceTree = "<group>"; };
+		66B2C56117112FE400C51CEB /* UIImage+GIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GIF.h"; sourceTree = "<group>"; };
+		66B2C56217112FE400C51CEB /* UIImage+GIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GIF.m"; sourceTree = "<group>"; };
+		66B2C5661711305100C51CEB /* anixmas.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = anixmas.gif; sourceTree = "<group>"; };
+		66B2C5681711317E00C51CEB /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		66B2C56B17113D2900C51CEB /* AFImageRequestOperation+OLImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFImageRequestOperation+OLImage.h"; sourceTree = "<group>"; };
+		66B2C56C17113D2900C51CEB /* AFImageRequestOperation+OLImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFImageRequestOperation+OLImage.m"; sourceTree = "<group>"; };
+		66B2C56D17113D2900C51CEB /* OLImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLImage.h; sourceTree = "<group>"; };
+		66B2C56E17113D2900C51CEB /* OLImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLImage.m; sourceTree = "<group>"; };
+		66B2C56F17113D2900C51CEB /* OLImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLImageView.h; sourceTree = "<group>"; };
+		66B2C57017113D2900C51CEB /* OLImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLImageView.m; sourceTree = "<group>"; };
+		66B2C57417113DD500C51CEB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		66BADF5A16E9CDB300A8E60C /* Back Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Back Button.png"; path = "Resources/Back Button.png"; sourceTree = "<group>"; };
 		66BADF5B16E9CDB300A8E60C /* Back Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Back Button@2x.png"; path = "Resources/Back Button@2x.png"; sourceTree = "<group>"; };
 		66BADF5E16E9CE4600A8E60C /* Add Item button Dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Add Item button Dark.png"; path = "Resources/Add Item button Dark.png"; sourceTree = "<group>"; };
@@ -1450,6 +1474,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66B2C57517113DD500C51CEB /* MobileCoreServices.framework in Frameworks */,
+				66B2C5691711317E00C51CEB /* ImageIO.framework in Frameworks */,
 				66F2E9DD1709F03A0023A16A /* AVFoundation.framework in Frameworks */,
 				6604FA5216DBC70800295209 /* CoreText.framework in Frameworks */,
 				6604FA4E16DBC6F400295209 /* libz.1.2.5.dylib in Frameworks */,
@@ -2117,6 +2143,8 @@
 		66310A8C16D9A27F00AC9DC8 = {
 			isa = PBXGroup;
 			children = (
+				66B2C57417113DD500C51CEB /* MobileCoreServices.framework */,
+				66B2C5681711317E00C51CEB /* ImageIO.framework */,
 				66F2E9DC1709F0390023A16A /* AVFoundation.framework */,
 				66FD83A316E7645800355992 /* Data */,
 				66FD83A216E7645200355992 /* ModelClasses */,
@@ -2203,6 +2231,7 @@
 		66310ACF16D9A37900AC9DC8 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				66B2C55F17112FE400C51CEB /* GIF */,
 				6684B73A170B346500987AF7 /* UIEffectDesignerView */,
 				6684B727170B1C5700987AF7 /* SoundManager */,
 				66F2E97C1709DFED0023A16A /* ThumbnailListView */,
@@ -2250,6 +2279,7 @@
 		66310AD116D9A6B900AC9DC8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				66B2C5641711305100C51CEB /* _gif_images */,
 				662507A517106B0A00FF3F8B /* _bg */,
 				6684B741170B351A00987AF7 /* _animations */,
 				66F2E9D91709EFF70023A16A /* _sounds */,
@@ -2496,6 +2526,55 @@
 			);
 			name = Cell;
 			path = Custom/Cell;
+			sourceTree = "<group>";
+		};
+		66B2C55F17112FE400C51CEB /* GIF */ = {
+			isa = PBXGroup;
+			children = (
+				66B2C56A17113D2900C51CEB /* Categories */,
+				66B2C56D17113D2900C51CEB /* OLImage.h */,
+				66B2C56E17113D2900C51CEB /* OLImage.m */,
+				66B2C56F17113D2900C51CEB /* OLImageView.h */,
+				66B2C57017113D2900C51CEB /* OLImageView.m */,
+				66B2C56017112FE400C51CEB /* LBGIFImage */,
+			);
+			name = GIF;
+			path = Library/GIF;
+			sourceTree = "<group>";
+		};
+		66B2C56017112FE400C51CEB /* LBGIFImage */ = {
+			isa = PBXGroup;
+			children = (
+				66B2C56117112FE400C51CEB /* UIImage+GIF.h */,
+				66B2C56217112FE400C51CEB /* UIImage+GIF.m */,
+			);
+			path = LBGIFImage;
+			sourceTree = "<group>";
+		};
+		66B2C5641711305100C51CEB /* _gif_images */ = {
+			isa = PBXGroup;
+			children = (
+				66B2C5651711305100C51CEB /* xmas */,
+			);
+			name = _gif_images;
+			path = Resources/_gif_images;
+			sourceTree = "<group>";
+		};
+		66B2C5651711305100C51CEB /* xmas */ = {
+			isa = PBXGroup;
+			children = (
+				66B2C5661711305100C51CEB /* anixmas.gif */,
+			);
+			path = xmas;
+			sourceTree = "<group>";
+		};
+		66B2C56A17113D2900C51CEB /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				66B2C56B17113D2900C51CEB /* AFImageRequestOperation+OLImage.h */,
+				66B2C56C17113D2900C51CEB /* AFImageRequestOperation+OLImage.m */,
+			);
+			path = Categories;
 			sourceTree = "<group>";
 		};
 		66B3C00C16FC0F93007D1339 /* Profiles */ = {
@@ -2919,13 +2998,15 @@
 		66FD83A216E7645200355992 /* ModelClasses */ = {
 			isa = PBXGroup;
 			children = (
+				662507A9171087BF00FF3F8B /* MacroDefine.h */,
 				66FD83A416E764BF00355992 /* Friend.h */,
 				66FD83A516E764BF00355992 /* Friend.m */,
 				660A417D16F38BA0006F593D /* GiftItem.h */,
 				660A417E16F38BA0006F593D /* GiftItem.m */,
+				66B2C55C17112C5700C51CEB /* GiftElement.h */,
+				66B2C55D17112C5700C51CEB /* GiftElement.m */,
 				66F4AFD2170457C600928AA3 /* GiftLabel.h */,
 				66F4AFD3170457C600928AA3 /* GiftLabel.m */,
-				662507A9171087BF00FF3F8B /* MacroDefine.h */,
 				662507AC1710885500FF3F8B /* FunctionObject.h */,
 				662507AD1710885500FF3F8B /* FunctionObject.m */,
 			);
@@ -2941,6 +3022,8 @@
 				660A418116F38FA6006F593D /* GiftItemManager.m */,
 				66FDD12A17049878008BD0B7 /* GiftLabelsManager.h */,
 				66FDD12B17049878008BD0B7 /* GiftLabelsManager.m */,
+				66B2C55917112C3800C51CEB /* GiftElementsManager.h */,
+				66B2C55A17112C3800C51CEB /* GiftElementsManager.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -3385,6 +3468,7 @@
 				66FD4103170E886500BD5254 /* card-love-sample.png in Resources */,
 				66FD4107170E8DAB00BD5254 /* no-eff.jpg in Resources */,
 				662507A717106B0B00FF3F8B /* bg-txt.png in Resources */,
+				66B2C5671711305100C51CEB /* anixmas.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3618,6 +3702,12 @@
 				6684B740170B346500987AF7 /* UIEffectDesignerView.m in Sources */,
 				662507A4171065AC00FF3F8B /* PromptAlert.m in Sources */,
 				662507AE1710885500FF3F8B /* FunctionObject.m in Sources */,
+				66B2C55B17112C3800C51CEB /* GiftElementsManager.m in Sources */,
+				66B2C55E17112C5700C51CEB /* GiftElement.m in Sources */,
+				66B2C56317112FE400C51CEB /* UIImage+GIF.m in Sources */,
+				66B2C57117113D2900C51CEB /* AFImageRequestOperation+OLImage.m in Sources */,
+				66B2C57217113D2900C51CEB /* OLImage.m in Sources */,
+				66B2C57317113D2900C51CEB /* OLImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

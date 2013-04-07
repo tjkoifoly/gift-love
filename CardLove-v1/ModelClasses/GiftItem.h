@@ -9,13 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "GestureImageView.h"
 #import "GestureView.h"
+#import "MacroDefine.h"
 
 #define kClass      @"ofClass"
 #define kFrame      @"frame"
-#define kBounds     @"bounds"
-#define kCenter     @"center"
-#define kTransfrom  @"transform"
-#define kPhoto      @"photo"
+
 
 @interface GiftItem : NSObject <NSCoding>
 

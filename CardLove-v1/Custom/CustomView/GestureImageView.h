@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OLImageView.h"
 
 @class GestureImageView;
 @protocol GesturePhotoDelegate <NSObject>
@@ -16,10 +17,11 @@
 
 @end
 
-@interface GestureImageView : UIImageView <UIGestureRecognizerDelegate>
+@interface GestureImageView : OLImageView <UIGestureRecognizerDelegate>
 
 @property (assign, nonatomic) id<GesturePhotoDelegate> delegate;
 @property (strong, nonatomic) NSString *imgURL;
+@property (strong, nonatomic) NSString *elementID;
 
 -(void) showShadow:(BOOL) show;
 -(void) showBorder: (BOOL) show;

@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "SSCollectionViewController.h"
+#import "MacroDefine.h"
+#import "CreateCardViewController.h"
 
 @interface StoredCardsViewController : SSCollectionViewController
+
+@property (strong, nonatomic) NSMutableArray *listGifts;
 
 @end

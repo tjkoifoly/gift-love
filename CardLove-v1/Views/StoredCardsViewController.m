@@ -18,6 +18,8 @@
 
 @implementation StoredCardsViewController
 
+@synthesize listGifts = _listGifts;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -31,6 +33,35 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    _listGifts = [[NSMutableArray alloc] init];
+}
+
+-(void) viewDidUnload
+{
+    [self setListGifts:nil];
+    [super viewDidUnload];
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    NSString *pathProjects = [self dataFilePath:kGift];
+    NSFileManager *fileMgr = [NSFileManager defaultManager];
+    
+    NSError *error = nil;
+    NSArray *subDirs = [fileMgr contentsOfDirectoryAtPath:pathProjects error:&error];
+    
+    _listGifts = [NSMutableArray arrayWithArray:subDirs];
+    if ([_listGifts count] >0) {
+        if ([[_listGifts objectAtIndex:0] isEqual:@".DS_Store"]) {
+            [_listGifts removeObjectAtIndex:0];
+        }
+    }
+    
+    [self.collectionView reloadData];
+
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,15 +70,23 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(NSString *) dataFilePath: (NSString *) comp
+{
+    NSArray * dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                             NSUserDomainMask, YES);
+    NSString *docsDir = [dirPaths objectAtIndex:0];
+    return  [docsDir stringByAppendingPathComponent:comp];
+}
+
 #pragma mark - SSCollectionViewDataSource
 
 - (NSUInteger)numberOfSectionsInCollectionView:(SSCollectionView *)aCollectionView {
-	return 3;
+	return 1;
 }
 
 
 - (NSUInteger)collectionView:(SSCollectionView *)aCollectionView numberOfItemsInSection:(NSUInteger)section {
-	return 5;
+	return [_listGifts count];
 }
 
 
@@ -93,6 +132,8 @@
         item = (SSCollectionViewItem *)[[[NSBundle mainBundle] loadNibNamed:@"SSCollectionViewItem" owner:self options:nil] objectAtIndex:0];
         item.reuseIdentifier = [itemIdentifier copy];
     }
+    NSString *gift = [_listGifts objectAtIndex:indexPath.row];
+    item.titleLabel.text = gift;
     
 	return item;
 }
@@ -109,7 +150,7 @@
 	//return header;
     
     CollectionHeaderView *header = [[[NSBundle mainBundle] loadNibNamed:@"CollectionHeaderView" owner:self options:nil] objectAtIndex:0];
-    header.lbTitle.text = [NSString stringWithFormat:@"Section %i", section + 1];
+    header.lbTitle.text = [NSString stringWithFormat:@"Favorite"];
     
     return header;
 }
@@ -123,11 +164,14 @@
 
 
 - (void)collectionView:(SSCollectionView *)aCollectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-	NSString *title = [NSString stringWithFormat:@"You selected item %i in section %i!",
-					   indexPath.row + 1, indexPath.section + 1];
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:nil delegate:nil
-										  cancelButtonTitle:@"Oh, awesome!" otherButtonTitles:nil];
-	[alert show];
+	
+    NSString *gift = [_listGifts objectAtIndex:indexPath.row];
+    
+    CreateCardViewController *ccvc = [[CreateCardViewController alloc] initWithNibName:@"CreateCardViewController" bundle:nil];
+    ccvc.giftName = gift;
+    self.tabBarController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:ccvc animated:YES];
+    self.tabBarController.hidesBottomBarWhenPushed = NO;
 }
 
 

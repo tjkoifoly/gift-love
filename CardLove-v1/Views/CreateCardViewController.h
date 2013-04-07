@@ -15,6 +15,8 @@
 #import "GestureView.h"
 #import "GestureLabel.h"
 #import "GiftLabelsManager.h"
+#import "GiftElement.h"
+#import "GiftElementsManager.h"
 #import <AVFoundation/AVFoundation.h>
 #import "MusicViewController.h"
 #import "AnimationsViewController.h"

@@ -44,8 +44,6 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 @property (strong, nonatomic) NSString *pathResources;
 @property (strong, nonatomic) NSString *pathConf;
 
--(void) addPhotoView: (UIImage *)image;
-
 @end
 
 @implementation CreateCardViewController
@@ -85,10 +83,14 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     if (!_giftName) {
         _giftName = kNewProject;
         _pathResources = [self dataFilePath:_giftName];
+
+        self.navigationItem.title = @"New Gift";
     }else
     {
         NSString *pathProjs = [self dataFilePath:kProjects];
         _pathResources = [pathProjs stringByAppendingPathComponent:_giftName];
+
+        self.navigationItem.title = _giftName;        
     }
     NSLog(@"PATH = %@", _pathResources);
     _pathConf = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:kIndex]];
@@ -96,8 +98,6 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     //Sound Manager
     [SoundManager sharedManager].allowsBackgroundMusic = NO;
     [[SoundManager sharedManager] prepareToPlay];
-    
-    self.navigationItem.title = @"New Gift";
 
     UIBarButtonItem *btnSave = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveCard)];
     UIBarButtonItem *btnSend = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(showExportMenu)];
@@ -130,6 +130,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
             
             [self loadGiftView];
             [self loadGiftLabels];
+            [self loadGIFElement];
             [self loadMusic];
             [self loadAnimation];
         }
@@ -269,7 +270,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     
     NSMutableArray *listItems = [[NSMutableArray alloc] init];
     NSMutableArray *listLabels = [[NSMutableArray alloc] init];
-    
+    NSMutableArray *listElements = [[NSMutableArray alloc] init];
     
     NSArray *arrPhotos = [self.viewCard subviews];
     NSLog(@"ARR = %@", arrPhotos);
@@ -287,14 +288,24 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
             GestureLabel *gtemp = (GestureLabel *) subview;
             GiftLabel *gl = [[GiftLabel alloc] initWithGestureLabel:gtemp];
             [listLabels addObject:gl];
+        }else if ([subview isKindOfClass:[GestureImageView class]])
+        {
+            GestureImageView *etem = (GestureImageView *)subview;
+            GiftElement *ge = [[GiftElement alloc] initWithGestureImageView:etem];
+            [listElements addObject:ge];
         }
+        
     }
     
     [[GiftItemManager sharedManager] setListItems:listItems];
     [[GiftLabelsManager sharedManager] setListLabels:listLabels];
+    [[GiftElementsManager sharedManager] setListElenemts:listElements];
+    
     if ([[GiftItemManager sharedManager] saveList]) {
         if ([[GiftLabelsManager sharedManager] saveListLabel]) {
-            [self showMessageWithCompletedView:@"Saved"];
+            if ([[GiftElementsManager sharedManager] saveListElements]) {
+                [self showMessageWithCompletedView:@"Saved"];
+            }
         }
     }
     
@@ -678,34 +689,6 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 /* ----------------------------------------------------------------------------------*/
 
--(void) addPhotoView: (UIImage *)image
-{
-    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:image];
-    
-    imvPhoto.imgURL = [self saveImagetoResources:image];
-    
-    [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:imvPhoto inView:self.viewCard];
-    [imvPhoto showShadow:YES];
-    imvPhoto.delegate = self;
-    
-    GiftItem *item = [[GiftItem alloc] initWithView:imvPhoto];
-    [[GiftItemManager sharedManager] addItem:item];
-    
-    [self.viewCard addSubview:imvPhoto];
-    
-    CABasicAnimation *animation =
-    [CABasicAnimation animationWithKeyPath:@"position"];
-    [animation setDuration:0.1];
-    [animation setRepeatCount:4];
-    [animation setAutoreverses:YES];
-    [animation setFromValue:[NSValue valueWithCGPoint:
-                             CGPointMake([imvPhoto center].x - 20.0f, [imvPhoto center].y)]];
-    [animation setToValue:[NSValue valueWithCGPoint:
-                           CGPointMake([imvPhoto center].x + 20.0f, [imvPhoto center].y)]];
-    [[imvPhoto layer] addAnimation:animation forKey:@"position"];
-    
-    currentPhoto = imvPhoto;
-}
 
 -(void) addViewPhoto: (UIImage *)image
 {
@@ -724,20 +707,6 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 }
 
 /* ----------------------------------------------------------------------------------*/
-
--(void) addPhotoViewWithItem: (GiftItem *) item
-{
-    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:item.photo]];
-    imvPhoto.bounds = CGRectFromString(item.bounds);
-    imvPhoto.center = CGPointFromString(item.center);
-    imvPhoto.transform = CGAffineTransformFromString(item.transform);
-    imvPhoto.imgURL = item.photo;
-    
-    [imvPhoto showShadow:YES];
-    imvPhoto.delegate = self;
-    
-    [self.viewCard addSubview:imvPhoto];
-}
 
 -(void) addViewPhotoWithItem: (GiftItem *) item
 {
@@ -985,6 +954,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 }
 
 - (IBAction)addText:(id)sender {
+    
     CMTextStylePickerViewController *textStylePickerViewController = [CMTextStylePickerViewController textStylePickerViewController];
 	textStylePickerViewController.delegate = self;
 		
@@ -995,10 +965,6 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 - (IBAction)addAnimation:(id)sender {
     
-//    strCurrentEffect = @"snowfall.ped";
-//    UIEffectDesignerView *effView = [UIEffectDesignerView effectWithFile:@"bubble.ped"];
-//    [self.imvFrameCard addSubview:effView];
-    
     AnimationsViewController *avc = [[AnimationsViewController alloc] initWithNibName:@"AnimationsViewController" bundle:nil];
     avc.currentEffect = strCurrentEffect;
     avc.delegate = self;
@@ -1008,16 +974,17 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 }
 - (IBAction)editPhoto:(id)sender {
     
-    if (currentPhoto) {
-        if (toolViewStyle.frame.origin.y > 460) {
-            toolViewStyle.viewToEdit = currentPhoto;
-            [self showStyleView];
-        }else
-        {
-            [self hideStyleView];
-        }
-    }
+//    if (currentPhoto) {
+//        if (toolViewStyle.frame.origin.y > 460) {
+//            toolViewStyle.viewToEdit = currentPhoto;
+//            [self showStyleView];
+//        }else
+//        {
+//            [self hideStyleView];
+//        }
+//    }
     
+    [self addGifElementWithName:@"anixmas.gif"];
 }
 
 - (IBAction)addMusic:(id)sender {
@@ -1170,8 +1137,12 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
                 _pathResources = pathOfThisGift;
                 _pathConf = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:kIndex]];
                 [[GiftItemManager sharedManager] setPathData:_pathConf];
+                
                 NSString *pathLabels = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:kGiftLabel]];
                 [[GiftLabelsManager sharedManager] setPathData:pathLabels];
+                
+                NSString *pathEles = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:kElements]];
+                [[GiftElementsManager sharedManager]setPathData:pathEles];
 
                 
                 NSArray *arrPhotos = [self.viewCard subviews];
@@ -1495,5 +1466,68 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     
 }
 
+-(void) addShakingAnimationToView: (UIView *)viewAnimation
+{
+    CABasicAnimation *animation =
+    [CABasicAnimation animationWithKeyPath:@"position"];
+    [animation setDuration:0.1];
+    [animation setRepeatCount:4];
+    [animation setAutoreverses:YES];
+    [animation setFromValue:[NSValue valueWithCGPoint:
+                                CGPointMake([viewAnimation center].x - 20.0f, [viewAnimation center].y)]];
+    [animation setToValue:[NSValue valueWithCGPoint:
+                               CGPointMake([viewAnimation center].x + 20.0f, [viewAnimation center].y)]];
+    [[viewAnimation layer] addAnimation:animation forKey:@"position"];
+
+}
+
+#pragma mark - 
+#pragma mark - GIF Method
+-(void) loadGIFElement
+{
+    NSString *pathElements = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:kElements]];
+    [[GiftElementsManager sharedManager] setPathData:pathElements];
+    NSArray *listElements = [[GiftElementsManager sharedManager] getListElements];
+    NSLog(@"LIST = %@", listElements);
+    
+    for(GiftElement *gi in listElements)
+    {
+        [self addPhotoViewWithItem:gi];
+    }
+}
+
+
+-(void) addGifElementWithName: (NSString *)imageName
+{
+    UIImage *image = [OLImage imageNamed:imageName];
+    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithFrame:CGRectZero];
+    [imvPhoto setImage:image];
+    [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:imvPhoto inView:self.viewCard];
+    
+    NSInteger randomID ;
+    do {
+        randomID = arc4random() % 1000;
+        NSLog(@"ID = %i", randomID);
+    } while ([[GiftElementsManager sharedManager] findElementGiftByElementID:[NSString stringWithFormat:@"%i", randomID]]);
+    imvPhoto.elementID = [NSString stringWithFormat:@"%i", randomID];
+    imvPhoto.imgURL = imageName;
+    
+    [self.viewCard addSubview:imvPhoto];
+    
+    GiftElement *item = [[GiftElement alloc] initWithGestureImageView:imvPhoto];
+    [[GiftElementsManager sharedManager] addElement:item];
+
+}
+
+-(void) addPhotoViewWithItem: (GiftElement *) item
+{
+    UIImage *image = [OLImage imageNamed:item.imageURL];
+    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:image];
+    imvPhoto.bounds = CGRectFromString(item.bounds);
+    imvPhoto.center = CGPointFromString(item.center);
+    imvPhoto.transform = CGAffineTransformFromString(item.transform);
+    imvPhoto.imgURL = item.imageURL;
+    [self.viewCard addSubview:imvPhoto];
+}
 
 @end
