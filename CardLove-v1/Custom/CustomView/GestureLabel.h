@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "UILabel+dynamicSizeMe.h"
+#import "THLabel.h"
+#import "FXLabel.h"
 #import <QuartzCore/QuartzCore.h>
 
 @class GestureLabel;
@@ -18,7 +20,7 @@
 
 @end
 
-@interface GestureLabel : UILabel <UIGestureRecognizerDelegate>
+@interface GestureLabel : FXLabel <UIGestureRecognizerDelegate>
 
 @property (assign, nonatomic) NSString* labelID;
 @property (strong, nonatomic) UIImageView *resizeImage;

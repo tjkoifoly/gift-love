@@ -70,6 +70,8 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self createNewFolder:kGift];
     [self createNewFolder:kPackages];
     
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern.png"] ];
+    
     UIColor *c = [UIColor colorWithRed:0.65454 green:0.2454 blue:0.7345 alpha:1];
     NSLog(@"___COLOR = %@", c);
     
@@ -414,14 +416,14 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     NSString *fileName = [NSString stringWithFormat:@"%@.png", _giftName];
     NSString *filePath = [cardsPath stringByAppendingPathComponent:fileName];
     
-    UIImage *imageSaved = [self imageCaptureSave:self.viewCard];
-    UIImageView *imvFrame = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 390)];
-    imvFrame.image = [UIImage imageNamed:@"card-frame-4.png"];
-    UIImageView *imvCard = [[UIImageView alloc] initWithImage:imageSaved];
-    imvCard.center = CGPointMake(imvFrame.bounds.size.width/2, imvFrame.bounds.size.height/2);
-    [imvFrame addSubview:imvCard];
-    
-    UIImage *finalImage = [self imageCaptureSave:imvFrame];
+//    UIImage *imageSaved = [self imageCaptureSave:self.viewCard];
+//    UIImageView *imvFrame = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 390)];
+//    imvFrame.image = [UIImage imageNamed:@"card-frame-4.png"];
+//    UIImageView *imvCard = [[UIImageView alloc] initWithImage:imageSaved];
+//    imvCard.center = CGPointMake(imvFrame.bounds.size.width/2, imvFrame.bounds.size.height/2);
+//    [imvFrame addSubview:imvCard];
+//    UIImage *finalImage = [self imageCaptureSave:imvFrame];
+    UIImage *finalImage = [self imageCaptureSave:self.viewGift];
     
     NSData *dataImage = [NSData dataWithData:UIImagePNGRepresentation(finalImage)];
     [dataImage writeToFile:filePath atomically:YES];

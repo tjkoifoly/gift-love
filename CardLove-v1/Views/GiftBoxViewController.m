@@ -17,6 +17,8 @@
 
 @implementation GiftBoxViewController
 
+@synthesize transition = _transition;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -70,6 +72,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    _transition = [[DoorsTransition alloc] init];
 }
 
 -(void) initComponents
@@ -95,6 +98,12 @@
     self.customizableViewControllers = controllers;
     [self setSelectedViewController:nav3];
     
+}
+
+-(void) viewDidUnload
+{
+    [self setTransition:nil];
+    [super viewDidUnload];
 }
 
 
@@ -145,9 +154,19 @@
 
 -(void) viewGiftCard
 {
-    CGPoint point = CGPointMake(320/2, 416/2);
     ViewGiftViewController *cvcv = [[ViewGiftViewController alloc] initWithNibName:@"ViewGiftViewController" bundle:nil];
-    [[self navigationController] kt_pushViewController:cvcv explodeFromPoint:point];
+    cvcv.delegate = self;
+    
+    [[HMGLTransitionManager sharedTransitionManager] setTransition:_transition];
+    [[HMGLTransitionManager sharedTransitionManager] presentModalViewController:cvcv onViewController:self.navigationController];
+    
+}
+
+#pragma mark - ViewGift Delegate
+-(void) modalControllerDidFinish:(ViewGiftViewController *)modalController
+{
+    [[HMGLTransitionManager sharedTransitionManager] setTransition:_transition];
+	[[HMGLTransitionManager sharedTransitionManager] dismissModalViewController:modalController];
 }
 
 @end

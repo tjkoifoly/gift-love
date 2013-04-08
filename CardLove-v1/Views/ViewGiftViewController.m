@@ -15,6 +15,7 @@
 @implementation ViewGiftViewController
 
 @synthesize giftName = _giftName;
+@synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,27 +30,20 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern.png"]];
     
 }
 
 -(void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btnBack setBackgroundImage:[UIImage imageNamed:@"Back Button.png"] forState:UIControlStateNormal];
-    [btnBack setFrame:CGRectMake(160, 200, 54, 34)];
-    [btnBack addTarget:self action:@selector(backPreviousView) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btnBack];
-    
     [self loadGiftByName:_giftName];
     
 }
 
 -(void) backPreviousView
 {
-    CGPoint point = CGPointMake(320/2, 416/2);
-    [[self navigationController] kt_popViewControllerImplodeToPoint:point];
+    [self.delegate modalControllerDidFinish:self];
 }
 
 -(void) loadGiftByName: (NSString *) nameOfGift

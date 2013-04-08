@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UINavigationController+KTTransitions.h"
+@class ViewGiftViewController;
+@protocol ViewGiftControllerDelegate <NSObject>
+
+- (void)modalControllerDidFinish:(ViewGiftViewController*)modalController;
+
+@end
 
 @interface ViewGiftViewController : UIViewController
 
+@property (assign, nonatomic) id<ViewGiftControllerDelegate> delegate;
 @property (strong, nonatomic) NSString * giftName;
 
 @end

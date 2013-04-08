@@ -11,13 +11,16 @@
 #import "CardsViewController.h"
 #import "StoredCardsViewController.h"
 #import "ViewGiftViewController.h"
-#import "UINavigationController+KTTransitions.h"
+#import "HMGLTransitionManager.h"
+#import "DoorsTransition.h"
 
-@interface GiftBoxViewController : UITabBarController <CardViewControllerDelegate>
+@interface GiftBoxViewController : UITabBarController <CardViewControllerDelegate, ViewGiftControllerDelegate>
 {
 @private
 	RevealBlock _revealBlock;
 }
+
+@property (nonatomic, strong) HMGLTransition *transition;
 
 - (id)initWithTitle:(NSString *)title withRevealBlock:(RevealBlock)revealBlock;
 

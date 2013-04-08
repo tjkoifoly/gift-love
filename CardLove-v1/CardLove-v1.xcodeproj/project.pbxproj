@@ -271,6 +271,14 @@
 		6632EA0816E2388300770AEF /* TSPopoverPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6632EA0016E2388300770AEF /* TSPopoverPopoverView.m */; };
 		6632EA0916E2388300770AEF /* TSPopoverTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6632EA0316E2388300770AEF /* TSPopoverTouchView.m */; };
 		6632EA0A16E2388300770AEF /* UIBarButtonItem+WEPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 6632EA0516E2388300770AEF /* UIBarButtonItem+WEPopover.m */; };
+		6634C8951712A7930048D862 /* FXLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6634C8911712A7930048D862 /* FXLabel.m */; };
+		6634C8961712A7930048D862 /* THLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6634C8941712A7930048D862 /* THLabel.m */; };
+		6634C89C1712AB720048D862 /* AUIAnimatableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6634C8991712AB720048D862 /* AUIAnimatableLabel.m */; };
+		6634C89D1712AB720048D862 /* UIFont+CoreTextExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6634C89B1712AB720048D862 /* UIFont+CoreTextExtensions.m */; };
+		6634C89F1712B10E0048D862 /* pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 6634C89E1712B10E0048D862 /* pattern.png */; };
+		6634C8A21712B7DC0048D862 /* UILabel+ESAdjustableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6634C8A11712B7DC0048D862 /* UILabel+ESAdjustableLabel.m */; };
+		6634C8AF1712D2200048D862 /* button-close.png in Resources */ = {isa = PBXBuildFile; fileRef = 6634C8AE1712D2200048D862 /* button-close.png */; };
+		6634C8B11712D3860048D862 /* button-close-red.png in Resources */ = {isa = PBXBuildFile; fileRef = 6634C8B01712D3860048D862 /* button-close-red.png */; };
 		663D839D16EE36960014B6E2 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 663D838B16EE36960014B6E2 /* AFHTTPClient.m */; };
 		663D839E16EE36960014B6E2 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 663D838D16EE36960014B6E2 /* AFHTTPRequestOperation.m */; };
 		663D839F16EE36960014B6E2 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 663D838F16EE36960014B6E2 /* AFImageRequestOperation.m */; };
@@ -373,8 +381,6 @@
 		669B78E716EA47C600F4437F /* button-text.png in Resources */ = {isa = PBXBuildFile; fileRef = 669B78E316EA47C600F4437F /* button-text.png */; };
 		66A327AA16DA505D00AB3767 /* MSBarButtonIconNavigationPane.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A327A816DA505D00AB3767 /* MSBarButtonIconNavigationPane.png */; };
 		66A327AB16DA505D00AB3767 /* MSBarButtonIconNavigationPane@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A327A916DA505D00AB3767 /* MSBarButtonIconNavigationPane@2x.png */; };
-		66A327B116DA507000AB3767 /* MSDraggableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327AE16DA507000AB3767 /* MSDraggableView.m */; };
-		66A327B216DA507000AB3767 /* MSNavigationPaneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327B016DA507000AB3767 /* MSNavigationPaneViewController.m */; };
 		66A327C716DA620300AB3767 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327C616DA620300AB3767 /* MainViewController.m */; };
 		66A327CB16DA6F4400AB3767 /* ProfilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327C916DA6F4400AB3767 /* ProfilesViewController.m */; };
 		66A327CC16DA6F4400AB3767 /* ProfilesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66A327CA16DA6F4400AB3767 /* ProfilesViewController.xib */; };
@@ -1056,6 +1062,19 @@
 		6632EA0316E2388300770AEF /* TSPopoverTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSPopoverTouchView.m; sourceTree = "<group>"; };
 		6632EA0416E2388300770AEF /* UIBarButtonItem+WEPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+WEPopover.h"; sourceTree = "<group>"; };
 		6632EA0516E2388300770AEF /* UIBarButtonItem+WEPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+WEPopover.m"; sourceTree = "<group>"; };
+		6634C8901712A7930048D862 /* FXLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXLabel.h; sourceTree = "<group>"; };
+		6634C8911712A7930048D862 /* FXLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXLabel.m; sourceTree = "<group>"; };
+		6634C8931712A7930048D862 /* THLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THLabel.h; sourceTree = "<group>"; };
+		6634C8941712A7930048D862 /* THLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THLabel.m; sourceTree = "<group>"; };
+		6634C8981712AB720048D862 /* AUIAnimatableLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUIAnimatableLabel.h; sourceTree = "<group>"; };
+		6634C8991712AB720048D862 /* AUIAnimatableLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUIAnimatableLabel.m; sourceTree = "<group>"; };
+		6634C89A1712AB720048D862 /* UIFont+CoreTextExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+CoreTextExtensions.h"; sourceTree = "<group>"; };
+		6634C89B1712AB720048D862 /* UIFont+CoreTextExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+CoreTextExtensions.m"; sourceTree = "<group>"; };
+		6634C89E1712B10E0048D862 /* pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pattern.png; sourceTree = "<group>"; };
+		6634C8A01712B7DC0048D862 /* UILabel+ESAdjustableLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+ESAdjustableLabel.h"; sourceTree = "<group>"; };
+		6634C8A11712B7DC0048D862 /* UILabel+ESAdjustableLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+ESAdjustableLabel.m"; sourceTree = "<group>"; };
+		6634C8AE1712D2200048D862 /* button-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-close.png"; sourceTree = "<group>"; };
+		6634C8B01712D3860048D862 /* button-close-red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-close-red.png"; sourceTree = "<group>"; };
 		663D838A16EE36960014B6E2 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		663D838B16EE36960014B6E2 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		663D838C16EE36960014B6E2 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -1177,10 +1196,6 @@
 		669B78E316EA47C600F4437F /* button-text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-text.png"; path = "Resources/button-text.png"; sourceTree = "<group>"; };
 		66A327A816DA505D00AB3767 /* MSBarButtonIconNavigationPane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MSBarButtonIconNavigationPane.png; path = Resources/MSBarButtonIconNavigationPane.png; sourceTree = "<group>"; };
 		66A327A916DA505D00AB3767 /* MSBarButtonIconNavigationPane@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MSBarButtonIconNavigationPane@2x.png"; path = "Resources/MSBarButtonIconNavigationPane@2x.png"; sourceTree = "<group>"; };
-		66A327AD16DA507000AB3767 /* MSDraggableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDraggableView.h; sourceTree = "<group>"; };
-		66A327AE16DA507000AB3767 /* MSDraggableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDraggableView.m; sourceTree = "<group>"; };
-		66A327AF16DA507000AB3767 /* MSNavigationPaneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSNavigationPaneViewController.h; sourceTree = "<group>"; };
-		66A327B016DA507000AB3767 /* MSNavigationPaneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSNavigationPaneViewController.m; sourceTree = "<group>"; };
 		66A327C516DA620300AB3767 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Views/MainViewController.h; sourceTree = "<group>"; };
 		66A327C616DA620300AB3767 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Views/MainViewController.m; sourceTree = "<group>"; };
 		66A327C816DA6F4400AB3767 /* ProfilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfilesViewController.h; path = Views/ProfilesViewController.h; sourceTree = "<group>"; };
@@ -2171,6 +2186,7 @@
 		662507A517106B0A00FF3F8B /* _bg */ = {
 			isa = PBXGroup;
 			children = (
+				6634C89E1712B10E0048D862 /* pattern.png */,
 				66B2C576171158D100C51CEB /* card-icon.jpg */,
 				662507A617106B0B00FF3F8B /* bg-txt.png */,
 			);
@@ -2276,6 +2292,7 @@
 		66310ACF16D9A37900AC9DC8 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				6634C88E1712A7930048D862 /* Label */,
 				66B2C5A517116BF200C51CEB /* EGOImage */,
 				66B2C55F17112FE400C51CEB /* GIF */,
 				6684B73A170B346500987AF7 /* UIEffectDesignerView */,
@@ -2302,7 +2319,6 @@
 				6604FA6616DBCD4200295209 /* Categories */,
 				6604FA3C16DBC69C00295209 /* Aviary */,
 				66A327CD16DA809F00AB3767 /* GHSidebarNav */,
-				66A327AC16DA507000AB3767 /* MSNavigationPaneViewController */,
 				66F3075B16D9B96F00E681AD /* TabView */,
 			);
 			name = Library;
@@ -2359,6 +2375,48 @@
 			);
 			name = TSPopover;
 			path = Library/TSPopover;
+			sourceTree = "<group>";
+		};
+		6634C88E1712A7930048D862 /* Label */ = {
+			isa = PBXGroup;
+			children = (
+				6634C8A01712B7DC0048D862 /* UILabel+ESAdjustableLabel.h */,
+				6634C8A11712B7DC0048D862 /* UILabel+ESAdjustableLabel.m */,
+				6634C8971712AB720048D862 /* AUIAnimatedText */,
+				6634C88F1712A7930048D862 /* FXLabel */,
+				6634C8921712A7930048D862 /* THLabel */,
+			);
+			name = Label;
+			path = Library/Label;
+			sourceTree = "<group>";
+		};
+		6634C88F1712A7930048D862 /* FXLabel */ = {
+			isa = PBXGroup;
+			children = (
+				6634C8901712A7930048D862 /* FXLabel.h */,
+				6634C8911712A7930048D862 /* FXLabel.m */,
+			);
+			path = FXLabel;
+			sourceTree = "<group>";
+		};
+		6634C8921712A7930048D862 /* THLabel */ = {
+			isa = PBXGroup;
+			children = (
+				6634C8931712A7930048D862 /* THLabel.h */,
+				6634C8941712A7930048D862 /* THLabel.m */,
+			);
+			path = THLabel;
+			sourceTree = "<group>";
+		};
+		6634C8971712AB720048D862 /* AUIAnimatedText */ = {
+			isa = PBXGroup;
+			children = (
+				6634C8981712AB720048D862 /* AUIAnimatableLabel.h */,
+				6634C8991712AB720048D862 /* AUIAnimatableLabel.m */,
+				6634C89A1712AB720048D862 /* UIFont+CoreTextExtensions.h */,
+				6634C89B1712AB720048D862 /* UIFont+CoreTextExtensions.m */,
+			);
+			path = AUIAnimatedText;
 			sourceTree = "<group>";
 		};
 		663D838916EE36960014B6E2 /* AFNetworking */ = {
@@ -2511,18 +2569,6 @@
 			);
 			name = Collection;
 			path = Resources/Collection;
-			sourceTree = "<group>";
-		};
-		66A327AC16DA507000AB3767 /* MSNavigationPaneViewController */ = {
-			isa = PBXGroup;
-			children = (
-				66A327AD16DA507000AB3767 /* MSDraggableView.h */,
-				66A327AE16DA507000AB3767 /* MSDraggableView.m */,
-				66A327AF16DA507000AB3767 /* MSNavigationPaneViewController.h */,
-				66A327B016DA507000AB3767 /* MSNavigationPaneViewController.m */,
-			);
-			name = MSNavigationPaneViewController;
-			path = Library/MSNavigationPaneViewController;
 			sourceTree = "<group>";
 		};
 		66A327B316DA5F0100AB3767 /* MenuNav */ = {
@@ -3011,6 +3057,8 @@
 		66F5A01C1711B51D00F30D6A /* _icons */ = {
 			isa = PBXGroup;
 			children = (
+				6634C8B01712D3860048D862 /* button-close-red.png */,
+				6634C8AE1712D2200048D862 /* button-close.png */,
 				66F5A01D1711B51E00F30D6A /* icon-checkmark.png */,
 			);
 			name = _icons;
@@ -3607,6 +3655,9 @@
 				66F5A01E1711B51E00F30D6A /* icon-checkmark.png in Resources */,
 				66EEF4971711D9B000F962F1 /* snowflower.jpg in Resources */,
 				66EEF4981711D9B000F962F1 /* snowflower.ped in Resources */,
+				6634C89F1712B10E0048D862 /* pattern.png in Resources */,
+				6634C8AF1712D2200048D862 /* button-close.png in Resources */,
+				6634C8B11712D3860048D862 /* button-close-red.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3637,8 +3688,6 @@
 				66F3078516D9B97C00E681AD /* CustomNoiseBackgroundView.m in Sources */,
 				66F3078616D9B97C00E681AD /* CustomSelectionView.m in Sources */,
 				66F3078716D9B97C00E681AD /* CustomTabItem.m in Sources */,
-				66A327B116DA507000AB3767 /* MSDraggableView.m in Sources */,
-				66A327B216DA507000AB3767 /* MSNavigationPaneViewController.m in Sources */,
 				66A327C716DA620300AB3767 /* MainViewController.m in Sources */,
 				66A327CB16DA6F4400AB3767 /* ProfilesViewController.m in Sources */,
 				66A327D916DA809F00AB3767 /* GHRevealViewController.m in Sources */,
@@ -3854,6 +3903,11 @@
 				66B2C5C217116BF200C51CEB /* EGOImageView.m in Sources */,
 				66F5A018171186E300F30D6A /* GifThumbnailView.m in Sources */,
 				66F5A01B171187E700F30D6A /* GifThumbnailCell.m in Sources */,
+				6634C8951712A7930048D862 /* FXLabel.m in Sources */,
+				6634C8961712A7930048D862 /* THLabel.m in Sources */,
+				6634C89C1712AB720048D862 /* AUIAnimatableLabel.m in Sources */,
+				6634C89D1712AB720048D862 /* UIFont+CoreTextExtensions.m in Sources */,
+				6634C8A21712B7DC0048D862 /* UILabel+ESAdjustableLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
