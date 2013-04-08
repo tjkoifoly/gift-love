@@ -28,17 +28,18 @@
 
 - (void)viewDidLoad
 {
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern.png"]];
+    self.viewCard.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cover-01.png"]];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern.png"]];
-    
+    //Update View
 }
 
 -(void) viewDidAppear:(BOOL)animated
 {
+    
     [super viewDidAppear:animated];
     [self loadGiftByName:_giftName];
-    
 }
 
 -(void) backPreviousView
@@ -54,6 +55,9 @@
 -(void) viewDidUnload
 {
     [self setGiftName:nil];
+    [self setViewGift:nil];
+    [self setViewCard:nil];
+    [self setImvFrameCard:nil];
     [super viewDidUnload];
 }
 

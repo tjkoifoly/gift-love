@@ -18,5 +18,8 @@
 
 @property (assign, nonatomic) id<ViewGiftControllerDelegate> delegate;
 @property (strong, nonatomic) NSString * giftName;
+@property (weak, nonatomic) IBOutlet UIView *viewGift;
+@property (weak, nonatomic) IBOutlet UIView *viewCard;
+@property (weak, nonatomic) IBOutlet UIImageView *imvFrameCard;
 
 @end
