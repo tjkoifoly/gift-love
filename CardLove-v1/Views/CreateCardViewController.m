@@ -7,7 +7,6 @@
 //
 
 #import "CreateCardViewController.h"
-#import "ViewGiftViewController.h"
 #import "GestureImageView.h"
 #import "GestureView.h"
 #import "GiftItemManager.h"
@@ -434,8 +433,31 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) runDemo
 {
+    [self saveData];
+    
+    if ([[SoundManager sharedManager] isPlayingMusic]) {
+        [[SoundManager sharedManager] stopMusic];
+    }
+    
     ViewGiftViewController *vgvc = [[ViewGiftViewController alloc] initWithNibName:@"ViewGiftViewController" bundle:nil];
-    [self.navigationController pushViewController:vgvc animated:YES];
+    vgvc.giftPath = _pathResources;
+    vgvc.delegate = self;
+    
+    DoorsTransition *transition = [[DoorsTransition alloc] init];
+    transition.transitionType = DoorsTransitionTypeOpen;
+    
+    [[HMGLTransitionManager sharedTransitionManager] setTransition:transition];
+    [[HMGLTransitionManager sharedTransitionManager] presentModalViewController:vgvc onViewController:self.navigationController];
+}
+
+#pragma mark - View Gift Delegate
+-(void) modalControllerDidFinish:(ViewGiftViewController *)modalController
+{
+    DoorsTransition *transition = [[DoorsTransition alloc] init];
+    transition.transitionType = DoorsTransitionTypeOpen;
+    
+    [[HMGLTransitionManager sharedTransitionManager] setTransition:transition];
+	[[HMGLTransitionManager sharedTransitionManager] dismissModalViewController:modalController];
 }
 
 -(void) sendGift
@@ -877,6 +899,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 {
     if (!_selectedLabel) {
         _selectedLabel = label;
+         [_selectedLabel labelSelected];
         return;
     }
     
@@ -884,6 +907,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         NSLog(@"DCM");
         [_selectedLabel labelDeselected];
         _selectedLabel = label;
+        [_selectedLabel labelSelected];
     }
 }
 //----------------------------------------------------------------------------------------------------//

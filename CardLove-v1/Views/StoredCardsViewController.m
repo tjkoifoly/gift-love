@@ -13,12 +13,14 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface StoredCardsViewController ()
-
+{
+}
 @end
 
 @implementation StoredCardsViewController
 
 @synthesize listGifts = _listGifts;
+@synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -134,6 +136,7 @@
     }
     NSString *gift = [_listGifts objectAtIndex:indexPath.row];
     item.titleLabel.text = gift;
+    item.imageView.image = [UIImage imageNamed:@"card-icon2.jpg"];
     
 	return item;
 }
@@ -166,12 +169,10 @@
 - (void)collectionView:(SSCollectionView *)aCollectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 	
     NSString *gift = [_listGifts objectAtIndex:indexPath.row];
+    NSString *pathProjects = [self dataFilePath:kGift];
+    NSString *pathOfGift = [pathProjects stringByAppendingPathComponent:gift];
     
-    CreateCardViewController *ccvc = [[CreateCardViewController alloc] initWithNibName:@"CreateCardViewController" bundle:nil];
-    ccvc.giftName = gift;
-    self.tabBarController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:ccvc animated:YES];
-    self.tabBarController.hidesBottomBarWhenPushed = NO;
+    [self.delegate storeCardViewControllerGiftDidSelected:pathOfGift];
 }
 
 

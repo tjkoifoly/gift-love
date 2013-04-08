@@ -29,4 +29,6 @@
 #define kPhoto      @"photo"
 #define kImgURL     @"imageURL"
 
+#define kNoEff @"no-eff"
+
 #define kNotificationGifSelected @"GifSelectedNotification"

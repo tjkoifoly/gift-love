@@ -193,7 +193,6 @@
         
     } completion:^(BOOL finished) {
         [self.delegate gestureLabelDidSelected:self];
-        [self labelSelected];
     }];
 }
 

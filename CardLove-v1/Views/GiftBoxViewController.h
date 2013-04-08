@@ -14,7 +14,7 @@
 #import "HMGLTransitionManager.h"
 #import "DoorsTransition.h"
 
-@interface GiftBoxViewController : UITabBarController <CardViewControllerDelegate, ViewGiftControllerDelegate>
+@interface GiftBoxViewController : UITabBarController <CardViewControllerDelegate, ViewGiftControllerDelegate, StoreCardViewControllerDelegate>
 {
 @private
 	RevealBlock _revealBlock;

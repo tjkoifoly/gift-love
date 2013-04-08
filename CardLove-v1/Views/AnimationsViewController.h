@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UIEffectDesignerView.h"
-
-#define kNoEff @"no-eff"
+#import "MacroDefine.h"
 
 @class AnimationsViewController;
 @protocol AnimationViewControllerDelegate <NSObject>

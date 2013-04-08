@@ -7,6 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GiftItemManager.h"
+#import "GiftLabelsManager.h"
+#import "GiftElementsManager.h"
+#import "GestureImageView.h"
+#import "GestureView.h"
+#import "GestureLabel.h"
+#import "MacroDefine.h"
+#import "UIEffectDesignerView.h"
+#import "ZipArchive.h"
+#import "FunctionObject.h"
+
 @class ViewGiftViewController;
 @protocol ViewGiftControllerDelegate <NSObject>
 
@@ -14,12 +25,15 @@
 
 @end
 
-@interface ViewGiftViewController : UIViewController
+@interface ViewGiftViewController : UIViewController 
 
 @property (assign, nonatomic) id<ViewGiftControllerDelegate> delegate;
-@property (strong, nonatomic) NSString * giftName;
+@property (strong, nonatomic) NSString * giftPath;
+
+
 @property (weak, nonatomic) IBOutlet UIView *viewGift;
 @property (weak, nonatomic) IBOutlet UIView *viewCard;
 @property (weak, nonatomic) IBOutlet UIImageView *imvFrameCard;
+@property (weak, nonatomic) IBOutlet UIImageView *imvOverlay;
 
 @end

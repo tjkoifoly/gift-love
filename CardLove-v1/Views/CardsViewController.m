@@ -267,8 +267,10 @@
     [itemSelected setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
     
     NSString *gift = itemSelected.titleLabel.text;
+    NSString *pathProjects = [self dataFilePath:kProjects];
+    NSString *pathGift = [pathProjects stringByAppendingPathComponent:gift];
     
-    [self.delegate cardViewControllerDidSelected:gift];
+    [self.delegate cardViewControllerDidSelected:pathGift];
 }
 
 

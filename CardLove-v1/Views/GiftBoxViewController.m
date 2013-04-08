@@ -88,6 +88,7 @@
     [controllers addObject:nav3];
     
     StoredCardsViewController *fvc = [[StoredCardsViewController alloc] initWithNibName:@"StoredCardsViewController" bundle:nil];
+    fvc.delegate = self;
     fvc.tabBarItem.image = [UIImage imageNamed:@"Stored.png"];
     fvc.tabBarItem.title = @"Stored";
     UINavigationController *nav1 = [[UINavigationController alloc] initWithRootViewController:fvc];
@@ -141,20 +142,17 @@
     self.tabBarController.hidesBottomBarWhenPushed = NO;
     
 }
+#pragma mark - CardView Delegate
 
 -(void) cardViewControllerDidSelected:(NSString *)giftName
 {
-//    CreateCardViewController *ccvc = [[CreateCardViewController alloc] initWithNibName:@"CreateCardViewController" bundle:nil];
-//    ccvc.giftName = giftName;
-//    self.tabBarController.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:ccvc animated:YES];
-//    self.tabBarController.hidesBottomBarWhenPushed = NO;
-    [self viewGiftCard];
+    [self viewGiftCardWithPath:giftName];
 }
 
--(void) viewGiftCard
+-(void) viewGiftCardWithPath: (NSString *) path
 {
     ViewGiftViewController *cvcv = [[ViewGiftViewController alloc] initWithNibName:@"ViewGiftViewController" bundle:nil];
+    cvcv.giftPath = path;
     cvcv.delegate = self;
     
     [[HMGLTransitionManager sharedTransitionManager] setTransition:_transition];
@@ -168,5 +166,12 @@
     [[HMGLTransitionManager sharedTransitionManager] setTransition:_transition];
 	[[HMGLTransitionManager sharedTransitionManager] dismissModalViewController:modalController];
 }
+
+#pragma mark - StoreCardDelegate
+-(void) storeCardViewControllerGiftDidSelected:(NSString *)giftPath
+{
+    [self viewGiftCardWithPath:giftPath];
+}
+
 
 @end

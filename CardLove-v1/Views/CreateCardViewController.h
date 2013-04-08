@@ -23,8 +23,11 @@
 #import "UIEffectDesignerView.h"
 #import "PromptAlert.h"
 #import "GiftElementsViewController.h"
+#import "HMGLTransitionManager.h"
+#import "DoorsTransition.h"
+#import "ViewGiftViewController.h"
 
-@interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate, GestureLabelDelegate, MusicViewControllerDelegate, AnimationViewControllerDelegate, GiftElementsDelegate>
+@interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate, GestureLabelDelegate, MusicViewControllerDelegate, AnimationViewControllerDelegate, GiftElementsDelegate, ViewGiftControllerDelegate>
 {
     MBProgressHUD *HUD;
 }

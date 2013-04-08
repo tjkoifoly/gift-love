@@ -11,8 +11,17 @@
 #import "MacroDefine.h"
 #import "CreateCardViewController.h"
 
+@class StoredCardsViewController;
+@protocol StoreCardViewControllerDelegate <NSObject>
+
+-(void) storeCardViewControllerGiftDidSelected: (NSString *) giftPath;
+
+@end
+
 @interface StoredCardsViewController : SSCollectionViewController
 
 @property (strong, nonatomic) NSMutableArray *listGifts;
+@property (assign, nonatomic) id<StoreCardViewControllerDelegate> delegate;
+
 
 @end
