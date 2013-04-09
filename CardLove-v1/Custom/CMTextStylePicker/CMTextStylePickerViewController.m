@@ -505,7 +505,14 @@
     NSString * theString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     labelPreview.text = theString;
     [labelPreview resizeToFit];
-    
+    previewScrollView.contentSize = CGSizeMake(labelPreview.bounds.size.width + 40, labelPreview.bounds.size.height+40);
+
+    if (labelPreview.bounds.size.height >= previewScrollView.bounds.size.height) {
+        CGPoint bottomOffset = CGPointMake(0, self.previewScrollView.contentSize.height - self.previewScrollView.bounds.size.height);
+        [self.previewScrollView setContentOffset:bottomOffset animated:YES];
+
+    }
+       
     return YES;
 }
 

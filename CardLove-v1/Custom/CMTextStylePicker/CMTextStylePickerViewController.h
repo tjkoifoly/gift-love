@@ -31,6 +31,7 @@
 #import "CMUpDownControl.h"
 #import "GestureLabel.h"
 #import "AUIAnimatableLabel.h"
+#import "FXLabel.h"
 
 @class CMColourBlockView;
 @protocol CMTextStylePickerViewControllerDelegate;
@@ -60,7 +61,7 @@
 @property (strong, nonatomic) IBOutlet  UIScrollView        *previewScrollView;
 @property (strong, nonatomic) IBOutlet  UITableViewCell     *textLabelCell;
 @property (strong, nonatomic) IBOutlet  UITextField         *textfieldLabel;
-@property (strong, nonatomic) IBOutlet  AUIAnimatableLabel  *labelPreview;
+@property (strong, nonatomic) IBOutlet  FXLabel  *labelPreview;
 
 @property (assign, nonatomic)          UILabel          *labelToEdit;
 

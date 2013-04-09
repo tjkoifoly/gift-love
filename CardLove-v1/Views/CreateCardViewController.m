@@ -865,9 +865,10 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) gestureLabelDidSelected:(GestureLabel *)label
 {
+    [label labelSelected];
     if (!_selectedLabel) {
         _selectedLabel = label;
-         [_selectedLabel labelSelected];
+         
         return;
     }
     
@@ -875,7 +876,6 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         NSLog(@"DCM");
         [_selectedLabel labelDeselected];
         _selectedLabel = label;
-        [_selectedLabel labelSelected];
     }
 }
 //----------------------------------------------------------------------------------------------------//

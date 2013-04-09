@@ -46,7 +46,6 @@
 				<string key="NSFrameSize">{320, 460}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
 					<bytes key="NSRGB">MCAwIDAgMAA</bytes>
@@ -358,7 +357,6 @@
 								<string key="NSFrame">{{0, 12}, {320, 21}}</string>
 								<reference key="NSSuperview" ref="905520219"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -420,7 +418,6 @@
 										<string key="NSFrame">{{20, 20}, {260, 80}}</string>
 										<reference key="NSSuperview" ref="411458304"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -964,7 +961,7 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>AUIAnimatableLabel</string>
+					<string>FXLabel</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -987,14 +984,6 @@
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<object class="IBPartialClassDescription">
-					<string key="className">AUIAnimatableLabel</string>
-					<string key="superclassName">UILabel</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/AUIAnimatableLabel.h</string>
-					</object>
-				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">CMColourBlockView</string>
 					<string key="superclassName">UIView</string>
@@ -1083,7 +1072,7 @@
 							<string>UITableViewCell</string>
 							<string>UILabel</string>
 							<string>CMUpDownControl</string>
-							<string>AUIAnimatableLabel</string>
+							<string>FXLabel</string>
 							<string>UITableViewCell</string>
 							<string>UIScrollView</string>
 							<string>UITableViewCell</string>
@@ -1151,7 +1140,7 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">labelPreview</string>
-								<string key="candidateClassName">AUIAnimatableLabel</string>
+								<string key="candidateClassName">FXLabel</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">previewCell</string>
@@ -1186,6 +1175,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/CMUpDownControl.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">FXLabel</string>
+					<string key="superclassName">UILabel</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/FXLabel.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
