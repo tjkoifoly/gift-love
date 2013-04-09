@@ -76,13 +76,55 @@
                           @"Flower_vine.gif",
                           @"flower02.gif",
                           @"flower01.gif",
-                          @"flower32.gif", nil];
+                          @"flower32.gif",
+                          @"daisys.gif",
+                          @"dl_flow162.gif",
+                          @"flow01.gif",
+                          @"flower-rose1.gif",
+                          @"flower-rose02.gif",
+                          @"flower03.gif",
+                          @"Red_rose_opens.gif",
+                          @"Red_tullips_1.gif",
+                          @"Red_tullips_2.gif",
+                          @"Rose_opens.gif",
+                          @"roses.gif",
+                          nil];
     NSArray *arXmas = [NSArray arrayWithObjects:
-                          @"anixmas.gif",
-                           nil];
+                       @"anixmas.gif",
+                       @"xmas01.gif",
+                       @"xmas02.gif",
+                       @"xmas03.gif",
+                       @"xmas04.gif",
+                        nil];
+    NSArray *hdb = [NSArray arrayWithObjects:
+                    @"hbd-cake01.gif",
+                    @"hbd-cake02.gif",
+                    @"hbd-cake03.gif",
+                    @"hbd-cake04.gif",
+                    @"hbd-text01.gif",
+                    @"hbd-text02.gif",
+                    @"hbd-text03.gif",
+                    @"hbd-text04.gif",
+                    @"hbd-text05.gif",
+                    @"hbd-text06.gif",nil];
     
     [_dictDataSource setObject:arFlowers forKey:@"Flowers"];
+    [_dictDataSource setObject:hdb forKey:@"Happy Birthday"];
     [_dictDataSource setObject:arXmas forKey:@"XMas"];
+
+    [_dictDataSource keysSortedByValueUsingComparator: ^(id obj1, id obj2) {
+        
+        if (obj1 > obj2) {
+            
+            return (NSComparisonResult)NSOrderedDescending;
+        }
+        if (obj1  < obj2) {
+            
+            return (NSComparisonResult)NSOrderedAscending;
+        }
+        
+        return (NSComparisonResult)NSOrderedSame;
+    }];
     
     return _dictDataSource;
 }

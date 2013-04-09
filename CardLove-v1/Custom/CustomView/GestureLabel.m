@@ -24,7 +24,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        [self initialize];
+        //[self initialize];
     }
     return self;
 }
@@ -33,9 +33,34 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self initialize];
+        //[self initialize];
     }
     return self;
+}
+
+-(id) initWithType: (GestureLabelType) type
+{
+    self = [super init];
+    if (self) {
+        switch (type) {
+            case GestureLabelToEdit:
+            {
+                [self initialize];
+            }
+                break;
+            
+            case GestureLabelToView:
+            {
+                [self initializeToView];
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+    return self;
+    
 }
 
 -(void) initialize
@@ -63,6 +88,18 @@
     tapRecognizer.delegate = self;
     
     UITapGestureRecognizer *tapSigleRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapSingleDetected:)];
+    tapSigleRecognizer.numberOfTapsRequired = 1;
+    [self addGestureRecognizer:tapSigleRecognizer];
+    tapSigleRecognizer.delegate = self;
+    
+}
+
+-(void) initializeToView
+{
+    self.userInteractionEnabled = YES;
+    self.textAlignment = UITextAlignmentCenter;
+    
+    UITapGestureRecognizer *tapSigleRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
     tapSigleRecognizer.numberOfTapsRequired = 1;
     [self addGestureRecognizer:tapSigleRecognizer];
     tapSigleRecognizer.delegate = self;
@@ -194,6 +231,11 @@
     } completion:^(BOOL finished) {
         [self.delegate gestureLabelDidSelected:self];
     }];
+}
+
+-(void) tapAction: (UITapGestureRecognizer *) tapRecognizer
+{
+    NSLog(@"Label has been tapped.");
 }
 
 -(void) autoFitTextWithFrame

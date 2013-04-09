@@ -305,7 +305,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     if ([[GiftItemManager sharedManager] saveList]) {
         if ([[GiftLabelsManager sharedManager] saveListLabel]) {
             if ([[GiftElementsManager sharedManager] saveListElements]) {
-                [self showMessageWithCompletedView:@"Saved"];
+                NSLog(@"Saved gift successful.");
             }
         }
     }
@@ -734,7 +734,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) addViewPhoto: (UIImage *)image
 {
-    GestureView *gv = [[GestureView alloc] initWithFrame:CGRectZero];
+    GestureView *gv = [[GestureView alloc] initWithType:GestureViewToEdit];
     gv.imgURL = [self saveImagetoResources:image];
     [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:gv inView:self.viewCard];
     
@@ -752,7 +752,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) addViewPhotoWithItem: (GiftItem *) item
 {
-    GestureView *imvPhoto = [[GestureView alloc] initWithFrame:CGRectZero];
+    GestureView *imvPhoto = [[GestureView alloc] initWithType:GestureViewToEdit];
     UIImage *image = [UIImage imageWithContentsOfFile:item.photo];
     
     imvPhoto.bounds = CGRectFromString(item.bounds);
@@ -769,25 +769,10 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 /* ----------------------------------------------------------------------------------*/
 
 
--(void) addPhotoView: (UIImage *)image withURL:(NSString *) strURL
-{
-    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:image];
-    
-    [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:imvPhoto inView:self.viewCard];
-    [imvPhoto showShadow:YES];
-    imvPhoto.delegate = self;
-    imvPhoto.imgURL = strURL;
-    
-    GiftItem *item = [[GiftItem alloc] initWithView:imvPhoto];
-    [[GiftItemManager sharedManager] addItem:item];
-    
-    [self.viewCard addSubview:imvPhoto];
-    currentPhoto = imvPhoto;
-}
 
 -(void) addViewPhoto: (UIImage *)image withURL:(NSString *) strURL
 {
-    GestureView *imvPhoto = [[GestureView alloc] initWithFrame:CGRectZero];
+    GestureView *imvPhoto = [[GestureView alloc] initWithType:GestureViewToEdit];
     
     [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:imvPhoto inView:self.viewCard];
     
@@ -806,27 +791,10 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 /* ----------------------------------------------------------------------------------*/
 
--(void) addPhotoView:(UIImage *)image withCenterPoint: (CGPoint)centerPoint andTransfrom: (CGAffineTransform) transform
-{
-    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:image];
-    
-    imvPhoto.imgURL = [self saveImagetoResources:image];
-    
-    [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:imvPhoto inView:self.viewCard];
-    imvPhoto.center = centerPoint;
-    imvPhoto.transform = transform;
-    [imvPhoto showShadow:YES];
-    imvPhoto.delegate = self;
-    
-    GiftItem *item = [[GiftItem alloc] initWithView:imvPhoto];
-    [[GiftItemManager sharedManager] addItem:item];
-    
-    [self.viewCard addSubview:imvPhoto];
-}
 
 -(void) addViewPhoto:(UIImage *)image withCenterPoint: (CGPoint)centerPoint andTransfrom: (CGAffineTransform) transform
 {
-    GestureView *imvPhoto = [[GestureView alloc] initWithFrame:CGRectZero];
+    GestureView *imvPhoto = [[GestureView alloc] initWithType:GestureViewToEdit];
     
     imvPhoto.imgURL = [self saveImagetoResources:image];
     
@@ -1185,7 +1153,8 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
             
             if (error) {
                 // handle error
-                NSLog(@"-----> ERROR move file!");
+                NSLog(@"-----> ERROR move file! = %@", error);
+                
             }else
             {
                 _giftName = nameOfGift;
@@ -1212,15 +1181,16 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
                         NSString *mPath = temp.imgURL;
                         temp.imgURL = [mPath stringByReplacingOccurrencesOfString:oldDirectoryPath withString:_pathResources];
                         NSLog(@"URL PHOTO = %@", temp.imgURL);
-                        
                     }
                 }
                 //END for
                 
-                [self saveData];
+                
             }//END if
             
         }//END for
+        
+        [self saveData];
         
     }else
     {
@@ -1346,7 +1316,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     // Create a blinking text
     NSInteger randomID ;
     
-    GestureLabel* labelText = [[GestureLabel alloc] initWithFrame:CGRectMake(50, 200, 0, 50)];
+    GestureLabel* labelText = [[GestureLabel alloc] initWithType:GestureLabelToEdit];
     
     do {
         randomID = arc4random() % 1000;
@@ -1386,7 +1356,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         return;
     }
     
-    GestureLabel * labelText = [[GestureLabel alloc] initWithFrame:CGRectZero];
+    GestureLabel * labelText = [[GestureLabel alloc] initWithType:GestureLabelToEdit];
     labelText.backgroundColor = [UIColor clearColor];
     
     labelText.labelID = gLabel.labelID;
@@ -1562,8 +1532,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 -(void) addGifElementWithName: (NSString *)imageName
 {
     UIImage *image = [OLImage imageNamed:imageName];
-    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithFrame:CGRectZero];
-    [imvPhoto setImage:image];
+    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:image withType:GestureImageViewToEdit];
     [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:imvPhoto inView:self.viewCard];
     
     NSInteger randomID ;
@@ -1584,7 +1553,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 -(void) addPhotoViewWithItem: (GiftElement *) item
 {
     UIImage *image = [OLImage imageNamed:item.imageURL];
-    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:image];
+    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:image withType:GestureImageViewToEdit];
     imvPhoto.bounds = CGRectFromString(item.bounds);
     imvPhoto.center = CGPointFromString(item.center);
     imvPhoto.transform = CGAffineTransformFromString(item.transform);
@@ -1594,6 +1563,40 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self.viewCard addSubview:imvPhoto];
 
 }
+
+-(void) addPhotoView: (UIImage *)image withURL:(NSString *) strURL
+{
+    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:image withType:GestureImageViewToEdit];
+    
+    [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:imvPhoto inView:self.viewCard];
+    [imvPhoto showShadow:YES];
+    imvPhoto.delegate = self;
+    imvPhoto.imgURL = strURL;
+    
+    GiftItem *item = [[GiftItem alloc] initWithView:imvPhoto];
+    [[GiftItemManager sharedManager] addItem:item];
+    
+    [self.viewCard addSubview:imvPhoto];
+    currentPhoto = imvPhoto;
+}
+-(void) addPhotoView:(UIImage *)image withCenterPoint: (CGPoint)centerPoint andTransfrom: (CGAffineTransform) transform
+{
+    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:image withType:GestureImageViewToEdit];
+    
+    imvPhoto.imgURL = [self saveImagetoResources:image];
+    
+    [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:imvPhoto inView:self.viewCard];
+    imvPhoto.center = centerPoint;
+    imvPhoto.transform = transform;
+    [imvPhoto showShadow:YES];
+    imvPhoto.delegate = self;
+    
+    GiftItem *item = [[GiftItem alloc] initWithView:imvPhoto];
+    [[GiftItemManager sharedManager] addItem:item];
+    
+    [self.viewCard addSubview:imvPhoto];
+}
+
 
 #pragma mark - GiftElementDelegate
 

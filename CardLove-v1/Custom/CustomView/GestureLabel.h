@@ -12,6 +12,11 @@
 #import "FXLabel.h"
 #import <QuartzCore/QuartzCore.h>
 
+typedef enum {
+    GestureLabelToEdit,
+    GestureLabelToView
+}GestureLabelType;
+
 @class GestureLabel;
 @protocol GestureLabelDelegate <NSObject>
 
@@ -27,6 +32,8 @@
 @property (strong, nonatomic) UIGestureRecognizer *panRecognizer;
 
 @property (assign, nonatomic) id<GestureLabelDelegate> delegate;
+
+-(id) initWithType: (GestureLabelType) type;
 
 -(void) labelSelected;
 -(void) labelDeselected;

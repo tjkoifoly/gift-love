@@ -94,7 +94,7 @@
 #pragma mark - LOAD GIFT ITEMS
 -(void) addViewPhotoWithItem: (GiftItem *) item
 {
-    GestureView *imvPhoto = [[GestureView alloc] initWithFrame:CGRectZero];
+    GestureView *imvPhoto = [[GestureView alloc] initWithType:GestureViewToView];
     UIImage *image = [UIImage imageWithContentsOfFile:item.photo];
     
     imvPhoto.bounds = CGRectFromString(item.bounds);
@@ -144,7 +144,7 @@
         return;
     }
     
-    GestureLabel * labelText = [[GestureLabel alloc] initWithFrame:CGRectZero];
+    GestureLabel * labelText = [[GestureLabel alloc] initWithType:GestureLabelToView];
     labelText.backgroundColor = [UIColor clearColor];
     
     labelText.labelID = gLabel.labelID;
@@ -190,7 +190,7 @@
 -(void) addPhotoViewWithItem: (GiftElement *) item
 {
     UIImage *image = [OLImage imageNamed:item.imageURL];
-    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:image];
+    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:image withType:GestureImageViewToView];
     imvPhoto.bounds = CGRectFromString(item.bounds);
     imvPhoto.center = CGPointFromString(item.center);
     imvPhoto.transform = CGAffineTransformFromString(item.transform);

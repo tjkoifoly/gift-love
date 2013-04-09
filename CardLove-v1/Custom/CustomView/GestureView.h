@@ -9,8 +9,16 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
+typedef enum {
+    GestureViewToEdit,
+    GestureViewToView
+} GestureViewType;
+
+
 @class GestureView;
 @protocol GestureViewDelegate <NSObject>
+
+@optional
 
 -(void) displayEditorWith:(GestureView *)gestureView forImage: (UIImage *) imageToEdit;
 -(void) selectPhoto: (GestureView *) gestureView;
@@ -26,6 +34,7 @@
 
 @property (assign, nonatomic) id <GestureViewDelegate> delegate;
 
+-(id) initWithType: (GestureViewType) type;
 -(void) initialize;
 
 - (void)panDetected:(UIPanGestureRecognizer *)panRecognizer;

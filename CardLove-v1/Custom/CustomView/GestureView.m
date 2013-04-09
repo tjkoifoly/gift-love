@@ -23,7 +23,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        [self initialize];
+//        [self initialize];
     }
     return self;
 }
@@ -32,7 +32,30 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self initialize];
+        
+    }
+    return self;
+}
+
+-(id) initWithType: (GestureViewType) type
+{
+    self = [super init];
+    if (self) {
+        switch (type) {
+            case GestureViewToEdit:
+            {
+                [self initialize];
+            }
+                break;
+            case GestureViewToView:
+            {
+                [self initializeToView];
+            }
+                break;
+                
+            default:
+                break;
+        }
     }
     return self;
 }
@@ -41,15 +64,6 @@
 {
     [super setFrame:frame];
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 -(void) initialize
 {
@@ -84,6 +98,18 @@
     
 }
 
+
+-(void) initializeToView
+{
+    self.userInteractionEnabled = YES;
+    [self setBackgroundColor:[UIColor clearColor]];
+    
+    UITapGestureRecognizer *tapSigleRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+    tapSigleRecognizer.numberOfTapsRequired = 1;
+    [self addGestureRecognizer:tapSigleRecognizer];
+    tapSigleRecognizer.delegate = self;
+
+}
 
 #pragma mark - Gesture Delegate
 
@@ -131,6 +157,11 @@
     }completion:^(BOOL finished) {
         [self.delegate selectPhoto:self];
     }];
+}
+
+-(void) tapAction: (UITapGestureRecognizer *) tapSigleRecognizer
+{
+    NSLog(@"View has been tapped.");
 }
 
 #pragma mark - 

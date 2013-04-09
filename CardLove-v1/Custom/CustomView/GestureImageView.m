@@ -22,16 +22,30 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self initialize];
+       
     }
     return self;
 }
 
--(id) initWithImage:(UIImage *)image
+-(id) initWithImage:(UIImage *)image withType: (GestureImageViewType) type
 {
     self = [super initWithImage:image];
     if (self) {
-        [self initialize];
+        switch (type) {
+            case GestureImageViewToEdit:
+            {
+                [self initialize];
+            }
+                break;
+            case GestureImageViewToView:
+            {
+                //
+            }
+                break;
+                
+            default:
+                break;
+        }
     }
     return self;
 }
@@ -61,6 +75,18 @@
     tapRecognizer.delegate = self;
     
     UITapGestureRecognizer *tapSigleRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDCM:)];
+    tapSigleRecognizer.numberOfTapsRequired = 1;
+    [self addGestureRecognizer:tapSigleRecognizer];
+    tapSigleRecognizer.delegate = self;
+
+}
+
+-(void) initializeToView
+{
+    self.userInteractionEnabled = YES;
+    self.layer.masksToBounds = YES;
+    
+    UITapGestureRecognizer *tapSigleRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
     tapSigleRecognizer.numberOfTapsRequired = 1;
     [self addGestureRecognizer:tapSigleRecognizer];
     tapSigleRecognizer.delegate = self;

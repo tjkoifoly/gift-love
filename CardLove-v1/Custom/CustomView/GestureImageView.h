@@ -9,8 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "OLImageView.h"
 
+typedef enum {
+    GestureImageViewToEdit,
+    GestureImageViewToView
+}GestureImageViewType;
+
 @class GestureImageView;
 @protocol GesturePhotoDelegate <NSObject>
+
+@optional
 
 -(void) displayEditor:(GestureImageView *)gestureImageView forImage: (UIImage *) imageToEdit;
 -(void) selectImageView: (GestureImageView *) gestureImageView;
@@ -22,6 +29,8 @@
 @property (assign, nonatomic) id<GesturePhotoDelegate> delegate;
 @property (strong, nonatomic) NSString *imgURL;
 @property (strong, nonatomic) NSString *elementID;
+
+-(id) initWithImage:(UIImage *)image withType: (GestureImageViewType) type;
 
 -(void) showShadow:(BOOL) show;
 -(void) showBorder: (BOOL) show;
