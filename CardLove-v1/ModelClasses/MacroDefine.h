@@ -32,3 +32,8 @@
 #define kNoEff @"no-eff"
 
 #define kNotificationGifSelected @"GifSelectedNotification"
+
+typedef enum {
+    NavigationBarModeEdit,
+    NavigationBarModeView
+}NavigationBarMode;

@@ -270,9 +270,9 @@ NSString *const SSCollectionViewInvalidItemSizeExceptionReason = @"SSCollectionV
 	}
 	
 	// Select
-	SSCollectionViewItem *item = [self itemForIndexPath:indexPath];
-	[item setHighlighted:NO animated:NO];
-	[item setSelected:YES animated:YES];
+//	SSCollectionViewItem *item = [self itemForIndexPath:indexPath];
+//	[item setHighlighted:NO animated:NO];
+//	[item setSelected:YES animated:YES];
 	
 	// Scroll to position
 	if (scrollPosition == SSCollectionViewScrollPositionTop || scrollPosition == SSCollectionViewScrollPositionMiddle ||

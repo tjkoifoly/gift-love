@@ -12,12 +12,17 @@
 #import "CreateCardViewController.h"
 
 @interface GiftBoxViewController ()
+{
+    CardsViewController *cvc;
+    StoredCardsViewController *fvc;
+}
 
 @end
 
 @implementation GiftBoxViewController
 
 @synthesize transition = _transition;
+@synthesize mode = _mode;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,24 +53,44 @@
                                                       target:self
                                                       action:@selector(revealSidebar)];
         
-        UIBarButtonItem *btnNew = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(addCard)];
-        UIBarButtonItem *btnDelete = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteCard:)];
-        
-        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:btnNew ,btnDelete, nil];
-        
-        
-//        UIBarButtonItem *btnSave = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveCard)];
-//        NSArray *arrBarButtons = [NSArray arrayWithObjects:btnNew,btnSave, nil];
-//        self.navigationItem.rightBarButtonItems = arrBarButtons;
-        
-//        UIButton *btnAddGift = [UIButton buttonWithType:UIButtonTypeCustom];
-//        [btnAddGift setBackgroundImage:[UIImage imageNamed:@"add-gift.png"] forState:UIControlStateNormal];
-//        btnAddGift.frame = CGRectMake(0, 0, 30, 30);
-//        [btnAddGift addTarget:self action:@selector(addCard) forControlEvents:UIControlEventTouchUpInside];
-//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnAddGift];
+        [self switchBartToMode:NavigationBarModeView];
         
 	}
 	return self;
+}
+
+-(void) switchBartToMode:(NavigationBarMode) mode
+{
+    _mode = mode;
+    cvc.mode = mode;
+    fvc.mode = mode;
+    
+    switch (mode) {
+        case NavigationBarModeEdit:
+        {
+            UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone   target:self action:@selector(doneEdit:)];
+            [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:btnDone, nil] animated:YES];
+            
+//            CABasicAnimation *fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+//            fadeOutAnimation.duration = 0.5f;
+//            fadeOutAnimation.removedOnCompletion = NO;
+//            fadeOutAnimation.fillMode = kCAFillModeForwards;
+//            fadeOutAnimation.toValue = [NSNumber numberWithFloat:0.0f];
+//            [viewToAnimation.layer addAnimation:fadeOutAnimation forKey:@"animateOpacity"];
+            
+        }
+            break;
+        case NavigationBarModeView:
+        {
+            UIBarButtonItem *btnNew = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(addCard)];
+            UIBarButtonItem *btnDelete = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteCard:)];
+            [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:btnNew ,btnDelete, nil] animated:YES] ;
+        }
+            break;
+        default:
+            break;
+    }
+    
 }
 
 - (void)viewDidLoad
@@ -79,7 +104,7 @@
 {
     NSMutableArray *controllers = [[NSMutableArray alloc] init];
     
-    CardsViewController *cvc = [[CardsViewController alloc] initWithNibName:@"CardsViewController" bundle:nil];
+    cvc = [[CardsViewController alloc] initWithNibName:@"CardsViewController" bundle:nil];
     cvc.delegate = self;
     cvc.tabBarItem.image = [UIImage imageNamed:@"cards.png"];
     cvc.tabBarItem.title = @"Inbox";
@@ -87,7 +112,7 @@
     [nav3 setNavigationBarHidden:YES];
     [controllers addObject:nav3];
     
-    StoredCardsViewController *fvc = [[StoredCardsViewController alloc] initWithNibName:@"StoredCardsViewController" bundle:nil];
+    fvc = [[StoredCardsViewController alloc] initWithNibName:@"StoredCardsViewController" bundle:nil];
     fvc.delegate = self;
     fvc.tabBarItem.image = [UIImage imageNamed:@"Stored.png"];
     fvc.tabBarItem.title = @"Stored";
@@ -127,6 +152,7 @@
 -(void) deleteCard: (id) sender
 {
     NSLog(@"Delete Card");
+    [self switchBartToMode:NavigationBarModeEdit];
 }
 
 -(void) saveCard
@@ -134,6 +160,13 @@
     NSLog(@"Save Card");
 }
 
+-(void) doneEdit: (id) sender
+{
+    NSLog(@"Done");
+    [self switchBartToMode:NavigationBarModeView];
+    [cvc editDone];
+    [fvc editDone];
+}
 -(void) createCard
 {
     CreateCardViewController *ccvc = [[CreateCardViewController alloc] initWithNibName:@"CreateCardViewController" bundle:nil];

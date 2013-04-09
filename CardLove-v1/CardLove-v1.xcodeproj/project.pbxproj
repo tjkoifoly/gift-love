@@ -496,6 +496,7 @@
 		66E3B1B817098991006B35E4 /* cover-01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E3B1B317098991006B35E4 /* cover-01@2x.png */; };
 		66E3B1B917098991006B35E4 /* cover-02.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E3B1B417098991006B35E4 /* cover-02.png */; };
 		66E3B1BA17098991006B35E4 /* cover-02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E3B1B517098991006B35E4 /* cover-02@2x.png */; };
+		66E4439A1714237D00F2D151 /* UINavigationController+Fade.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E443991714237D00F2D151 /* UINavigationController+Fade.m */; };
 		66E931EB1713E4D800B51A5D /* Gift_Paper_Habitat_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E931E91713E4D800B51A5D /* Gift_Paper_Habitat_1.png */; };
 		66E931EC1713E4D800B51A5D /* Gift_Paper_Habitat_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E931EA1713E4D800B51A5D /* Gift_Paper_Habitat_2.png */; };
 		66ECB32616F494D400F0B998 /* CreateAEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66ECB32416F494D400F0B998 /* CreateAEventViewController.m */; };
@@ -1339,6 +1340,8 @@
 		66E3B1B317098991006B35E4 /* cover-01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cover-01@2x.png"; sourceTree = "<group>"; };
 		66E3B1B417098991006B35E4 /* cover-02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cover-02.png"; sourceTree = "<group>"; };
 		66E3B1B517098991006B35E4 /* cover-02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cover-02@2x.png"; sourceTree = "<group>"; };
+		66E443981714237D00F2D151 /* UINavigationController+Fade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+Fade.h"; sourceTree = "<group>"; };
+		66E443991714237D00F2D151 /* UINavigationController+Fade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Fade.m"; sourceTree = "<group>"; };
 		66E931E91713E4D800B51A5D /* Gift_Paper_Habitat_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gift_Paper_Habitat_1.png; sourceTree = "<group>"; };
 		66E931EA1713E4D800B51A5D /* Gift_Paper_Habitat_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gift_Paper_Habitat_2.png; sourceTree = "<group>"; };
 		66ECB32316F494D400F0B998 /* CreateAEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateAEventViewController.h; path = Views/CreateAEventViewController.h; sourceTree = "<group>"; };
@@ -1577,6 +1580,8 @@
 				66D4C67516F59D14004DC5A4 /* UIView+AUISelectiveBorder.m */,
 				6604FA6716DBCD4200295209 /* UINavigationController+KTTransitions.h */,
 				6604FA6816DBCD4200295209 /* UINavigationController+KTTransitions.m */,
+				66E443981714237D00F2D151 /* UINavigationController+Fade.h */,
+				66E443991714237D00F2D151 /* UINavigationController+Fade.m */,
 			);
 			name = Categories;
 			path = Library/Categories;
@@ -2185,9 +2190,6 @@
 		66310A8C16D9A27F00AC9DC8 = {
 			isa = PBXGroup;
 			children = (
-				66B2C57417113DD500C51CEB /* MobileCoreServices.framework */,
-				66B2C5681711317E00C51CEB /* ImageIO.framework */,
-				66F2E9DC1709F0390023A16A /* AVFoundation.framework */,
 				66FD83A316E7645800355992 /* Data */,
 				66FD83A216E7645200355992 /* ModelClasses */,
 				66310AD016D9A38900AC9DC8 /* Custom */,
@@ -2210,6 +2212,9 @@
 		66310A9716D9A27F00AC9DC8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				66B2C57417113DD500C51CEB /* MobileCoreServices.framework */,
+				66B2C5681711317E00C51CEB /* ImageIO.framework */,
+				66F2E9DC1709F0390023A16A /* AVFoundation.framework */,
 				661B87A216EF714900AE542D /* MapKit.framework */,
 				661B87A016EF712C00AE542D /* SenTestingKit.framework */,
 				661B879E16EF712600AE542D /* MessageUI.framework */,
@@ -3863,6 +3868,7 @@
 				6634C89C1712AB720048D862 /* AUIAnimatableLabel.m in Sources */,
 				6634C89D1712AB720048D862 /* UIFont+CoreTextExtensions.m in Sources */,
 				6634C8A21712B7DC0048D862 /* UILabel+ESAdjustableLabel.m in Sources */,
+				66E4439A1714237D00F2D151 /* UINavigationController+Fade.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -66,17 +66,15 @@
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	[self setHighlighted:YES animated:NO];
+	    
 }
-
-
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-	[self setHighlighted:NO animated:NO];
+
+    [self setHighlighted:NO];
 }
 
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	[self setHighlighted:YES animated:NO];
 	
 	if (CGRectContainsPoint(self.bounds, [[touches anyObject] locationInView:self])) {
 		[self.collectionView selectItemAtIndexPath:self.indexPath animated:YES scrollPosition:SSCollectionViewScrollPositionNone];

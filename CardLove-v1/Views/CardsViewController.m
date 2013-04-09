@@ -21,8 +21,10 @@
 
 @interface CardsViewController ()
 {
-    SSCollectionViewItem *currentItem;
+    NSMutableArray *_listToEdit;
+    NSMutableArray *_listItems;
 }
+
 -(void)addStandardTabView;
 -(void)addCustomTabView;
 @end
@@ -30,6 +32,7 @@
 @implementation CardsViewController
 
 @synthesize listGifts =_listGifts;
+@synthesize mode = _mode;
 @synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -46,14 +49,15 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    _mode = NavigationBarModeView;
     self.collectionView.extremitiesStyle = SSCollectionViewExtremitiesStyleScrolling;
     _listGifts = [[NSMutableArray alloc] init];
+    _listToEdit = [[NSMutableArray alloc] init];
+    _listItems = [[NSMutableArray alloc] init];
 }
 
 -(void) viewDidAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
-    
     NSString *pathProjects = [self dataFilePath:kProjects];
     NSFileManager *fileMgr = [NSFileManager defaultManager];
     
@@ -69,6 +73,9 @@
     
     [self.collectionView reloadData];
 
+    [super viewDidAppear:animated];
+    
+    
 }
 
 -(NSString *) dataFilePath: (NSString *) comp
@@ -82,6 +89,7 @@
 -(void) viewDidUnload
 {
     [self setListGifts:nil];
+    _listToEdit = nil;
     [super viewDidUnload];
 }
 
@@ -178,45 +186,19 @@
 - (SSCollectionViewItem *)collectionView:(SSCollectionView *)aCollectionView itemForIndexPath:(NSIndexPath *)indexPath {
 	static NSString *const itemIdentifier = @"itemIdentifier";
     
-    //    SSCollectionViewItem *item  = (SSCollectionViewItem *)[aCollectionView dequeueReusableItemWithIdentifier:itemIdentifier];
-    //	if(!item)
-    //    {
-    //        item = [[SSCollectionViewItem alloc] initWithStyle:SSCollectionViewItemStyleSubtitle reuseIdentifier:itemIdentifier];
-    //
-    //
-    //        item.layer.borderColor = [UIColor blackColor].CGColor;
-    //        item.layer.borderWidth = 2.0f;
-    //        item.layer.cornerRadius = 10.0f;
-    //
-    //        item.layer.masksToBounds = NO;
-    //        item.layer.shadowColor = [UIColor blackColor].CGColor;
-    //        item.layer.shadowOffset = CGSizeMake(2.0f, 2.0f);
-    //        item.layer.shadowOpacity = 1.0f;
-    //        item.layer.shadowRadius = 4.5f;
-    //        item.layer.shadowPath = [UIBezierPath bezierPathWithRect:item.bounds].CGPath;
-    //
-    //    }
-    //
-    //    item.textLabel.frame  = CGRectMake(90, 36, 66, 21);
-    //    item.textLabel.text = @"FOLY MEN";
-    //    item.textLabel.backgroundColor = [UIColor clearColor];
-    //
-    //    item.imageView.frame = CGRectMake(10, 10, 60, 80);
-    //    item.imageView.image = [UIImage imageNamed:@"list-item-cover-men1.png"];
-    //
-    //    item.imageView.layer.masksToBounds = NO;
-    //    item.imageView.layer.shadowColor = [UIColor blackColor].CGColor;
-    //    item.imageView.layer.shadowOffset = CGSizeMake(2.0f, 2.0f);
-    //    item.imageView.layer.shadowOpacity = 1.0f;
-    //    item.imageView.layer.shadowRadius = 4.5f;
-    //    item.imageView.layer.shadowPath = [UIBezierPath bezierPathWithRect:item.imageView.bounds].CGPath;
-    
     SSCollectionViewItem *item = [aCollectionView dequeueReusableItemWithIdentifier:itemIdentifier];
     if(!item)
     {
         item = (SSCollectionViewItem *)[[[NSBundle mainBundle] loadNibNamed:@"SSCollectionViewItem" owner:self options:nil] objectAtIndex:0];
         item.reuseIdentifier = [itemIdentifier copy];
+        
+        UIImageView *backgroundView = [[UIImageView alloc] initWithFrame:item.frame];
+        backgroundView.backgroundColor = [UIColor clearColor];
+        backgroundView.image = [UIImage imageNamed:@"mask.png"];
+        [item setSelectedBackgroundView:backgroundView];
     }
+    
+    [item setSelected:NO];
     id gift = [_listGifts objectAtIndex:indexPath.row];
     NSLog(@"Gift object = %@", gift);
     item.titleLabel.text = [NSString stringWithFormat:@"%@", gift ];
@@ -226,15 +208,6 @@
 }
 
 - (UIView *)collectionView:(SSCollectionView *)aCollectionView viewForHeaderInSection:(NSUInteger)section {
-	
-    //    UILabel *header = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 40.0f)];
-    //	header.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    //	header.text = [NSString stringWithFormat:@"Section %i", section + 1];
-    //	header.shadowColor = [UIColor whiteColor];
-    //	header.shadowOffset = CGSizeMake(0.0f, 1.0f);
-    //	header.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.8f];
-    
-	//return header;
     
     CollectionHeaderView *header = [[[NSBundle mainBundle] loadNibNamed:@"CollectionHeaderView" owner:self options:nil] objectAtIndex:0];
     header.lbTitle.text = [NSString stringWithFormat:@"Favorite"];
@@ -257,20 +230,50 @@
     NSLog(@"%@",title);
     
     SSCollectionViewItem *itemSelected = [aCollectionView itemForIndexPath:indexPath];
-    [self selectItem:itemSelected];
-}
-
--(void) selectItem: (SSCollectionViewItem *)itemSelected
-{
-    [currentItem setBackgroundColor:[UIColor clearColor]];
-    currentItem = itemSelected;
-    [itemSelected setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
-    
     NSString *gift = itemSelected.titleLabel.text;
     NSString *pathProjects = [self dataFilePath:kProjects];
     NSString *pathGift = [pathProjects stringByAppendingPathComponent:gift];
     
-    [self.delegate cardViewControllerDidSelected:pathGift];
+    switch (_mode) {
+        case NavigationBarModeView:
+        {
+            
+            [self.delegate cardViewControllerDidSelected:pathGift];
+        }
+            break;
+            
+        case NavigationBarModeEdit:
+        {
+            if (itemSelected.isSelected) {
+                [itemSelected setSelected:NO];
+                
+                if ([_listItems containsObject:indexPath]) {
+                    [_listItems removeObject:indexPath];
+                }
+                
+                if ([_listToEdit containsObject:gift]) {
+                    [_listToEdit removeObject:gift];
+                }
+            }else{
+                [itemSelected setSelected:YES];
+                
+                if (![_listItems containsObject:indexPath]) {
+                    [_listItems addObject:indexPath];
+                }
+                
+                if (![_listToEdit containsObject:gift]) {
+                    [_listToEdit addObject:gift];
+                }
+            }
+            
+            NSLog(@"Edit = %@", _listToEdit);
+            
+        }
+            break;
+        default:
+            break;
+    }
+   
 }
 
 
@@ -278,6 +281,37 @@
 	return 40.0f;
 }
 
+-(void) editDone
+{
+    for(NSString *gift in _listToEdit)
+    {
+        NSString *pathProjects = [self dataFilePath:kProjects];
+        NSString *pathGift = [pathProjects stringByAppendingPathComponent:gift];
+        NSError *error;
+        [[NSFileManager defaultManager] removeItemAtPath:pathGift error:&error];
+        if (error) {
+            NSLog(@"ERROR delete directory = %@", error);
+        }else
+        {
+            NSLog(@"Deleted gift %@ successful .", [pathGift lastPathComponent]);
+        }
+    }
+    
+    [self.collectionView deleteItemsAtIndexPaths:_listItems withItemAnimation:SSCollectionViewItemAnimationRight];
+    
+    
+    [_listGifts removeObjectsInArray:_listToEdit];
+    [_listToEdit removeAllObjects];
+    [_listItems removeAllObjects];
+
+    [self performSelector:@selector(reloadData) withObject:nil afterDelay:0.5];
+    
+}
+
+-(void) reloadData
+{
+    [self.collectionView reloadData];
+}
 
 
 

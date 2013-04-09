@@ -21,6 +21,7 @@
 }
 
 @property (nonatomic, strong) HMGLTransition *transition;
+@property (nonatomic) NavigationBarMode mode;
 
 - (id)initWithTitle:(NSString *)title withRevealBlock:(RevealBlock)revealBlock;
 

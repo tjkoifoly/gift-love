@@ -22,6 +22,8 @@
 
 @property (strong, nonatomic) NSMutableArray *listGifts;
 @property (assign, nonatomic) id<StoreCardViewControllerDelegate> delegate;
+@property (nonatomic) NavigationBarMode mode;
 
+-(void) editDone;
 
 @end

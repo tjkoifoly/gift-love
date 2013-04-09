@@ -24,5 +24,8 @@
 
 @property (assign, nonatomic) id <CardViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSMutableArray *listGifts;
+@property (nonatomic) NavigationBarMode mode;
+
+-(void) editDone;
 
 @end
