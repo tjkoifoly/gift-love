@@ -111,21 +111,6 @@
     [_dictDataSource setObject:arFlowers forKey:@"Flowers"];
     [_dictDataSource setObject:hdb forKey:@"Happy Birthday"];
     [_dictDataSource setObject:arXmas forKey:@"XMas"];
-
-    [_dictDataSource keysSortedByValueUsingComparator: ^(id obj1, id obj2) {
-        
-        if (obj1 > obj2) {
-            
-            return (NSComparisonResult)NSOrderedDescending;
-        }
-        if (obj1  < obj2) {
-            
-            return (NSComparisonResult)NSOrderedAscending;
-        }
-        
-        return (NSComparisonResult)NSOrderedSame;
-    }];
-    
     return _dictDataSource;
 }
 
@@ -167,12 +152,17 @@
     if (endIndex > [value count])
         endIndex = [value count];
     
-    for (int i = startIndex; i < endIndex; i++) {
+    for (int i = startIndex; i < (startIndex+4); i++) {
        
+        GifThumbnailView *gtv = [cell gifViewByTag:(i - startIndex)];
+        if (i>= endIndex) {
+            gtv.hidden = YES;
+            continue;
+        }
         NSString *imageName = [value objectAtIndex:i];
         UIImage *image = [OLImage imageNamed:imageName];
 
-        GifThumbnailView *gtv = [cell gifViewByTag:(endIndex - 1 - i)];
+        //GifThumbnailView *gtv = [cell gifViewByTag:(endIndex - 1 - i)];
         [gtv setImage:image];
         [gtv setImageName:imageName];
         gtv.hidden = NO;

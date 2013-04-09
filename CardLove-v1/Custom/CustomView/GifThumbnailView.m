@@ -22,7 +22,7 @@
         self.backgroundColor = [UIColor whiteColor];
         self.layer.borderColor = [UIColor blackColor].CGColor;
         self.layer.borderWidth = 1.0f;
-        [self setContentMode:UIViewContentModeCenter];
+        [self setContentMode:UIViewContentModeRedraw];
         self.clipsToBounds = YES;
         self.userInteractionEnabled = YES;
         
