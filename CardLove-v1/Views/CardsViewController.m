@@ -283,6 +283,10 @@
 
 -(void) editDone
 {
+    if ([_listToEdit count] == 0) {
+        return;
+    }
+    
     for(NSString *gift in _listToEdit)
     {
         NSString *pathProjects = [self dataFilePath:kProjects];
@@ -311,6 +315,7 @@
 -(void) reloadData
 {
     [self.collectionView reloadData];
+     [[TKAlertCenter defaultCenter] postAlertWithMessage:@"You have just deleted some gifts" image:[UIImage imageNamed:@"37x-Checkmark.png"]];
 }
 
 

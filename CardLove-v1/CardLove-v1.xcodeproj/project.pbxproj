@@ -485,6 +485,20 @@
 		66D70C04170149D100E12D42 /* KGStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D70C03170149D100E12D42 /* KGStatusBar.m */; };
 		66D70C071701829200E12D42 /* PreviewScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D70C061701829200E12D42 /* PreviewScrollView.m */; };
 		66D70C0A170182D800E12D42 /* PreviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D70C09170182D700E12D42 /* PreviewCell.m */; };
+		66DE338C1718361B00801F5D /* main-button-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DE33821718361B00801F5D /* main-button-left.png */; };
+		66DE338D1718361B00801F5D /* main-button-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DE33831718361B00801F5D /* main-button-left@2x.png */; };
+		66DE338E1718361B00801F5D /* main-button-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DE33841718361B00801F5D /* main-button-up.png */; };
+		66DE338F1718361B00801F5D /* main-button-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DE33851718361B00801F5D /* main-button-up@2x.png */; };
+		66DE33901718361B00801F5D /* mainBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DE33861718361B00801F5D /* mainBackground.png */; };
+		66DE33911718361B00801F5D /* mainBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DE33871718361B00801F5D /* mainBackground@2x.png */; };
+		66DE33921718361B00801F5D /* rw-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DE33881718361B00801F5D /* rw-button.png */; };
+		66DE33931718361B00801F5D /* rw-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DE33891718361B00801F5D /* rw-button@2x.png */; };
+		66DE33941718361B00801F5D /* QBKOverlayMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66DE338B1718361B00801F5D /* QBKOverlayMenuView.m */; };
+		66DE3398171859D100801F5D /* bg-none.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DE3397171859D100801F5D /* bg-none.png */; };
+		66DE33A017185AB800801F5D /* ConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66DE339E17185AB800801F5D /* ConfigurationViewController.m */; };
+		66DE33A117185AB800801F5D /* ConfigurationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66DE339F17185AB800801F5D /* ConfigurationViewController.xib */; };
+		66DE33A417185C0800801F5D /* ConfigCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66DE33A317185C0800801F5D /* ConfigCell.m */; };
+		66DE33A617185C3400801F5D /* ConfigCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66DE33A517185C3400801F5D /* ConfigCell.xib */; };
 		66E0E34C16DB11DF0085AA12 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E0E34A16DB11DF0085AA12 /* AboutViewController.m */; };
 		66E0E34D16DB11DF0085AA12 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E0E34B16DB11DF0085AA12 /* AboutViewController.xib */; };
 		66E0E35616DB13A50085AA12 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E0E35416DB13A40085AA12 /* MessagesViewController.m */; };
@@ -1325,6 +1339,23 @@
 		66D70C061701829200E12D42 /* PreviewScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreviewScrollView.m; path = Custom/CustomView/PreviewScrollView.m; sourceTree = "<group>"; };
 		66D70C08170182D700E12D42 /* PreviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreviewCell.h; path = Custom/CustomView/PreviewCell.h; sourceTree = "<group>"; };
 		66D70C09170182D700E12D42 /* PreviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreviewCell.m; path = Custom/CustomView/PreviewCell.m; sourceTree = "<group>"; };
+		66DE33821718361B00801F5D /* main-button-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main-button-left.png"; sourceTree = "<group>"; };
+		66DE33831718361B00801F5D /* main-button-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main-button-left@2x.png"; sourceTree = "<group>"; };
+		66DE33841718361B00801F5D /* main-button-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main-button-up.png"; sourceTree = "<group>"; };
+		66DE33851718361B00801F5D /* main-button-up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main-button-up@2x.png"; sourceTree = "<group>"; };
+		66DE33861718361B00801F5D /* mainBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainBackground.png; sourceTree = "<group>"; };
+		66DE33871718361B00801F5D /* mainBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mainBackground@2x.png"; sourceTree = "<group>"; };
+		66DE33881718361B00801F5D /* rw-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rw-button.png"; sourceTree = "<group>"; };
+		66DE33891718361B00801F5D /* rw-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rw-button@2x.png"; sourceTree = "<group>"; };
+		66DE338A1718361B00801F5D /* QBKOverlayMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBKOverlayMenuView.h; sourceTree = "<group>"; };
+		66DE338B1718361B00801F5D /* QBKOverlayMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBKOverlayMenuView.m; sourceTree = "<group>"; };
+		66DE3397171859D100801F5D /* bg-none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-none.png"; sourceTree = "<group>"; };
+		66DE339D17185AB800801F5D /* ConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigurationViewController.h; path = Views/ConfigurationViewController.h; sourceTree = "<group>"; };
+		66DE339E17185AB800801F5D /* ConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConfigurationViewController.m; path = Views/ConfigurationViewController.m; sourceTree = "<group>"; };
+		66DE339F17185AB800801F5D /* ConfigurationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConfigurationViewController.xib; path = Views/ConfigurationViewController.xib; sourceTree = "<group>"; };
+		66DE33A217185C0800801F5D /* ConfigCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigCell.h; sourceTree = "<group>"; };
+		66DE33A317185C0800801F5D /* ConfigCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigCell.m; sourceTree = "<group>"; };
+		66DE33A517185C3400801F5D /* ConfigCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfigCell.xib; sourceTree = "<group>"; };
 		66E0E34916DB11DF0085AA12 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutViewController.h; path = Views/AboutViewController.h; sourceTree = "<group>"; };
 		66E0E34A16DB11DF0085AA12 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutViewController.m; path = Views/AboutViewController.m; sourceTree = "<group>"; };
 		66E0E34B16DB11DF0085AA12 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AboutViewController.xib; path = Views/AboutViewController.xib; sourceTree = "<group>"; };
@@ -2169,6 +2200,7 @@
 		662507A517106B0A00FF3F8B /* _bg */ = {
 			isa = PBXGroup;
 			children = (
+				66DE3397171859D100801F5D /* bg-none.png */,
 				66E931E91713E4D800B51A5D /* Gift_Paper_Habitat_1.png */,
 				66E931EA1713E4D800B51A5D /* Gift_Paper_Habitat_2.png */,
 				667C25B817130B3E0081BC38 /* card-icon2.jpg */,
@@ -2278,6 +2310,7 @@
 		66310ACF16D9A37900AC9DC8 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				66DE33801718361B00801F5D /* QKmenu */,
 				6634C88E1712A7930048D862 /* Label */,
 				66B2C5A517116BF200C51CEB /* EGOImage */,
 				66B2C55F17112FE400C51CEB /* GIF */,
@@ -2616,11 +2649,14 @@
 		66A327E016DA80BE00AB3767 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				66DE33A217185C0800801F5D /* ConfigCell.h */,
+				66DE33A317185C0800801F5D /* ConfigCell.m */,
 				66A327E116DA80BE00AB3767 /* GHMenuCell.h */,
 				66A327E216DA80BE00AB3767 /* GHMenuCell.m */,
 				661F4E6A16E87A140005B8F0 /* DrawerViewMenu.h */,
 				661F4E6B16E87A150005B8F0 /* DrawerViewMenu.m */,
 				661F4E6D16E87A390005B8F0 /* DrawerViewMenu.xib */,
+				66DE33A517185C3400801F5D /* ConfigCell.xib */,
 			);
 			name = Cell;
 			path = Custom/Cell;
@@ -2801,6 +2837,9 @@
 				66B2C57D17115F2300C51CEB /* GiftElementsViewController.h */,
 				66B2C57E17115F2300C51CEB /* GiftElementsViewController.m */,
 				66B2C57F17115F2300C51CEB /* GiftElementsViewController.xib */,
+				66DE339D17185AB800801F5D /* ConfigurationViewController.h */,
+				66DE339E17185AB800801F5D /* ConfigurationViewController.m */,
+				66DE339F17185AB800801F5D /* ConfigurationViewController.xib */,
 			);
 			name = Gift;
 			sourceTree = "<group>";
@@ -2878,6 +2917,32 @@
 			);
 			name = KGStatusBar;
 			path = Library/KGStatusBar;
+			sourceTree = "<group>";
+		};
+		66DE33801718361B00801F5D /* QKmenu */ = {
+			isa = PBXGroup;
+			children = (
+				66DE33811718361B00801F5D /* img */,
+				66DE338A1718361B00801F5D /* QBKOverlayMenuView.h */,
+				66DE338B1718361B00801F5D /* QBKOverlayMenuView.m */,
+			);
+			name = QKmenu;
+			path = Library/QKmenu;
+			sourceTree = "<group>";
+		};
+		66DE33811718361B00801F5D /* img */ = {
+			isa = PBXGroup;
+			children = (
+				66DE33821718361B00801F5D /* main-button-left.png */,
+				66DE33831718361B00801F5D /* main-button-left@2x.png */,
+				66DE33841718361B00801F5D /* main-button-up.png */,
+				66DE33851718361B00801F5D /* main-button-up@2x.png */,
+				66DE33861718361B00801F5D /* mainBackground.png */,
+				66DE33871718361B00801F5D /* mainBackground@2x.png */,
+				66DE33881718361B00801F5D /* rw-button.png */,
+				66DE33891718361B00801F5D /* rw-button@2x.png */,
+			);
+			path = img;
 			sourceTree = "<group>";
 		};
 		66F1B92316EAE996003FEA7F /* CustomView */ = {
@@ -3618,6 +3683,17 @@
 				663C15241713D33C0006C960 /* hbd-text06.gif in Resources */,
 				66E931EB1713E4D800B51A5D /* Gift_Paper_Habitat_1.png in Resources */,
 				66E931EC1713E4D800B51A5D /* Gift_Paper_Habitat_2.png in Resources */,
+				66DE338C1718361B00801F5D /* main-button-left.png in Resources */,
+				66DE338D1718361B00801F5D /* main-button-left@2x.png in Resources */,
+				66DE338E1718361B00801F5D /* main-button-up.png in Resources */,
+				66DE338F1718361B00801F5D /* main-button-up@2x.png in Resources */,
+				66DE33901718361B00801F5D /* mainBackground.png in Resources */,
+				66DE33911718361B00801F5D /* mainBackground@2x.png in Resources */,
+				66DE33921718361B00801F5D /* rw-button.png in Resources */,
+				66DE33931718361B00801F5D /* rw-button@2x.png in Resources */,
+				66DE3398171859D100801F5D /* bg-none.png in Resources */,
+				66DE33A117185AB800801F5D /* ConfigurationViewController.xib in Resources */,
+				66DE33A617185C3400801F5D /* ConfigCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3869,6 +3945,9 @@
 				6634C89D1712AB720048D862 /* UIFont+CoreTextExtensions.m in Sources */,
 				6634C8A21712B7DC0048D862 /* UILabel+ESAdjustableLabel.m in Sources */,
 				66E4439A1714237D00F2D151 /* UINavigationController+Fade.m in Sources */,
+				66DE33941718361B00801F5D /* QBKOverlayMenuView.m in Sources */,
+				66DE33A017185AB800801F5D /* ConfigurationViewController.m in Sources */,
+				66DE33A417185C0800801F5D /* ConfigCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

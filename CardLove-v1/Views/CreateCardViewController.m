@@ -306,6 +306,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         if ([[GiftLabelsManager sharedManager] saveListLabel]) {
             if ([[GiftElementsManager sharedManager] saveListElements]) {
                 NSLog(@"Saved gift successful.");
+                [self performSelector:@selector(showMessageWithCompletedView:) withObject:@"Saved !" afterDelay:0.5];
             }
         }
     }
@@ -346,13 +347,16 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
                                                              [self saveAsImage];
                                                          }];
     
-    REMenuItem *activityItem = [[REMenuItem alloc] initWithTitle:@"Package gift"
-                                                        subtitle:@"Package gift as a zip file"
+    REMenuItem *activityItem = [[REMenuItem alloc] initWithTitle:@"Configuration"
+                                                        subtitle:@"Change settings of the gift"
                                                            image:[UIImage imageNamed:@"Icon_Activity"]
                                                 highlightedImage:nil
                                                           action:^(REMenuItem *item) {
                                                               NSLog(@"Item: %@", item);
-                                                              [self saveAsZip];
+                                                              //[self saveAsZip];
+                                                              ConfigurationViewController *cgvc = [[ConfigurationViewController alloc] initWithNibName:@"ConfigurationViewController" bundle:nil];
+                                                              UINavigationController *navConfig = [[UINavigationController alloc] initWithRootViewController:cgvc];
+                                                              [self presentModalViewController:navConfig animated:YES];
                                                           }];
     
     REMenuItem *saveProjectItem = [[REMenuItem alloc] initWithTitle:@"Send gift"
@@ -369,7 +373,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     activityItem.tag = 2;
     saveProjectItem.tag = 3;
     
-    _exportMenu = [[REMenu alloc] initWithItems:@[ homeItem, exploreItem, activityItem, saveProjectItem]];
+    _exportMenu = [[REMenu alloc] initWithItems:@[ activityItem, homeItem, exploreItem,  saveProjectItem]];
     _exportMenu.cornerRadius = 4;
     _exportMenu.shadowColor = [UIColor blackColor];
     _exportMenu.shadowOffset = CGSizeMake(0, 1);
@@ -865,6 +869,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) gestureLabelDidSelected:(GestureLabel *)label
 {
+    [self currentItemDeslected:currentPhoto];
+    [self focusItemDeslected:focusObject];
+    
     [label labelSelected];
     if (!_selectedLabel) {
         _selectedLabel = label;
@@ -891,6 +898,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) selectImageView:(GestureImageView *)gestureImageView
 {
+    [self currentLabelDeselected:_selectedLabel];
+    [self focusItemDeslected:focusObject];
+    
     if (currentPhoto) {
         [currentPhoto showBorder:NO];
     }
@@ -911,6 +921,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) selectPhoto:(GestureView *)gestureView
 {
+    [self currentLabelDeselected:_selectedLabel];
+    [self currentItemDeslected:currentPhoto];
+    
     if (focusObject) {
         [focusObject selected:NO];
     }
@@ -1200,9 +1213,10 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) showMessageWithCompletedView: (NSString *) message
 {
-    UIImageView *completedView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]] ;
-	
-	[self showMessage:message withCustomView:completedView];
+//    UIImageView *completedView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]] ;
+//	[self showMessage:message withCustomView:completedView];
+    
+    [[TKAlertCenter defaultCenter] postAlertWithMessage:message image:[UIImage imageNamed:@"37x-Checkmark.png"]];
 }
 
 -(void) showMessage: (NSString *)message withCustomView :(UIView *)customView
@@ -1256,13 +1270,13 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 -(void) currentLabelDeselected: (GestureLabel *) currentLabel
 {
     [currentLabel labelDeselected];
-    currentLabel = nil;
+    _selectedLabel = nil;
 }
 
 -(void)currentItemDeslected : (GestureImageView *)currentItem
 {
     [currentItem showBorder:NO];
-    currentItem = nil;
+    currentPhoto = nil;
 }
 -(void)focusItemDeslected : (GestureView *)focusItem
 {

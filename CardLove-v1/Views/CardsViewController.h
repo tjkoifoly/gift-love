@@ -12,6 +12,7 @@
 #import "SSCollectionViewController.h"
 #import "MacroDefine.h"
 #import "CreateCardViewController.h"
+#import "TapkuLibrary.h"
 
 @class CardsViewController;
 @protocol CardViewControllerDelegate <NSObject>
