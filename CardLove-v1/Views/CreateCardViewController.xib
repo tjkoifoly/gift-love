@@ -487,6 +487,35 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">CreateCardViewController</string>
 					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="addAnimation:">id</string>
+						<string key="addMusic:">id</string>
+						<string key="addText:">id</string>
+						<string key="editPhoto:">id</string>
+						<string key="importPhoto:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="addAnimation:">
+							<string key="name">addAnimation:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="addMusic:">
+							<string key="name">addMusic:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="addText:">
+							<string key="name">addText:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="editPhoto:">
+							<string key="name">editPhoto:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="importPhoto:">
+							<string key="name">importPhoto:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="imvFrameCard">UIImageView</string>
 						<string key="toolBar">UIView</string>

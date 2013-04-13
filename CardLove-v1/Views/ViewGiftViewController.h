@@ -34,6 +34,5 @@
 @property (weak, nonatomic) IBOutlet UIView *viewGift;
 @property (weak, nonatomic) IBOutlet UIView *viewCard;
 @property (weak, nonatomic) IBOutlet UIImageView *imvFrameCard;
-@property (weak, nonatomic) IBOutlet UIImageView *imvOverlay;
 
 @end

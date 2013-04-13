@@ -22,6 +22,7 @@
 #define kMusic          @"music.tjkoifoly"
 #define kAnimation      @"animation.tjkoifoly"
 #define kElements       @"elements.tjkoifoly"
+#define kConfig         @"gift-config.tjkoifoly"
 
 #define kBounds     @"bounds"
 #define kCenter     @"center"
@@ -32,6 +33,13 @@
 #define kNoEff @"no-eff"
 
 #define kNotificationGifSelected @"GifSelectedNotification"
+#define kNotificationGiftConfig  @"NotificationGiftConfig"
+
+#define kGiftPaper      @"gift-paper"
+#define kGiftBG         @"gift-bg"
+#define kGiftFrame      @"gift-frame"
+#define kGiftMessage    @"gift-message"
+
 
 typedef enum {
     NavigationBarModeEdit,

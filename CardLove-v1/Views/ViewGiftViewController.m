@@ -33,12 +33,12 @@
     [SoundManager sharedManager].allowsBackgroundMusic = NO;
     [[SoundManager sharedManager] prepareToPlay];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern.png"]];
     self.viewCard.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cover-01.png"]];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     //Update View
     [self loadGiftByPath:_giftPath];
+    [self loadConfigurationWithPath:_giftPath];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -75,7 +75,6 @@
     [self setViewGift:nil];
     [self setViewCard:nil];
     [self setImvFrameCard:nil];
-    [self setImvOverlay:nil];
     [super viewDidUnload];
 }
 
@@ -273,6 +272,27 @@
     return zipFile;
 }
 
+#pragma mark - LOAD ConfigGift
+-(void) loadConfigurationWithPath: (NSString *)path
+{
+    NSString *filePath = [path stringByAppendingPathComponent:kConfig];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filePath];
+    
+    NSString *strTemp = [dict valueForKey:kGiftPaper];
+    UIImage *imgTemp = [UIImage imageNamed:strTemp];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:imgTemp];
+    
+    strTemp = [dict valueForKey:kGiftBG];
+    imgTemp = [UIImage imageNamed:strTemp];
+    self.viewCard.backgroundColor = [UIColor colorWithPatternImage:imgTemp];
+    
+    strTemp = [dict valueForKey:kGiftFrame];
+    imgTemp = [UIImage imageNamed:strTemp];
+    self.imvFrameCard.image = imgTemp;
+    
+    strTemp = [dict valueForKey:kGiftMessage];
+    //Set message
+}
 
 
 

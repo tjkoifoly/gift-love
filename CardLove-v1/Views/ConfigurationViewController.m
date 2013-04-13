@@ -46,6 +46,12 @@
     
     self.navigationItem.title = @"Configuration";
     
+    //Initialize
+    [self loadConfiguration];
+    if (!_dictGiftConfig) {
+        _dictGiftConfig = [[NSMutableDictionary alloc] init];
+    }
+    
     //Actions
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(dismissKeyboard)];
@@ -70,6 +76,12 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [self reloadView];
+    [super viewDidAppear:animated];
 }
 
 #pragma mark - Keyboard events
@@ -115,6 +127,11 @@
 
 -(void) doneAction
 {
+    [_dictGiftConfig setValue:_txtViewMessage.text forKey:kGiftMessage];
+    NSString *filePath = [_pathGift stringByAppendingPathComponent:kConfig];
+    [_dictGiftConfig writeToFile:filePath atomically:YES];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationGiftConfig object:nil];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -154,19 +171,63 @@
 -(void) choosePaper
 {
     [self dismissKeyboard];
+    
+    BGPickerViewController *bgPikcerVC = [[BGPickerViewController alloc] initWithNibName:@"BGPickerViewController" bundle:nil];
+    bgPikcerVC.type = kGiftPaper;
+    bgPikcerVC.dictParent = _dictGiftConfig;
+    [self.navigationController pushViewController:bgPikcerVC animated:YES];
+    
     NSLog(@"Paper");
 }
 
 -(void) chooseBg
 {
     [self dismissKeyboard];
+    
+    BGPickerViewController *bgPikcerVC = [[BGPickerViewController alloc] initWithNibName:@"BGPickerViewController" bundle:nil];
+    bgPikcerVC.type = kGiftBG;
+    bgPikcerVC.dictParent = _dictGiftConfig;
+    [self.navigationController pushViewController:bgPikcerVC animated:YES];
+
+    
     NSLog(@"BG");
 }
 
 -(void) chooseFrame
 {
     [self dismissKeyboard];
+    
+    BGPickerViewController *bgPikcerVC = [[BGPickerViewController alloc] initWithNibName:@"BGPickerViewController" bundle:nil];
+    bgPikcerVC.type = kGiftFrame;
+    bgPikcerVC.dictParent = _dictGiftConfig;
+    [self.navigationController pushViewController:bgPikcerVC animated:YES];
+    
     NSLog(@"Frame");
+}
+
+-(void) loadConfiguration
+{
+    NSString *filePath = [_pathGift stringByAppendingPathComponent:kConfig];
+    _dictGiftConfig = [NSMutableDictionary dictionaryWithContentsOfFile:filePath];
+}
+
+-(void) reloadView
+{
+    NSString *strTemp = [_dictGiftConfig valueForKey:kGiftPaper];
+    UIImage *imgTemp = [UIImage imageNamed:strTemp];
+    _imvGiftPaper.image = imgTemp;
+    
+    strTemp = [_dictGiftConfig valueForKey:kGiftBG];
+    imgTemp = [UIImage imageNamed:strTemp];
+    _imvGiftBackground.image = imgTemp;
+    
+    strTemp = [_dictGiftConfig valueForKey:kGiftFrame];
+    imgTemp = [UIImage imageNamed:strTemp];
+    _imvGiftFame.image = imgTemp;
+    
+    strTemp = [_dictGiftConfig valueForKey:kGiftMessage];
+    _txtViewMessage.text = strTemp;
+    
 }
 
 

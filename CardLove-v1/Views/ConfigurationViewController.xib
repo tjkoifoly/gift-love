@@ -4504,9 +4504,9 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<int key="IBUIContentMode">1</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<object class="NSCustomResource" key="IBUIImage">
+						<object class="NSCustomResource" key="IBUIImage" id="893598100">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">cover-01.png</string>
+							<string key="NSResourceName">bg-cell120.png</string>
 						</object>
 					</object>
 					<object class="IBUILabel" id="708320799">
@@ -4552,10 +4552,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<int key="IBUIContentMode">1</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<object class="NSCustomResource" key="IBUIImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">Gift_Paper_Habitat_1.png</string>
-						</object>
+						<reference key="IBUIImage" ref="893598100"/>
 					</object>
 					<object class="IBUILabel" id="28752978">
 						<reference key="NSNextResponder" ref="384573984"/>
@@ -4640,10 +4637,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<int key="IBUIContentMode">1</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<object class="NSCustomResource" key="IBUIImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">card-frame-4.png</string>
-						</object>
+						<reference key="IBUIImage" ref="893598100"/>
 					</object>
 					<object class="IBUILabel" id="553542116">
 						<reference key="NSNextResponder" ref="384573984"/>
@@ -4728,6 +4722,14 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<reference key="destination" ref="818823913"/>
 					</object>
 					<int key="connectionID">21</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">imvGiftFame</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="958009704"/>
+					</object>
+					<int key="connectionID">23</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4847,7 +4849,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">22</int>
+			<int key="maxID">23</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4900,9 +4902,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="Gift_Paper_Habitat_1.png">{320, 480}</string>
-			<string key="card-frame-4.png">{1000, 746}</string>
-			<string key="cover-01.png">{300, 350}</string>
+			<string key="bg-cell120.png">{116, 116}</string>
 			<string key="mask.png">{300, 240}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>

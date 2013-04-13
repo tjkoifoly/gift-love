@@ -139,6 +139,12 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     {
         [self createNewFolder:_giftName];
     }
+    
+    [self setDefaultConfig];
+    
+    //Listeners
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadConfigurationWithPath:) name:kNotificationGiftConfig object:nil];
+
 }
 
 -(void) backPreviousView
@@ -173,6 +179,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self setExportMenu:nil];
     [self setPathConf:nil];
     [self setPathResources:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:kNotificationGiftConfig object:nil];
     [super viewDidUnload];
 }
 
@@ -355,6 +362,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
                                                               NSLog(@"Item: %@", item);
                                                               //[self saveAsZip];
                                                               ConfigurationViewController *cgvc = [[ConfigurationViewController alloc] initWithNibName:@"ConfigurationViewController" bundle:nil];
+                                                              cgvc.pathGift = _pathResources;
                                                               UINavigationController *navConfig = [[UINavigationController alloc] initWithRootViewController:cgvc];
                                                               [self presentModalViewController:navConfig animated:YES];
                                                           }];
@@ -1618,6 +1626,41 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 {
     [self addGifElementWithName:elementName];
 }
+
+#pragma mark - LOAD ConfigGift
+-(void) loadConfigurationWithPath: (NSNotification*) notification
+{
+    NSString *filePath = [_pathResources stringByAppendingPathComponent:kConfig];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filePath];
+    
+    NSString *strTemp = [dict valueForKey:kGiftPaper];
+    UIImage *imgTemp = [UIImage imageNamed:strTemp];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:imgTemp];
+    
+    strTemp = [dict valueForKey:kGiftBG];
+    imgTemp = [UIImage imageNamed:strTemp];
+    self.viewCard.backgroundColor = [UIColor colorWithPatternImage:imgTemp];
+
+    strTemp = [dict valueForKey:kGiftFrame];
+    imgTemp = [UIImage imageNamed:strTemp];
+    self.imvFrameCard.image = imgTemp;
+    
+    strTemp = [dict valueForKey:kGiftMessage];
+    //Set message
+}
+
+-(void) setDefaultConfig
+{
+    NSDictionary *dict =[NSDictionary dictionaryWithObjectsAndKeys:
+                         @"pattern.png",kGiftPaper,
+                         @"cover-01.png",kGiftBG,
+                         @"card-frame-4.png",kGiftFrame,
+                         @"",kGiftMessage, nil];
+    NSString *filePath = [_pathResources stringByAppendingPathComponent:kConfig];
+    [dict writeToFile:filePath atomically:YES];
+}
+
+
 
 
 @end

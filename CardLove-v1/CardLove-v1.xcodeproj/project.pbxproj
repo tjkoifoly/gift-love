@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6604EFA117191B63005B6135 /* bg-cell120.png in Resources */ = {isa = PBXBuildFile; fileRef = 6604EFA017191B63005B6135 /* bg-cell120.png */; };
 		6604FA3616DBC1B300295209 /* add-gift.png in Resources */ = {isa = PBXBuildFile; fileRef = 6604FA3416DBC1B300295209 /* add-gift.png */; };
 		6604FA3716DBC1B300295209 /* add-gift@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6604FA3516DBC1B300295209 /* add-gift@2x.png */; };
 		6604FA3A16DBC5B400295209 /* shop.png in Resources */ = {isa = PBXBuildFile; fileRef = 6604FA3816DBC5B400295209 /* shop.png */; };
@@ -28,6 +29,11 @@
 		6604FA6416DBCB7E00295209 /* CreateCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6604FA6216DBCB7E00295209 /* CreateCardViewController.m */; };
 		6604FA6516DBCB7E00295209 /* CreateCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6604FA6316DBCB7E00295209 /* CreateCardViewController.xib */; };
 		6604FA6916DBCD4200295209 /* UINavigationController+KTTransitions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6604FA6816DBCD4200295209 /* UINavigationController+KTTransitions.m */; };
+		66081A7B1719082E002B8B36 /* MMGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66081A761719082E002B8B36 /* MMGridView.m */; };
+		66081A7C1719082E002B8B36 /* MMGridViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66081A781719082E002B8B36 /* MMGridViewCell.m */; };
+		66081A7D1719082E002B8B36 /* MMGridViewDefaultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66081A7A1719082E002B8B36 /* MMGridViewDefaultCell.m */; };
+		66081A81171908BB002B8B36 /* BGPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66081A7F171908BB002B8B36 /* BGPickerViewController.m */; };
+		66081A82171908BB002B8B36 /* BGPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66081A80171908BB002B8B36 /* BGPickerViewController.xib */; };
 		660A417616F3841B006F593D /* EventsManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 660A417416F3841B006F593D /* EventsManagerViewController.m */; };
 		660A417716F3841B006F593D /* EventsManagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 660A417516F3841B006F593D /* EventsManagerViewController.xib */; };
 		660A417B16F385CE006F593D /* DetailEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 660A417916F385CE006F593D /* DetailEventViewController.m */; };
@@ -639,6 +645,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6604EFA017191B63005B6135 /* bg-cell120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-cell120.png"; sourceTree = "<group>"; };
 		6604FA3416DBC1B300295209 /* add-gift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add-gift.png"; path = "Resources/add-gift.png"; sourceTree = "<group>"; };
 		6604FA3516DBC1B300295209 /* add-gift@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add-gift@2x.png"; path = "Resources/add-gift@2x.png"; sourceTree = "<group>"; };
 		6604FA3816DBC5B400295209 /* shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = shop.png; path = Resources/shop.png; sourceTree = "<group>"; };
@@ -668,6 +675,15 @@
 		6604FA6316DBCB7E00295209 /* CreateCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateCardViewController.xib; path = Views/CreateCardViewController.xib; sourceTree = "<group>"; };
 		6604FA6716DBCD4200295209 /* UINavigationController+KTTransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+KTTransitions.h"; sourceTree = "<group>"; };
 		6604FA6816DBCD4200295209 /* UINavigationController+KTTransitions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+KTTransitions.m"; sourceTree = "<group>"; };
+		66081A751719082E002B8B36 /* MMGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMGridView.h; sourceTree = "<group>"; };
+		66081A761719082E002B8B36 /* MMGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMGridView.m; sourceTree = "<group>"; };
+		66081A771719082E002B8B36 /* MMGridViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMGridViewCell.h; sourceTree = "<group>"; };
+		66081A781719082E002B8B36 /* MMGridViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMGridViewCell.m; sourceTree = "<group>"; };
+		66081A791719082E002B8B36 /* MMGridViewDefaultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMGridViewDefaultCell.h; sourceTree = "<group>"; };
+		66081A7A1719082E002B8B36 /* MMGridViewDefaultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMGridViewDefaultCell.m; sourceTree = "<group>"; };
+		66081A7E171908BB002B8B36 /* BGPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BGPickerViewController.h; path = Views/BGPickerViewController.h; sourceTree = "<group>"; };
+		66081A7F171908BB002B8B36 /* BGPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BGPickerViewController.m; path = Views/BGPickerViewController.m; sourceTree = "<group>"; };
+		66081A80171908BB002B8B36 /* BGPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BGPickerViewController.xib; path = Views/BGPickerViewController.xib; sourceTree = "<group>"; };
 		660A417316F3841B006F593D /* EventsManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventsManagerViewController.h; path = Views/EventsManagerViewController.h; sourceTree = "<group>"; };
 		660A417416F3841B006F593D /* EventsManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventsManagerViewController.m; path = Views/EventsManagerViewController.m; sourceTree = "<group>"; };
 		660A417516F3841B006F593D /* EventsManagerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventsManagerViewController.xib; path = Views/EventsManagerViewController.xib; sourceTree = "<group>"; };
@@ -1618,6 +1634,28 @@
 			path = Library/Categories;
 			sourceTree = "<group>";
 		};
+		66081A731719082E002B8B36 /* MMGridView */ = {
+			isa = PBXGroup;
+			children = (
+				66081A741719082E002B8B36 /* Classes */,
+				66081A791719082E002B8B36 /* MMGridViewDefaultCell.h */,
+				66081A7A1719082E002B8B36 /* MMGridViewDefaultCell.m */,
+			);
+			name = MMGridView;
+			path = Library/MMGridView;
+			sourceTree = "<group>";
+		};
+		66081A741719082E002B8B36 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				66081A751719082E002B8B36 /* MMGridView.h */,
+				66081A761719082E002B8B36 /* MMGridView.m */,
+				66081A771719082E002B8B36 /* MMGridViewCell.h */,
+				66081A781719082E002B8B36 /* MMGridViewCell.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		661B868416EF68E000AE542D /* PMCalendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -2200,6 +2238,7 @@
 		662507A517106B0A00FF3F8B /* _bg */ = {
 			isa = PBXGroup;
 			children = (
+				6604EFA017191B63005B6135 /* bg-cell120.png */,
 				66DE3397171859D100801F5D /* bg-none.png */,
 				66E931E91713E4D800B51A5D /* Gift_Paper_Habitat_1.png */,
 				66E931EA1713E4D800B51A5D /* Gift_Paper_Habitat_2.png */,
@@ -2310,6 +2349,7 @@
 		66310ACF16D9A37900AC9DC8 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				66081A731719082E002B8B36 /* MMGridView */,
 				66DE33801718361B00801F5D /* QKmenu */,
 				6634C88E1712A7930048D862 /* Label */,
 				66B2C5A517116BF200C51CEB /* EGOImage */,
@@ -2840,6 +2880,9 @@
 				66DE339D17185AB800801F5D /* ConfigurationViewController.h */,
 				66DE339E17185AB800801F5D /* ConfigurationViewController.m */,
 				66DE339F17185AB800801F5D /* ConfigurationViewController.xib */,
+				66081A7E171908BB002B8B36 /* BGPickerViewController.h */,
+				66081A7F171908BB002B8B36 /* BGPickerViewController.m */,
+				66081A80171908BB002B8B36 /* BGPickerViewController.xib */,
 			);
 			name = Gift;
 			sourceTree = "<group>";
@@ -3694,6 +3737,8 @@
 				66DE3398171859D100801F5D /* bg-none.png in Resources */,
 				66DE33A117185AB800801F5D /* ConfigurationViewController.xib in Resources */,
 				66DE33A617185C3400801F5D /* ConfigCell.xib in Resources */,
+				66081A82171908BB002B8B36 /* BGPickerViewController.xib in Resources */,
+				6604EFA117191B63005B6135 /* bg-cell120.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3948,6 +3993,10 @@
 				66DE33941718361B00801F5D /* QBKOverlayMenuView.m in Sources */,
 				66DE33A017185AB800801F5D /* ConfigurationViewController.m in Sources */,
 				66DE33A417185C0800801F5D /* ConfigCell.m in Sources */,
+				66081A7B1719082E002B8B36 /* MMGridView.m in Sources */,
+				66081A7C1719082E002B8B36 /* MMGridViewCell.m in Sources */,
+				66081A7D1719082E002B8B36 /* MMGridViewDefaultCell.m in Sources */,
+				66081A81171908BB002B8B36 /* BGPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
