@@ -23,8 +23,16 @@
 @property (strong, nonatomic) NSString *center;
 @property (strong, nonatomic) NSString *transform;
 @property (strong, nonatomic) NSString *photo;
+@property (strong, nonatomic) NSString* borderWidth;
+@property (strong, nonatomic) NSString* borderOpacity;
+@property (strong, nonatomic) NSString * borderColor;
+@property (strong, nonatomic) NSString *borderRadius;
+@property (strong, nonatomic) NSString * shadowOpacity;
+@property (strong, nonatomic) NSString *shadowOffset;
+@property (strong, nonatomic) NSString *shadowColor;
+@property (strong, nonatomic) NSString *shadowRadius;
 
-- (id) initWithView:(GestureImageView*) imv;
+
 - (id) initWithGestureView:(GestureView*) imv;
 
 @end

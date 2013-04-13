@@ -29,6 +29,14 @@
 #define kTransfrom  @"transform"
 #define kPhoto      @"photo"
 #define kImgURL     @"imageURL"
+#define kBorderWidth @"borderWidth"
+#define kBorderColor @"borderColor"
+#define kBorderOpacity @"borderOpacity"
+#define kBorderRadius @"borderRadius"
+#define kShadowOffset @"shadowOffset"
+#define kShadowColor @"shadowColor"
+#define kShadowOpacity @"shadowOpacity"
+#define kShadowRadius @"shadowRadius"
 
 #define kNoEff @"no-eff"
 

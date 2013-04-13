@@ -100,9 +100,40 @@
     imvPhoto.center = CGPointFromString(item.center);
     imvPhoto.transform = CGAffineTransformFromString(item.transform);
     imvPhoto.imgURL = item.photo;
-    
-    [imvPhoto addLayersWithImage:image];
+        [imvPhoto addLayersWithImage:image];
     //imvPhoto.delegate = self;
+    imvPhoto.shadowLayer.borderWidth = [item.borderWidth floatValue];
+    imvPhoto.shadowLayer.cornerRadius  = [item.borderRadius floatValue];
+    imvPhoto.photoLayer.cornerRadius = [item.borderRadius floatValue];
+    imvPhoto.shadowLayer.opacity = [item.borderOpacity floatValue];
+    
+    NSArray *colorRGB = [item.borderColor componentsSeparatedByString:@" "];
+    
+    if ([[colorRGB objectAtIndex:0] isEqual:@"UIDeviceRGBColorSpace"]) {
+        UIColor *colorText = [UIColor colorWithRed:[[colorRGB objectAtIndex:1] floatValue] green:[[colorRGB objectAtIndex:2] floatValue] blue:[[colorRGB objectAtIndex:3] floatValue] alpha:[[colorRGB objectAtIndex:4] floatValue]];
+        imvPhoto.shadowLayer.borderColor = colorText.CGColor;
+    }else if ([[colorRGB objectAtIndex:0] isEqual:@"UIDeviceWhiteColorSpace"])
+    {
+        UIColor *colorText = [UIColor colorWithWhite:[[colorRGB objectAtIndex:1] floatValue] alpha:[[colorRGB objectAtIndex:2] floatValue]];
+        imvPhoto.shadowLayer.borderColor = colorText.CGColor;
+    }
+    
+    
+    imvPhoto.shadowLayer.shadowOffset = CGSizeFromString(item.shadowOffset);
+    imvPhoto.shadowLayer.shadowOpacity = [item.shadowOpacity floatValue];
+    imvPhoto.shadowLayer.shadowRadius = [item.shadowRadius floatValue];
+    
+    colorRGB = [item.shadowColor componentsSeparatedByString:@" "];
+    
+    if ([[colorRGB objectAtIndex:0] isEqual:@"UIDeviceRGBColorSpace"]) {
+        UIColor *colorText = [UIColor colorWithRed:[[colorRGB objectAtIndex:1] floatValue] green:[[colorRGB objectAtIndex:2] floatValue] blue:[[colorRGB objectAtIndex:3] floatValue] alpha:[[colorRGB objectAtIndex:4] floatValue]];
+        imvPhoto.shadowLayer.shadowColor = colorText.CGColor;
+    }else if ([[colorRGB objectAtIndex:0] isEqual:@"UIDeviceWhiteColorSpace"])
+    {
+        UIColor *colorText = [UIColor colorWithWhite:[[colorRGB objectAtIndex:1] floatValue] alpha:[[colorRGB objectAtIndex:2] floatValue]];
+        imvPhoto.shadowLayer.shadowColor = colorText.CGColor;
+    }
+
     
     [self.viewCard addSubview:imvPhoto];
 }

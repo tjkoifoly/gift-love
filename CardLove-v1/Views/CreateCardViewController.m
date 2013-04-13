@@ -69,7 +69,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self createNewFolder:kGift];
     [self createNewFolder:kPackages];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Gift_Paper_Habitat_1.png"] ];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern.png"] ];
     
     UIColor *c = [UIColor colorWithRed:0.65454 green:0.2454 blue:0.7345 alpha:1];
     NSLog(@"___COLOR = %@", c);
@@ -774,9 +774,43 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     imvPhoto.center = CGPointFromString(item.center);
     imvPhoto.transform = CGAffineTransformFromString(item.transform);
     imvPhoto.imgURL = item.photo;
-    
+        
    [imvPhoto addLayersWithImage:image];
     imvPhoto.delegate = self;
+    
+    imvPhoto.shadowLayer.borderWidth = [item.borderWidth floatValue];
+    imvPhoto.shadowLayer.cornerRadius  = [item.borderRadius floatValue];
+    imvPhoto.photoLayer.cornerRadius = [item.borderRadius floatValue];
+    imvPhoto.shadowLayer.opacity = [item.borderOpacity floatValue];
+    
+    NSArray *colorRGB = [item.borderColor componentsSeparatedByString:@" "];
+    
+    if ([[colorRGB objectAtIndex:0] isEqual:@"UIDeviceRGBColorSpace"]) {
+        UIColor *colorText = [UIColor colorWithRed:[[colorRGB objectAtIndex:1] floatValue] green:[[colorRGB objectAtIndex:2] floatValue] blue:[[colorRGB objectAtIndex:3] floatValue] alpha:[[colorRGB objectAtIndex:4] floatValue]];
+        imvPhoto.shadowLayer.borderColor = colorText.CGColor;
+    }else if ([[colorRGB objectAtIndex:0] isEqual:@"UIDeviceWhiteColorSpace"])
+    {
+        UIColor *colorText = [UIColor colorWithWhite:[[colorRGB objectAtIndex:1] floatValue] alpha:[[colorRGB objectAtIndex:2] floatValue]];
+        imvPhoto.shadowLayer.borderColor = colorText.CGColor;
+    }
+    
+    
+    imvPhoto.shadowLayer.shadowOffset = CGSizeFromString(item.shadowOffset);
+    imvPhoto.shadowLayer.shadowOpacity = [item.shadowOpacity floatValue];
+    imvPhoto.shadowLayer.shadowRadius = [item.shadowRadius floatValue];
+    
+    colorRGB = [item.shadowColor componentsSeparatedByString:@" "];
+    
+    if ([[colorRGB objectAtIndex:0] isEqual:@"UIDeviceRGBColorSpace"]) {
+        UIColor *colorText = [UIColor colorWithRed:[[colorRGB objectAtIndex:1] floatValue] green:[[colorRGB objectAtIndex:2] floatValue] blue:[[colorRGB objectAtIndex:3] floatValue] alpha:[[colorRGB objectAtIndex:4] floatValue]];
+        imvPhoto.shadowLayer.shadowColor = colorText.CGColor;
+    }else if ([[colorRGB objectAtIndex:0] isEqual:@"UIDeviceWhiteColorSpace"])
+    {
+        UIColor *colorText = [UIColor colorWithWhite:[[colorRGB objectAtIndex:1] floatValue] alpha:[[colorRGB objectAtIndex:2] floatValue]];
+        imvPhoto.shadowLayer.shadowColor = colorText.CGColor;
+    }
+    
+
     
     [self.viewCard addSubview:imvPhoto];
 }
@@ -946,7 +980,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 {
     [toolViewStyle setViewToEdit:gestureView];
     [self hideToolBar];
-    [gestureView selected:NO];
+    [self performSelector:@selector(focusItemDeslected:) withObject:gestureView afterDelay:0.5];
 }
 
 -(void) viewStyleClosed:(ViewStyle *)viewStyle
@@ -962,21 +996,6 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 #pragma mark - AFPhotoEditor
 - (void)photoEditor:(AFPhotoEditorController *)editor finishedWithImage:(UIImage *)image
 {
-    // Handle the result image here
-//    NSLog(@"%@" , NSStringFromCGSize(image.size));
-//    [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:currentPhoto inView:self.viewCard];
-//    ((GestureImageView *)currentPhoto).image = image;
-//
-    if (currentPhoto) {
-        CGPoint center = ((GestureImageView *)currentPhoto).center;
-        CGAffineTransform transform = currentPhoto.transform;
-        [self removeImageView];
-        
-        [self addPhotoView:image withCenterPoint:center andTransfrom:transform];
-        [self dismissModalViewControllerAnimated:YES];
-        return;
-    }
-    
     if (focusObject) {
         CGPoint center = ((GestureView *)focusObject).center;
         CGAffineTransform transform = focusObject.transform;
@@ -1597,38 +1616,38 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 }
 
--(void) addPhotoView: (UIImage *)image withURL:(NSString *) strURL
-{
-    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:image withType:GestureImageViewToEdit];
-    
-    [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:imvPhoto inView:self.viewCard];
-    [imvPhoto showShadow:YES];
-    imvPhoto.delegate = self;
-    imvPhoto.imgURL = strURL;
-    
-    GiftItem *item = [[GiftItem alloc] initWithView:imvPhoto];
-    [[GiftItemManager sharedManager] addItem:item];
-    
-    [self.viewCard addSubview:imvPhoto];
-    currentPhoto = imvPhoto;
-}
--(void) addPhotoView:(UIImage *)image withCenterPoint: (CGPoint)centerPoint andTransfrom: (CGAffineTransform) transform
-{
-    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:image withType:GestureImageViewToEdit];
-    
-    imvPhoto.imgURL = [self saveImagetoResources:image];
-    
-    [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:imvPhoto inView:self.viewCard];
-    imvPhoto.center = centerPoint;
-    imvPhoto.transform = transform;
-    [imvPhoto showShadow:YES];
-    imvPhoto.delegate = self;
-    
-    GiftItem *item = [[GiftItem alloc] initWithView:imvPhoto];
-    [[GiftItemManager sharedManager] addItem:item];
-    
-    [self.viewCard addSubview:imvPhoto];
-}
+//-(void) addPhotoView: (UIImage *)image withURL:(NSString *) strURL
+//{
+//    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:image withType:GestureImageViewToEdit];
+//    
+//    [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:imvPhoto inView:self.viewCard];
+//    [imvPhoto showShadow:YES];
+//    imvPhoto.delegate = self;
+//    imvPhoto.imgURL = strURL;
+//    
+//    GiftItem *item = [[GiftItem alloc] initWithView:imvPhoto];
+//    [[GiftItemManager sharedManager] addItem:item];
+//    
+//    [self.viewCard addSubview:imvPhoto];
+//    currentPhoto = imvPhoto;
+//}
+//-(void) addPhotoView:(UIImage *)image withCenterPoint: (CGPoint)centerPoint andTransfrom: (CGAffineTransform) transform
+//{
+//    GestureImageView *imvPhoto = [[GestureImageView alloc] initWithImage:image withType:GestureImageViewToEdit];
+//    
+//    imvPhoto.imgURL = [self saveImagetoResources:image];
+//    
+//    [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:imvPhoto inView:self.viewCard];
+//    imvPhoto.center = centerPoint;
+//    imvPhoto.transform = transform;
+//    [imvPhoto showShadow:YES];
+//    imvPhoto.delegate = self;
+//    
+//    GiftItem *item = [[GiftItem alloc] initWithView:imvPhoto];
+//    [[GiftItemManager sharedManager] addItem:item];
+//    
+//    [self.viewCard addSubview:imvPhoto];
+//}
 
 
 #pragma mark - GiftElementDelegate
