@@ -16,7 +16,7 @@
 @synthesize delegate;
 @synthesize viewToEdit;
 @synthesize segControl;
-@synthesize viewBorder, viewColor, viewPattern;
+@synthesize viewBorder, viewColor;
 @synthesize segProperty;
 @synthesize lbWithOrOffset;
 @synthesize slOpacity, slRadius, slWidthOrOffset;
@@ -28,12 +28,8 @@
     [super awakeFromNib];
     currentView = viewBorder;
     viewColor.hidden = YES;
-    viewPattern.hidden = YES;
     [self addSubview:viewColor];
-    [self addSubview:viewPattern];
     viewColor.frame = currentView.frame;
-    viewPattern.frame = currentView.frame;
-    
     [self loadComponents];
 }
 
@@ -64,16 +60,40 @@
 -(void) updateColorRed: (UISlider *) sender
 {
     NSLog(@"Red = %f", sender.value);
+    [self updateColor];
 }
 
 -(void) updateColorGreen: (UISlider *) sender
 {
     NSLog(@"Green = %f", sender.value);
+    [self updateColor];
 }
 
 -(void) updateColorBlue: (UISlider *) sender
 {
     NSLog(@"Blue = %f", sender.value);
+    [self updateColor];
+}
+
+-(void) updateColor
+{
+    switch (segProperty.selectedSegmentIndex) {
+        case 0:
+        {
+            NSLog(@"View to Edit %@", viewToEdit);
+            viewToEdit.shadowLayer.borderColor = [UIColor colorWithRed:sliderColorRed.value green:sliderColorGreen.value blue:sliderColorBlue.value alpha:1].CGColor;
+        }
+            break;
+        case 1:
+        {
+            viewToEdit.shadowLayer.shadowColor = [UIColor colorWithRed:sliderColorRed.value green:sliderColorGreen.value blue:sliderColorBlue.value alpha:1].CGColor;
+        }
+            break;
+            
+        default:
+            break;
+    }
+
 }
 
 -(IBAction)updateBlackColor:(id)sender
@@ -82,12 +102,19 @@
     switch (segProperty.selectedSegmentIndex) {
         case 0:
         {
-            viewToEdit.layer.borderColor = [UIColor blackColor].CGColor;
+            sliderColorRed.value = 0;
+            sliderColorGreen.value = 0;
+            sliderColorBlue.value = 0;
+            viewToEdit.shadowLayer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor;
+            
         }
             break;
         case 1:
         {
-            viewToEdit.layer.shadowColor = [UIColor blackColor].CGColor;
+            sliderColorBlue.value = 0;
+            sliderColorGreen.value = 0;
+            sliderColorRed.value = 0;
+            viewToEdit.shadowLayer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor;
         }
             break;
             
@@ -95,26 +122,31 @@
             break;
     }
 
+    [viewToEdit setNeedsDisplay];
 }
 
 -(IBAction)updateWhiteColor:(id)sender
 {
+    sliderColorBlue.value = 1;
+    sliderColorGreen.value = 1;
+    sliderColorRed.value = 1;
     NSLog(@"White");
     switch (segProperty.selectedSegmentIndex) {
         case 0:
         {
-            viewToEdit.layer.borderColor = [UIColor whiteColor].CGColor;
+            viewToEdit.shadowLayer.borderColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:1].CGColor;
         }
             break;
         case 1:
         {
-            viewToEdit.layer.shadowColor = [UIColor whiteColor].CGColor;
+            viewToEdit.shadowLayer.shadowColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:1].CGColor;
         }
             break;
             
         default:
             break;
     }
+        [viewToEdit setNeedsDisplay];
 
 }
 
@@ -131,7 +163,21 @@
                 } completion:^(BOOL finished) {
                     viewBorder.hidden = NO;
                     currentView = viewBorder;
-                    
+                    switch (segProperty.selectedSegmentIndex) {
+                        case 0:
+                        {
+                            [self loadBorder];
+                        }
+                            break;
+                        case 1:
+                        {
+                            [self loadShadow];
+                        }
+                            break;
+                            
+                        default:
+                            break;
+                    }
                 }];
             }
         }
@@ -145,19 +191,40 @@
                 } completion:^(BOOL finished) {
                     viewColor.hidden = NO;
                     currentView = viewColor;
-                }];
-            }
-        }
-            break;
-        case 2:
-        {
-            NSLog(@"Parttern");
-            if (viewPattern.hidden) {
-                [UIView animateWithDuration:0.5 animations:^{
-                    currentView.hidden = YES;
-                } completion:^(BOOL finished) {
-                    viewPattern.hidden = NO;
-                    currentView = viewPattern;
+                    switch (segProperty.selectedSegmentIndex) {
+                        case 0:
+                        {
+                            UIColor *color = [UIColor colorWithCGColor:viewToEdit.shadowLayer.borderColor];
+                            const CGFloat* components = CGColorGetComponents(color.CGColor);
+                                                    
+                            sliderColorRed.value = components[0];
+                            NSLog(@"%f", components[0]);
+                            sliderColorGreen.value = components[1];
+                            NSLog(@"%f", components[1]);
+                            sliderColorBlue.value = components[2];
+                            NSLog(@"%f", components[2]);
+
+                        }
+                            break;
+                        case 1:
+                        {
+                            UIColor *color = [UIColor colorWithCGColor:viewToEdit.shadowLayer.shadowColor];
+                            const CGFloat* components = CGColorGetComponents(color.CGColor);
+                            
+                            sliderColorRed.value = components[0];
+                            NSLog(@"%f", components[0]);
+                            sliderColorGreen.value = components[1];
+                            NSLog(@"%f", components[1]);
+                            sliderColorBlue.value = components[2];
+                            NSLog(@"%f", components[2]);
+                        }
+                            break;
+                            
+                        default:
+                            break;
+                    }
+
+                    
                 }];
             }
         }
@@ -168,10 +235,22 @@
     }
 }
 
--(IBAction)stylePatternSelected:(id)sender
+-(void) loadBorder
 {
-    NSLog(@"Button press = %i", [sender tag]);
+    lbWithOrOffset.text = @"Width";
+    slWidthOrOffset.value = viewToEdit.shadowLayer.borderWidth ;
+    slRadius.value = viewToEdit.shadowLayer.cornerRadius ;
+    slOpacity.value = viewToEdit.photoLayer.opacity;
 }
+
+-(void) loadShadow
+{
+    lbWithOrOffset.text = @"Offset";
+    slWidthOrOffset.value = viewToEdit.shadowLayer.shadowOffset.width;
+    slRadius.value = viewToEdit.shadowLayer.shadowRadius;
+    slOpacity.value = viewToEdit.shadowLayer.shadowOpacity;
+}
+
 
 -(IBAction)segPropertySeleted:(id)sender
 {
@@ -179,16 +258,13 @@
     switch (seg.selectedSegmentIndex) {
         case 0:
         {
-            viewToEdit.layer.masksToBounds = YES;
-            lbWithOrOffset.text = @"Width";
+            [self loadBorder];
             
         }
             break;
         case 1:
         {
-            viewToEdit.layer.masksToBounds = NO;
-            viewToEdit.layer.borderWidth = 0.0f;
-            lbWithOrOffset.text = @"Offset";
+            [self loadShadow];
         }
             break;
         default:
@@ -196,18 +272,19 @@
     }
 }
 
+
 -(IBAction)updateWidthOrOffset:(UISlider *)sender
 {
     switch (segProperty.selectedSegmentIndex) {
         case 0:
         {
             NSLog(@"View to Edit %@", viewToEdit);
-            viewToEdit.layer.borderWidth = sender.value;
+            viewToEdit.shadowLayer.borderWidth = sender.value;
         }
             break;
         case 1:
         {
-            viewToEdit.layer.shadowOffset = CGSizeMake(sender.value, sender.value);
+            viewToEdit.shadowLayer.shadowOffset = CGSizeMake(sender.value, sender.value);
         }
             break;
             
@@ -221,20 +298,22 @@
     switch (segProperty.selectedSegmentIndex) {
         case 0:
         {
-            CALayer *photoLayer = viewToEdit.layer;
-            photoLayer.cornerRadius = sender.value;
-            [viewToEdit setNeedsDisplay];
+            viewToEdit.shadowLayer.cornerRadius = sender.value;
+            viewToEdit.photoLayer.cornerRadius = sender.value;
         }
             break;
         case 1:
         {
-            viewToEdit.layer.shadowRadius = sender.value;
+            viewToEdit.shadowLayer.shadowRadius = sender.value;
+        
         }
             break;
             
         default:
             break;
     }
+    [viewToEdit updateMaskLayer];
+    [viewToEdit setNeedsDisplay];
 
 }
 
@@ -243,12 +322,12 @@
     switch (segProperty.selectedSegmentIndex) {
         case 0:
         {
-            viewToEdit.layer.opacity = sender.value;
+            viewToEdit.photoLayer.opacity = sender.value;
         }
             break;
         case 1:
         {
-            viewToEdit.layer.shadowOpacity = sender.value;
+            viewToEdit.shadowLayer.shadowOpacity = sender.value;
         }
             break;
             
@@ -258,6 +337,10 @@
 
 }
 
+-(IBAction)closeViewStyle:(id)sender
+{
+    [self.delegate viewStyleClosed:self];
+}
 
 
 @end

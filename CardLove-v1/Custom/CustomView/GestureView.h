@@ -22,6 +22,7 @@ typedef enum {
 
 -(void) displayEditorWith:(GestureView *)gestureView forImage: (UIImage *) imageToEdit;
 -(void) selectPhoto: (GestureView *) gestureView;
+-(void) didLongPress: (GestureView *)gestureView;
 
 @end
 
@@ -45,5 +46,6 @@ typedef enum {
 
 -(void) addLayersWithImage: (UIImage *)image;
 -(void) selected: (BOOL) show;
+-(void) updateMaskLayer;
 
 @end

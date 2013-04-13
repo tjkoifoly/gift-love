@@ -96,6 +96,10 @@
     [self addGestureRecognizer:tapSigleRecognizer];
     tapSigleRecognizer.delegate = self;
     
+    UILongPressGestureRecognizer *longTapRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longTapDetected:)];
+    [self addGestureRecognizer:longTapRecognizer];
+    longTapRecognizer.delegate = self;
+    
 }
 
 
@@ -159,6 +163,11 @@
     }];
 }
 
+-(void) longTapDetected: (UILongPressGestureRecognizer *) longPressRecognizer
+{
+    [self.delegate didLongPress:self];
+}
+
 -(void) tapAction: (UITapGestureRecognizer *) tapSigleRecognizer
 {
     NSLog(@"View has been tapped.");
@@ -169,13 +178,13 @@
 -(void) addLayersWithImage: (UIImage *)image
 {
     _shadowLayer = [CALayer layer];
-    _shadowLayer.backgroundColor = [UIColor blueColor].CGColor;
+    _shadowLayer.backgroundColor = [UIColor clearColor].CGColor;
     _shadowLayer.shadowOffset = CGSizeMake(0, 3);
     _shadowLayer.shadowRadius = 5.0;
-    _shadowLayer.shadowColor = [UIColor blackColor].CGColor;
+    _shadowLayer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor;
     _shadowLayer.shadowOpacity = 0.8;
     _shadowLayer.frame = self.bounds;
-    _shadowLayer.borderColor = [UIColor blackColor].CGColor;
+    _shadowLayer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor;
     _shadowLayer.borderWidth = 2.0;
     _shadowLayer.cornerRadius = 10.0;
     [self.layer addSublayer:_shadowLayer];
@@ -214,6 +223,14 @@
     _maskingLayer.cornerRadius = _photoLayer.cornerRadius;
     _maskingLayer.masksToBounds = NO;
     [self.layer addSublayer:_maskingLayer];
+}
+
+-(void) updateMaskLayer
+{
+    if (_maskingLayer) {
+        _maskingLayer.cornerRadius = _photoLayer.cornerRadius;        
+    }
+
 }
 
 -(void) removeMaskLayer

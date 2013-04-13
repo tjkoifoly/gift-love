@@ -69,14 +69,15 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self createNewFolder:kGift];
     [self createNewFolder:kPackages];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern.png"] ];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Gift_Paper_Habitat_1.png"] ];
     
     UIColor *c = [UIColor colorWithRed:0.65454 green:0.2454 blue:0.7345 alpha:1];
     NSLog(@"___COLOR = %@", c);
     
     toolViewStyle = [[[NSBundle mainBundle] loadNibNamed:@"ViewStyle" owner:self options:nil] objectAtIndex:0];
-    [toolViewStyle setFrame:CGRectMake(0, 480, 320, 300)];
-    [self.view addSubview:toolViewStyle];
+    [toolViewStyle setFrame:CGRectMake(0, 480, 320, 190)];
+    toolViewStyle.delegate = self;
+    [self.navigationController.view addSubview:toolViewStyle];
    
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -649,7 +650,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 {
     [UIView animateWithDuration:0.5 animations:^{
         CGRect frame = toolViewStyle.frame;
-        frame.origin.y = 416 - frame.size.height;
+        frame.origin.y = 460 - 190;
         [toolViewStyle setFrame:frame];
     }];
 }
@@ -659,15 +660,17 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [UIView animateWithDuration:0.5 animations:^{
         [toolViewStyle setFrame:CGRectMake(0, 480, 320, 300)];
     } completion:^(BOOL finished) {
-        //[self showToolBar];
+        [self showToolBar];
     }];
 }
 
--(void) hideToolBarWithView: (UIView*) altView
+-(void) hideToolBar
 {
     [UIView animateWithDuration:0.5 animations:^{
-        //[toolBar setFrame:CGRectMake(0, 480, 320, 54)];
+       
+        [toolBar setFrame:CGRectMake(0, 480, 320, 54)];
     } completion:^(BOOL finished) {
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
         [self showStyleView];
     }];
 }
@@ -939,6 +942,23 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [focusObject selected:YES];
 }
 
+-(void) didLongPress:(GestureView *)gestureView
+{
+    [toolViewStyle setViewToEdit:gestureView];
+    [self hideToolBar];
+    [gestureView selected:NO];
+}
+
+-(void) viewStyleClosed:(ViewStyle *)viewStyle
+{
+    [UIView animateWithDuration:0.5 animations:^{
+         [self hideStyleView];
+    } completion:^(BOOL finished) {
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }];
+   
+}
+
 #pragma mark - AFPhotoEditor
 - (void)photoEditor:(AFPhotoEditorController *)editor finishedWithImage:(UIImage *)image
 {
@@ -1007,15 +1027,6 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 }
 - (IBAction)editPhoto:(id)sender {
     
-//    if (currentPhoto) {
-//        if (toolViewStyle.frame.origin.y > 460) {
-//            toolViewStyle.viewToEdit = currentPhoto;
-//            [self showStyleView];
-//        }else
-//        {
-//            [self hideStyleView];
-//        }
-//    }
     GiftElementsViewController *gevc = [[GiftElementsViewController alloc] initWithNibName:@"GiftElementsViewController" bundle:nil];
     gevc.delegate = self;
     UINavigationController *navGif = [[UINavigationController alloc] initWithRootViewController:gevc];
