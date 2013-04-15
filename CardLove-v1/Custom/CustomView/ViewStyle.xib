@@ -105,7 +105,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<float key="IBUIMaxValue">10</float>
+								<float key="IBUIMaxValue">20</float>
 							</object>
 							<object class="IBUISlider" id="35056830">
 								<reference key="NSNextResponder" ref="1004838537"/>
@@ -743,7 +743,6 @@
 						<string key="closeViewStyle:">id</string>
 						<string key="segControlChanged:">id</string>
 						<string key="segPropertySeleted:">id</string>
-						<string key="stylePatternSelected:">id</string>
 						<string key="updateBlackColor:">id</string>
 						<string key="updateOpacity:">UISlider</string>
 						<string key="updateRadius:">UISlider</string>
@@ -761,10 +760,6 @@
 						</object>
 						<object class="IBActionInfo" key="segPropertySeleted:">
 							<string key="name">segPropertySeleted:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="stylePatternSelected:">
-							<string key="name">stylePatternSelected:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="updateBlackColor:">

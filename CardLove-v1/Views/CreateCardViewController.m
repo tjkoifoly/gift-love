@@ -871,15 +871,15 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     imvPhoto.center = oldView.center;
     imvPhoto.transform = oldView.transform;
     
-    imvPhoto.shadowLayer.borderWidth = oldView.shadowLayer.borderWidth;
-    imvPhoto.shadowLayer.cornerRadius  = oldView.shadowLayer.cornerRadius;
-    imvPhoto.photoLayer.cornerRadius = oldView.photoLayer.cornerRadius;
-    imvPhoto.shadowLayer.opacity = oldView.shadowLayer.opacity;
-    imvPhoto.shadowLayer.borderColor = oldView.shadowLayer.borderColor;
-    imvPhoto.shadowLayer.shadowOffset = oldView.shadowLayer.shadowOffset;
-    imvPhoto.shadowLayer.shadowOpacity = oldView.shadowLayer.shadowOpacity;
-    imvPhoto.shadowLayer.shadowRadius = oldView.shadowLayer.shadowRadius;
-    imvPhoto.shadowLayer.shadowColor = oldView.shadowLayer.shadowColor;
+    imvPhoto.shadowLayer.borderWidth    = oldView.shadowLayer.borderWidth;
+    imvPhoto.shadowLayer.cornerRadius   = oldView.shadowLayer.cornerRadius;
+    imvPhoto.photoLayer.cornerRadius    = oldView.photoLayer.cornerRadius;
+    imvPhoto.shadowLayer.opacity        = oldView.shadowLayer.opacity;
+    imvPhoto.shadowLayer.borderColor    = oldView.shadowLayer.borderColor;
+    imvPhoto.shadowLayer.shadowOffset   = oldView.shadowLayer.shadowOffset;
+    imvPhoto.shadowLayer.shadowOpacity  = oldView.shadowLayer.shadowOpacity;
+    imvPhoto.shadowLayer.shadowRadius   = oldView.shadowLayer.shadowRadius;
+    imvPhoto.shadowLayer.shadowColor    = oldView.shadowLayer.shadowColor;
 
     imvPhoto.delegate = self;
     

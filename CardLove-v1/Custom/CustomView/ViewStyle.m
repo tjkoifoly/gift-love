@@ -238,6 +238,8 @@
 -(void) loadBorder
 {
     lbWithOrOffset.text = @"Width";
+    slWidthOrOffset.minimumValue = 0;
+    slWidthOrOffset.maximumValue = 20;
     slWidthOrOffset.value = viewToEdit.shadowLayer.borderWidth ;
     slRadius.value = viewToEdit.shadowLayer.cornerRadius ;
     slOpacity.value = viewToEdit.photoLayer.opacity;
@@ -246,6 +248,8 @@
 -(void) loadShadow
 {
     lbWithOrOffset.text = @"Offset";
+    slWidthOrOffset.minimumValue = -10;
+    slWidthOrOffset.maximumValue = 10;
     slWidthOrOffset.value = viewToEdit.shadowLayer.shadowOffset.width;
     slRadius.value = viewToEdit.shadowLayer.shadowRadius;
     slOpacity.value = viewToEdit.shadowLayer.shadowOpacity;
