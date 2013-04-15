@@ -652,6 +652,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         CGRect frame = toolViewStyle.frame;
         frame.origin.y = 460 - 190;
         [toolViewStyle setFrame:frame];
+        [toolViewStyle refreshView];
     }];
 }
 

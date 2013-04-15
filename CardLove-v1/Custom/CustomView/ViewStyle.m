@@ -342,5 +342,52 @@
     [self.delegate viewStyleClosed:self];
 }
 
+-(void) refreshView
+{
+    [self.segControl setSelectedSegmentIndex:0];
+    [self.segProperty setSelectedSegmentIndex:0];
+    
+    if (viewBorder.hidden) {
+        [UIView animateWithDuration:0.5 animations:^{
+            currentView.hidden = YES;
+        } completion:^(BOOL finished) {
+            viewBorder.hidden = NO;
+            currentView = viewBorder;
+            switch (segProperty.selectedSegmentIndex) {
+                case 0:
+                {
+                    [self loadBorder];
+                }
+                    break;
+                case 1:
+                {
+                    [self loadShadow];
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }];
+    }
+    
+    switch (segProperty.selectedSegmentIndex) {
+        case 0:
+        {
+            [self loadBorder];
+        }
+            break;
+        case 1:
+        {
+            [self loadShadow];
+        }
+            break;
+            
+        default:
+            break;
+    }
+
+}
+
 
 @end

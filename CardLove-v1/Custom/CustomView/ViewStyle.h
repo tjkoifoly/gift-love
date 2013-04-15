@@ -39,6 +39,7 @@
 -(IBAction)segPropertySeleted:(id)sender;
 -(IBAction)updateBlackColor:(id)sender;
 -(IBAction)updateWhiteColor:(id)sender;
+-(void) refreshView;
 
 
 @end
