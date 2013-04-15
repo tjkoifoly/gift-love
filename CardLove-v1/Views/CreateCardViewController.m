@@ -766,7 +766,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 /* ----------------------------------------------------------------------------------*/
 
--(void) addViewPhotoWithItem: (GiftItem *) item
+-(GestureView *) addViewPhotoWithItem: (GiftItem *) item
 {
     GestureView *imvPhoto = [[GestureView alloc] initWithType:GestureViewToEdit];
     UIImage *image = [UIImage imageWithContentsOfFile:item.photo];
@@ -810,10 +810,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         UIColor *colorText = [UIColor colorWithWhite:[[colorRGB objectAtIndex:1] floatValue] alpha:[[colorRGB objectAtIndex:2] floatValue]];
         imvPhoto.shadowLayer.shadowColor = colorText.CGColor;
     }
-    
 
-    
     [self.viewCard addSubview:imvPhoto];
+    return imvPhoto;
 }
 
 /* ----------------------------------------------------------------------------------*/
@@ -853,6 +852,35 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     imvPhoto.transform = transform;
     
     [imvPhoto addLayersWithImage:image];
+    imvPhoto.delegate = self;
+    
+    GiftItem *item = [[GiftItem alloc] initWithGestureView:imvPhoto];
+    [[GiftItemManager sharedManager] addItem:item];
+    
+    [self.viewCard addSubview:imvPhoto];
+}
+
+-(void) addViewPhoto:(UIImage *)image withOldView: (GestureView *)oldView
+{
+    GestureView *imvPhoto = [[GestureView alloc] initWithType:GestureViewToEdit];
+    imvPhoto.imgURL = [self saveImagetoResources:image];
+    [self flxibleFrameImage:image withMaxValue:kCanvasSize forView:imvPhoto inView:self.viewCard];
+   
+    [imvPhoto addLayersWithImage:image];
+    
+    imvPhoto.center = oldView.center;
+    imvPhoto.transform = oldView.transform;
+    
+    imvPhoto.shadowLayer.borderWidth = oldView.shadowLayer.borderWidth;
+    imvPhoto.shadowLayer.cornerRadius  = oldView.shadowLayer.cornerRadius;
+    imvPhoto.photoLayer.cornerRadius = oldView.photoLayer.cornerRadius;
+    imvPhoto.shadowLayer.opacity = oldView.shadowLayer.opacity;
+    imvPhoto.shadowLayer.borderColor = oldView.shadowLayer.borderColor;
+    imvPhoto.shadowLayer.shadowOffset = oldView.shadowLayer.shadowOffset;
+    imvPhoto.shadowLayer.shadowOpacity = oldView.shadowLayer.shadowOpacity;
+    imvPhoto.shadowLayer.shadowRadius = oldView.shadowLayer.shadowRadius;
+    imvPhoto.shadowLayer.shadowColor = oldView.shadowLayer.shadowColor;
+
     imvPhoto.delegate = self;
     
     GiftItem *item = [[GiftItem alloc] initWithGestureView:imvPhoto];
@@ -998,12 +1026,8 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 - (void)photoEditor:(AFPhotoEditorController *)editor finishedWithImage:(UIImage *)image
 {
     if (focusObject) {
-        CGPoint center = ((GestureView *)focusObject).center;
-        CGAffineTransform transform = focusObject.transform;
-
+        [self addViewPhoto:image withOldView:focusObject];
         [self removeGestureView];
-        
-        [self addViewPhoto:image withCenterPoint:center andTransfrom:transform];
         [self dismissModalViewControllerAnimated:YES];
         return;
     }
@@ -1013,7 +1037,6 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 {
     // Handle cancelation here
     [self dismissModalViewControllerAnimated:YES];
-    currentPhoto = nil;
 }
 
 #pragma mark - IBActions
