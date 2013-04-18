@@ -18,6 +18,11 @@
 #import "EventsManagerViewController.h"
 #import "MessagesViewController.h"
 #import "GiftBoxViewController.h"
+#import "LoginViewController.h"
+
+#import "HMGLTransitionManager.h"
+#import "HMGLTransition.h"
+#import "DoorsTransition.h"
 
 @interface AppDelegate() 
 
@@ -126,6 +131,16 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
     [self.menuController._menuTableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionBottom];
     self.window.rootViewController = self.revealController;
+    
+    [self.window.rootViewController.view addSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default.png"]]];
+    
+    LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+    UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    navLogin.navigationBarHidden = YES;
+    
+    DoorsTransition *_transition = [[DoorsTransition alloc] init];
+    [[HMGLTransitionManager sharedTransitionManager] setTransition:_transition];
+    [[HMGLTransitionManager sharedTransitionManager] presentModalViewController:navLogin onViewController:self.revealController];
     
 //    [self customizeAppearance];
     

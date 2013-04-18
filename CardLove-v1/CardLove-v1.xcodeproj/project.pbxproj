@@ -523,6 +523,8 @@
 		66ECB32716F494D400F0B998 /* CreateAEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66ECB32516F494D400F0B998 /* CreateAEventViewController.xib */; };
 		66EEF4971711D9B000F962F1 /* snowflower.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66EEF4951711D9B000F962F1 /* snowflower.jpg */; };
 		66EEF4981711D9B000F962F1 /* snowflower.ped in Resources */ = {isa = PBXBuildFile; fileRef = 66EEF4961711D9B000F962F1 /* snowflower.ped */; };
+		66F06941171FAD4D00D084B5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F06940171FAD4C00D084B5 /* Default.png */; };
+		66F06943171FAD5B00D084B5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F06942171FAD5B00D084B5 /* Default@2x.png */; };
 		66F1B92216EAE991003FEA7F /* GestureImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1B92116EAE991003FEA7F /* GestureImageView.m */; };
 		66F2E9811709DFED0023A16A /* ThumbnailListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F2E97E1709DFED0023A16A /* ThumbnailListView.m */; };
 		66F2E9821709DFED0023A16A /* UIView+ThumbnailListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F2E9801709DFED0023A16A /* UIView+ThumbnailListView.m */; };
@@ -1396,6 +1398,8 @@
 		66ECB32516F494D400F0B998 /* CreateAEventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateAEventViewController.xib; path = Views/CreateAEventViewController.xib; sourceTree = "<group>"; };
 		66EEF4951711D9B000F962F1 /* snowflower.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = snowflower.jpg; sourceTree = "<group>"; };
 		66EEF4961711D9B000F962F1 /* snowflower.ped */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = snowflower.ped; sourceTree = "<group>"; };
+		66F06940171FAD4C00D084B5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		66F06942171FAD5B00D084B5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		66F1B92016EAE991003FEA7F /* GestureImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GestureImageView.h; path = Custom/CustomView/GestureImageView.h; sourceTree = "<group>"; };
 		66F1B92116EAE991003FEA7F /* GestureImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GestureImageView.m; path = Custom/CustomView/GestureImageView.m; sourceTree = "<group>"; };
 		66F2E97D1709DFED0023A16A /* ThumbnailListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailListView.h; sourceTree = "<group>"; };
@@ -2261,6 +2265,8 @@
 		66310A8C16D9A27F00AC9DC8 = {
 			isa = PBXGroup;
 			children = (
+				66F06942171FAD5B00D084B5 /* Default@2x.png */,
+				66F06940171FAD4C00D084B5 /* Default.png */,
 				66FD83A316E7645800355992 /* Data */,
 				66FD83A216E7645200355992 /* ModelClasses */,
 				66310AD016D9A38900AC9DC8 /* Custom */,
@@ -3739,6 +3745,8 @@
 				66DE33A617185C3400801F5D /* ConfigCell.xib in Resources */,
 				66081A82171908BB002B8B36 /* BGPickerViewController.xib in Resources */,
 				6604EFA117191B63005B6135 /* bg-cell120.png in Resources */,
+				66F06941171FAD4D00D084B5 /* Default.png in Resources */,
+				66F06943171FAD5B00D084B5 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

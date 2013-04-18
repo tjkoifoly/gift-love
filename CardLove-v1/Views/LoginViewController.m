@@ -7,6 +7,8 @@
 //
 
 #import "LoginViewController.h"
+#import "AppDelegate.h"
+#import "HMGLTransitionManager.h"
 
 @interface LoginViewController ()
 
@@ -35,4 +37,28 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidUnload {
+    [self setTxtUserName:nil];
+    [self setTxtPassword:nil];
+    [self setBtnLogin:nil];
+    [self setBtnSignUp:nil];
+    [super viewDidUnload];
+}
+- (IBAction)signUp:(id)sender {
+    
+        
+}
+- (IBAction)login:(id)sender {
+    NSString *userName = [_txtUserName text];
+    NSString *passWord = [_txtPassword text];
+    
+    if ([userName isEqualToString:@"foly"] && [passWord isEqualToString:@"tjkoi"]) {
+        [[HMGLTransitionManager sharedTransitionManager] dismissModalViewController:self];
+    }else
+    {
+        //Notification errors
+    }
+
+    
+}
 @end
