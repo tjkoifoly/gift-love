@@ -23,6 +23,8 @@
 @property (nonatomic, strong) GHSidebarSearchViewController *searchController;
 @property (nonatomic, strong) GHMenuViewController *menuController;
 
+@property(nonatomic, strong) UIView *overlayView;
+
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;

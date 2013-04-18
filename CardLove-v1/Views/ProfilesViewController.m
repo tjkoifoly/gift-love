@@ -8,6 +8,8 @@
 
 #import "ProfilesViewController.h"
 #import "EditProfilesViewController.h"
+#import "LoginViewController.h"
+#import "DBSignupViewController.h"
 
 @interface ProfilesViewController ()
 
@@ -53,6 +55,23 @@
     EditProfilesViewController *epvc = [[EditProfilesViewController alloc] initWithNibName:@"EditProfilesViewController" bundle:nil];
     
     [self.navigationController pushViewController:epvc animated:YES];
+    
 }
 
+- (void)viewDidUnload {
+    [self setImvAvarta:nil];
+    [self setLbUserName:nil];
+    [super viewDidUnload];
+}
+- (IBAction)logout:(id)sender {
+    
+    //Logout Method
+    LoginViewController *loginVC = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
+    UINavigationController *navLogin =[[UINavigationController alloc] initWithRootViewController:loginVC];
+    navLogin.navigationBarHidden = YES;
+    
+    [self presentModalViewController:navLogin animated:YES];
+    
+    
+}
 @end

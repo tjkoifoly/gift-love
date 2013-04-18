@@ -36,6 +36,7 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize revealController, searchController, menuController;
+@synthesize overlayView = _overlayView;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -132,7 +133,8 @@
     [self.menuController._menuTableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionBottom];
     self.window.rootViewController = self.revealController;
     
-    [self.window.rootViewController.view addSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default.png"]]];
+    _overlayView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default.png"]];
+    [self.window.rootViewController.view addSubview:_overlayView];
     
     LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
     UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:loginVC];

@@ -224,8 +224,6 @@
 		662D0E5916DFA429000B3364 /* imageTabbarBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 662D0E5716DFA429000B3364 /* imageTabbarBackground@2x.png */; };
 		662D3BFB16E4C87100DD2422 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 662D3BF916E4C87100DD2422 /* LoginViewController.m */; };
 		662D3BFC16E4C87100DD2422 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 662D3BFA16E4C87100DD2422 /* LoginViewController.xib */; };
-		662D3C0016E4C8B600DD2422 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 662D3BFE16E4C8B600DD2422 /* RegisterViewController.m */; };
-		662D3C0116E4C8B600DD2422 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 662D3BFF16E4C8B600DD2422 /* RegisterViewController.xib */; };
 		662D3C0416E4CCB000DD2422 /* logo-gift.png in Resources */ = {isa = PBXBuildFile; fileRef = 662D3C0216E4CCB000DD2422 /* logo-gift.png */; };
 		662D3C0516E4CCB000DD2422 /* logo-gift@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 662D3C0316E4CCB000DD2422 /* logo-gift@2x.png */; };
 		662D3C0C16E4CF6100DD2422 /* bg-main.png in Resources */ = {isa = PBXBuildFile; fileRef = 662D3C0A16E4CF6100DD2422 /* bg-main.png */; };
@@ -251,8 +249,6 @@
 		66310AA516D9A27F00AC9DC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 66310AA316D9A27F00AC9DC8 /* InfoPlist.strings */; };
 		66310AA716D9A27F00AC9DC8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 66310AA616D9A27F00AC9DC8 /* main.m */; };
 		66310AAB16D9A27F00AC9DC8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 66310AAA16D9A27F00AC9DC8 /* AppDelegate.m */; };
-		66310AAD16D9A27F00AC9DC8 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 66310AAC16D9A27F00AC9DC8 /* Default.png */; };
-		66310AAF16D9A27F00AC9DC8 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66310AAE16D9A27F00AC9DC8 /* Default@2x.png */; };
 		66310AB116D9A27F00AC9DC8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66310AB016D9A27F00AC9DC8 /* Default-568h@2x.png */; };
 		66310AB416D9A27F00AC9DC8 /* CardLove_v1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 66310AB216D9A27F00AC9DC8 /* CardLove_v1.xcdatamodeld */; };
 		66310ABE16D9A2BB00AC9DC8 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66310ABC16D9A2BB00AC9DC8 /* FriendsViewController.m */; };
@@ -523,8 +519,20 @@
 		66ECB32716F494D400F0B998 /* CreateAEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66ECB32516F494D400F0B998 /* CreateAEventViewController.xib */; };
 		66EEF4971711D9B000F962F1 /* snowflower.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66EEF4951711D9B000F962F1 /* snowflower.jpg */; };
 		66EEF4981711D9B000F962F1 /* snowflower.ped in Resources */ = {isa = PBXBuildFile; fileRef = 66EEF4961711D9B000F962F1 /* snowflower.ped */; };
-		66F06941171FAD4D00D084B5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F06940171FAD4C00D084B5 /* Default.png */; };
-		66F06943171FAD5B00D084B5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F06942171FAD5B00D084B5 /* Default@2x.png */; };
+		66F06948171FF2D400D084B5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F06942171FAD5B00D084B5 /* Default@2x.png */; };
+		66F06949171FF2D600D084B5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F06940171FAD4C00D084B5 /* Default.png */; };
+		66F0694E1720047A00D084B5 /* background-signup.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F0694A1720047A00D084B5 /* background-signup.png */; };
+		66F0694F1720047A00D084B5 /* background-signup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F0694B1720047A00D084B5 /* background-signup@2x.png */; };
+		66F069501720047A00D084B5 /* female.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F0694C1720047A00D084B5 /* female.png */; };
+		66F069511720047A00D084B5 /* male.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F0694D1720047A00D084B5 /* male.png */; };
+		66F06955172004AD00D084B5 /* DBSignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F06953172004AD00D084B5 /* DBSignupViewController.m */; };
+		66F06956172004AD00D084B5 /* DBSignupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66F06954172004AD00D084B5 /* DBSignupViewController.xib */; };
+		66F06959172007BA00D084B5 /* DefaultImageGrid.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F06957172007B900D084B5 /* DefaultImageGrid.png */; };
+		66F0695A172007BA00D084B5 /* DefaultImageGrid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F06958172007BA00D084B5 /* DefaultImageGrid@2x.png */; };
+		66F0695D172009F700D084B5 /* btn-sign-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F0695B172009F700D084B5 /* btn-sign-up.png */; };
+		66F0695E172009F700D084B5 /* btn-sign-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F0695C172009F700D084B5 /* btn-sign-up@2x.png */; };
+		66F0696117200FF900D084B5 /* Small Blue Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F0695F17200FF900D084B5 /* Small Blue Button.png */; };
+		66F0696217200FF900D084B5 /* Small Red Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F0696017200FF900D084B5 /* Small Red Button.png */; };
 		66F1B92216EAE991003FEA7F /* GestureImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1B92116EAE991003FEA7F /* GestureImageView.m */; };
 		66F2E9811709DFED0023A16A /* ThumbnailListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F2E97E1709DFED0023A16A /* ThumbnailListView.m */; };
 		66F2E9821709DFED0023A16A /* UIView+ThumbnailListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F2E9801709DFED0023A16A /* UIView+ThumbnailListView.m */; };
@@ -1014,9 +1022,6 @@
 		662D3BF816E4C87100DD2422 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Views/LoginViewController.h; sourceTree = "<group>"; };
 		662D3BF916E4C87100DD2422 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = Views/LoginViewController.m; sourceTree = "<group>"; };
 		662D3BFA16E4C87100DD2422 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginViewController.xib; path = Views/LoginViewController.xib; sourceTree = "<group>"; };
-		662D3BFD16E4C8B600DD2422 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterViewController.h; path = Views/RegisterViewController.h; sourceTree = "<group>"; };
-		662D3BFE16E4C8B600DD2422 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterViewController.m; path = Views/RegisterViewController.m; sourceTree = "<group>"; };
-		662D3BFF16E4C8B600DD2422 /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RegisterViewController.xib; path = Views/RegisterViewController.xib; sourceTree = "<group>"; };
 		662D3C0216E4CCB000DD2422 /* logo-gift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo-gift.png"; path = "Resources/logo-gift.png"; sourceTree = "<group>"; };
 		662D3C0316E4CCB000DD2422 /* logo-gift@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo-gift@2x.png"; path = "Resources/logo-gift@2x.png"; sourceTree = "<group>"; };
 		662D3C0A16E4CF6100DD2422 /* bg-main.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg-main.png"; path = "Resources/bg-main.png"; sourceTree = "<group>"; };
@@ -1400,6 +1405,19 @@
 		66EEF4961711D9B000F962F1 /* snowflower.ped */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = snowflower.ped; sourceTree = "<group>"; };
 		66F06940171FAD4C00D084B5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		66F06942171FAD5B00D084B5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		66F0694A1720047A00D084B5 /* background-signup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-signup.png"; sourceTree = "<group>"; };
+		66F0694B1720047A00D084B5 /* background-signup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-signup@2x.png"; sourceTree = "<group>"; };
+		66F0694C1720047A00D084B5 /* female.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = female.png; sourceTree = "<group>"; };
+		66F0694D1720047A00D084B5 /* male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = male.png; sourceTree = "<group>"; };
+		66F06952172004AD00D084B5 /* DBSignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBSignupViewController.h; path = Views/DBSignupViewController.h; sourceTree = "<group>"; };
+		66F06953172004AD00D084B5 /* DBSignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBSignupViewController.m; path = Views/DBSignupViewController.m; sourceTree = "<group>"; };
+		66F06954172004AD00D084B5 /* DBSignupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DBSignupViewController.xib; path = Views/DBSignupViewController.xib; sourceTree = "<group>"; };
+		66F06957172007B900D084B5 /* DefaultImageGrid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultImageGrid.png; sourceTree = "<group>"; };
+		66F06958172007BA00D084B5 /* DefaultImageGrid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DefaultImageGrid@2x.png"; sourceTree = "<group>"; };
+		66F0695B172009F700D084B5 /* btn-sign-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-sign-up.png"; sourceTree = "<group>"; };
+		66F0695C172009F700D084B5 /* btn-sign-up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-sign-up@2x.png"; sourceTree = "<group>"; };
+		66F0695F17200FF900D084B5 /* Small Blue Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Small Blue Button.png"; sourceTree = "<group>"; };
+		66F0696017200FF900D084B5 /* Small Red Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Small Red Button.png"; sourceTree = "<group>"; };
 		66F1B92016EAE991003FEA7F /* GestureImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GestureImageView.h; path = Custom/CustomView/GestureImageView.h; sourceTree = "<group>"; };
 		66F1B92116EAE991003FEA7F /* GestureImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GestureImageView.m; path = Custom/CustomView/GestureImageView.m; sourceTree = "<group>"; };
 		66F2E97D1709DFED0023A16A /* ThumbnailListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailListView.h; sourceTree = "<group>"; };
@@ -2242,6 +2260,12 @@
 		662507A517106B0A00FF3F8B /* _bg */ = {
 			isa = PBXGroup;
 			children = (
+				66F06957172007B900D084B5 /* DefaultImageGrid.png */,
+				66F06958172007BA00D084B5 /* DefaultImageGrid@2x.png */,
+				66F0694A1720047A00D084B5 /* background-signup.png */,
+				66F0694B1720047A00D084B5 /* background-signup@2x.png */,
+				66F0694C1720047A00D084B5 /* female.png */,
+				66F0694D1720047A00D084B5 /* male.png */,
 				6604EFA017191B63005B6135 /* bg-cell120.png */,
 				66DE3397171859D100801F5D /* bg-none.png */,
 				66E931E91713E4D800B51A5D /* Gift_Paper_Habitat_1.png */,
@@ -2915,9 +2939,9 @@
 				662D3BF816E4C87100DD2422 /* LoginViewController.h */,
 				662D3BF916E4C87100DD2422 /* LoginViewController.m */,
 				662D3BFA16E4C87100DD2422 /* LoginViewController.xib */,
-				662D3BFD16E4C8B600DD2422 /* RegisterViewController.h */,
-				662D3BFE16E4C8B600DD2422 /* RegisterViewController.m */,
-				662D3BFF16E4C8B600DD2422 /* RegisterViewController.xib */,
+				66F06952172004AD00D084B5 /* DBSignupViewController.h */,
+				66F06953172004AD00D084B5 /* DBSignupViewController.m */,
+				66F06954172004AD00D084B5 /* DBSignupViewController.xib */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -3142,6 +3166,10 @@
 		66F5A01C1711B51D00F30D6A /* _icons */ = {
 			isa = PBXGroup;
 			children = (
+				66F0695F17200FF900D084B5 /* Small Blue Button.png */,
+				66F0696017200FF900D084B5 /* Small Red Button.png */,
+				66F0695B172009F700D084B5 /* btn-sign-up.png */,
+				66F0695C172009F700D084B5 /* btn-sign-up@2x.png */,
 				6634C8B01712D3860048D862 /* button-close-red.png */,
 				6634C8AE1712D2200048D862 /* button-close.png */,
 				66F5A01D1711B51E00F30D6A /* icon-checkmark.png */,
@@ -3378,8 +3406,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				66310AA516D9A27F00AC9DC8 /* InfoPlist.strings in Resources */,
-				66310AAD16D9A27F00AC9DC8 /* Default.png in Resources */,
-				66310AAF16D9A27F00AC9DC8 /* Default@2x.png in Resources */,
 				66310AB116D9A27F00AC9DC8 /* Default-568h@2x.png in Resources */,
 				66310ABF16D9A2BB00AC9DC8 /* FriendsViewController.xib in Resources */,
 				66310AC416D9A31F00AC9DC8 /* NewsViewController.xib in Resources */,
@@ -3444,7 +3470,6 @@
 				6632E9F416E22EEC00770AEF /* bg-new-card@2x.jpg in Resources */,
 				6632E9F916E22F3200770AEF /* ViewCardViewController.xib in Resources */,
 				662D3BFC16E4C87100DD2422 /* LoginViewController.xib in Resources */,
-				662D3C0116E4C8B600DD2422 /* RegisterViewController.xib in Resources */,
 				662D3C0416E4CCB000DD2422 /* logo-gift.png in Resources */,
 				662D3C0516E4CCB000DD2422 /* logo-gift@2x.png in Resources */,
 				662D3C0C16E4CF6100DD2422 /* bg-main.png in Resources */,
@@ -3745,8 +3770,19 @@
 				66DE33A617185C3400801F5D /* ConfigCell.xib in Resources */,
 				66081A82171908BB002B8B36 /* BGPickerViewController.xib in Resources */,
 				6604EFA117191B63005B6135 /* bg-cell120.png in Resources */,
-				66F06941171FAD4D00D084B5 /* Default.png in Resources */,
-				66F06943171FAD5B00D084B5 /* Default@2x.png in Resources */,
+				66F06948171FF2D400D084B5 /* Default@2x.png in Resources */,
+				66F06949171FF2D600D084B5 /* Default.png in Resources */,
+				66F0694E1720047A00D084B5 /* background-signup.png in Resources */,
+				66F0694F1720047A00D084B5 /* background-signup@2x.png in Resources */,
+				66F069501720047A00D084B5 /* female.png in Resources */,
+				66F069511720047A00D084B5 /* male.png in Resources */,
+				66F06956172004AD00D084B5 /* DBSignupViewController.xib in Resources */,
+				66F06959172007BA00D084B5 /* DefaultImageGrid.png in Resources */,
+				66F0695A172007BA00D084B5 /* DefaultImageGrid@2x.png in Resources */,
+				66F0695D172009F700D084B5 /* btn-sign-up.png in Resources */,
+				66F0695E172009F700D084B5 /* btn-sign-up@2x.png in Resources */,
+				66F0696117200FF900D084B5 /* Small Blue Button.png in Resources */,
+				66F0696217200FF900D084B5 /* Small Red Button.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3798,7 +3834,6 @@
 				6632EA0916E2388300770AEF /* TSPopoverTouchView.m in Sources */,
 				6632EA0A16E2388300770AEF /* UIBarButtonItem+WEPopover.m in Sources */,
 				662D3BFB16E4C87100DD2422 /* LoginViewController.m in Sources */,
-				662D3C0016E4C8B600DD2422 /* RegisterViewController.m in Sources */,
 				662D3C2916E4FBD500DD2422 /* EditProfilesViewController.m in Sources */,
 				66FD83A116E7640000355992 /* TDBadgedCell.m in Sources */,
 				66FD83A616E764BF00355992 /* Friend.m in Sources */,
@@ -4005,6 +4040,7 @@
 				66081A7C1719082E002B8B36 /* MMGridViewCell.m in Sources */,
 				66081A7D1719082E002B8B36 /* MMGridViewDefaultCell.m in Sources */,
 				66081A81171908BB002B8B36 /* BGPickerViewController.m in Sources */,
+				66F06955172004AD00D084B5 /* DBSignupViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
