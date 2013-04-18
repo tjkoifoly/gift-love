@@ -13,6 +13,7 @@
 #import "DDActionHeaderView.h"
 #import "HHPanningTableViewCell.h"
 #import "DrawerViewMenu.h"
+#import "AddFriendViewController.h"
 
 @interface FriendsViewController : GHRootViewController <UITableViewDataSource, UITableViewDelegate, HHPanningTableViewCellDelegate, DrawerMenuDelegate, UIActionSheetDelegate>
 

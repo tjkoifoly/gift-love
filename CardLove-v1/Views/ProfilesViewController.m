@@ -7,7 +7,6 @@
 //
 
 #import "ProfilesViewController.h"
-#import "EditProfilesViewController.h"
 #import "LoginViewController.h"
 #import "DBSignupViewController.h"
 
@@ -52,9 +51,12 @@
 
 -(void)editProfiles
 {
-    EditProfilesViewController *epvc = [[EditProfilesViewController alloc] initWithNibName:@"EditProfilesViewController" bundle:nil];
+    DBSignupViewController *epvc = [[DBSignupViewController alloc] initWithNibName:@"DBSignupViewController" bundle:nil];
+    epvc.viewMode = ProfileViewTypeEdit;
     
     [self.navigationController pushViewController:epvc animated:YES];
+    
+    
     
 }
 

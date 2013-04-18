@@ -75,8 +75,37 @@
     [super viewDidLoad];
     
     // Signup button
-    UIBarButtonItem *signupBarItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"signup", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(signup:)];
-    self.navigationItem.rightBarButtonItem = signupBarItem;
+    
+    switch (_viewMode) {
+        case ProfileViewTypeSignUp:
+        {
+            UIBarButtonItem *signupBarItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Sign up", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(signup:)];
+            self.navigationItem.rightBarButtonItem = signupBarItem;
+
+        }
+            break;
+        case ProfileViewTypeEdit:
+        {
+            UIBarButtonItem *signupBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveProfiles:)];
+            self.navigationItem.rightBarButtonItem = signupBarItem;
+            self.lastNameTextField.enabled = NO;
+            self.termsTextView.hidden = YES;
+            
+            //LOAD information
+
+        }
+            break;
+            
+        default:
+            break;
+    }
+        
+    UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnBack setBackgroundImage:[UIImage imageNamed:@"Back Button.png"] forState:UIControlStateNormal];
+    [btnBack setFrame:CGRectMake(0, 0, 54, 34)];
+    [btnBack addTarget:self action:@selector(backPreviousView:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnBack];
     
     // Birthday date picker
     if (self.birthdayDatePicker == nil) {
@@ -137,8 +166,8 @@
     }
     
     // Set localization
-    self.nameTextField.placeholder = NSLocalizedString(@"first_name", @"");
-    self.lastNameTextField.placeholder = NSLocalizedString(@"last_name", @"");
+    self.nameTextField.placeholder = NSLocalizedString(@"Display Name", @"");
+    self.lastNameTextField.placeholder = NSLocalizedString(@"User Name", @"");
     self.emailLabel.text = [NSLocalizedString(@"email", @"") uppercaseString]; 
     self.passwordLabel.text = [NSLocalizedString(@"password", @"") uppercaseString];
     self.birthdayLabel.text = [NSLocalizedString(@"birthdate", @"") uppercaseString]; 
@@ -149,6 +178,17 @@
     
     // Reset labels colors
     [self resetLabelsColors];
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [super viewDidAppear:animated];
+}
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
 }
 
 
@@ -190,11 +230,20 @@
 }
 
 - (IBAction)backPreviousView:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (_viewMode == ProfileViewTypeSignUp) {
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+    }
+    [self.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:[NSNumber numberWithBool:YES] afterDelay:0.25];
+    
 }
 
 - (IBAction)signUpPressed:(id)sender {
     [self signup:sender];
+}
+
+-(void) saveProfiles: (id) sender
+{
+    [self backPreviousView:nil];
 }
 
 

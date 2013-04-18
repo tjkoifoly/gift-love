@@ -11,6 +11,7 @@
 #import "ChatViewController.h"
 #import "AppDelegate.h"
 #import "EKNotifView.h"
+#import "AddFriendViewController.h"
 
 typedef void (^FinishBlock)();
 
@@ -57,21 +58,24 @@ typedef void (^FinishBlock)();
 
 -(void) addFriendView
 {
-    Friend *f = [[Friend alloc] init];
-    f.displayName = @"Nguyen Chi Cong";
-    f.userName = @"foly";
+//    Friend *f = [[Friend alloc] init];
+//    f.displayName = @"Nguyen Chi Cong";
+//    f.userName = @"foly";
+//    
+//    [[FriendsManager sharedManager] addFriend:f];
+//    [[FriendsManager sharedManager]loadFriends];
+//    
+//    NSIndexPath *newLastIndexPath = [NSIndexPath indexPathForRow:([_tableView numberOfRowsInSection:(_tableView.numberOfSections - 1)]) inSection:(_tableView.numberOfSections - 1)];
+//    //[_tableView scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//
+//    [_tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newLastIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//    
+//    [self performSelector:@selector(addFriendCompleteWithBlock:) withObject:^{
+//        [_tableView reloadData];
+//        } afterDelay:0.5];
     
-    [[FriendsManager sharedManager] addFriend:f];
-    [[FriendsManager sharedManager]loadFriends];
-    
-    NSIndexPath *newLastIndexPath = [NSIndexPath indexPathForRow:([_tableView numberOfRowsInSection:(_tableView.numberOfSections - 1)]) inSection:(_tableView.numberOfSections - 1)];
-    //[_tableView scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-
-    [_tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newLastIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    [self performSelector:@selector(addFriendCompleteWithBlock:) withObject:^{
-        [_tableView reloadData];
-        } afterDelay:0.5];
+    AddFriendViewController *addFriendVC = [[AddFriendViewController alloc] initWithNibName:@"AddFriendViewController" bundle:nil];
+    [self.navigationController pushViewController:addFriendVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
