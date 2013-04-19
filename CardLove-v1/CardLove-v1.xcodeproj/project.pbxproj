@@ -408,7 +408,6 @@
 		669B78E716EA47C600F4437F /* button-text.png in Resources */ = {isa = PBXBuildFile; fileRef = 669B78E316EA47C600F4437F /* button-text.png */; };
 		66A327AA16DA505D00AB3767 /* MSBarButtonIconNavigationPane.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A327A816DA505D00AB3767 /* MSBarButtonIconNavigationPane.png */; };
 		66A327AB16DA505D00AB3767 /* MSBarButtonIconNavigationPane@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A327A916DA505D00AB3767 /* MSBarButtonIconNavigationPane@2x.png */; };
-		66A327C716DA620300AB3767 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327C616DA620300AB3767 /* MainViewController.m */; };
 		66A327CB16DA6F4400AB3767 /* ProfilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327C916DA6F4400AB3767 /* ProfilesViewController.m */; };
 		66A327CC16DA6F4400AB3767 /* ProfilesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66A327CA16DA6F4400AB3767 /* ProfilesViewController.xib */; };
 		66A327D916DA809F00AB3767 /* GHRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327CF16DA809F00AB3767 /* GHRevealViewController.m */; };
@@ -527,6 +526,19 @@
 		66E0E35A16DB16A80085AA12 /* GiftBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E0E35916DB16A80085AA12 /* GiftBoxViewController.m */; };
 		66E0E35E16DB16CC0085AA12 /* StoredCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E0E35C16DB16CB0085AA12 /* StoredCardsViewController.m */; };
 		66E0E35F16DB16CC0085AA12 /* StoredCardsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E0E35D16DB16CC0085AA12 /* StoredCardsViewController.xib */; };
+		66E1725E1721611E00BF9E73 /* UIView+JMNoise.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E1724A1721611E00BF9E73 /* UIView+JMNoise.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66E1725F1721611E00BF9E73 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E1724C1721611E00BF9E73 /* close.png */; };
+		66E172601721611E00BF9E73 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E1724D1721611E00BF9E73 /* close@2x.png */; };
+		66E172611721611E00BF9E73 /* modalButton-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E1724E1721611E00BF9E73 /* modalButton-selected.png */; };
+		66E172621721611E00BF9E73 /* modalButton-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E1724F1721611E00BF9E73 /* modalButton-selected@2x.png */; };
+		66E172631721611E00BF9E73 /* modalButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E172501721611E00BF9E73 /* modalButton.png */; };
+		66E172641721611E00BF9E73 /* modalButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E172511721611E00BF9E73 /* modalButton@2x.png */; };
+		66E172651721611E00BF9E73 /* UAModalPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E172541721611E00BF9E73 /* UAModalPanel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66E172661721611E00BF9E73 /* UATitledModalPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E172561721611E00BF9E73 /* UATitledModalPanel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66E172671721611E00BF9E73 /* UAGradientBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E172591721611E00BF9E73 /* UAGradientBackground.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66E172681721611E00BF9E73 /* UANoisyGradientBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E1725B1721611E00BF9E73 /* UANoisyGradientBackground.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66E172691721611E00BF9E73 /* UARoundedRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E1725D1721611E00BF9E73 /* UARoundedRectView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66E1726C1721635A00BF9E73 /* ModalPanelPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E1726B1721635A00BF9E73 /* ModalPanelPickerView.m */; };
 		66E3B1B717098991006B35E4 /* cover-01.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E3B1B217098991006B35E4 /* cover-01.png */; };
 		66E3B1B817098991006B35E4 /* cover-01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E3B1B317098991006B35E4 /* cover-01@2x.png */; };
 		66E3B1B917098991006B35E4 /* cover-02.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E3B1B417098991006B35E4 /* cover-02.png */; };
@@ -1266,8 +1278,6 @@
 		669B78E316EA47C600F4437F /* button-text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-text.png"; path = "Resources/button-text.png"; sourceTree = "<group>"; };
 		66A327A816DA505D00AB3767 /* MSBarButtonIconNavigationPane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MSBarButtonIconNavigationPane.png; path = Resources/MSBarButtonIconNavigationPane.png; sourceTree = "<group>"; };
 		66A327A916DA505D00AB3767 /* MSBarButtonIconNavigationPane@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MSBarButtonIconNavigationPane@2x.png"; path = "Resources/MSBarButtonIconNavigationPane@2x.png"; sourceTree = "<group>"; };
-		66A327C516DA620300AB3767 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Views/MainViewController.h; sourceTree = "<group>"; };
-		66A327C616DA620300AB3767 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Views/MainViewController.m; sourceTree = "<group>"; };
 		66A327C816DA6F4400AB3767 /* ProfilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfilesViewController.h; path = Views/ProfilesViewController.h; sourceTree = "<group>"; };
 		66A327C916DA6F4400AB3767 /* ProfilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfilesViewController.m; path = Views/ProfilesViewController.m; sourceTree = "<group>"; };
 		66A327CA16DA6F4400AB3767 /* ProfilesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfilesViewController.xib; path = Views/ProfilesViewController.xib; sourceTree = "<group>"; };
@@ -1429,6 +1439,26 @@
 		66E0E35B16DB16CB0085AA12 /* StoredCardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoredCardsViewController.h; path = Views/StoredCardsViewController.h; sourceTree = "<group>"; };
 		66E0E35C16DB16CB0085AA12 /* StoredCardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoredCardsViewController.m; path = Views/StoredCardsViewController.m; sourceTree = "<group>"; };
 		66E0E35D16DB16CC0085AA12 /* StoredCardsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StoredCardsViewController.xib; path = Views/StoredCardsViewController.xib; sourceTree = "<group>"; };
+		66E172491721611E00BF9E73 /* UIView+JMNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+JMNoise.h"; sourceTree = "<group>"; };
+		66E1724A1721611E00BF9E73 /* UIView+JMNoise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+JMNoise.m"; sourceTree = "<group>"; };
+		66E1724C1721611E00BF9E73 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		66E1724D1721611E00BF9E73 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
+		66E1724E1721611E00BF9E73 /* modalButton-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "modalButton-selected.png"; sourceTree = "<group>"; };
+		66E1724F1721611E00BF9E73 /* modalButton-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "modalButton-selected@2x.png"; sourceTree = "<group>"; };
+		66E172501721611E00BF9E73 /* modalButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = modalButton.png; sourceTree = "<group>"; };
+		66E172511721611E00BF9E73 /* modalButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "modalButton@2x.png"; sourceTree = "<group>"; };
+		66E172531721611E00BF9E73 /* UAModalPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAModalPanel.h; sourceTree = "<group>"; };
+		66E172541721611E00BF9E73 /* UAModalPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAModalPanel.m; sourceTree = "<group>"; };
+		66E172551721611E00BF9E73 /* UATitledModalPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATitledModalPanel.h; sourceTree = "<group>"; };
+		66E172561721611E00BF9E73 /* UATitledModalPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATitledModalPanel.m; sourceTree = "<group>"; };
+		66E172581721611E00BF9E73 /* UAGradientBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAGradientBackground.h; sourceTree = "<group>"; };
+		66E172591721611E00BF9E73 /* UAGradientBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAGradientBackground.m; sourceTree = "<group>"; };
+		66E1725A1721611E00BF9E73 /* UANoisyGradientBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UANoisyGradientBackground.h; sourceTree = "<group>"; };
+		66E1725B1721611E00BF9E73 /* UANoisyGradientBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UANoisyGradientBackground.m; sourceTree = "<group>"; };
+		66E1725C1721611E00BF9E73 /* UARoundedRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARoundedRectView.h; sourceTree = "<group>"; };
+		66E1725D1721611E00BF9E73 /* UARoundedRectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UARoundedRectView.m; sourceTree = "<group>"; };
+		66E1726A1721635A00BF9E73 /* ModalPanelPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModalPanelPickerView.h; path = Custom/CustomView/ModalPanelPickerView.h; sourceTree = "<group>"; };
+		66E1726B1721635A00BF9E73 /* ModalPanelPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModalPanelPickerView.m; path = Custom/CustomView/ModalPanelPickerView.m; sourceTree = "<group>"; };
 		66E3B1B217098991006B35E4 /* cover-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cover-01.png"; sourceTree = "<group>"; };
 		66E3B1B317098991006B35E4 /* cover-01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cover-01@2x.png"; sourceTree = "<group>"; };
 		66E3B1B417098991006B35E4 /* cover-02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cover-02.png"; sourceTree = "<group>"; };
@@ -2436,6 +2466,7 @@
 		66310ACF16D9A37900AC9DC8 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				66E172471721611E00BF9E73 /* Panel */,
 				66DD9A1A17204B7F002C50B5 /* Popover */,
 				66081A731719082E002B8B36 /* MMGridView */,
 				66DE33801718361B00801F5D /* QKmenu */,
@@ -2898,8 +2929,6 @@
 		66B3C00C16FC0F93007D1339 /* Profiles */ = {
 			isa = PBXGroup;
 			children = (
-				66A327C516DA620300AB3767 /* MainViewController.h */,
-				66A327C616DA620300AB3767 /* MainViewController.m */,
 				66A327C816DA6F4400AB3767 /* ProfilesViewController.h */,
 				66A327C916DA6F4400AB3767 /* ProfilesViewController.m */,
 				66A327CA16DA6F4400AB3767 /* ProfilesViewController.xib */,
@@ -2922,6 +2951,8 @@
 				661F4E9116E899680005B8F0 /* ChatViewController.h */,
 				661F4E9216E899680005B8F0 /* ChatViewController.m */,
 				661F4E9316E899680005B8F0 /* ChatViewController.xib */,
+				66E1726A1721635A00BF9E73 /* ModalPanelPickerView.h */,
+				66E1726B1721635A00BF9E73 /* ModalPanelPickerView.m */,
 			);
 			name = "Friends+Messages";
 			sourceTree = "<group>";
@@ -3084,6 +3115,64 @@
 				66DE33891718361B00801F5D /* rw-button@2x.png */,
 			);
 			path = img;
+			sourceTree = "<group>";
+		};
+		66E172471721611E00BF9E73 /* Panel */ = {
+			isa = PBXGroup;
+			children = (
+				66E172481721611E00BF9E73 /* Categories */,
+				66E1724B1721611E00BF9E73 /* Images */,
+				66E172521721611E00BF9E73 /* Panels */,
+				66E172571721611E00BF9E73 /* Views */,
+			);
+			name = Panel;
+			path = Library/Panel;
+			sourceTree = "<group>";
+		};
+		66E172481721611E00BF9E73 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				66E172491721611E00BF9E73 /* UIView+JMNoise.h */,
+				66E1724A1721611E00BF9E73 /* UIView+JMNoise.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		66E1724B1721611E00BF9E73 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				66E1724C1721611E00BF9E73 /* close.png */,
+				66E1724D1721611E00BF9E73 /* close@2x.png */,
+				66E1724E1721611E00BF9E73 /* modalButton-selected.png */,
+				66E1724F1721611E00BF9E73 /* modalButton-selected@2x.png */,
+				66E172501721611E00BF9E73 /* modalButton.png */,
+				66E172511721611E00BF9E73 /* modalButton@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		66E172521721611E00BF9E73 /* Panels */ = {
+			isa = PBXGroup;
+			children = (
+				66E172531721611E00BF9E73 /* UAModalPanel.h */,
+				66E172541721611E00BF9E73 /* UAModalPanel.m */,
+				66E172551721611E00BF9E73 /* UATitledModalPanel.h */,
+				66E172561721611E00BF9E73 /* UATitledModalPanel.m */,
+			);
+			path = Panels;
+			sourceTree = "<group>";
+		};
+		66E172571721611E00BF9E73 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				66E172581721611E00BF9E73 /* UAGradientBackground.h */,
+				66E172591721611E00BF9E73 /* UAGradientBackground.m */,
+				66E1725A1721611E00BF9E73 /* UANoisyGradientBackground.h */,
+				66E1725B1721611E00BF9E73 /* UANoisyGradientBackground.m */,
+				66E1725C1721611E00BF9E73 /* UARoundedRectView.h */,
+				66E1725D1721611E00BF9E73 /* UARoundedRectView.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		66F1B92316EAE996003FEA7F /* CustomView */ = {
@@ -3869,6 +3958,12 @@
 				66DD9A131720404B002C50B5 /* redbackground.png in Resources */,
 				66DD9A141720404B002C50B5 /* separate.png in Resources */,
 				66DD9A191720411F002C50B5 /* AddFriendViewController.xib in Resources */,
+				66E1725F1721611E00BF9E73 /* close.png in Resources */,
+				66E172601721611E00BF9E73 /* close@2x.png in Resources */,
+				66E172611721611E00BF9E73 /* modalButton-selected.png in Resources */,
+				66E172621721611E00BF9E73 /* modalButton-selected@2x.png in Resources */,
+				66E172631721611E00BF9E73 /* modalButton.png in Resources */,
+				66E172641721611E00BF9E73 /* modalButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3899,7 +3994,6 @@
 				66F3078516D9B97C00E681AD /* CustomNoiseBackgroundView.m in Sources */,
 				66F3078616D9B97C00E681AD /* CustomSelectionView.m in Sources */,
 				66F3078716D9B97C00E681AD /* CustomTabItem.m in Sources */,
-				66A327C716DA620300AB3767 /* MainViewController.m in Sources */,
 				66A327CB16DA6F4400AB3767 /* ProfilesViewController.m in Sources */,
 				66A327D916DA809F00AB3767 /* GHRevealViewController.m in Sources */,
 				66A327DA16DA809F00AB3767 /* GHSidebarSearchViewController.m in Sources */,
@@ -4128,6 +4222,13 @@
 				66F06955172004AD00D084B5 /* DBSignupViewController.m in Sources */,
 				66DD9A181720411F002C50B5 /* AddFriendViewController.m in Sources */,
 				66DD9A1D17204B7F002C50B5 /* NIDropDown.m in Sources */,
+				66E1725E1721611E00BF9E73 /* UIView+JMNoise.m in Sources */,
+				66E172651721611E00BF9E73 /* UAModalPanel.m in Sources */,
+				66E172661721611E00BF9E73 /* UATitledModalPanel.m in Sources */,
+				66E172671721611E00BF9E73 /* UAGradientBackground.m in Sources */,
+				66E172681721611E00BF9E73 /* UANoisyGradientBackground.m in Sources */,
+				66E172691721611E00BF9E73 /* UARoundedRectView.m in Sources */,
+				66E1726C1721635A00BF9E73 /* ModalPanelPickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

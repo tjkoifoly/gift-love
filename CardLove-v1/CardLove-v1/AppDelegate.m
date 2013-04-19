@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 
-#import "MainViewController.h"
 #import "FriendsViewController.h"
 #import "ProfilesViewController.h"
 #import "NewsViewController.h"

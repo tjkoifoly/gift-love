@@ -13,6 +13,10 @@
 #import "EKNotifView.h"
 #import "AddFriendViewController.h"
 
+#import "ModalPanelPickerView.h"
+#import "UANoisyGradientBackground.h"
+#import "UAGradientBackground.h"
+
 typedef void (^FinishBlock)();
 
 @interface FriendsViewController ()
@@ -232,13 +236,37 @@ typedef void (^FinishBlock)();
 
 -(void) sendGiftTo:(NSIndexPath *)indexPath
 {
-    NSLog(@"Gift %@", indexPath);
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    NSLog(@"Gift %@", indexPath);
+//    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    
+//    NSArray *controllers = [appDelegate.menuController _controllers];
+//        [appDelegate.revealController setContentViewController: controllers[1][3]];
+//    NSIndexPath *indexPathMenu = [NSIndexPath indexPathForRow:3 inSection:1];
+//    [appDelegate.menuController._menuTableView selectRowAtIndexPath:indexPathMenu animated:YES scrollPosition:UITableViewScrollPositionBottom];
     
-    NSArray *controllers = [appDelegate.menuController _controllers];
-        [appDelegate.revealController setContentViewController: controllers[1][3]];
-    NSIndexPath *indexPathMenu = [NSIndexPath indexPathForRow:3 inSection:1];
-    [appDelegate.menuController._menuTableView selectRowAtIndexPath:indexPathMenu animated:YES scrollPosition:UITableViewScrollPositionBottom];        
+    ModalPanelPickerView *modalPanel = [[ModalPanelPickerView alloc] initWithFrame:self.view.bounds title:@"Choose a gift"] ;
+    modalPanel.onClosePressed = ^(UAModalPanel* panel) {
+        // [panel hide];
+        [panel hideWithOnComplete:^(BOOL finished) {
+            [panel removeFromSuperview];
+        }];
+        UADebugLog(@"onClosePressed block called from panel: %@", modalPanel);
+    };
+    
+    ///////////////////////////////////////////
+    //   Panel is a reference to the modalPanel
+    modalPanel.onActionPressed = ^(UAModalPanel* panel) {
+        UADebugLog(@"onActionPressed block called from panel: %@", modalPanel);
+    };
+
+    modalPanel.delegate = self;
+    
+    [self.view addSubview:modalPanel];
+	
+	///////////////////////////////////
+	// Show the panel from the center of the button that was pressed
+	[modalPanel showFromPoint:self.view.center];
+    
 }
 
 -(void) removeContact:(NSIndexPath *)indexPath
@@ -307,4 +335,47 @@ typedef void (^FinishBlock)();
     [self setActionHeaderView:nil];
     [super viewDidUnload];
 }
+
+#pragma mark - UAModalDisplayPanelViewDelegate
+
+// Optional: This is called before the open animations.
+//   Only used if delegate is set.
+- (void)willShowModalPanel:(UAModalPanel *)modalPanel {
+	UADebugLog(@"willShowModalPanel called with modalPanel: %@", modalPanel);
+}
+
+// Optional: This is called after the open animations.
+//   Only used if delegate is set.
+- (void)didShowModalPanel:(UAModalPanel *)modalPanel {
+	UADebugLog(@"didShowModalPanel called with modalPanel: %@", modalPanel);
+}
+
+// Optional: This is called when the close button is pressed
+//   You can use it to perform validations
+//   Return YES to close the panel, otherwise NO
+//   Only used if delegate is set.
+- (BOOL)shouldCloseModalPanel:(UAModalPanel *)modalPanel {
+	UADebugLog(@"shouldCloseModalPanel called with modalPanel: %@", modalPanel);
+	return YES;
+}
+
+// Optional: This is called when the action button is pressed
+//   Action button is only visible when its title is non-nil;
+//   Only used if delegate is set and not using blocks.
+- (void)didSelectActionButton:(UAModalPanel *)modalPanel {
+	UADebugLog(@"didSelectActionButton called with modalPanel: %@", modalPanel);
+}
+
+// Optional: This is called before the close animations.
+//   Only used if delegate is set.
+- (void)willCloseModalPanel:(UAModalPanel *)modalPanel {
+	UADebugLog(@"willCloseModalPanel called with modalPanel: %@", modalPanel);
+}
+
+// Optional: This is called after the close animations.
+//   Only used if delegate is set.
+- (void)didCloseModalPanel:(UAModalPanel *)modalPanel {
+	UADebugLog(@"didCloseModalPanel called with modalPanel: %@", modalPanel);
+}
+
 @end

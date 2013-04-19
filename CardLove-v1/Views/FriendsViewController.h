@@ -14,8 +14,9 @@
 #import "HHPanningTableViewCell.h"
 #import "DrawerViewMenu.h"
 #import "AddFriendViewController.h"
+#import "UAModalPanel.h"
 
-@interface FriendsViewController : GHRootViewController <UITableViewDataSource, UITableViewDelegate, HHPanningTableViewCellDelegate, DrawerMenuDelegate, UIActionSheetDelegate>
+@interface FriendsViewController : GHRootViewController <UITableViewDataSource, UITableViewDelegate, HHPanningTableViewCellDelegate, DrawerMenuDelegate, UIActionSheetDelegate, UAModalPanelDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) DDActionHeaderView *actionHeaderView;
