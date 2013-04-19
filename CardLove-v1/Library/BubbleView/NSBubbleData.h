@@ -26,6 +26,8 @@ typedef enum _NSBubbleType
 
 - (id)initWithText:(NSString *)text date:(NSDate *)date type:(NSBubbleType)type;
 + (id)dataWithText:(NSString *)text date:(NSDate *)date type:(NSBubbleType)type;
++ (id)dataWithText:(NSString *)text date:(NSDate *)date type:(NSBubbleType)type font: (UIFont *)customFont;
+- (id)initWithText:(NSString *)text date:(NSDate *)date type:(NSBubbleType)type font: (UIFont *)customFont;
 - (id)initWithImage:(UIImage *)image date:(NSDate *)date type:(NSBubbleType)type;
 + (id)dataWithImage:(UIImage *)image date:(NSDate *)date type:(NSBubbleType)type;
 - (id)initWithView:(UIView *)view date:(NSDate *)date type:(NSBubbleType)type insets:(UIEdgeInsets)insets;

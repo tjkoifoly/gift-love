@@ -49,7 +49,13 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnBack];
     
     UIBarButtonItem *btnCamera = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(pickerImage:)];
-    self.navigationItem.rightBarButtonItem = btnCamera;
+    
+    UIButton *btnEmoj = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnEmoj setBackgroundImage:[UIImage imageNamed:@"emo.png"] forState:UIControlStateNormal];
+    [btnEmoj setFrame:CGRectMake(0, 0, 34, 34)];
+    [btnEmoj addTarget:self action:@selector(pickerEmoj:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:btnCamera,[[UIBarButtonItem alloc] initWithCustomView:btnEmoj], nil];
     
     keyboardIsVisible = NO;
     
@@ -64,7 +70,13 @@
     
     //UI
     if (_friendChatting) {
-        self.navigationItem.title = _friendChatting.displayName;
+        UILabel *labelTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
+        [labelTitle setFont:[UIFont boldSystemFontOfSize:18]];
+        labelTitle.textColor= [UIColor whiteColor];
+        labelTitle.backgroundColor = [UIColor clearColor];
+        labelTitle.textAlignment = NSTextAlignmentCenter;
+        labelTitle.text = _friendChatting.displayName;
+        self.navigationItem.titleView = labelTitle;
     }
     
     bubbleData = [[NSMutableArray alloc] init];
@@ -110,6 +122,31 @@
     }
     
     [choosePhotoActionSheet showInView:self.view];
+
+}
+
+-(void) pickerEmoj: (UIButton *) sender
+{
+    if(!self->_emojiPopover)
+        self->_emojiPopover = [[SYEmojiPopover alloc] init];
+    
+    [self->_emojiPopover setDelegate:self];
+    [self->_emojiPopover showFromPoint:CGPointMake(sender.center.x, sender.bounds.size.height) inView:self.navigationController.view withTitle:@"Click on a character to see it in big"];
+}
+
+#pragma mark - SYEmojiPopoverDelegate methods
+
+-(void)emojiPopover:(SYEmojiPopover *)emojiPopover didClickedOnCharacter:(NSString *)character
+{
+    _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
+    NSBubbleType type = arc4random() % 2;
+    UIFont *customFont = [UIFont fontWithName:@"AppleColorEmoji" size:50.0f];
+    NSBubbleData *sayBubble = [NSBubbleData dataWithText:character date:[NSDate dateWithTimeIntervalSinceNow:0] type:type font:customFont];
+    [bubbleData addObject:sayBubble];
+    [_bubbleTable reloadData];
+    
+    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)]-1) inSection:(_bubbleTable.numberOfSections - 1)];
+    [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 
 }
 

@@ -11,14 +11,15 @@
 #import "UIBubbleTableView.h"
 #import "Friend.h"
 #import "UIInputToolbar.h"
+#import "SYEmojiPopover.h"
 
-@interface ChatViewController : UIViewController <UIBubbleTableViewDataSource, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIInputToolbarDelegate, UIGestureRecognizerDelegate>
+@interface ChatViewController : UIViewController <UIBubbleTableViewDataSource, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIInputToolbarDelegate, UIGestureRecognizerDelegate, SYEmojiPopoverDelegate>
 {
     UIInputToolbar *_inputToolbar;
     
 @private
     BOOL keyboardIsVisible;
-
+    SYEmojiPopover *_emojiPopover;
 }
 
 @property (nonatomic, strong) UIInputToolbar *inputToolbar;

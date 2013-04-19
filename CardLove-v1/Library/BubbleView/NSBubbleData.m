@@ -71,6 +71,36 @@ const UIEdgeInsets textInsetsSomeone = {5, 15, 11, 10};
     return [self initWithView:label date:date type:type insets:insets];
 }
 
++ (id)dataWithText:(NSString *)text date:(NSDate *)date type:(NSBubbleType)type font: (UIFont *)customFont
+{
+#if !__has_feature(objc_arc)
+    return [[[NSBubbleData alloc] initWithText:text date:date type:type font:customFont] autorelease];
+#else
+    return [[NSBubbleData alloc] initWithText:text date:date type:type font:customFont];
+#endif
+}
+
+
+- (id)initWithText:(NSString *)text date:(NSDate *)date type:(NSBubbleType)type font: (UIFont *)customFont
+{
+    CGSize size = [(text ? text : @"") sizeWithFont:customFont constrainedToSize:CGSizeMake(220, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    label.numberOfLines = 0;
+    label.lineBreakMode = UILineBreakModeWordWrap;
+    label.text = (text ? text : @"");
+    label.font = customFont;
+    label.backgroundColor = [UIColor clearColor];
+    
+#if !__has_feature(objc_arc)
+    [label autorelease];
+#endif
+    
+    UIEdgeInsets insets = (type == BubbleTypeMine ? textInsetsMine : textInsetsSomeone);
+    return [self initWithView:label date:date type:type insets:insets];
+}
+
+
 #pragma mark - Image bubble
 
 const UIEdgeInsets imageInsetsMine = {11, 13, 16, 22};

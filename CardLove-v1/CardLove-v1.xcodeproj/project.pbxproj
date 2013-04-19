@@ -338,6 +338,10 @@
 		6666151F1721A91D009ACC1E /* UIExpandingTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 666615151721A91D009ACC1E /* UIExpandingTextViewInternal.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		666615201721A91D009ACC1E /* UIInputToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 666615171721A91D009ACC1E /* UIInputToolbar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		666615231721B4CD009ACC1E /* UITableView+reloadDataWithAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 666615221721B4CD009ACC1E /* UITableView+reloadDataWithAnimation.m */; };
+		6666152C1721BAF8009ACC1E /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 666615261721BAF8009ACC1E /* PopoverView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6666152D1721BAF8009ACC1E /* SYEmojiCharacters.m in Sources */ = {isa = PBXBuildFile; fileRef = 666615291721BAF8009ACC1E /* SYEmojiCharacters.m */; };
+		6666152E1721BAF8009ACC1E /* SYEmojiPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 6666152B1721BAF8009ACC1E /* SYEmojiPopover.m */; };
+		666615301721C042009ACC1E /* emo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6666152F1721C042009ACC1E /* emo.png */; };
 		667C25B917130B3E0081BC38 /* card-icon2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 667C25B817130B3E0081BC38 /* card-icon2.jpg */; };
 		6684B72A170B1C5700987AF7 /* SoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6684B729170B1C5700987AF7 /* SoundManager.m */; };
 		6684B72F170B1C8A00987AF7 /* sound1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 6684B72B170B1C8A00987AF7 /* sound1.caf */; };
@@ -1217,6 +1221,13 @@
 		666615171721A91D009ACC1E /* UIInputToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIInputToolbar.m; sourceTree = "<group>"; };
 		666615211721B4CD009ACC1E /* UITableView+reloadDataWithAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+reloadDataWithAnimation.h"; sourceTree = "<group>"; };
 		666615221721B4CD009ACC1E /* UITableView+reloadDataWithAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+reloadDataWithAnimation.m"; sourceTree = "<group>"; };
+		666615251721BAF8009ACC1E /* PopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverView.h; sourceTree = "<group>"; };
+		666615261721BAF8009ACC1E /* PopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverView.m; sourceTree = "<group>"; };
+		666615281721BAF8009ACC1E /* SYEmojiCharacters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYEmojiCharacters.h; sourceTree = "<group>"; };
+		666615291721BAF8009ACC1E /* SYEmojiCharacters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYEmojiCharacters.m; sourceTree = "<group>"; };
+		6666152A1721BAF8009ACC1E /* SYEmojiPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYEmojiPopover.h; sourceTree = "<group>"; };
+		6666152B1721BAF8009ACC1E /* SYEmojiPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYEmojiPopover.m; sourceTree = "<group>"; };
+		6666152F1721C042009ACC1E /* emo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emo.png; sourceTree = "<group>"; };
 		667C25B817130B3E0081BC38 /* card-icon2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "card-icon2.jpg"; sourceTree = "<group>"; };
 		6684B728170B1C5700987AF7 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
 		6684B729170B1C5700987AF7 /* SoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundManager.m; sourceTree = "<group>"; };
@@ -2730,6 +2741,26 @@
 			path = UIInputToolbar;
 			sourceTree = "<group>";
 		};
+		666615241721BAF8009ACC1E /* PopoverView */ = {
+			isa = PBXGroup;
+			children = (
+				666615251721BAF8009ACC1E /* PopoverView.h */,
+				666615261721BAF8009ACC1E /* PopoverView.m */,
+			);
+			path = PopoverView;
+			sourceTree = "<group>";
+		};
+		666615271721BAF8009ACC1E /* SYEmojiPopover */ = {
+			isa = PBXGroup;
+			children = (
+				666615281721BAF8009ACC1E /* SYEmojiCharacters.h */,
+				666615291721BAF8009ACC1E /* SYEmojiCharacters.m */,
+				6666152A1721BAF8009ACC1E /* SYEmojiPopover.h */,
+				6666152B1721BAF8009ACC1E /* SYEmojiPopover.m */,
+			);
+			path = SYEmojiPopover;
+			sourceTree = "<group>";
+		};
 		6684B727170B1C5700987AF7 /* SoundManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -3147,6 +3178,8 @@
 		66DD9A1A17204B7F002C50B5 /* Popover */ = {
 			isa = PBXGroup;
 			children = (
+				666615241721BAF8009ACC1E /* PopoverView */,
+				666615271721BAF8009ACC1E /* SYEmojiPopover */,
 				66DD9A1B17204B7F002C50B5 /* NIDropDown.h */,
 				66DD9A1C17204B7F002C50B5 /* NIDropDown.m */,
 			);
@@ -3386,6 +3419,7 @@
 		66F5A01C1711B51D00F30D6A /* _icons */ = {
 			isa = PBXGroup;
 			children = (
+				6666152F1721C042009ACC1E /* emo.png */,
 				66F0695F17200FF900D084B5 /* Small Blue Button.png */,
 				66F0696017200FF900D084B5 /* Small Red Button.png */,
 				66F0695B172009F700D084B5 /* btn-sign-up.png */,
@@ -4033,6 +4067,7 @@
 				6666151B1721A91D009ACC1E /* textbg@2x.png in Resources */,
 				6666151C1721A91D009ACC1E /* toolbarbg.png in Resources */,
 				6666151D1721A91D009ACC1E /* toolbarbg@2x.png in Resources */,
+				666615301721C042009ACC1E /* emo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4302,6 +4337,9 @@
 				6666151F1721A91D009ACC1E /* UIExpandingTextViewInternal.m in Sources */,
 				666615201721A91D009ACC1E /* UIInputToolbar.m in Sources */,
 				666615231721B4CD009ACC1E /* UITableView+reloadDataWithAnimation.m in Sources */,
+				6666152C1721BAF8009ACC1E /* PopoverView.m in Sources */,
+				6666152D1721BAF8009ACC1E /* SYEmojiCharacters.m in Sources */,
+				6666152E1721BAF8009ACC1E /* SYEmojiPopover.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
