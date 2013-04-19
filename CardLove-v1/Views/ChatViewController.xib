@@ -61,7 +61,7 @@
 					</object>
 					<object class="IBUIToolbar" id="503099735">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">266</int>
+						<int key="NSvFlags">-2147483382</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUITextField" id="321712258">
 								<reference key="NSNextResponder" ref="503099735"/>

@@ -40,8 +40,10 @@
 
 #define kNoEff @"no-eff"
 
-#define kNotificationGifSelected @"GifSelectedNotification"
-#define kNotificationGiftConfig  @"NotificationGiftConfig"
+#define kNotificationGifSelected        @"NotificationGifSelected"
+#define kNotificationGiftConfig         @"NotificationGiftConfig"
+#define kNotificationChatWithPerson     @"NotificationChatWithPerson"
+#define kNotificationSendGiftToFriend   @"NotificationSendGiftToFriend"
 
 #define kGiftPaper      @"gift-paper"
 #define kGiftBG         @"gift-bg"

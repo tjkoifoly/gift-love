@@ -10,6 +10,7 @@
 #import "GHRootViewController.h"
 #import "FriendsManager.h"
 #import "TDBadgedCell.h"
+#import "ModalPanelPickerView.h"
 
 @interface MessagesViewController : GHRootViewController <UITableViewDataSource, UITableViewDelegate>
 

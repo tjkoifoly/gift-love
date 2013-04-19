@@ -7,11 +7,22 @@
 //
 
 #import "UATitledModalPanel.h"
+#import "MacroDefine.h"
+#import "FriendsManager.h"
+#import "FunctionObject.h"
+
+typedef enum {
+    ModalPickerGifts,
+    ModalPickerFriends
+}ModalPickerMode;
 
 @interface ModalPanelPickerView : UATitledModalPanel <UITableViewDataSource,UITableViewDelegate>
 
 @property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) NSMutableArray *dataSource;
+@property (nonatomic) ModalPickerMode mode;
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title;
+- (id)initWithFrame:(CGRect)frame title:(NSString *)title mode: (ModalPickerMode) mode;
 
 @end

@@ -37,11 +37,34 @@
     [btnNewMessage setFrame:CGRectMake(0, 0, 39, 34)];
     [btnNewMessage addTarget:self action:@selector(newMessageAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnNewMessage];
+    
+    //Listeners
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatWithPerson:) name:kNotificationChatWithPerson object:nil];
 }
 
 -(void) newMessageAction
 {
+    ModalPanelPickerView *modalPanel = [[ModalPanelPickerView alloc] initWithFrame:self.view.bounds title:@"Choose a friend" mode:ModalPickerFriends] ;
+    modalPanel.onClosePressed = ^(UAModalPanel* panel) {
+        // [panel hide];
+        [panel hideWithOnComplete:^(BOOL finished) {
+            [panel removeFromSuperview];
+        }];
+        UADebugLog(@"onClosePressed block called from panel: %@", modalPanel);
+    };
     
+    ///////////////////////////////////////////
+    //   Panel is a reference to the modalPanel
+    modalPanel.onActionPressed = ^(UAModalPanel* panel) {
+        UADebugLog(@"onActionPressed block called from panel: %@", modalPanel);
+    };
+    
+    [self.view addSubview:modalPanel];
+	
+	///////////////////////////////////
+	// Show the panel from the center of the button that was pressed
+	[modalPanel showFromPoint:self.view.center];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,6 +75,7 @@
 
 - (void)viewDidUnload {
     [self setTableView:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationChatWithPerson object:nil];
     [super viewDidUnload];
 }
 
@@ -99,7 +123,15 @@
     [self.navigationController pushViewController:chatVC animated:YES];
 }
 
-
+#pragma mark - Notification
+-(void) chatWithPerson: (NSNotification *) notification
+{
+    Friend *f = [notification object];
+    ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
+    chatVC.friendChatting = f;
+    [self.navigationController pushViewController:chatVC animated:YES];
+    
+}
 
 
 

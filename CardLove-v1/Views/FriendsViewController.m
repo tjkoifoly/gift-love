@@ -163,7 +163,10 @@ typedef void (^FinishBlock)();
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"LOG = %@", [[[[FriendsManager sharedManager] friendsList] objectAtIndex:indexPath.row] displayName]);
+    
+    Friend *f = [[[FriendsManager sharedManager] friendsList] objectAtIndex:indexPath.row];
     ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
+    chatVC.friendChatting = f;
     [self.navigationController pushViewController:chatVC animated:YES];
 }
 
@@ -244,7 +247,7 @@ typedef void (^FinishBlock)();
 //    NSIndexPath *indexPathMenu = [NSIndexPath indexPathForRow:3 inSection:1];
 //    [appDelegate.menuController._menuTableView selectRowAtIndexPath:indexPathMenu animated:YES scrollPosition:UITableViewScrollPositionBottom];
     
-    ModalPanelPickerView *modalPanel = [[ModalPanelPickerView alloc] initWithFrame:self.view.bounds title:@"Choose a gift"] ;
+    ModalPanelPickerView *modalPanel = [[ModalPanelPickerView alloc] initWithFrame:self.view.bounds title:@"Choose a gift" mode:ModalPickerGifts] ;
     modalPanel.onClosePressed = ^(UAModalPanel* panel) {
         // [panel hide];
         [panel hideWithOnComplete:^(BOOL finished) {
