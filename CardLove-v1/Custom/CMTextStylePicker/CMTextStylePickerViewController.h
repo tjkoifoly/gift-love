@@ -32,11 +32,12 @@
 #import "GestureLabel.h"
 #import "AUIAnimatableLabel.h"
 #import "FXLabel.h"
+#import "InfColorPickerController.h"
 
 @class CMColourBlockView;
 @protocol CMTextStylePickerViewControllerDelegate;
 
-@interface CMTextStylePickerViewController : UITableViewController <CMFontSelectTableViewControllerDelegate, CMColourSelectTableViewControllerDelegate, UITextFieldDelegate, UpDownControlDelegate> {
+@interface CMTextStylePickerViewController : UITableViewController <CMFontSelectTableViewControllerDelegate, CMColourSelectTableViewControllerDelegate, UITextFieldDelegate, UpDownControlDelegate, InfColorPickerControllerDelegate> {
 
 }
 

@@ -29,6 +29,7 @@
 #import "CMColourBlockView.h"
 #import "CMUpDownControl.h"
 #import "UILabel+dynamicSizeMe.h"
+#import "InfColorPicker.h"
 
 #define kDisabledCellAlpha		0.4
 
@@ -259,6 +260,8 @@
         
         textfieldLabel.text = labelToEdit.text;
         
+        self.selectedTextColour = labelToEdit.textColor;
+        
     }else
     {
         _currentFont = [UIFont fontWithName:@"Helvetica" size:17.0f];
@@ -450,11 +453,16 @@
 		[fontSelectTableViewController release];
 	}
 	else if (cell == self.colourCell) {
-		CMColourSelectTableViewController *colourSelectTableViewController = [[CMColourSelectTableViewController alloc] initWithNibName:@"CMColourSelectTableViewController" bundle:nil];
-		colourSelectTableViewController.delegate = self;
-		colourSelectTableViewController.selectedColour = self.selectedTextColour;
-		[self.navigationController pushViewController:colourSelectTableViewController animated:YES];
-		[colourSelectTableViewController release];
+//		CMColourSelectTableViewController *colourSelectTableViewController = [[CMColourSelectTableViewController alloc] initWithNibName:@"CMColourSelectTableViewController" bundle:nil];
+//		colourSelectTableViewController.delegate = self;
+//		colourSelectTableViewController.selectedColour = self.selectedTextColour;
+//		[self.navigationController pushViewController:colourSelectTableViewController animated:YES];
+//		[colourSelectTableViewController release];
+        
+        InfColorPickerController* picker = [ InfColorPickerController colorPickerViewController ];
+        picker.sourceColor = self.selectedTextColour;
+        picker.delegate = self;
+        [self.navigationController pushViewController:picker animated:YES];
 	}
 	else if (cell == self.applyAsDefaultCell) {
 		// "Replace default settings"
@@ -533,6 +541,14 @@
 {
     [sender resignFirstResponder];
 }
+
+#pragma mark - ColorPickerDelegate
+
+- (void) colorPickerControllerDidFinish: (InfColorPickerController*) picker
+{
+	self.selectedTextColour = picker.resultColor;
+}
+
 
 
 
