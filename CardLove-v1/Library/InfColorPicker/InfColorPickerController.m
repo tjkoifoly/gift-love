@@ -112,6 +112,7 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
 	if( self ) {
 		self.navigationItem.title = NSLocalizedString( @"Set Color", 
 									@"InfColorPicker default nav item title" );
+        self.navigationItem.rightBarButtonItem = [ [ [ UIBarButtonItem alloc ] initWithBarButtonSystemItem: UIBarButtonSystemItemDone target: self action: @selector( done: ) ] autorelease ];
 	}
 	
 	return self;
@@ -209,7 +210,8 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
 
 - (IBAction) done: (id) sender
 {
-	[ self.delegate colorPickerControllerDidFinish: self ];	
+	[ self.delegate colorPickerControllerDidFinish: self ];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //------------------------------------------------------------------------------
