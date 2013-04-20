@@ -266,8 +266,11 @@
     {
         _currentFont = [UIFont fontWithName:@"Helvetica" size:17.0f];
         [textfieldLabel becomeFirstResponder];
+        self.selectedTextColour = [UIColor blackColor];
     }
     
+    self.colourView.colour = selectedTextColour;	// Update the colour swatch
+
     self.selectedFont = _currentFont;
     self.fontNameLabel.text = _currentFont.fontName;
     self.fontSizeControl.value = _currentFont.pointSize;
@@ -547,6 +550,10 @@
 - (void) colorPickerControllerDidFinish: (InfColorPickerController*) picker
 {
 	self.selectedTextColour = picker.resultColor;
+	self.colourView.colour = selectedTextColour;	// Update the colour swatch
+    self.labelPreview.textColor = selectedTextColour;
+	[self notifyDelegateSelectedTextColorChanged];
+    //[self.navigationController popViewControllerAnimated:YES];
 }
 
 
