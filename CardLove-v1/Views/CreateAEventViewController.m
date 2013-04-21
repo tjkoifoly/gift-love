@@ -32,6 +32,8 @@
     
     UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneCreate)];
     self.navigationItem.rightBarButtonItem = btnDone;
+    
+    self.navigationItem.title = @"New event";
 }
 
 -(void) cancelCreate

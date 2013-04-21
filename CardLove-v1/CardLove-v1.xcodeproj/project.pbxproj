@@ -40,6 +40,12 @@
 		660A417C16F385CE006F593D /* DetailEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 660A417A16F385CE006F593D /* DetailEventViewController.xib */; };
 		660A417F16F38BA0006F593D /* GiftItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 660A417E16F38BA0006F593D /* GiftItem.m */; };
 		660A418216F38FA6006F593D /* GiftItemManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 660A418116F38FA6006F593D /* GiftItemManager.m */; };
+		660E27F91724436F008214A2 /* BButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 660E27F21724436F008214A2 /* BButton.m */; };
+		660E27FA1724436F008214A2 /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 660E27F41724436F008214A2 /* NSString+FontAwesome.m */; };
+		660E27FB1724436F008214A2 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 660E27F61724436F008214A2 /* FontAwesome.ttf */; };
+		660E27FC1724436F008214A2 /* UIColor+BButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 660E27F81724436F008214A2 /* UIColor+BButton.m */; };
+		660E280217244721008214A2 /* Names.m in Sources */ = {isa = PBXBuildFile; fileRef = 660E27FF17244721008214A2 /* Names.m */; };
+		660E280317244721008214A2 /* TITokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 660E280117244721008214A2 /* TITokenField.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		661B86A116EF68E000AE542D /* NSDate+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 661B868816EF68E000AE542D /* NSDate+Helpers.m */; };
 		661B86A216EF68E000AE542D /* PMCalendarBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 661B868A16EF68E000AE542D /* PMCalendarBackgroundView.m */; };
 		661B86A316EF68E000AE542D /* PMCalendarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 661B868D16EF68E000AE542D /* PMCalendarController.m */; };
@@ -749,6 +755,17 @@
 		660A417E16F38BA0006F593D /* GiftItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GiftItem.m; path = ModelClasses/GiftItem.m; sourceTree = "<group>"; };
 		660A418016F38FA6006F593D /* GiftItemManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiftItemManager.h; path = Data/GiftItemManager.h; sourceTree = "<group>"; };
 		660A418116F38FA6006F593D /* GiftItemManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GiftItemManager.m; path = Data/GiftItemManager.m; sourceTree = "<group>"; };
+		660E27F11724436F008214A2 /* BButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BButton.h; sourceTree = "<group>"; };
+		660E27F21724436F008214A2 /* BButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BButton.m; sourceTree = "<group>"; };
+		660E27F31724436F008214A2 /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
+		660E27F41724436F008214A2 /* NSString+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FontAwesome.m"; sourceTree = "<group>"; };
+		660E27F61724436F008214A2 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
+		660E27F71724436F008214A2 /* UIColor+BButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+BButton.h"; sourceTree = "<group>"; };
+		660E27F81724436F008214A2 /* UIColor+BButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+BButton.m"; sourceTree = "<group>"; };
+		660E27FE17244721008214A2 /* Names.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Names.h; sourceTree = "<group>"; };
+		660E27FF17244721008214A2 /* Names.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Names.m; sourceTree = "<group>"; };
+		660E280017244721008214A2 /* TITokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TITokenField.h; sourceTree = "<group>"; };
+		660E280117244721008214A2 /* TITokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TITokenField.m; sourceTree = "<group>"; };
 		661B868516EF68E000AE542D /* PMCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMCalendar.h; sourceTree = "<group>"; };
 		661B868716EF68E000AE542D /* NSDate+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helpers.h"; sourceTree = "<group>"; };
 		661B868816EF68E000AE542D /* NSDate+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helpers.m"; sourceTree = "<group>"; };
@@ -1784,6 +1801,48 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		660E27EF1724436F008214A2 /* CustomControl */ = {
+			isa = PBXGroup;
+			children = (
+				660E27F01724436F008214A2 /* BButton */,
+			);
+			name = CustomControl;
+			path = Custom/CustomControl;
+			sourceTree = "<group>";
+		};
+		660E27F01724436F008214A2 /* BButton */ = {
+			isa = PBXGroup;
+			children = (
+				660E27F11724436F008214A2 /* BButton.h */,
+				660E27F21724436F008214A2 /* BButton.m */,
+				660E27F31724436F008214A2 /* NSString+FontAwesome.h */,
+				660E27F41724436F008214A2 /* NSString+FontAwesome.m */,
+				660E27F51724436F008214A2 /* resources */,
+				660E27F71724436F008214A2 /* UIColor+BButton.h */,
+				660E27F81724436F008214A2 /* UIColor+BButton.m */,
+			);
+			path = BButton;
+			sourceTree = "<group>";
+		};
+		660E27F51724436F008214A2 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				660E27F61724436F008214A2 /* FontAwesome.ttf */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		660E27FD17244721008214A2 /* TokenField */ = {
+			isa = PBXGroup;
+			children = (
+				660E27FE17244721008214A2 /* Names.h */,
+				660E27FF17244721008214A2 /* Names.m */,
+				660E280017244721008214A2 /* TITokenField.h */,
+				660E280117244721008214A2 /* TITokenField.m */,
+			);
+			path = TokenField;
+			sourceTree = "<group>";
+		};
 		661B868416EF68E000AE542D /* PMCalendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -2543,6 +2602,7 @@
 		66310AD016D9A38900AC9DC8 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				660E27EF1724436F008214A2 /* CustomControl */,
 				66F892A016FC16DD002EAA28 /* CMTextStylePicker */,
 				66F1B92316EAE996003FEA7F /* CustomView */,
 				669B787916E9F8D900F4437F /* CollectionView */,
@@ -2708,6 +2768,7 @@
 		666615091721A91D009ACC1E /* CHAT */ = {
 			isa = PBXGroup;
 			children = (
+				660E27FD17244721008214A2 /* TokenField */,
 				6666150A1721A91D009ACC1E /* Resources */,
 				666615111721A91D009ACC1E /* UIInputToolbar */,
 			);
@@ -4068,6 +4129,7 @@
 				6666151C1721A91D009ACC1E /* toolbarbg.png in Resources */,
 				6666151D1721A91D009ACC1E /* toolbarbg@2x.png in Resources */,
 				666615301721C042009ACC1E /* emo.png in Resources */,
+				660E27FB1724436F008214A2 /* FontAwesome.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4340,6 +4402,11 @@
 				6666152C1721BAF8009ACC1E /* PopoverView.m in Sources */,
 				6666152D1721BAF8009ACC1E /* SYEmojiCharacters.m in Sources */,
 				6666152E1721BAF8009ACC1E /* SYEmojiPopover.m in Sources */,
+				660E27F91724436F008214A2 /* BButton.m in Sources */,
+				660E27FA1724436F008214A2 /* NSString+FontAwesome.m in Sources */,
+				660E27FC1724436F008214A2 /* UIColor+BButton.m in Sources */,
+				660E280217244721008214A2 /* Names.m in Sources */,
+				660E280317244721008214A2 /* TITokenField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

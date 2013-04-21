@@ -180,60 +180,64 @@
 
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
-    NSDictionary* info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    [UIView animateWithDuration:0.2f animations:^{
+        NSDictionary* info = [aNotification userInfo];
+        CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
         
-        CGRect frame = _tbTextField.frame;
-        frame.origin.y -= kbSize.height;
-        _tbTextField.frame = frame;
-        
-        CGRect rf = _inputToolbar.frame;
-        rf.origin.y -= kbSize.height;
-        _inputToolbar.frame = rf;
-
-        
-    } completion:^(BOOL finished) {
-        
-        CGRect frame = _bubbleTable.frame;
-        frame.size.height -= kbSize.height;
-        _bubbleTable.frame = frame;
-        
-        NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)] - 1) inSection:(_bubbleTable.numberOfSections - 1)];
-        [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    }];
+        [UIView animateWithDuration:0.2f animations:^{
+            
+            CGRect frame = _tbTextField.frame;
+            frame.origin.y -= kbSize.height;
+            _tbTextField.frame = frame;
+            
+            CGRect rf = _inputToolbar.frame;
+            rf.origin.y -= kbSize.height;
+            _inputToolbar.frame = rf;
+            
+            
+        } completion:^(BOOL finished) {
+            
+            CGRect frame = _bubbleTable.frame;
+            frame.size.height -= kbSize.height;
+            _bubbleTable.frame = frame;
+            
+            NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)] - 1) inSection:(_bubbleTable.numberOfSections - 1)];
+            [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }];
+    
+   
     keyboardIsVisible = YES;
 }
 
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
-    NSDictionary* info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
-    [UIView animateWithDuration:0.2f animations:^{
+        NSDictionary* info = [aNotification userInfo];
+        CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
         
-        CGRect frame = _tbTextField.frame;
-        frame.origin.y += kbSize.height;
-        _tbTextField.frame = frame;
-        
-        CGRect rf = _inputToolbar.frame;
-        rf.origin.y += kbSize.height;
-        _inputToolbar.frame = rf;
-        
-    } completion:^(BOOL finished) {
-       
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.0];
-        [UIView setAnimationBeginsFromCurrentState:YES];
-        
-        CGRect frame = _bubbleTable.frame;
-        frame.size.height += kbSize.height;
-        _bubbleTable.frame = frame;
-        
-        [UIView commitAnimations];
-        
-    }];
+        [UIView animateWithDuration:0.2f animations:^{
+            
+            CGRect frame = _tbTextField.frame;
+            frame.origin.y += kbSize.height;
+            _tbTextField.frame = frame;
+            
+            CGRect rf = _inputToolbar.frame;
+            rf.origin.y += kbSize.height;
+            _inputToolbar.frame = rf;
+            
+        } completion:^(BOOL finished) {
+            
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationDuration:0.0];
+            [UIView setAnimationBeginsFromCurrentState:YES];
+            
+            CGRect frame = _bubbleTable.frame;
+            frame.size.height += kbSize.height;
+            _bubbleTable.frame = frame;
+            
+            [UIView commitAnimations];
+            
+        }];
+   
     keyboardIsVisible = NO;
 }
 
@@ -349,6 +353,8 @@
 {
     [self.inputToolbar.textView resignFirstResponder];
 }
+
+
 
 
 @end
