@@ -75,7 +75,7 @@
     [super viewDidLoad];
     
     // Signup button
-    
+    self.navigationItem.title = @"Sign up";
     switch (_viewMode) {
         case ProfileViewTypeSignUp:
         {
