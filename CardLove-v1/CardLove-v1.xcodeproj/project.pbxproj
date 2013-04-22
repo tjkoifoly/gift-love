@@ -441,6 +441,7 @@
 		66A327EA16DA811000AB3767 /* GHMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327E516DA811000AB3767 /* GHMenuViewController.m */; };
 		66A327EB16DA811000AB3767 /* GHPushedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327E716DA811000AB3767 /* GHPushedViewController.m */; };
 		66A327EC16DA811000AB3767 /* GHRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327E916DA811000AB3767 /* GHRootViewController.m */; };
+		66A445B41725A7AE00555626 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 66A445B31725A7AE00555626 /* Settings.bundle */; };
 		66AA4F7416FDC45D00F0DE4A /* UIView+Selection.m in Sources */ = {isa = PBXBuildFile; fileRef = 66AA4F7316FDC45D00F0DE4A /* UIView+Selection.m */; };
 		66B2C55B17112C3800C51CEB /* GiftElementsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C55A17112C3800C51CEB /* GiftElementsManager.m */; };
 		66B2C55E17112C5700C51CEB /* GiftElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C55D17112C5700C51CEB /* GiftElement.m */; };
@@ -1351,6 +1352,7 @@
 		66A327E716DA811000AB3767 /* GHPushedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHPushedViewController.m; path = Custom/MenuNav/GHPushedViewController.m; sourceTree = "<group>"; };
 		66A327E816DA811000AB3767 /* GHRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHRootViewController.h; path = Custom/MenuNav/GHRootViewController.h; sourceTree = "<group>"; };
 		66A327E916DA811000AB3767 /* GHRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHRootViewController.m; path = Custom/MenuNav/GHRootViewController.m; sourceTree = "<group>"; };
+		66A445B31725A7AE00555626 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		66AA4F7216FDC45D00F0DE4A /* UIView+Selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Selection.h"; path = "Custom/CustomView/UIView+Selection.h"; sourceTree = "<group>"; };
 		66AA4F7316FDC45D00F0DE4A /* UIView+Selection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Selection.m"; path = "Custom/CustomView/UIView+Selection.m"; sourceTree = "<group>"; };
 		66B2C55917112C3800C51CEB /* GiftElementsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiftElementsManager.h; path = Data/GiftElementsManager.h; sourceTree = "<group>"; };
@@ -2522,6 +2524,7 @@
 		66310AA016D9A27F00AC9DC8 /* CardLove-v1 */ = {
 			isa = PBXGroup;
 			children = (
+				66A445B31725A7AE00555626 /* Settings.bundle */,
 				66310AD116D9A6B900AC9DC8 /* Resources */,
 				66310AA916D9A27F00AC9DC8 /* AppDelegate.h */,
 				66310AAA16D9A27F00AC9DC8 /* AppDelegate.m */,
@@ -4130,6 +4133,7 @@
 				6666151D1721A91D009ACC1E /* toolbarbg@2x.png in Resources */,
 				666615301721C042009ACC1E /* emo.png in Resources */,
 				660E27FB1724436F008214A2 /* FontAwesome.ttf in Resources */,
+				66A445B41725A7AE00555626 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
