@@ -138,6 +138,7 @@
     LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
     UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:loginVC];
     navLogin.navigationBarHidden = YES;
+    loginVC.startFlag = YES;
     
     DoorsTransition *_transition = [[DoorsTransition alloc] init];
     [[HMGLTransitionManager sharedTransitionManager] setTransition:_transition];

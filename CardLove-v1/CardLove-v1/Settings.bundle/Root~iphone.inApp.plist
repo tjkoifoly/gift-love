@@ -16,7 +16,7 @@
 			<key>Title</key>
 			<string>Auto login</string>
 			<key>Key</key>
-			<string>toggleSwitch</string>
+			<string>autologin_preference</string>
 			<key>DefaultValue</key>
 			<false/>
 		</dict>

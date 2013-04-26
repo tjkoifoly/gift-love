@@ -27,7 +27,11 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.contentView.editable = NO;
 }
+
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -35,4 +39,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidUnload {
+    [self setContentView:nil];
+    [super viewDidUnload];
+}
 @end

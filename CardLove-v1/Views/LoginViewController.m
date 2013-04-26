@@ -18,6 +18,8 @@
 
 @implementation LoginViewController
 
+@synthesize startFlag = _startFlag;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -34,9 +36,27 @@
     [_btnLogin setType:BButtonTypePrimary];
     [_btnSignUp setType:BButtonTypeDanger];
     
+    //Data
+    NSString *userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"username_preference"];
+    NSString *passWord = [[NSUserDefaults standardUserDefaults] stringForKey:@"password_preference"];
+    _txtUserName.text = userName;
+    _txtPassword.text = passWord;
+    
+    if (_startFlag) {
+        BOOL autoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"autologin_preference"];
+        
+        NSLog(@"AUTO = %i", autoLogin);
+        if (autoLogin) {
+            [self login:nil];
+        }
+
+    }
+    
     //Listeners
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive)
+                                                 name:UIApplicationWillResignActiveNotification object:[UIApplication sharedApplication]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -87,6 +107,16 @@
     } completion:^(BOOL finished) {
         
     }];
+}
+
+-(void) applicationWillResignActive
+{
+    BOOL autoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"autologin_preference"];
+    
+    NSLog(@"AUTO = %i", autoLogin);
+    if (autoLogin) {
+        [self performSelector:@selector(login:) withObject:nil afterDelay:1];
+    }
 }
 
 -(IBAction)resignKeyboard : (id) sender

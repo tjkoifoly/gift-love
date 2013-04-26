@@ -10,5 +10,6 @@
 #import "GHRootViewController.h"
 
 @interface AboutViewController : GHRootViewController
+@property (weak, nonatomic) IBOutlet UITextView *contentView;
 
 @end

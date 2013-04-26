@@ -15,5 +15,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtPassword;
 @property (weak, nonatomic) IBOutlet BButton *btnLogin;
 @property (weak, nonatomic) IBOutlet BButton *btnSignUp;
+@property (nonatomic) BOOL startFlag;
+
+- (IBAction)login:(id)sender ;
 
 @end
