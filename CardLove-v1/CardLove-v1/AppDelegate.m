@@ -65,7 +65,7 @@
                               [[UINavigationController alloc] initWithRootViewController:[[MessagesViewController alloc] initWithTitle:@"Messages" withRevealBlock:revealBlock withNibName:@"MessagesViewController" bundle:nil]],
                               [[UINavigationController alloc] initWithRootViewController:[[NewsViewController alloc] initWithNibName:@"NewsViewController" bundle:nil withBlock:revealBlock]],
                                [[UINavigationController alloc] initWithRootViewController:[[GiftBoxViewController alloc] initWithTitle:@"Gift Box" withRevealBlock:revealBlock]],
-                              [[UINavigationController alloc] initWithRootViewController:[[EventsManagerViewController alloc] initWithTitle:@"Events" withRevealBlock:revealBlock withNibName:@"EventsManagerViewController" bundle:nil]]
+                              
                               ],
                           @[
                               [[UINavigationController alloc] initWithRootViewController:[[SettingsViewController alloc] initWithTitle:@"Settings" withRevealBlock:revealBlock withNibName:@"SettingsViewController" bundle:nil]],
@@ -81,7 +81,7 @@
                             @{kSidebarCellImageKey: [UIImage imageNamed:@"user.png"], kSidebarCellTextKey: NSLocalizedString(@"Messages", @"")},
                             @{kSidebarCellImageKey: [UIImage imageNamed:@"shop.png"], kSidebarCellTextKey: NSLocalizedString(@"Shopping", @"")},
                             @{kSidebarCellImageKey: [UIImage imageNamed:@"gift-box.png"], kSidebarCellTextKey: NSLocalizedString(@"Gift Box", @"")},
-                            @{kSidebarCellImageKey: [UIImage imageNamed:@"user.png"], kSidebarCellTextKey: NSLocalizedString(@"Events", @"")},
+                            
                             ],
                         @[
                             @{kSidebarCellImageKey: [UIImage imageNamed:@"user.png"], kSidebarCellTextKey: NSLocalizedString(@"Settings", @"")},

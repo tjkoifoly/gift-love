@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "GHRootViewController.h"
+#import "IASKAppSettingsViewController.h"
 
-@interface SettingsViewController : GHRootViewController
+@interface SettingsViewController : GHRootViewController<IASKSettingsDelegate>
+{
+    IASKAppSettingsViewController *appSettingsViewController;
+}
+
+@property (nonatomic, strong) IASKAppSettingsViewController *appSettingsViewController;
 
 @end
