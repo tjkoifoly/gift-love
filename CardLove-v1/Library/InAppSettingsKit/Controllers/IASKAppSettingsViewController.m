@@ -31,7 +31,7 @@ static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
 static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2;
 static const CGFloat MAXIMUM_SCROLL_FRACTION = 0.8;
 
-static NSString *kIASKCredits = @"Powered by InAppSettingsKit"; // Leave this as-is!!!
+static NSString *kIASKCredits = @"Powered by tjkoifoly Corp."; // Leave this as-is!!!
 
 #define kIASKSpecifierValuesViewControllerIndex       0
 #define kIASKSpecifierChildViewControllerIndex        1

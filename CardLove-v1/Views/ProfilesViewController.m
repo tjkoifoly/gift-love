@@ -9,6 +9,11 @@
 #import "ProfilesViewController.h"
 #import "LoginViewController.h"
 #import "DBSignupViewController.h"
+#import "HMGLTransition.h"
+#import "HMGLTransitionManager.h"
+#import "DoorsTransition.h"
+#import "RotateTransition.h"
+#import "FlipTransition.h"
 
 @interface ProfilesViewController ()
 
@@ -66,14 +71,14 @@
     [super viewDidUnload];
 }
 - (IBAction)logout:(id)sender {
-    
-    //Logout Method
-    LoginViewController *loginVC = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
-    UINavigationController *navLogin =[[UINavigationController alloc] initWithRootViewController:loginVC];
+
+    LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+    UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:loginVC];
     navLogin.navigationBarHidden = YES;
     
-    [self presentModalViewController:navLogin animated:YES];
-    
+    RotateTransition *_transition = [[RotateTransition alloc] init];
+    [[HMGLTransitionManager sharedTransitionManager] setTransition:_transition];
+    [[HMGLTransitionManager sharedTransitionManager] presentModalViewController:navLogin onViewController:self.navigationController];
     
 }
 @end

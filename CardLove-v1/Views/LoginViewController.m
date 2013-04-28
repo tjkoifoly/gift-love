@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "HMGLTransitionManager.h"
+#import "DoorsTransition.h"
 #import "DBSignupViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -55,8 +56,8 @@
     //Listeners
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive)
-                                                 name:UIApplicationWillResignActiveNotification object:[UIApplication sharedApplication]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive)
+                                                 name:UIApplicationWillEnterForegroundNotification object:[UIApplication sharedApplication]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -109,13 +110,13 @@
     }];
 }
 
--(void) applicationWillResignActive
+-(void) applicationDidBecomeActive
 {
     BOOL autoLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"autologin_preference"];
     
     NSLog(@"AUTO = %i", autoLogin);
     if (autoLogin) {
-        [self performSelector:@selector(login:) withObject:nil afterDelay:1];
+        [self login:_btnLogin];
     }
 }
 
@@ -152,6 +153,8 @@
             appDelegate.overlayView.layer.opacity = 0;
         } completion:^(BOOL finished) {
             appDelegate.overlayView.hidden = YES;
+            DoorsTransition *_transition = [[DoorsTransition alloc] init];
+            [[HMGLTransitionManager sharedTransitionManager] setTransition:_transition];
             [[HMGLTransitionManager sharedTransitionManager] dismissModalViewController:self];
         }];
         
