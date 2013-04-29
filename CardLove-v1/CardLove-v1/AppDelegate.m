@@ -24,9 +24,6 @@
 #import "DoorsTransition.h"
 
 @interface AppDelegate() 
-
-
-
 @end
 
 @implementation AppDelegate
@@ -36,6 +33,7 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize revealController, searchController, menuController;
 @synthesize overlayView = _overlayView;
+@synthesize user = _user;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

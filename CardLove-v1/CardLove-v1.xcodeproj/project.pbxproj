@@ -40,6 +40,8 @@
 		660A417C16F385CE006F593D /* DetailEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 660A417A16F385CE006F593D /* DetailEventViewController.xib */; };
 		660A417F16F38BA0006F593D /* GiftItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 660A417E16F38BA0006F593D /* GiftItem.m */; };
 		660A418216F38FA6006F593D /* GiftItemManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 660A418116F38FA6006F593D /* GiftItemManager.m */; };
+		660A4FCD172E685600149BD4 /* NKApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 660A4FCC172E685600149BD4 /* NKApiClient.m */; };
+		660A4FD1172E68C100149BD4 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 660A4FD0172E68C100149BD4 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		660E27F91724436F008214A2 /* BButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 660E27F21724436F008214A2 /* BButton.m */; };
 		660E27FA1724436F008214A2 /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 660E27F41724436F008214A2 /* NSString+FontAwesome.m */; };
 		660E27FB1724436F008214A2 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 660E27F61724436F008214A2 /* FontAwesome.ttf */; };
@@ -756,6 +758,10 @@
 		660A417E16F38BA0006F593D /* GiftItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GiftItem.m; path = ModelClasses/GiftItem.m; sourceTree = "<group>"; };
 		660A418016F38FA6006F593D /* GiftItemManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiftItemManager.h; path = Data/GiftItemManager.h; sourceTree = "<group>"; };
 		660A418116F38FA6006F593D /* GiftItemManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GiftItemManager.m; path = Data/GiftItemManager.m; sourceTree = "<group>"; };
+		660A4FCB172E685600149BD4 /* NKApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NKApiClient.h; sourceTree = "<group>"; };
+		660A4FCC172E685600149BD4 /* NKApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NKApiClient.m; sourceTree = "<group>"; };
+		660A4FCF172E68C100149BD4 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		660A4FD0172E68C100149BD4 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		660E27F11724436F008214A2 /* BButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BButton.h; sourceTree = "<group>"; };
 		660E27F21724436F008214A2 /* BButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BButton.m; sourceTree = "<group>"; };
 		660E27F31724436F008214A2 /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
@@ -1803,6 +1809,26 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		660A4FCA172E685600149BD4 /* NETWORK */ = {
+			isa = PBXGroup;
+			children = (
+				660A4FCB172E685600149BD4 /* NKApiClient.h */,
+				660A4FCC172E685600149BD4 /* NKApiClient.m */,
+			);
+			name = NETWORK;
+			path = Custom/NETWORK;
+			sourceTree = "<group>";
+		};
+		660A4FCE172E68C100149BD4 /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				660A4FCF172E68C100149BD4 /* JSONKit.h */,
+				660A4FD0172E68C100149BD4 /* JSONKit.m */,
+			);
+			name = JSONKit;
+			path = Library/JSONKit;
+			sourceTree = "<group>";
+		};
 		660E27EF1724436F008214A2 /* CustomControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -2565,6 +2591,7 @@
 		66310ACF16D9A37900AC9DC8 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				660A4FCE172E68C100149BD4 /* JSONKit */,
 				666615091721A91D009ACC1E /* CHAT */,
 				66E172471721611E00BF9E73 /* Panel */,
 				66DD9A1A17204B7F002C50B5 /* Popover */,
@@ -2605,6 +2632,7 @@
 		66310AD016D9A38900AC9DC8 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				660A4FCA172E685600149BD4 /* NETWORK */,
 				660E27EF1724436F008214A2 /* CustomControl */,
 				66F892A016FC16DD002EAA28 /* CMTextStylePicker */,
 				66F1B92316EAE996003FEA7F /* CustomView */,
@@ -4411,6 +4439,8 @@
 				660E27FC1724436F008214A2 /* UIColor+BButton.m in Sources */,
 				660E280217244721008214A2 /* Names.m in Sources */,
 				660E280317244721008214A2 /* TITokenField.m in Sources */,
+				660A4FCD172E685600149BD4 /* NKApiClient.m in Sources */,
+				660A4FD1172E68C100149BD4 /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

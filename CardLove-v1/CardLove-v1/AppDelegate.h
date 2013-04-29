@@ -25,6 +25,9 @@
 
 @property(nonatomic, strong) UIView *overlayView;
 
+//DATA
+@property (strong, nonatomic) NSString *user;
+
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;

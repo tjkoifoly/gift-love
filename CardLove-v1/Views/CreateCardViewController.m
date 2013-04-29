@@ -314,6 +314,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         if ([[GiftLabelsManager sharedManager] saveListLabel]) {
             if ([[GiftElementsManager sharedManager] saveListElements]) {
                 NSLog(@"Saved gift successful.");
+                //[self saveAsZip];
                 [self performSelector:@selector(showMessageWithCompletedView:) withObject:@"Saved !" afterDelay:0.5];
             }
         }
@@ -399,7 +400,8 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     
     NSString *docspath = [self dataFilePath:kPackages];
     
-    NSString *zipFile = [docspath stringByAppendingPathComponent:_giftName];
+    NSString *zipFile1 = [docspath stringByAppendingPathComponent:_giftName];
+    NSString *zipFile = [zipFile1 stringByAppendingPathExtension:@"zip"];
     
     ZipArchive *za = [[ZipArchive alloc] init];
     [za CreateZipFile2:zipFile];
