@@ -43,5 +43,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>Aviary-API-Key</key>
+	<string>auQMzWICBkGmLLO2o-4sLQ</string>
 </dict>
 </plist>

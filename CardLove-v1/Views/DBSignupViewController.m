@@ -7,6 +7,8 @@
 //
 
 #import "DBSignupViewController.h"
+#import "UserManager.h"
+#import "FunctionObject.h"
 
 // Safe releases
 #define RELEASE_SAFELY(__POINTER) { [__POINTER release]; __POINTER = nil; }
@@ -92,6 +94,7 @@
             self.termsTextView.hidden = YES;
             
             //LOAD information
+            
 
         }
             break;
@@ -178,6 +181,9 @@
     
     // Reset labels colors
     [self resetLabelsColors];
+    if (_viewMode == ProfileViewTypeEdit) {
+        [self loadInfo];
+    }
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -361,6 +367,14 @@
     [dateFormatter setLocale:[NSLocale currentLocale]];
     self.birthdayTextField.text = [dateFormatter stringFromDate:self.birthday];
 }
+- (void)setBirthdayWithDate: (NSDate *) date
+{
+    self.birthday = date;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
+    self.birthdayTextField.text = [dateFormatter stringFromDate:self.birthday];
+}
 
 - (void)setGenderData
 {
@@ -370,6 +384,19 @@
     } else {
         self.genderTextField.text = NSLocalizedString(@"female", @"");
         self.gender = @"F";
+    }
+}
+- (void)setGenderWithSex: (BOOL) sex
+{
+    if ([[UserManager sharedInstance] sex]) {
+        self.genderTextField.text = @"female";
+        self.gender = @"F";
+        [self.genderPickerView selectRow:1 inComponent:0 animated:NO];
+    }else
+    {
+        self.genderTextField.text = @"male";
+        self.gender = @"M";
+        [self.genderPickerView selectRow:0 inComponent:0 animated:NO];
     }
 }
 
@@ -506,6 +533,18 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
 	[self dismissModalViewControllerAnimated:YES];
+}
+
+-(void) loadInfo
+{
+    self.nameTextField.text = [[UserManager sharedInstance] displayName];
+    self.lastNameTextField.text = [[UserManager sharedInstance] username];
+    self.passwordTextField.text = [[UserManager sharedInstance] password];
+    self.emailTextField.text = [[UserManager sharedInstance] email];
+    [self setGenderWithSex:[[UserManager sharedInstance] sex]];
+    self.phoneTextField.text = [[UserManager sharedInstance] phone];
+    [self setBirthdayWithDate:   [[UserManager sharedInstance] birthday]];
+    [self.birthdayDatePicker setDate:[[UserManager sharedInstance] birthday] animated:NO];
 }
 
 @end

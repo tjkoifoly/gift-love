@@ -14,6 +14,7 @@
 #import "DoorsTransition.h"
 #import "RotateTransition.h"
 #import "FlipTransition.h"
+#import "UserManager.h"
 
 @interface ProfilesViewController ()
 
@@ -44,6 +45,8 @@
     
     UIBarButtonItem *btnEditProfile = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editProfiles)];
     self.navigationItem.rightBarButtonItem = btnEditProfile;
+    
+    [self loadInfo];
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,4 +84,11 @@
     [[HMGLTransitionManager sharedTransitionManager] presentModalViewController:navLogin onViewController:self.navigationController];
     
 }
+
+-(void) loadInfo
+{
+    
+}
+
+
 @end

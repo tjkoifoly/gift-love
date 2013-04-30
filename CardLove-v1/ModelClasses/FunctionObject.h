@@ -14,5 +14,5 @@
 
 - (NSDate *)dateFromString:(NSString *)string;
 -(NSString *) dataFilePath: (NSString *) comp;
-
+-(NSString *)stringFromDate: (NSDate *) date;
 @end

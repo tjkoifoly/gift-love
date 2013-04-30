@@ -24,8 +24,16 @@
 - (NSDate *)dateFromString:(NSString *)string
 {
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"MM/dd/yyyy"];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
     return [dateFormat dateFromString:string];
+}
+
+-(NSString *)stringFromDate: (NSDate *) date
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+    return [dateFormatter stringFromDate:date];
 }
 
 -(NSString *) dataFilePath: (NSString *) comp

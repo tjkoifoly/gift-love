@@ -12,6 +12,10 @@
 #import "DoorsTransition.h"
 #import "DBSignupViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "AFNetworking.h"
+#import "NKApiClient.h"
+#import "JSONKit.h"
+#import "UserManager.h"
 
 @interface LoginViewController ()
 
@@ -144,27 +148,47 @@
     
     NSString *userName = [_txtUserName text];
     NSString *passWord = [_txtPassword text];
+    //
+    NSMutableDictionary *dictParams = [[NSMutableDictionary alloc] init];
+    [dictParams setValue:userName forKey:@"username"];
+    [dictParams setValue:passWord forKey:@"password"];
     
-    if ([userName isEqualToString:@"foly"] && [passWord isEqualToString:@"tjkoi"]) {
-       
-        AppDelegate *appDelegate  = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [[NKApiClient shareInstace] getPath:@"login.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        [UIView animateWithDuration:0.5 animations:^{
-            appDelegate.overlayView.layer.opacity = 0;
-        } completion:^(BOOL finished) {
-            appDelegate.overlayView.hidden = YES;
-            DoorsTransition *_transition = [[DoorsTransition alloc] init];
-            [[HMGLTransitionManager sharedTransitionManager] setTransition:_transition];
-            [[HMGLTransitionManager sharedTransitionManager] dismissModalViewController:self];
-        }];
+        id jsonObject = [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON OBJECT = %@", jsonObject);
+        if (jsonObject) {
+            [self loginSuccess];
+            [[UserManager sharedInstance] updateInfoWithDictionary:[jsonObject objectAtIndex:0]];
+        }else
+        {
+            [self loginFailed];
+        }
         
-        
-    }else
-    {
-        //Notification errors
-    }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
+        NSLog(@"Error = %@", error);
+        
+    }];
     
+}
+
+-(void) loginSuccess
+{
+    AppDelegate *appDelegate  = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        appDelegate.overlayView.layer.opacity = 0;
+    } completion:^(BOOL finished) {
+        appDelegate.overlayView.hidden = YES;
+        DoorsTransition *_transition = [[DoorsTransition alloc] init];
+        [[HMGLTransitionManager sharedTransitionManager] setTransition:_transition];
+        [[HMGLTransitionManager sharedTransitionManager] dismissModalViewController:self];
+    }];
+}
+-(void) loginFailed
+{
+    NSLog(@"Login failed");
 }
 
 
