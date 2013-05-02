@@ -35,12 +35,22 @@
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnBack];
     
-    self.navigationItem.title = @"Find and add friends";
+    
+    UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction)];
+    self.navigationItem.rightBarButtonItem = btnDone;
+    
+    self.navigationItem.title = @"Add friends";
     
     _btnSelect.layer.borderWidth = 1;
     _btnSelect.layer.borderColor = [[UIColor blackColor] CGColor];
     _btnSelect.layer.cornerRadius = 5;
     
+}
+
+-(void) doneAction
+{
+    NSLog(@"Done");
+    [self backPreviousView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -123,7 +133,13 @@
         cell = [arrayNib objectAtIndex:0];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    
+    Friend *f1 = [[Friend alloc] init];
+    f1.displayName = @"Cong Nguyen Chi";
+    f1.userName = @"foly01";
+    
     cell.imvAvata.image =[UIImage imageNamed:@"emo.png"];
+    cell.friendObject = f1;
     [cell reloadCell];
     
     return cell;

@@ -37,6 +37,8 @@
 
 -(void) awakeFromNib
 {
+    __weak typeof(self) weakSelf = self;
+    
     self.btnFriend = [[NKToggleOverlayButton alloc] init];
     self.btnFriend.frame = CGRectMake(0, 0, 27, 31);
     self.btnFriend.center = CGPointMake(286, 25);
@@ -47,7 +49,7 @@
     self.btnFriend.overlayOnText = @"Friend";
     self.btnFriend.overlayOffText = @"Unfriend";
     self.btnFriend.toggleOnBlock = ^(NKToggleOverlayButton *button) {
-        NSLog(@"Friend");
+        NSLog(@"Friend ");
     };
     self.btnFriend.toggleOffBlock = ^(NKToggleOverlayButton *button) {
         NSLog(@"Unfriend");
@@ -55,6 +57,11 @@
     
      [self addSubview:self.btnFriend];
 
+}
+
+-(void) addF
+{
+    
 }
 
 @end
