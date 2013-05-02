@@ -7,6 +7,7 @@
 //
 
 #import "AddFriendViewController.h"
+#import "SearchFriendCell.h"
 
 @interface AddFriendViewController ()
 
@@ -90,4 +91,44 @@
 - (IBAction)find:(id)sender {
     [self resignKeyboard];
 }
+
+#pragma mark - TableView
+
+-(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+-(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 5;
+}
+
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50;
+}
+
+-(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return @"Recommended Friends";
+}
+
+-(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *SearchFriendCellIdentifier = @"SearchFriendCellIdentifier";
+    SearchFriendCell *cell = [tableView dequeueReusableCellWithIdentifier:SearchFriendCellIdentifier];
+    
+    if (!cell) {
+        NSArray *arrayNib = [[NSBundle mainBundle] loadNibNamed:@"SearchFriendCell" owner:self options:nil];
+        cell = [arrayNib objectAtIndex:0];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    cell.imvAvata.image =[UIImage imageNamed:@"emo.png"];
+    [cell reloadCell];
+    
+    return cell;
+    
+}
+
+
 @end

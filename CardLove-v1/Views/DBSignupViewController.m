@@ -77,10 +77,11 @@
     [super viewDidLoad];
     
     // Signup button
-    self.navigationItem.title = @"Sign up";
+    
     switch (_viewMode) {
         case ProfileViewTypeSignUp:
         {
+            self.navigationItem.title = @"Sign up";
             UIBarButtonItem *signupBarItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Sign up", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(signup:)];
             self.navigationItem.rightBarButtonItem = signupBarItem;
 
@@ -88,6 +89,7 @@
             break;
         case ProfileViewTypeEdit:
         {
+            self.navigationItem.title = @"Profiles";
             UIBarButtonItem *signupBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveProfiles:)];
             self.navigationItem.rightBarButtonItem = signupBarItem;
             self.lastNameTextField.enabled = NO;

@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "NIDropDown.h"
 
-@interface AddFriendViewController : UIViewController <NIDropDownDelegate>
+@interface AddFriendViewController : UIViewController <NIDropDownDelegate, UITableViewDataSource, UITableViewDelegate>
 {
     NIDropDown *dropDown;
 }
