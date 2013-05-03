@@ -30,14 +30,24 @@
 
 -(void) reloadCell
 {
+    __weak SearchFriendCell *weakSelf = self;
+    
     if (_friendObject) {
         self.lbName.text = _friendObject.displayName;
+        self.btnFriend.toggleOnBlock = ^(NKToggleOverlayButton *button) {
+            NSLog(@"Friend = %@", weakSelf.friendObject);
+            //[[NSNotificationCenter defaultCenter] postNotificationName:@"" object:nil];
+        };
+        self.btnFriend.toggleOffBlock = ^(NKToggleOverlayButton *button) {
+            NSLog(@"Unfriend");
+        };
+
     }
 }
 
 -(void) awakeFromNib
 {
-    __weak typeof(self) weakSelf = self;
+    //
     
     self.btnFriend = [[NKToggleOverlayButton alloc] init];
     self.btnFriend.frame = CGRectMake(0, 0, 27, 31);
@@ -48,13 +58,7 @@
     [self.btnFriend setOffImage:[UIImage imageNamed:@"tick-off-press.png"] forState:UIControlStateHighlighted];
     self.btnFriend.overlayOnText = @"Friend";
     self.btnFriend.overlayOffText = @"Unfriend";
-    self.btnFriend.toggleOnBlock = ^(NKToggleOverlayButton *button) {
-        NSLog(@"Friend ");
-    };
-    self.btnFriend.toggleOffBlock = ^(NKToggleOverlayButton *button) {
-        NSLog(@"Unfriend");
-    };
-    
+        
      [self addSubview:self.btnFriend];
 
 }
