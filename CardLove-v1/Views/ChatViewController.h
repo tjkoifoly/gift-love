@@ -12,8 +12,10 @@
 #import "Friend.h"
 #import "UIInputToolbar.h"
 #import "SYEmojiPopover.h"
+#import "TITokenField.h"
+#import "Names.h"
 
-@interface ChatViewController : UIViewController <UIBubbleTableViewDataSource, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIInputToolbarDelegate, UIGestureRecognizerDelegate, SYEmojiPopoverDelegate>
+@interface ChatViewController : UIViewController <UIBubbleTableViewDataSource, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIInputToolbarDelegate, UIGestureRecognizerDelegate, SYEmojiPopoverDelegate, TITokenFieldDelegate>
 {
     UIInputToolbar *_inputToolbar;
     

@@ -30,12 +30,11 @@
 
 -(void) reloadCell
 {
-    __weak SearchFriendCell *weakSelf = self;
     
     if (_friendObject) {
         self.lbName.text = _friendObject.displayName;
         self.btnFriend.toggleOnBlock = ^(NKToggleOverlayButton *button) {
-            NSLog(@"Friend = %@", weakSelf.friendObject);
+            
             //[[NSNotificationCenter defaultCenter] postNotificationName:@"" object:nil];
         };
         self.btnFriend.toggleOffBlock = ^(NKToggleOverlayButton *button) {
