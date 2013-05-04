@@ -11,6 +11,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface MessagesViewController ()
+{
+    NSMutableArray *newGroup;
+}
 
 @end
 
@@ -39,12 +42,16 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnNewMessage];
     
     //Listeners
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatWithPerson:) name:kNotificationChatWithPerson object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removePersonFromGroup:) name:kNotificationRemovePersonFromGroup object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addPersonToGroup:) name:kNotificationAddPersonToGroup object:nil];
+    
 }
 
 -(void) newMessageAction
 {
-    ModalPanelPickerView *modalPanel = [[ModalPanelPickerView alloc] initWithFrame:self.view.bounds title:@"Choose a friend" mode:ModalPickerFriends] ;
+    ModalPanelPickerView *modalPanel = [[ModalPanelPickerView alloc] initWithFrame:self.view.bounds title:@"Group Message" mode:ModalPickerFriends] ;
+    [modalPanel.actionButton setTitle:@"Start" forState:UIControlStateNormal];
+
     modalPanel.onClosePressed = ^(UAModalPanel* panel) {
         // [panel hide];
         [panel hideWithOnComplete:^(BOOL finished) {
@@ -55,9 +62,7 @@
     
     ///////////////////////////////////////////
     //   Panel is a reference to the modalPanel
-    modalPanel.onActionPressed = ^(UAModalPanel* panel) {
-        UADebugLog(@"onActionPressed block called from panel: %@", modalPanel);
-    };
+    modalPanel.delegate =self;
     
     [self.view addSubview:modalPanel];
 	
@@ -75,7 +80,8 @@
 
 - (void)viewDidUnload {
     [self setTableView:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationChatWithPerson object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationAddPersonToGroup object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationRemovePersonFromGroup object:nil];
     [super viewDidUnload];
 }
 
@@ -126,11 +132,43 @@
 #pragma mark - Notification
 -(void) chatWithPerson: (NSNotification *) notification
 {
+    
     Friend *f = [notification object];
     ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
     chatVC.friendChatting = f;
     [self.navigationController pushViewController:chatVC animated:YES];
     
+}
+
+-(void) addPersonToGroup: (NSNotification *) notification
+{
+    if (!newGroup) {
+        newGroup = [[NSMutableArray alloc] init];
+    }
+    Friend *f = [notification object];
+    [newGroup addObject:f];
+}
+-(void) removePersonFromGroup: (NSNotification *) notification
+{
+    if (!newGroup) {
+        newGroup = [[NSMutableArray alloc] init];
+    }
+    Friend *f = [notification object];
+    [newGroup removeObject:f];
+}
+
+#pragma mark - Panel Delegate
+- (void)didSelectActionButton:(UAModalPanel *)modalPanel {
+	UADebugLog(@"didSelectActionButton called with modalPanel: %@", modalPanel);
+    [modalPanel hideWithOnComplete:^(BOOL finished) {
+
+        ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
+        chatVC.mode = ChatModeGroup;
+        chatVC.groupMembers = newGroup;
+        [self.navigationController pushViewController:chatVC animated:YES];
+        newGroup = nil;
+        
+    }];
 }
 
 

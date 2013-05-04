@@ -15,15 +15,26 @@
 #import "TITokenField.h"
 #import "Names.h"
 
+typedef enum {
+    ChatModeSigle,
+    ChatModeGroup
+}ChatMode;
+
 @interface ChatViewController : UIViewController <UIBubbleTableViewDataSource, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIInputToolbarDelegate, UIGestureRecognizerDelegate, SYEmojiPopoverDelegate, TITokenFieldDelegate>
 {
     UIInputToolbar *_inputToolbar;
     
+    TITokenFieldView * tokenFieldView;
+    CGFloat keyboardHeight;
+    
 @private
-    BOOL keyboardIsVisible;
+    BOOL inputToolbarIsVisible;
     SYEmojiPopover *_emojiPopover;
 }
 
+
+@property (nonatomic) ChatMode mode;
+@property (strong, nonatomic) NSMutableArray *groupMembers;
 @property (nonatomic, strong) UIInputToolbar *inputToolbar;
 @property (strong, nonatomic) Friend *friendChatting;
 @property (weak, nonatomic) IBOutlet UIToolbar *tbTextField;

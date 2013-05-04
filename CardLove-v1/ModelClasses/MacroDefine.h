@@ -43,6 +43,8 @@
 #define kNotificationGifSelected        @"NotificationGifSelected"
 #define kNotificationGiftConfig         @"NotificationGiftConfig"
 #define kNotificationChatWithPerson     @"NotificationChatWithPerson"
+#define kNotificationAddPersonToGroup           @"NotificationAddPersonToGroup"
+#define kNotificationRemovePersonFromGroup      @"NotificationRemovePersonFromGroup"
 #define kNotificationSendGiftToFriend   @"NotificationSendGiftToFriend"
 
 #define kGiftPaper      @"gift-paper"

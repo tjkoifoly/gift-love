@@ -12,7 +12,7 @@
 #import "TDBadgedCell.h"
 #import "ModalPanelPickerView.h"
 
-@interface MessagesViewController : GHRootViewController <UITableViewDataSource, UITableViewDelegate>
+@interface MessagesViewController : GHRootViewController <UITableViewDataSource, UITableViewDelegate, UAModalPanelDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

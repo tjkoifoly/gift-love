@@ -27,6 +27,8 @@
 
 @synthesize friendChatting = _friendChatting;
 @synthesize inputToolbar = _inputToolbar;
+@synthesize mode = _mode;
+@synthesize groupMembers = _groupMembers;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -57,16 +59,8 @@
     
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:btnCamera,[[UIBarButtonItem alloc] initWithCustomView:btnEmoj], nil];
     
-    keyboardIsVisible = NO;
-    
-    /* Calculate screen size */
-    CGRect screenFrame = self.view.frame;
-    /* Create toolbar */
-    self.inputToolbar = [[UIInputToolbar alloc] initWithFrame:CGRectMake(0, screenFrame.size.height-kDefaultToolbarHeight, screenFrame.size.width, kDefaultToolbarHeight)];
-    [self.view addSubview:self.inputToolbar];
-    _inputToolbar.delegate = self;
-    _inputToolbar.textView.placeholder = @"Type a message here";
-    [self.inputToolbar.textView setMaximumNumberOfLines:13]; 
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"style_8.png"]];
+    inputToolbarIsVisible = NO;
     
     //UI
     if (_friendChatting) {
@@ -81,6 +75,7 @@
     
     bubbleData = [[NSMutableArray alloc] init];
     _bubbleTable.bubbleDataSource = self;
+    _bubbleTable.backgroundColor = [UIColor clearColor];
 
     _bubbleTable.snapInterval = 120;
     _bubbleTable.showAvatars = YES;
@@ -93,10 +88,160 @@
     tapRecognizer.numberOfTapsRequired = 1;
     [_bubbleTable addGestureRecognizer:tapRecognizer];
     
+    //Add token field
+    if (_mode == ChatModeGroup) {
+        tokenFieldView = [[TITokenFieldView alloc] initWithFrame:self.bubbleTable.bounds];
+        [tokenFieldView setSourceArray:[Names listOfNames]];
+        tokenFieldView.backgroundColor = [UIColor clearColor];
+        tokenFieldView.tokenField.backgroundColor = [UIColor colorWithWhite:1 alpha:0.6];
+        tokenFieldView.tokenField.leftView.backgroundColor = [UIColor clearColor];
+
+        tokenFieldView.tokenField.textColor = [UIColor blackColor];
+        
+        [self.view addSubview:tokenFieldView];
+        
+       for(Friend *f in _groupMembers)
+       {
+           TIToken * token = [tokenFieldView.tokenField addTokenWithTitle:f.displayName];
+           [tokenFieldView.tokenField addToken:token];
+       }
+        
+        [tokenFieldView.tokenField setDelegate:self];
+
+        [tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldFrameDidChange:) forControlEvents:(UIControlEvents)TITokenFieldControlEventFrameDidChange];
+        [tokenFieldView.tokenField setTokenizingCharacters:[NSCharacterSet characterSetWithCharactersInString:@",;."]]; // Default is a comma
+        
+        UIButton * addButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+        [addButton addTarget:self action:@selector(showContactsPicker:) forControlEvents:UIControlEventTouchUpInside];
+        [tokenFieldView.tokenField setRightView:addButton];
+        [tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidBegin];
+        [tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidEnd];
+        
+        [_bubbleTable setAutoresizingMask:UIViewAutoresizingNone];
+        [tokenFieldView.contentView addSubview:_bubbleTable];
+    }
+    
+    /* Calculate screen size */
+    CGRect screenFrame = self.view.frame;
+    /* Create toolbar */
+    self.inputToolbar = [[UIInputToolbar alloc] initWithFrame:CGRectMake(0, screenFrame.size.height-kDefaultToolbarHeight, screenFrame.size.width, kDefaultToolbarHeight)];
+    [self.view addSubview:self.inputToolbar];
+    _inputToolbar.delegate = self;
+    _inputToolbar.textView.placeholder = @"Type a message here";
+    [self.inputToolbar.textView setMaximumNumberOfLines:13];
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 
 }
+
+- (void)viewDidUnload {
+    [self setTbTextField:nil];
+    [self setBubbleTable:nil];
+    [self setTfMessage:nil];
+    [self setFriendChatting:nil];
+    [self setInputToolbar:nil];
+    [self setGroupMembers:nil];
+    [super viewDidUnload];
+}
+
+#pragma mark - Token field
+- (void)tokenFieldChangedEditing:(TITokenField *)tokenField {
+	// There's some kind of annoying bug where UITextFieldViewModeWhile/UnlessEditing doesn't do anything.
+	[tokenField setRightViewMode:(tokenField.editing ? UITextFieldViewModeAlways : UITextFieldViewModeNever)];
+   
+    if (inputToolbarIsVisible) {
+        [UIView animateWithDuration:0.2f animations:^{
+            
+            CGRect frame = _tbTextField.frame;
+            frame.origin.y += keyboardHeight;
+            _tbTextField.frame = frame;
+            
+            CGRect rf = _inputToolbar.frame;
+            rf.origin.y += keyboardHeight;
+            _inputToolbar.frame = rf;
+            
+            CGRect frameBubble = _bubbleTable.frame;
+            frameBubble.size.height += keyboardHeight;
+            _bubbleTable.frame = frameBubble;
+            
+        } completion:^(BOOL finished) {
+            inputToolbarIsVisible = NO;
+        }];
+    }
+}
+
+- (void)showContactsPicker:(id)sender {
+	
+	// Show some kind of contacts picker in here.
+	// For now, here's how to add and customize tokens.
+	
+	NSArray * names = [Names listOfNames];
+    for(TIToken *tk in tokenFieldView.tokenField.tokens)
+    {
+        if ([tk isSelected]) {
+            [tokenFieldView.tokenField removeToken:tk];
+        }
+    }
+	
+	TIToken * token = [tokenFieldView.tokenField addTokenWithTitle:[names objectAtIndex:(arc4random() % names.count)]];
+    
+    UITapGestureRecognizer *tr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTokenDetected:)];
+    tr.numberOfTapsRequired = 2;
+    tr.delegate = self;
+    [token addGestureRecognizer:tr];
+    
+	[token setAccessoryType:TITokenAccessoryTypeDisclosureIndicator];
+	// If the size of the token might change, it's a good idea to layout again.
+	[tokenFieldView.tokenField layoutTokensAnimated:YES];
+	
+	NSUInteger tokenCount = tokenFieldView.tokenField.tokens.count;
+	[token setTintColor:((tokenCount % 3) == 0 ? [TIToken redTintColor] : ((tokenCount % 2) == 0 ? [TIToken greenTintColor] : [TIToken blueTintColor]))];
+}
+
+-(void) tapTokenDetected: (UITapGestureRecognizer *) reg
+{
+    TIToken *tk = (TIToken *)[reg view];
+    [tokenFieldView.tokenField removeToken:tk];
+}
+
+- (void)tokenFieldFrameDidChange:(TITokenField *)tokenField {
+	[self contentDidChange:_bubbleTable];
+}
+
+- (void)contentDidChange:(UITableView *)textView {
+	
+	CGFloat oldHeight = tokenFieldView.frame.size.height - tokenFieldView.tokenField.frame.size.height;
+	CGFloat newHeight = textView.contentSize.height;
+	
+	CGRect newTextFrame = textView.frame;
+	newTextFrame.size = textView.contentSize;
+	newTextFrame.size.height = newHeight;
+	
+	CGRect newFrame = tokenFieldView.contentView.frame;
+	newFrame.size.height = newHeight;
+	
+	if (newHeight < oldHeight){
+		newTextFrame.size.height = oldHeight;
+		newFrame.size.height = oldHeight;
+	}
+    
+	[tokenFieldView.contentView setFrame:newFrame];
+	[textView setFrame:newTextFrame];
+	[tokenFieldView updateContentSize];
+}
+
+- (void)resizeViews {
+    int tabBarOffset = self.inputToolbar == nil ?  0 : self.inputToolbar.frame.size.height;
+	[tokenFieldView setFrame:((CGRect){tokenFieldView.frame.origin, {self.view.bounds.size.width, self.view.bounds.size.height + tabBarOffset - keyboardHeight}})];
+	[_bubbleTable setFrame:tokenFieldView.contentView.bounds];
+}
+
+
+//------------------------------------------------------
+
+
 
 -(void) backPreviousView
 {
@@ -155,14 +300,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)viewDidUnload {
-    [self setTbTextField:nil];
-    [self setBubbleTable:nil];
-    [self setTfMessage:nil];
-    [self setFriendChatting:nil];
-    [self setInputToolbar:nil];
-    [super viewDidUnload];
-}
+
 
 #pragma mark - UIBubbleTableViewDataSource implementation
 
@@ -180,10 +318,15 @@
 
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    keyboardHeight = kbSize.height;
     
-        NSDictionary* info = [aNotification userInfo];
-        CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    if ([tokenFieldView.tokenField isFirstResponder]) {
         
+        return;
+    }
+    
         [UIView animateWithDuration:0.2f animations:^{
             
             CGRect frame = _tbTextField.frame;
@@ -194,6 +337,7 @@
             rf.origin.y -= kbSize.height;
             _inputToolbar.frame = rf;
             
+             inputToolbarIsVisible = YES;
             
         } completion:^(BOOL finished) {
             
@@ -201,16 +345,22 @@
             frame.size.height -= kbSize.height;
             _bubbleTable.frame = frame;
             
-            NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)] - 1) inSection:(_bubbleTable.numberOfSections - 1)];
-            [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//            NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)] - 1) inSection:(_bubbleTable.numberOfSections - 1)];
+//            [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            CGFloat height = self.bubbleTable.contentSize.height - self.bubbleTable.bounds.size.height;
+            if (height > 0) {
+                [self.bubbleTable setContentOffset:CGPointMake(0, height) animated:YES];
+            }
         }];
-    
-   
-    keyboardIsVisible = YES;
 }
 
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
+    keyboardHeight = 0;
+    
+    if ([tokenFieldView.tokenField isFirstResponder]) {
+        return;
+    }
         NSDictionary* info = [aNotification userInfo];
         CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
         
@@ -223,6 +373,8 @@
             CGRect rf = _inputToolbar.frame;
             rf.origin.y += kbSize.height;
             _inputToolbar.frame = rf;
+            
+             inputToolbarIsVisible = NO;
             
         } completion:^(BOOL finished) {
             
@@ -237,8 +389,6 @@
             [UIView commitAnimations];
             
         }];
-   
-    keyboardIsVisible = NO;
 }
 
 #pragma mark - Actions
@@ -352,6 +502,7 @@
 -(void) tapDetected: (UITapGestureRecognizer *) tapRecognizer
 {
     [self.inputToolbar.textView resignFirstResponder];
+    [tokenFieldView.tokenField resignFirstResponder];
 }
 
 

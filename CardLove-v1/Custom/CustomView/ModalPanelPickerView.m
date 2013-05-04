@@ -120,7 +120,7 @@
     }
     
     cell.textLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryType = UITableViewCellAccessoryNone;
     	
 	return cell;
 }
@@ -133,36 +133,47 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
     
-    
-    [self hideWithOnComplete:^(BOOL finished) {
-        NSLog(@"Panel hidden");
-        switch (_mode) {
-            case ModalPickerFriends:
+    switch (_mode) {
+            
+        case ModalPickerFriends:
+        {
+            Friend *f = [_dataSource objectAtIndex:indexPath.row];
+            
+            if (cell.accessoryType != UITableViewCellAccessoryCheckmark) {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationAddPersonToGroup object:f];
+            }else if(cell.accessoryType == UITableViewCellAccessoryCheckmark)
             {
-                Friend *f = [_dataSource objectAtIndex:indexPath.row];
-                NSLog(@"PICK = %@", f);
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationChatWithPerson object:f];
+                cell.accessoryType = UITableViewCellAccessoryNone;
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemovePersonFromGroup object:f];
             }
-                break;
-            case ModalPickerGifts:
-            {
+            
+            
+        }
+            break;
+        case ModalPickerGifts:
+        {
+             cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            [self hideWithOnComplete:^(BOOL finished) {
+                NSLog(@"Panel hidden");
                 NSString *fileName = [_dataSource objectAtIndex:indexPath.row];
                 NSString *pathPackages = [[FunctionObject sharedInstance] dataFilePath:kPackages];
                 NSString *pathGift = [pathPackages stringByAppendingPathComponent:fileName];
                 NSLog(@"PICK = %@", pathGift);
                 
                 [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationSendGiftToFriend object:pathGift];
-            }
-                break;
-                
-            default:
-                break;
+
+            }];
+
         }
-    }];
-}
+            break;
+            
+        default:
+            break;
+    }
+
+    }
 
 
 @end
