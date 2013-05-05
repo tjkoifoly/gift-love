@@ -9,7 +9,7 @@
 #import "NKApiClient.h"
 #import "AFNetworking.h"
 
-#define NKAPIBaseURLString @"http://localhost:8888/gift-lvoe/"
+#define NKAPIBaseURLString @"http://localhost:8888/gift-love/"
 #define NKAPIToken @"1234abcd"
 
 @implementation NKApiClient

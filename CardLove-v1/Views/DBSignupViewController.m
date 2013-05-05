@@ -547,6 +547,11 @@
     self.phoneTextField.text = [[UserManager sharedInstance] phone];
     [self setBirthdayWithDate:   [[UserManager sharedInstance] birthday]];
     [self.birthdayDatePicker setDate:[[UserManager sharedInstance] birthday] animated:NO];
+    NSString *strURL = [[UserManager sharedInstance] imgAvata];
+    NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
+    self.photo = [UIImage imageWithData:dataImage];
+    [self.photoButton setImage:self.photo forState:UIControlStateNormal];
+    
 }
 
 @end

@@ -15,11 +15,13 @@
 #define kAccEmail       @"accEmail"
 #define kAccBirthday    @"accBirthday"
 #define kAccPhone       @"accPhone"
+#define kaccAvata       @"accImageAvata"
 
 @interface UserManager : NSObject
 
 @property (strong, nonatomic) NSString *displayName;
 @property (strong, nonatomic) NSString *username;
+@property (strong, nonatomic) NSString *imgAvata;
 @property (strong, nonatomic) NSString *password;
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSDate *birthday;

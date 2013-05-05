@@ -9,6 +9,9 @@
 #import "UserManager.h"
 
 @implementation UserManager
+
+@synthesize displayName, username, imgAvata, password, email, birthday, phone, sex;
+
 +(id) sharedInstance
 {
     static UserManager *__instance;
@@ -25,6 +28,7 @@
     self.displayName = [dict valueForKey:kAccDisplayName];
     self.username = [dict valueForKey:kAccName];
     self.password = [dict valueForKey:kAccPassword];
+    self.imgAvata = [dict valueForKey:kaccAvata];
     
     NSLog(@"Password = %@", self.password);
     

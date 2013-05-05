@@ -49,6 +49,16 @@
     [self loadInfo];
 }
 
+-(void) viewDidAppear:(BOOL)animated
+{
+    NSString *strURL = [[UserManager sharedInstance] imgAvata];
+    NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
+    UIImage *photo = [UIImage imageWithData:dataImage];
+    self.imvAvarta.image = photo;
+    
+    self.lbUserName.text = [[UserManager sharedInstance] displayName];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
