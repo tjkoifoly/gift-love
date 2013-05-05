@@ -251,7 +251,13 @@
 
 -(void) saveProfiles: (id) sender
 {
-    [self backPreviousView:nil];
+    NSData *imgData = UIImagePNGRepresentation(self.photo);
+    [self saveInfo:imgData WithProgress:^(CGFloat progress) {
+        
+    } completion:^(BOOL success, NSError *error) {
+        [self backPreviousView:nil];
+    }];
+    
 }
 
 
@@ -547,11 +553,78 @@
     self.phoneTextField.text = [[UserManager sharedInstance] phone];
     [self setBirthdayWithDate:   [[UserManager sharedInstance] birthday]];
     [self.birthdayDatePicker setDate:[[UserManager sharedInstance] birthday] animated:NO];
+   
     NSString *strURL = [[UserManager sharedInstance] imgAvata];
-    NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
-    self.photo = [UIImage imageWithData:dataImage];
-    [self.photoButton setImage:self.photo forState:UIControlStateNormal];
+    if (strURL) {
+        [self.photoButton setImage:[UIImage imageNamed:@"noavata.png"] forState:UIControlStateNormal];
+    }else
+    {
+        NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
+        UIImage *photo = [UIImage imageWithData:dataImage];
+        if (photo) {
+            self.photo = photo;
+            [self.photoButton setImage:self.photo forState:UIControlStateNormal];
+        }else
+        {
+            [self.photoButton setImage:[UIImage imageNamed:@"noavata.png"] forState:UIControlStateNormal];
+        }
+    }
     
 }
+
+- (void)saveInfo: (NSData *) imgData WithProgress:(void (^)(CGFloat progress))progressBlock completion:(void (^)(BOOL success, NSError *error))completionBlock {
+    
+    //make sure none of the parameters are nil, otherwise it will mess up our dictionary
+    NSDictionary *params = [self dictionaryFromUser];
+    NSLog(@"DICT = %@", params);
+    
+    NSURLRequest *postRequest = [[NKApiClient shareInstace] multipartFormRequestWithMethod:@"POST"
+                                                                                      path:@"register.php"
+                                                                                parameters:params
+                                                                 constructingBodyWithBlock:^(id formData) {
+                                                                     [formData appendPartWithFileData:imgData
+                                                                                                 name:@"avatar"
+                                                                                             fileName:@"latte.png"
+                                                                                             mimeType:@"image/png"];
+                                                                 }];
+    
+    AFHTTPRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:postRequest];
+    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        CGFloat progress = ((CGFloat)totalBytesWritten) / totalBytesExpectedToWrite;
+        progressBlock(progress);
+    }];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == 200 || operation.response.statusCode == 201) {
+            NSLog(@"Created, %@", responseObject);
+            //            [self updateFromJSON:updatedLatte];
+            //            [self notifyCreated];
+            completionBlock(YES, nil);
+        } else {
+            completionBlock(NO, nil);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completionBlock(NO, error);
+    }];
+    
+    [[NKApiClient shareInstace] enqueueHTTPRequestOperation:operation];
+};
+
+-(NSDictionary *)dictionaryFromUser
+{
+    NSString *strBirthday = [[FunctionObject sharedInstance] stringFromDate:self.birthday];
+    NSLog(@"%@",strBirthday);
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                          self.lastNameTextField.text, kAccName,
+                          self.nameTextField.text, kAccDisplayName,
+                          self.emailTextField.text, kAccEmail,
+                          self.passwordTextField.text, kAccPassword,
+                          strBirthday, kAccBirthday,
+                          [self.gender isEqualToString:@"male"]?1:0, kAccGender,
+                          self.phoneTextField.text, kAccPhone,
+                          nil];
+    NSDictionary *mDict = [[NSDictionary alloc] initWithDictionary:dict];
+    return mDict;
+}
+
 
 @end

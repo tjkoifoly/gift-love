@@ -52,15 +52,19 @@
 -(void) viewDidAppear:(BOOL)animated
 {
     NSString *strURL = [[UserManager sharedInstance] imgAvata];
-    NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
-    UIImage *photo = [UIImage imageWithData:dataImage];
-    if (photo) {
-        self.imvAvarta.image = photo;
+    if (strURL) {
+        self.imvAvarta.image = [UIImage imageNamed:@"noavata.png"];
     }else
     {
-        self.imvAvarta.image = [UIImage imageNamed:@"noavata.png"];
+        NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
+        UIImage *photo = [UIImage imageWithData:dataImage];
+        if (photo) {
+            self.imvAvarta.image = photo;
+        }else
+        {
+            self.imvAvarta.image = [UIImage imageNamed:@"noavata.png"];
+        }
     }
-    
     
     self.lbUserName.text = [[UserManager sharedInstance] displayName];
 }

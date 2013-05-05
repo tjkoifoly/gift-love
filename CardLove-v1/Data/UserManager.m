@@ -7,6 +7,9 @@
 //
 
 #import "UserManager.h"
+#import "FunctionObject.h"
+#import "NKApiClient.h"
+#import "AFNetworking.h"
 
 @implementation UserManager
 
@@ -50,5 +53,6 @@
     
     self.sex = [[dict valueForKey:kAccGender] boolValue];
 }
+
 
 @end

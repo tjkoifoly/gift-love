@@ -31,4 +31,5 @@
 +(id) sharedInstance;
 -(void) updateInfoWithDictionary: (NSDictionary *) dict;
 
+
 @end
