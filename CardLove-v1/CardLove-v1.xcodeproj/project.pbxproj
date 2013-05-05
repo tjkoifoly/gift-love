@@ -641,6 +641,7 @@
 		66F3078516D9B97C00E681AD /* CustomNoiseBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F3077F16D9B97C00E681AD /* CustomNoiseBackgroundView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66F3078616D9B97C00E681AD /* CustomSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F3078116D9B97C00E681AD /* CustomSelectionView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66F3078716D9B97C00E681AD /* CustomTabItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F3078316D9B97C00E681AD /* CustomTabItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66F3426D173619B80092D133 /* noavata.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F3426C173619B80092D133 /* noavata.png */; };
 		66F4AFD4170457C600928AA3 /* GiftLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F4AFD3170457C600928AA3 /* GiftLabel.m */; };
 		66F5A00E1711839600F30D6A /* flower01.gif in Resources */ = {isa = PBXBuildFile; fileRef = 66F5A00C1711839600F30D6A /* flower01.gif */; };
 		66F5A00F1711839600F30D6A /* flower32.gif in Resources */ = {isa = PBXBuildFile; fileRef = 66F5A00D1711839600F30D6A /* flower32.gif */; };
@@ -1649,6 +1650,7 @@
 		66F3078116D9B97C00E681AD /* CustomSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSelectionView.m; sourceTree = "<group>"; };
 		66F3078216D9B97C00E681AD /* CustomTabItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTabItem.h; sourceTree = "<group>"; };
 		66F3078316D9B97C00E681AD /* CustomTabItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTabItem.m; sourceTree = "<group>"; };
+		66F3426C173619B80092D133 /* noavata.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noavata.png; sourceTree = "<group>"; };
 		66F4AFD2170457C600928AA3 /* GiftLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiftLabel.h; path = ModelClasses/GiftLabel.h; sourceTree = "<group>"; };
 		66F4AFD3170457C600928AA3 /* GiftLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GiftLabel.m; path = ModelClasses/GiftLabel.m; sourceTree = "<group>"; };
 		66F5A00C1711839600F30D6A /* flower01.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = flower01.gif; sourceTree = "<group>"; };
@@ -2478,6 +2480,7 @@
 		662507A517106B0A00FF3F8B /* _bg */ = {
 			isa = PBXGroup;
 			children = (
+				66F3426C173619B80092D133 /* noavata.png */,
 				66F055571732731B00FF1B32 /* form-font.png */,
 				66F055581732731B00FF1B32 /* form.png */,
 				66F055591732731B00FF1B32 /* sign-up.png */,
@@ -4290,6 +4293,7 @@
 				66B3ACEE173280B400782DDB /* tick-on-press@2x.png in Resources */,
 				66B3ACEF173280B400782DDB /* tick-on.png in Resources */,
 				66B3ACF0173280B400782DDB /* tick-on@2x.png in Resources */,
+				66F3426D173619B80092D133 /* noavata.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

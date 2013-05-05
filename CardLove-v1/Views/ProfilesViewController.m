@@ -54,7 +54,13 @@
     NSString *strURL = [[UserManager sharedInstance] imgAvata];
     NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
     UIImage *photo = [UIImage imageWithData:dataImage];
-    self.imvAvarta.image = photo;
+    if (photo) {
+        self.imvAvarta.image = photo;
+    }else
+    {
+        self.imvAvarta.image = [UIImage imageNamed:@"noavata.png"];
+    }
+    
     
     self.lbUserName.text = [[UserManager sharedInstance] displayName];
 }
