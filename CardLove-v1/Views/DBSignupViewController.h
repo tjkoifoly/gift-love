@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "NKApiClient.h"
 #import "AFNetworking.h"
+#import "MacroDefine.h"
 
 typedef enum {
     ProfileViewTypeSignUp,
@@ -87,5 +88,5 @@ typedef enum {
 + (UIColor *)labelNormalColor;
 + (UIColor *)labelSelectedColor;
 
-- (void)saveInfo: (NSData *) imgData WithProgress:(void (^)(CGFloat progress))progressBlock completion:(void (^)(BOOL success, NSError *error))completionBlock;
+- (void)saveInfo: (NSData *) imgData WithProgress:(void (^)(CGFloat progress))progressBlock completion:(void (^)(BOOL success, NSError *error, NSString *urlUpload))completionBlock;
 @end

@@ -46,6 +46,7 @@
 #define kNotificationAddPersonToGroup           @"NotificationAddPersonToGroup"
 #define kNotificationRemovePersonFromGroup      @"NotificationRemovePersonFromGroup"
 #define kNotificationSendGiftToFriend   @"NotificationSendGiftToFriend"
+#define kNotificationSignUpSuccessful @"NotificaionSignUpSuccessful" 
 
 #define kGiftPaper      @"gift-paper"
 #define kGiftBG         @"gift-bg"

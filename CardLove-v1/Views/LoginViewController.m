@@ -62,6 +62,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive)
                                                  name:UIApplicationWillEnterForegroundNotification object:[UIApplication sharedApplication]];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signupAccountSuccessful:) name:kNotificationSignUpSuccessful object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -77,6 +78,8 @@
     [self setBtnSignUp:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationSignUpSuccessful object:nil];
     [super viewDidUnload];
 }
 #pragma mark - 
@@ -175,6 +178,13 @@
 
 -(void) loginSuccess
 {
+    BOOL autoRemember = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_remember_preference"];
+    if(autoRemember)
+    {
+        [[NSUserDefaults standardUserDefaults] setValue:self.txtUserName.text forKey:@"username_preference"];
+        [[NSUserDefaults standardUserDefaults] setValue:self.txtPassword.text forKey:@"password_preference"];
+    }
+    
     AppDelegate *appDelegate  = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     [UIView animateWithDuration:0.5 animations:^{
@@ -189,6 +199,12 @@
 -(void) loginFailed
 {
     NSLog(@"Login failed");
+}
+
+-(void) signupAccountSuccessful: (NSNotification *) notification
+{
+    self.txtUserName.text = [[UserManager sharedInstance] username];
+    self.txtPassword.text = [[UserManager sharedInstance] password];
 }
 
 

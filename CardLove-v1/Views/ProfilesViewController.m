@@ -52,14 +52,24 @@
 -(void) viewDidAppear:(BOOL)animated
 {
     NSString *strURL = [[UserManager sharedInstance] imgAvata];
-    if (strURL) {
+    if (!strURL) {
         self.imvAvarta.image = [UIImage imageNamed:@"noavata.png"];
     }else
     {
         NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
         UIImage *photo = [UIImage imageWithData:dataImage];
         if (photo) {
-            self.imvAvarta.image = photo;
+            [UIView animateWithDuration:0.1 animations:^{
+                self.imvAvarta.alpha = 0;
+            }completion:^(BOOL finished) {
+                self.imvAvarta.image = photo;
+                [UIView animateWithDuration:0.1 animations:^{
+                    self.imvAvarta.alpha = 1;
+                } completion:^(BOOL finished) {
+                    
+                }];
+            }];
+            
         }else
         {
             self.imvAvarta.image = [UIImage imageNamed:@"noavata.png"];
@@ -67,6 +77,11 @@
     }
     
     self.lbUserName.text = [[UserManager sharedInstance] displayName];
+}
+-(void) viewDidDisappear:(BOOL)animated
+{
+    self.imvAvarta.image = [UIImage imageNamed:@"noavata.png"];
+    [super viewDidDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
