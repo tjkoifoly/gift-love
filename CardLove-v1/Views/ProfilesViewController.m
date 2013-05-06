@@ -49,7 +49,7 @@
     [self loadInfo];
 }
 
--(void) viewDidAppear:(BOOL)animated
+-(void) viewWillAppear:(BOOL)animated
 {
     NSString *strURL = [[UserManager sharedInstance] imgAvata];
     if (!strURL) {
@@ -77,6 +77,12 @@
     }
     
     self.lbUserName.text = [[UserManager sharedInstance] displayName];
+    [super viewWillAppear:animated];
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    
 }
 -(void) viewDidDisappear:(BOOL)animated
 {
