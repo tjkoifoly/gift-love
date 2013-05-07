@@ -36,6 +36,7 @@
         self.btnFriend.toggleOnBlock = ^(NKToggleOverlayButton *button) {
             
             //[[NSNotificationCenter defaultCenter] postNotificationName:@"" object:nil];
+            
         };
         self.btnFriend.toggleOffBlock = ^(NKToggleOverlayButton *button) {
             NSLog(@"Unfriend");
@@ -60,6 +61,10 @@
         
      [self addSubview:self.btnFriend];
 
+}
+
+- (NSString *) reuseIdentifier {
+    return @"SearchFriendCell";
 }
 
 -(void) addF

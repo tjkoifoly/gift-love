@@ -41,9 +41,12 @@
     
     self.navigationItem.title = @"Add friends";
     
-    _btnSelect.layer.borderWidth = 1;
-    _btnSelect.layer.borderColor = [[UIColor blackColor] CGColor];
-    _btnSelect.layer.cornerRadius = 5;
+//    _btnSelect.layer.borderWidth = 1;
+//    _btnSelect.layer.borderColor = [[UIColor blackColor] CGColor];
+//    _btnSelect.layer.cornerRadius = 5;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
     
 }
 
@@ -68,6 +71,12 @@
     [self setBtnSelect:nil];
     [self setTxtFindWord:nil];
     [self setTableView:nil];
+    [[NSNotificationCenter defaultCenter ] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter ] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [self setViewBack:nil];
+    [self setImvBack:nil];
+    [self setImvTxtBack:nil];
+    [self setBtnSearch:nil];
     [super viewDidUnload];
 }
 
@@ -76,7 +85,7 @@
     arr = [NSArray arrayWithObjects:@"User name", @"Email",nil];
     if(dropDown == nil) {
         CGFloat f = 80;
-        dropDown = [[NIDropDown alloc]showDropDown:sender :&f :arr :@"down"];
+        dropDown = [[NIDropDown alloc]showDropDown:sender :&f :arr :@"up"];
         dropDown.delegate = self;
     }
     else {
@@ -118,27 +127,25 @@
     return 50;
 }
 
--(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return @"Recommended Friends";
-}
-
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *SearchFriendCellIdentifier = @"SearchFriendCellIdentifier";
-    SearchFriendCell *cell = [tableView dequeueReusableCellWithIdentifier:SearchFriendCellIdentifier];
+    static NSString *SearchFriendCellIdentifier = @"SearchFriendCell";
+    SearchFriendCell *cell = (SearchFriendCell *)[tableView dequeueReusableCellWithIdentifier:SearchFriendCellIdentifier];
     
     if (!cell) {
-        NSArray *arrayNib = [[NSBundle mainBundle] loadNibNamed:@"SearchFriendCell" owner:self options:nil];
-        cell = [arrayNib objectAtIndex:0];
+//        NSArray *arrayNib = [[NSBundle mainBundle] loadNibNamed:@"SearchFriendCell" owner:self options:nil];
+//        cell = [arrayNib objectAtIndex:0];
+        cell = (SearchFriendCell *)[self loadReusableTableViewCellFromNibNamed:@"SearchFriendCell"];
+       
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        NSLog(@"init cell %@",  [cell reuseIdentifier]);
     }
     
     Friend *f1 = [[Friend alloc] init];
     f1.displayName = @"Cong Nguyen Chi";
     f1.userName = @"foly01";
     
-    cell.imvAvata.image =[UIImage imageNamed:@"emo.png"];
+    cell.imvAvata.image =[UIImage imageNamed:@"noavata.png"];
     cell.friendObject = f1;
     [cell reloadCell];
     
@@ -146,5 +153,53 @@
     
 }
 
+#pragma mark - Keyboard events
+
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    [UIView animateWithDuration:0.2f animations:^{
+        
+        [self view:self.btnSearch move:-kbSize.height];
+        [self view:self.btnSelect move:-kbSize.height];
+        [self view:self.txtFindWord move:-kbSize.height];
+        [self view:self.imvBack move:-kbSize.height];
+        [self view:self.imvTxtBack move:-kbSize.height];
+        [self view:self.viewBack move:-kbSize.height];
+        
+    } completion:^(BOOL finished) {
+
+        
+    }];
+}
+
+
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    [UIView animateWithDuration:0.2f animations:^{
+        
+        [self view:self.btnSearch move:kbSize.height];
+        [self view:self.btnSelect move:kbSize.height];
+        [self view:self.txtFindWord move:kbSize.height];
+        [self view:self.imvBack move:kbSize.height];
+        [self view:self.imvTxtBack move:kbSize.height];
+        [self view:self.viewBack move:kbSize.height];
+        
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+-(void) view: (UIView *)v move: (CGFloat) height
+{
+    CGRect frame = v.frame;
+    frame.origin.y += height;
+    [v setFrame:frame];
+}
 
 @end

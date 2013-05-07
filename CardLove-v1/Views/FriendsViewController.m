@@ -17,6 +17,8 @@
 #import "UANoisyGradientBackground.h"
 #import "UAGradientBackground.h"
 
+#import "FriendInfoViewController.h"
+
 typedef void (^FinishBlock)();
 
 @interface FriendsViewController ()
@@ -228,6 +230,11 @@ typedef void (^FinishBlock)();
 -(void) updateContact:(NSIndexPath *)indexPath
 {
     NSLog(@"Update %@", indexPath);
+    FriendInfoViewController *fivc = [[FriendInfoViewController alloc] initWithNibName:@"FriendInfoViewController" bundle:nil];
+    
+    fivc.currentFriend =  [[[FriendsManager sharedManager] friendsList] objectAtIndex:indexPath.row];
+    
+    [self.navigationController pushViewController:fivc animated:YES];
 }
 
 -(void) sendMessageTo:(NSIndexPath *)indexPath

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "NIDropDown.h"
+#import "UIViewController+NibCells.h"
 
 @interface AddFriendViewController : UIViewController <NIDropDownDelegate, UITableViewDataSource, UITableViewDelegate>
 {
@@ -17,5 +18,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnSelect;
 @property (weak, nonatomic) IBOutlet UITextField *txtFindWord;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *viewBack;
+@property (weak, nonatomic) IBOutlet UIImageView *imvBack;
+@property (weak, nonatomic) IBOutlet UIImageView *imvTxtBack;
+@property (weak, nonatomic) IBOutlet UIButton *btnSearch;
 
 @end

@@ -559,6 +559,12 @@
 		66DDC3A017390EE700595838 /* Check (Selected).png in Resources */ = {isa = PBXBuildFile; fileRef = 66DDC39917390EE700595838 /* Check (Selected).png */; };
 		66DDC3A117390EE700595838 /* Check (Unslected).png in Resources */ = {isa = PBXBuildFile; fileRef = 66DDC39A17390EE700595838 /* Check (Unslected).png */; };
 		66DDC3A217390EE700595838 /* Close Safari Page Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DDC39B17390EE700595838 /* Close Safari Page Button.png */; };
+		66DDC3A417391B5700595838 /* LionDenSearch-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DDC3A317391B5700595838 /* LionDenSearch-button.png */; };
+		66DDC3A91739285A00595838 /* UIViewController+NibCells.m in Sources */ = {isa = PBXBuildFile; fileRef = 66DDC3A81739285A00595838 /* UIViewController+NibCells.m */; };
+		66DDC3AD17392C6100595838 /* FriendInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66DDC3AB17392C6100595838 /* FriendInfoViewController.m */; };
+		66DDC3AE17392C6100595838 /* FriendInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66DDC3AC17392C6100595838 /* FriendInfoViewController.xib */; };
+		66DDC3B11739308200595838 /* FriendInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66DDC3B01739308200595838 /* FriendInfoCell.m */; };
+		66DDC3B3173930B500595838 /* FriendInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66DDC3B2173930B500595838 /* FriendInfoCell.xib */; };
 		66DE338C1718361B00801F5D /* main-button-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DE33821718361B00801F5D /* main-button-left.png */; };
 		66DE338D1718361B00801F5D /* main-button-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DE33831718361B00801F5D /* main-button-left@2x.png */; };
 		66DE338E1718361B00801F5D /* main-button-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DE33841718361B00801F5D /* main-button-up.png */; };
@@ -1540,6 +1546,15 @@
 		66DDC39917390EE700595838 /* Check (Selected).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Check (Selected).png"; sourceTree = "<group>"; };
 		66DDC39A17390EE700595838 /* Check (Unslected).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Check (Unslected).png"; sourceTree = "<group>"; };
 		66DDC39B17390EE700595838 /* Close Safari Page Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Close Safari Page Button.png"; sourceTree = "<group>"; };
+		66DDC3A317391B5700595838 /* LionDenSearch-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LionDenSearch-button.png"; path = "Resources/_icons/LionDenSearch-button.png"; sourceTree = SOURCE_ROOT; };
+		66DDC3A71739285A00595838 /* UIViewController+NibCells.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+NibCells.h"; sourceTree = "<group>"; };
+		66DDC3A81739285A00595838 /* UIViewController+NibCells.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+NibCells.m"; sourceTree = "<group>"; };
+		66DDC3AA17392C6100595838 /* FriendInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendInfoViewController.h; path = Views/FriendInfoViewController.h; sourceTree = "<group>"; };
+		66DDC3AB17392C6100595838 /* FriendInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendInfoViewController.m; path = Views/FriendInfoViewController.m; sourceTree = "<group>"; };
+		66DDC3AC17392C6100595838 /* FriendInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FriendInfoViewController.xib; path = Views/FriendInfoViewController.xib; sourceTree = "<group>"; };
+		66DDC3AF1739308200595838 /* FriendInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendInfoCell.h; sourceTree = "<group>"; };
+		66DDC3B01739308200595838 /* FriendInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendInfoCell.m; sourceTree = "<group>"; };
+		66DDC3B2173930B500595838 /* FriendInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendInfoCell.xib; sourceTree = "<group>"; };
 		66DE33821718361B00801F5D /* main-button-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main-button-left.png"; sourceTree = "<group>"; };
 		66DE33831718361B00801F5D /* main-button-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main-button-left@2x.png"; sourceTree = "<group>"; };
 		66DE33841718361B00801F5D /* main-button-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main-button-up.png"; sourceTree = "<group>"; };
@@ -1813,6 +1828,8 @@
 		6604FA6616DBCD4200295209 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				66DDC3A71739285A00595838 /* UIViewController+NibCells.h */,
+				66DDC3A81739285A00595838 /* UIViewController+NibCells.m */,
 				66D4C67216F59D14004DC5A4 /* AUISelectiveBordersLayer.h */,
 				66D4C67316F59D14004DC5A4 /* AUISelectiveBordersLayer.m */,
 				66D4C67416F59D14004DC5A4 /* UIView+AUISelectiveBorder.h */,
@@ -2494,6 +2511,7 @@
 		662507A517106B0A00FF3F8B /* _bg */ = {
 			isa = PBXGroup;
 			children = (
+				66DDC3A317391B5700595838 /* LionDenSearch-button.png */,
 				66F3426C173619B80092D133 /* noavata.png */,
 				66F055571732731B00FF1B32 /* form-font.png */,
 				66F055581732731B00FF1B32 /* form.png */,
@@ -3083,6 +3101,9 @@
 				66B3ACBF17327A9F00782DDB /* SearchFriendCell.h */,
 				66B3ACC017327A9F00782DDB /* SearchFriendCell.m */,
 				66B3ACC217327AB200782DDB /* SearchFriendCell.xib */,
+				66DDC3AF1739308200595838 /* FriendInfoCell.h */,
+				66DDC3B01739308200595838 /* FriendInfoCell.m */,
+				66DDC3B2173930B500595838 /* FriendInfoCell.xib */,
 			);
 			name = Cell;
 			path = Custom/Cell;
@@ -3242,6 +3263,9 @@
 				661F4E9316E899680005B8F0 /* ChatViewController.xib */,
 				66E1726A1721635A00BF9E73 /* ModalPanelPickerView.h */,
 				66E1726B1721635A00BF9E73 /* ModalPanelPickerView.m */,
+				66DDC3AA17392C6100595838 /* FriendInfoViewController.h */,
+				66DDC3AB17392C6100595838 /* FriendInfoViewController.m */,
+				66DDC3AC17392C6100595838 /* FriendInfoViewController.xib */,
 			);
 			name = "Friends+Messages";
 			sourceTree = "<group>";
@@ -4322,6 +4346,9 @@
 				66DDC3A017390EE700595838 /* Check (Selected).png in Resources */,
 				66DDC3A117390EE700595838 /* Check (Unslected).png in Resources */,
 				66DDC3A217390EE700595838 /* Close Safari Page Button.png in Resources */,
+				66DDC3A417391B5700595838 /* LionDenSearch-button.png in Resources */,
+				66DDC3AE17392C6100595838 /* FriendInfoViewController.xib in Resources */,
+				66DDC3B3173930B500595838 /* FriendInfoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4604,6 +4631,9 @@
 				665D856D172F59B0006670CB /* UserManager.m in Sources */,
 				66B3ACC117327A9F00782DDB /* SearchFriendCell.m in Sources */,
 				66B3ACD017327F7A00782DDB /* NKToggleOverlayButton.m in Sources */,
+				66DDC3A91739285A00595838 /* UIViewController+NibCells.m in Sources */,
+				66DDC3AD17392C6100595838 /* FriendInfoViewController.m in Sources */,
+				66DDC3B11739308200595838 /* FriendInfoCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
