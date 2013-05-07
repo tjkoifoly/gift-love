@@ -51,11 +51,11 @@
     self.btnFriend = [[NKToggleOverlayButton alloc] init];
     self.btnFriend.frame = CGRectMake(0, 0, 27, 31);
     self.btnFriend.center = CGPointMake(286, 25);
-    [self.btnFriend setOnImage:[UIImage imageNamed:@"tick-on.png"] forState:UIControlStateNormal];
-    [self.btnFriend setOnImage:[UIImage imageNamed:@"tick-on-press.png"] forState:UIControlStateHighlighted];
-    [self.btnFriend setOffImage:[UIImage imageNamed:@"tick-off.png"] forState:UIControlStateNormal];
-    [self.btnFriend setOffImage:[UIImage imageNamed:@"tick-off-press.png"] forState:UIControlStateHighlighted];
-    self.btnFriend.overlayOnText = @"Friend";
+    [self.btnFriend setOnImage:[UIImage imageNamed:@"Check (Selected).png"] forState:UIControlStateNormal];
+    [self.btnFriend setOnImage:[UIImage imageNamed:@"Close Safari Page Button.png"] forState:UIControlStateHighlighted];
+    [self.btnFriend setOffImage:[UIImage imageNamed:@"Check (Unslected).png"] forState:UIControlStateNormal];
+    [self.btnFriend setOffImage:[UIImage imageNamed:@"Check (Selected).png"] forState:UIControlStateHighlighted];
+    self.btnFriend.overlayOnText = @"Friend request";
     self.btnFriend.overlayOffText = @"Unfriend";
         
      [self addSubview:self.btnFriend];

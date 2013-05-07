@@ -552,6 +552,13 @@
 		66DD9A181720411F002C50B5 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66DD9A161720411E002C50B5 /* AddFriendViewController.m */; };
 		66DD9A191720411F002C50B5 /* AddFriendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66DD9A171720411E002C50B5 /* AddFriendViewController.xib */; };
 		66DD9A1D17204B7F002C50B5 /* NIDropDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 66DD9A1C17204B7F002C50B5 /* NIDropDown.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66DDC39C17390EE700595838 /* btn-accept-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DDC39517390EE700595838 /* btn-accept-normal.png */; };
+		66DDC39D17390EE700595838 /* btn-accept-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DDC39617390EE700595838 /* btn-accept-pressed.png */; };
+		66DDC39E17390EE700595838 /* btn-deny-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DDC39717390EE700595838 /* btn-deny-normal.png */; };
+		66DDC39F17390EE700595838 /* btn-deny-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DDC39817390EE700595838 /* btn-deny-pressed.png */; };
+		66DDC3A017390EE700595838 /* Check (Selected).png in Resources */ = {isa = PBXBuildFile; fileRef = 66DDC39917390EE700595838 /* Check (Selected).png */; };
+		66DDC3A117390EE700595838 /* Check (Unslected).png in Resources */ = {isa = PBXBuildFile; fileRef = 66DDC39A17390EE700595838 /* Check (Unslected).png */; };
+		66DDC3A217390EE700595838 /* Close Safari Page Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DDC39B17390EE700595838 /* Close Safari Page Button.png */; };
 		66DE338C1718361B00801F5D /* main-button-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DE33821718361B00801F5D /* main-button-left.png */; };
 		66DE338D1718361B00801F5D /* main-button-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DE33831718361B00801F5D /* main-button-left@2x.png */; };
 		66DE338E1718361B00801F5D /* main-button-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 66DE33841718361B00801F5D /* main-button-up.png */; };
@@ -1526,6 +1533,13 @@
 		66DD9A171720411E002C50B5 /* AddFriendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddFriendViewController.xib; path = Views/AddFriendViewController.xib; sourceTree = "<group>"; };
 		66DD9A1B17204B7F002C50B5 /* NIDropDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIDropDown.h; sourceTree = "<group>"; };
 		66DD9A1C17204B7F002C50B5 /* NIDropDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIDropDown.m; sourceTree = "<group>"; };
+		66DDC39517390EE700595838 /* btn-accept-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-accept-normal.png"; sourceTree = "<group>"; };
+		66DDC39617390EE700595838 /* btn-accept-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-accept-pressed.png"; sourceTree = "<group>"; };
+		66DDC39717390EE700595838 /* btn-deny-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-deny-normal.png"; sourceTree = "<group>"; };
+		66DDC39817390EE700595838 /* btn-deny-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-deny-pressed.png"; sourceTree = "<group>"; };
+		66DDC39917390EE700595838 /* Check (Selected).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Check (Selected).png"; sourceTree = "<group>"; };
+		66DDC39A17390EE700595838 /* Check (Unslected).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Check (Unslected).png"; sourceTree = "<group>"; };
+		66DDC39B17390EE700595838 /* Close Safari Page Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Close Safari Page Button.png"; sourceTree = "<group>"; };
 		66DE33821718361B00801F5D /* main-button-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main-button-left.png"; sourceTree = "<group>"; };
 		66DE33831718361B00801F5D /* main-button-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main-button-left@2x.png"; sourceTree = "<group>"; };
 		66DE33841718361B00801F5D /* main-button-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main-button-up.png"; sourceTree = "<group>"; };
@@ -3600,6 +3614,13 @@
 		66F5A01C1711B51D00F30D6A /* _icons */ = {
 			isa = PBXGroup;
 			children = (
+				66DDC39517390EE700595838 /* btn-accept-normal.png */,
+				66DDC39617390EE700595838 /* btn-accept-pressed.png */,
+				66DDC39717390EE700595838 /* btn-deny-normal.png */,
+				66DDC39817390EE700595838 /* btn-deny-pressed.png */,
+				66DDC39917390EE700595838 /* Check (Selected).png */,
+				66DDC39A17390EE700595838 /* Check (Unslected).png */,
+				66DDC39B17390EE700595838 /* Close Safari Page Button.png */,
 				66B3ACD1173280B400782DDB /* fav-off-press.png */,
 				66B3ACD2173280B400782DDB /* fav-off-press@2x.png */,
 				66B3ACD3173280B400782DDB /* fav-off.png */,
@@ -4294,6 +4315,13 @@
 				66B3ACEF173280B400782DDB /* tick-on.png in Resources */,
 				66B3ACF0173280B400782DDB /* tick-on@2x.png in Resources */,
 				66F3426D173619B80092D133 /* noavata.png in Resources */,
+				66DDC39C17390EE700595838 /* btn-accept-normal.png in Resources */,
+				66DDC39D17390EE700595838 /* btn-accept-pressed.png in Resources */,
+				66DDC39E17390EE700595838 /* btn-deny-normal.png in Resources */,
+				66DDC39F17390EE700595838 /* btn-deny-pressed.png in Resources */,
+				66DDC3A017390EE700595838 /* Check (Selected).png in Resources */,
+				66DDC3A117390EE700595838 /* Check (Unslected).png in Resources */,
+				66DDC3A217390EE700595838 /* Close Safari Page Button.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
