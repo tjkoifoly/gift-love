@@ -617,6 +617,7 @@
         
         if (operation.response.statusCode == 200 || operation.response.statusCode == 201) {
             NSLog(@"STATUS = %i", operation.response.statusCode);
+            NSLog(@"DDDDDCCCCMMM _> %@", responseObject);
             id jsonObject = [[JSONDecoder decoder] objectWithData:responseObject];
             NSLog(@"JSON = %@", jsonObject);
             [[UserManager sharedInstance] updateInfoWithDictionary:[jsonObject objectAtIndex:0]];
