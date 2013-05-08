@@ -385,6 +385,13 @@
         [firstResponder resignFirstResponder];
         
     }
+    
+     NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_tableView numberOfRowsInSection:1] - 1) inSection:1];
+
+    NSInteger indexSpecial = lastIndexPath.row-1;
+    [self.specials removeObjectAtIndex:indexSpecial];
+    
+    [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:lastIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (id)getFirstResponder
