@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define kFriendID       @"FID"
+#define kFriendAvatar   @"FAvatarLink"
 #define kDisplayName    @"displayName"
 #define kUserName       @"userName"
 #define kEmail          @"email"
@@ -18,6 +20,8 @@
 
 @interface Friend : NSObject <NSCoding>
 
+@property (strong, nonatomic) NSString *fID;
+@property (strong, nonatomic) NSString *fAvatarLink;
 @property (strong, nonatomic) NSString *displayName;
 @property (strong, nonatomic) NSString *userName;
 @property (strong, nonatomic) NSString *email;

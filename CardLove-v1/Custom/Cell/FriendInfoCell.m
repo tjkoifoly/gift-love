@@ -11,6 +11,7 @@
 @implementation FriendInfoCell
 
 @synthesize lbContent,lbTitle;
+@synthesize delegate;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -31,10 +32,14 @@
 -(void) awakeFromNib
 {
     self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_middle.png"]];
+
 }
 
 - (NSString *) reuseIdentifier {
     return @"FriendInfoCell";
+}
+- (IBAction)deleteThisCell:(id)sender {
+    [self.delegate FriendInfoCellOnDelete:self];
 }
 
 @end

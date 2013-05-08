@@ -10,6 +10,8 @@
 
 @implementation Friend
 
+@synthesize fID;
+@synthesize fAvatarLink;
 @synthesize displayName;
 @synthesize userName;
 @synthesize email;
@@ -23,6 +25,8 @@
     self = [super init];
     if(self)
     {
+        self.fID = [dictionary objectForKey:kFriendID];
+        self.fAvatarLink = [dictionary objectForKey:kFriendAvatar];
         self.displayName = [dictionary objectForKey: kDisplayName];
         self.userName = [dictionary objectForKey:kUserName];
         self.email = [dictionary objectForKey:kEmail];
@@ -39,6 +43,8 @@
 
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
+    [aCoder encodeObject:self.fID forKey:kFriendID];
+    [aCoder encodeObject:self.fAvatarLink forKey:kFriendAvatar];
     [aCoder encodeObject:self.displayName forKey:kDisplayName];
     [aCoder encodeObject:self.userName forKey:kUserName];
     [aCoder encodeObject:self.email forKey:kEmail];
@@ -60,6 +66,8 @@
         self.birthday = [aDecoder decodeObjectForKey:kBirthday];
         self.address = [aDecoder decodeObjectForKey:kAddress];
         self.phone = [aDecoder decodeObjectForKey:kPhone];
+        self.fID = [aDecoder decodeObjectForKey:kFriendID];
+        self.fAvatarLink = [aDecoder decodeObjectForKey:kFriendAvatar];
     }
     
     return self;
