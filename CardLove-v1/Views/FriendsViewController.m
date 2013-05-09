@@ -12,13 +12,14 @@
 #import "AppDelegate.h"
 #import "EKNotifView.h"
 #import "AddFriendViewController.h"
-
 #import "ModalPanelPickerView.h"
 #import "UANoisyGradientBackground.h"
 #import "UAGradientBackground.h"
 #import "UserManager.h"
 #import "UIImageView+AFNetworking.h"
-
+#import "NKApiClient.h"
+#import "AFNetworking.h"
+#import "JSONKit.h"
 #import "FriendInfoViewController.h"
 
 typedef void (^FinishBlock)();
@@ -319,13 +320,33 @@ typedef void (^FinishBlock)();
         case 0:
         {
             NSLog(@"Delete");
-            [[FriendsManager sharedManager] removeFriendAtIndex:currentIndexPath.row];
-            [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:currentIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-           
-            [self performSelector:@selector(deleteContactCompleteWithBlock:) withObject:^{
-                    [self.tableView reloadData];
-                } afterDelay:0.5];
             
+            Friend *cF = [[[FriendsManager sharedManager] friendsList ]objectAtIndex:currentIndexPath.row];
+//            [[FriendsManager sharedManager] removeFriend:cF];
+//            
+////            [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:currentIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [[UserManager sharedInstance] accID],@"sourceID",
+                                    cF.fID, @"friendID",
+                                    @"cancel_request", @"usage",
+                                    nil];
+            
+            [[NKApiClient shareInstace] postPath:@"add_friend.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                
+                id jsonObject = [[JSONDecoder decoder] objectWithData:responseObject];
+                NSLog(@"%@", jsonObject);
+                NSString *userID = [[UserManager sharedInstance] accID];
+                [[FriendsManager sharedManager] loadFriendsFromURLbyUser: userID completion:^(BOOL success, NSError *error) {
+                    [self performSelector:@selector(deleteContactCompleteWithBlock:) withObject:^{
+                        [_tableView reloadData];
+                    } afterDelay:0.5];
+                }];
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"HTTP ERROR : %@", error);
+            }];
+
             currentIndexPath = nil;
             
             break;
