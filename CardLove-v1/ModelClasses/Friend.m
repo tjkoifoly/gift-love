@@ -17,7 +17,6 @@
 @synthesize email;
 @synthesize sex;
 @synthesize birthday;
-@synthesize address;
 @synthesize phone;
 
 -(id) initWithDictionary :(NSDictionary *) dictionary
@@ -25,15 +24,14 @@
     self = [super init];
     if(self)
     {
-        self.fID = [dictionary objectForKey:kFriendID] ;
-        self.fAvatarLink = [dictionary objectForKey:kFriendAvatar];
-        self.displayName = [dictionary objectForKey: kDisplayName];
-        self.userName = [dictionary objectForKey:kUserName];
-        self.email = [dictionary objectForKey:kEmail];
-        self.sex = [dictionary objectForKey:kSex];
-        self.birthday = [dictionary objectForKey:kBirthday];
-        self.address = [dictionary objectForKey:kAddress];
-        self.phone = [dictionary objectForKey:kPhone];
+        self.fID = [dictionary objectForKey:kAccID] ;
+        self.fAvatarLink = [dictionary objectForKey:kaccAvata];
+        self.displayName = [dictionary objectForKey: kAccDisplayName];
+        self.userName = [dictionary objectForKey:kAccName];
+        self.email = [dictionary objectForKey:kAccEmail];
+        self.sex = [dictionary objectForKey:kAccGender];
+        self.birthday = [dictionary objectForKey:kAccBirthday];
+        self.phone = [dictionary objectForKey:kAccPhone];
 
     }
     return self;
@@ -43,15 +41,14 @@
 
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:self.fID forKey:kFriendID];
-    [aCoder encodeObject:self.fAvatarLink forKey:kFriendAvatar];
-    [aCoder encodeObject:self.displayName forKey:kDisplayName];
-    [aCoder encodeObject:self.userName forKey:kUserName];
-    [aCoder encodeObject:self.email forKey:kEmail];
-    [aCoder encodeObject:self.sex forKey:kSex];
-    [aCoder encodeObject:self.birthday forKey:kBirthday];
-    [aCoder encodeObject:self.address forKey:kAddress];
-    [aCoder encodeObject:self.phone forKey:kPhone];
+    [aCoder encodeObject:self.fID forKey:kAccID];
+    [aCoder encodeObject:self.fAvatarLink forKey:kaccAvata];
+    [aCoder encodeObject:self.displayName forKey:kAccDisplayName];
+    [aCoder encodeObject:self.userName forKey:kAccName];
+    [aCoder encodeObject:self.email forKey:kAccEmail];
+    [aCoder encodeObject:self.sex forKey:kAccGender];
+    [aCoder encodeObject:self.birthday forKey:kAccBirthday];
+    [aCoder encodeObject:self.phone forKey:kAccPhone];
 }
 
 -(id) initWithCoder:(NSCoder *)aDecoder
@@ -59,15 +56,14 @@
     self = [super init];
     if(self)
     {
-        self.displayName = [aDecoder decodeObjectForKey:kDisplayName];
-        self.userName = [aDecoder decodeObjectForKey:kUserName];
-        self.email = [aDecoder decodeObjectForKey:kEmail];
-        self.sex = [aDecoder decodeObjectForKey:kSex];
-        self.birthday = [aDecoder decodeObjectForKey:kBirthday];
-        self.address = [aDecoder decodeObjectForKey:kAddress];
-        self.phone = [aDecoder decodeObjectForKey:kPhone];
-        self.fID = [aDecoder decodeObjectForKey:kFriendID];
-        self.fAvatarLink = [aDecoder decodeObjectForKey:kFriendAvatar];
+        self.displayName = [aDecoder decodeObjectForKey:kAccDisplayName];
+        self.userName = [aDecoder decodeObjectForKey:kAccName];
+        self.email = [aDecoder decodeObjectForKey:kAccEmail];
+        self.sex = [aDecoder decodeObjectForKey:kAccGender];
+        self.birthday = [aDecoder decodeObjectForKey:kAccBirthday];
+        self.phone = [aDecoder decodeObjectForKey:kAccPhone];
+        self.fID = [aDecoder decodeObjectForKey:kAccID];
+        self.fAvatarLink = [aDecoder decodeObjectForKey:kaccAvata];
     }
     
     return self;

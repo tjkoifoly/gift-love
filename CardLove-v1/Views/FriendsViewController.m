@@ -16,6 +16,7 @@
 #import "ModalPanelPickerView.h"
 #import "UANoisyGradientBackground.h"
 #import "UAGradientBackground.h"
+#import "UserManager.h"
 
 #import "FriendInfoViewController.h"
 
@@ -52,14 +53,29 @@ typedef void (^FinishBlock)();
     self.view.backgroundColor = bgColor;
     [self loadActionHeaderView];
     
-//    UIButton *btnAddFriend = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [btnAddFriend setBackgroundImage:[UIImage imageNamed:@"ButtonAddFriend.png"] forState:UIControlStateNormal];
-//    btnAddFriend.frame = CGRectMake(0, 0, 40, 30);
-//    [btnAddFriend addTarget:self action:@selector(addFriendView) forControlEvents:UIControlEventTouchUpInside];
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnAddFriend];
+    //    UIButton *btnAddFriend = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    [btnAddFriend setBackgroundImage:[UIImage imageNamed:@"ButtonAddFriend.png"] forState:UIControlStateNormal];
+    //    btnAddFriend.frame = CGRectMake(0, 0, 40, 30);
+    //    [btnAddFriend addTarget:self action:@selector(addFriendView) forControlEvents:UIControlEventTouchUpInside];
+    //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnAddFriend];
     
     UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFriendView)];
     self.navigationItem.rightBarButtonItem = btnAdd;
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeAnnularDeterminate;
+    hud.labelText = @"Loading";
+    
+    [[FriendsManager sharedManager] loadFriends];
+    NSString *userID = [[UserManager sharedInstance] accID];
+    [[FriendsManager sharedManager] loadFriendsFromURLbyUser:userID completion:^(BOOL success, NSError *error) {
+        [hud hide:YES];
+    }];
+    [_tableView reloadData];
+    [super viewDidAppear:animated];
 }
 
 -(void) addFriendView

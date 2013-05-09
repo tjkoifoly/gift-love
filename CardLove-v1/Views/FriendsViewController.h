@@ -15,6 +15,7 @@
 #import "DrawerViewMenu.h"
 #import "AddFriendViewController.h"
 #import "UAModalPanel.h"
+#import "MBProgressHUD.h"
 
 @interface FriendsViewController : GHRootViewController <UITableViewDataSource, UITableViewDelegate, HHPanningTableViewCellDelegate, DrawerMenuDelegate, UIActionSheetDelegate, UAModalPanelDelegate>
 

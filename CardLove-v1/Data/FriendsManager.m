@@ -7,6 +7,9 @@
 //
 
 #import "FriendsManager.h"
+#import "NKApiClient.h"
+#import "AFNetworking.h"
+#import "JSONKit.h"
 
 @implementation FriendsManager
 
@@ -31,30 +34,6 @@
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         documentsDirectory = [paths objectAtIndex:0];
         _path = [documentsDirectory stringByAppendingPathComponent:@"friends.dat"] ;
-        
-        //LOG
-        //NSLog(@"Saving friends in %@", _path);
-    
-//        Friend *friend = [[Friend alloc] init];
-//        friend.displayName = @"CongNC";
-//        friend.userName = @"foly";
-//        
-//        Friend *friend2 = [[Friend alloc] init];
-//        friend2.displayName = @"TuyenVT";
-//        friend2.userName = @"tjkoi";
-//        
-//        Friend *friend3 = [[Friend alloc] init];
-//        friend3.displayName = @"HuongNT";
-//        friend3.userName = @"nuhoangtuyet";
-//        
-//        Friend *friend4 = [[Friend alloc] init];
-//        friend4.displayName = @"KengKeng";
-//        friend4.userName = @"kengkeng";
-//        
-//        NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:friend,friend2,friend3, friend4, nil];
-//        
-//        [NSKeyedArchiver archiveRootObject:array toFile:_path];
-       
     }
     
     return self;
@@ -65,6 +44,28 @@
     if (!_friendsList) {
         _friendsList = [NSMutableArray array];
     }
+}
+
+-(void) loadFriendsFromURLbyUser: (NSString*)userID completion:(void (^)(BOOL success, NSError *error))completionBlock{
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:userID,@"sourceID", nil];
+    [[NKApiClient shareInstace] postPath:@"list_friend.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Friend = %@", jsonObject);
+        if (_friendsList) {
+            [_friendsList removeAllObjects];
+        }
+        for(NSDictionary *dictFriend in jsonObject)
+        {
+            Friend *aFriend =  [[Friend alloc]initWithDictionary:dictFriend];
+            [self addFriend:aFriend];
+        }
+        completionBlock (YES, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil);
+    }];
 }
 
 - (NSArray *)friendsList {

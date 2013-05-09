@@ -17,6 +17,7 @@
 + (id)sharedManager;
 
 - (void)loadFriends;
+-(void) loadFriendsFromURLbyUser: (NSString*)userID completion:(void (^)(BOOL success, NSError *error))completionBlock;
 - (NSArray *)friendsList;
 - (void) addFriend : (Friend *) fO;
 - (void) removeFriend :(Friend *) fO;

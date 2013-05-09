@@ -7,16 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#define kFriendID       @"FID"
-#define kFriendAvatar   @"FAvatarLink"
-#define kDisplayName    @"displayName"
-#define kUserName       @"userName"
-#define kEmail          @"email"
-#define kSex            @"sex"
-#define kBirthday       @"birthday"
-#define kAddress        @"address"
-#define kPhone          @"phone"
+#import "MacroDefine.h"
 
 @interface Friend : NSObject <NSCoding>
 
@@ -27,7 +18,6 @@
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *sex;
 @property (strong, nonatomic) NSString *birthday;
-@property (strong, nonatomic) NSString *address;
 @property (strong, nonatomic) NSString *phone;
 
 -(id) initWithDictionary :(NSDictionary *) dictionary;

@@ -7,16 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#define kAccID          @"accID"
-#define kAccDisplayName @"accDisplayName"
-#define kAccName        @"accName"
-#define kAccPassword    @"accPassword"
-#define kAccGender      @"accGender"
-#define kAccEmail       @"accEmail"
-#define kAccBirthday    @"accBirthday"
-#define kAccPhone       @"accPhone"
-#define kaccAvata       @"accImageAvata"
+#import "MacroDefine.h"
 
 @interface UserManager : NSObject
 

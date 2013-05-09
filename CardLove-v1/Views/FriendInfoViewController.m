@@ -219,7 +219,10 @@
         imvAvatar.layer.masksToBounds = YES;
         
         [firstCell addSubview:imvAvatar];
-        imvAvatar.imageURL = [NSURL URLWithString:_currentFriend.fAvatarLink];
+        if (_currentFriend.fAvatarLink != (id)[NSNull null] && _currentFriend.fAvatarLink.length != 0) {
+            imvAvatar.imageURL = [NSURL URLWithString:_currentFriend.fAvatarLink];
+        }
+        
         
         UILabel *lbName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 189, 21)];
         lbName.center = CGPointMake(206, 22);
@@ -257,7 +260,7 @@
             }else if (row ==3 )
             {
                 cell.lbTitle.text = @"Gender";
-                cell.lbContent.text = _currentFriend.sex;
+                cell.lbContent.text = [_currentFriend.sex isEqualToString:@"0"]? @"male":@"female";
             }else if (row == 4)
             {
                 cell.lbTitle.text = @"Phone";

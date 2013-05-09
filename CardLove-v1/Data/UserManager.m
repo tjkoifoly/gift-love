@@ -29,6 +29,7 @@
 
 -(void) updateInfoWithDictionary: (NSDictionary *) dict
 {
+    NSLog(@"_____________%@", [dict valueForKey:kAccID]);
     self.accID = [dict valueForKey:kAccID];
     self.displayName = [dict valueForKey:kAccDisplayName];
     self.username = [dict valueForKey:kAccName];
