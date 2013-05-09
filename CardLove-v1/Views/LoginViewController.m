@@ -162,6 +162,7 @@
         NSLog(@"JSON OBJECT = %@", jsonObject);
         if (jsonObject) {
             [self loginSuccess];
+            NSLog(@"Class = %@", [[[jsonObject objectAtIndex:0] valueForKey:kAccID] class] );
             [[UserManager sharedInstance] updateInfoWithDictionary:[jsonObject objectAtIndex:0]];
         }else
         {

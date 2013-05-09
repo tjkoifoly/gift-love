@@ -20,7 +20,7 @@
 
 @interface Friend : NSObject <NSCoding>
 
-@property (strong, nonatomic) NSString *fID;
+@property ( strong, nonatomic) NSString *fID;
 @property (strong, nonatomic) NSString *fAvatarLink;
 @property (strong, nonatomic) NSString *displayName;
 @property (strong, nonatomic) NSString *userName;

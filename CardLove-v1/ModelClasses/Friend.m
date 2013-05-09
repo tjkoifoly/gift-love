@@ -25,7 +25,7 @@
     self = [super init];
     if(self)
     {
-        self.fID = [dictionary objectForKey:kFriendID];
+        self.fID = [dictionary objectForKey:kFriendID] ;
         self.fAvatarLink = [dictionary objectForKey:kFriendAvatar];
         self.displayName = [dictionary objectForKey: kDisplayName];
         self.userName = [dictionary objectForKey:kUserName];

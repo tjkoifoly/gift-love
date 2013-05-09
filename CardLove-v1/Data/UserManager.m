@@ -14,6 +14,7 @@
 @implementation UserManager
 
 @synthesize displayName, username, imgAvata, password, email, birthday, phone, sex;
+@synthesize accID;
 
 +(id) sharedInstance
 {
@@ -28,6 +29,7 @@
 
 -(void) updateInfoWithDictionary: (NSDictionary *) dict
 {
+    self.accID = [dict valueForKey:kAccID];
     self.displayName = [dict valueForKey:kAccDisplayName];
     self.username = [dict valueForKey:kAccName];
     self.password = [dict valueForKey:kAccPassword];

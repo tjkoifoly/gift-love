@@ -115,6 +115,13 @@
     [super viewDidUnload];
 }
 
+#pragma mark - Load View
+-(void) loadSpecialsDayWith: (NSString *)sourceID andFriend: (NSString *) friendID
+{
+    
+}
+
+
 #pragma mark - Table View
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -267,9 +274,11 @@
             }else
             {
                 cell.lbTitle.text = [[[_specials objectAtIndex:row-1] allKeys] objectAtIndex:0];
-                cell.lbContent.text = [[FunctionObject sharedInstance] stringFromDate:(NSDate *)[[_specials objectAtIndex:row-1] valueForKey:@"Love"]];
+                cell.lbContent.text = [[FunctionObject sharedInstance] stringFromDate:(NSDate *)[[_specials objectAtIndex:row-1] valueForKey:cell.lbTitle.text]];
+                
                 cell.txtTitle.hidden = NO;
                 cell.txtContent.hidden = NO;
+                
                 cell.lbTitle.hidden = YES;
                 cell.lbContent.hidden = YES;
                 cell.txtTitle.tag = 2*row;
@@ -300,7 +309,7 @@
 -(void) addSpecialDay: (id) sender
 {
    
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSDate date],@"Love", nil];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSDate date],@"Love", nil];
     [self.specials addObject:dict];
     
     NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_tableView numberOfRowsInSection:1]) inSection:1];
@@ -387,7 +396,6 @@
     }
     
      NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_tableView numberOfRowsInSection:1] - 1) inSection:1];
-
     NSInteger indexSpecial = lastIndexPath.row-1;
     [self.specials removeObjectAtIndex:indexSpecial];
     
@@ -431,13 +439,42 @@
             
         }else
         {
+            
+            
+            UITextField *endField = (UITextField *)firstResponder;
             NSUInteger prevTag = tag-1;
             UITextField *prevField = (UITextField *)[self.view viewWithTag:prevTag];
+            
+            NSString *title = prevField.text;
+            NSString *content= endField.text;
+            
             if ([((UITextField *)prevField).text isEqualToString:@""]) {
                 [[[UIAlertView alloc]initWithTitle:@"Warning" message:@"Title field not empty" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
                 return;
-                
             }
+
+            NSUInteger indexCell = prevTag/2;
+            NSMutableDictionary *dict = [_specials objectAtIndex:indexCell-1];
+            NSString *oldKey = [[dict allKeys]objectAtIndex:0];
+            [dict removeObjectForKey:oldKey];
+            
+            NSDate *date = [[FunctionObject sharedInstance] dateFromString:content];
+            [dict setValue:date forKey:title];
+            
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:indexCell inSection:1];
+            FriendInfoCell *cell = (FriendInfoCell *)[_tableView cellForRowAtIndexPath:indexPath];
+            
+            
+            cell.lbTitle.text = title;
+            cell.lbContent.text = content;
+            
+            cell.lbTitle.hidden = NO;
+            cell.lbContent.hidden = NO;
+            
+            prevField.hidden = YES;
+            endField.hidden = YES;
+            
+            
             [firstResponder resignFirstResponder];
         }
     }

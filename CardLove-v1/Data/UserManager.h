@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+#define kAccID          @"accID"
 #define kAccDisplayName @"accDisplayName"
 #define kAccName        @"accName"
 #define kAccPassword    @"accPassword"
@@ -19,6 +20,7 @@
 
 @interface UserManager : NSObject
 
+@property (strong, nonatomic) NSString *accID;
 @property (strong, nonatomic) NSString *displayName;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *imgAvata;
