@@ -63,21 +63,26 @@ typedef void (^FinishBlock)();
     
     UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFriendView)];
     self.navigationItem.rightBarButtonItem = btnAdd;
-}
-
--(void) viewDidAppear:(BOOL)animated
-{
+    
+    
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeAnnularDeterminate;
     hud.labelText = @"Loading";
     
-//    [[FriendsManager sharedManager] loadFriends];
     NSString *userID = [[UserManager sharedInstance] accID];
     [[FriendsManager sharedManager] loadFriendsFromURLbyUser:userID completion:^(BOOL success, NSError *error) {
         [hud hide:YES];
         [_tableView reloadData];
     }];
     
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    NSString *userID = [[UserManager sharedInstance] accID];
+    [[FriendsManager sharedManager] loadFriendsFromURLbyUser:userID completion:^(BOOL success, NSError *error) {
+        [_tableView reloadData];
+    }];
     [super viewDidAppear:animated];
 }
 
@@ -265,6 +270,7 @@ typedef void (^FinishBlock)();
 {
     NSLog(@"Chat %@", indexPath);
     ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
+    chatVC.friendChatting = [[[FriendsManager sharedManager] friendsList] objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:chatVC animated:YES];
 }
 
