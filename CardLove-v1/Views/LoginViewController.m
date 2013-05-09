@@ -16,6 +16,7 @@
 #import "NKApiClient.h"
 #import "JSONKit.h"
 #import "UserManager.h"
+#import "FriendsManager.h"
 
 @interface LoginViewController ()
 
@@ -196,6 +197,7 @@
         [[HMGLTransitionManager sharedTransitionManager] setTransition:_transition];
         [[HMGLTransitionManager sharedTransitionManager] dismissModalViewController:self];
     }];
+    
 }
 -(void) loginFailed
 {

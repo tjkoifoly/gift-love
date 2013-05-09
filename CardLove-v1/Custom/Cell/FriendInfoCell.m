@@ -13,6 +13,14 @@
 @synthesize lbContent,lbTitle;
 @synthesize delegate;
 
+-(id) initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder]) {
+        
+        
+    }
+    return self;
+}
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -31,7 +39,7 @@
 
 -(void) awakeFromNib
 {
-    self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_middle.png"]];
+    
 
 }
 

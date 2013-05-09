@@ -40,7 +40,7 @@
 }
 
 - (void)loadFriends {
-    _friendsList = [NSKeyedUnarchiver unarchiveObjectWithFile:_path] ;
+    //_friendsList = [NSKeyedUnarchiver unarchiveObjectWithFile:_path] ;
     if (!_friendsList) {
         _friendsList = [NSMutableArray array];
     }

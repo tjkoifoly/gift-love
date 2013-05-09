@@ -64,16 +64,7 @@ typedef void (^FinishBlock)();
     UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFriendView)];
     self.navigationItem.rightBarButtonItem = btnAdd;
     
-    
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeAnnularDeterminate;
-    hud.labelText = @"Loading";
-    
-    NSString *userID = [[UserManager sharedInstance] accID];
-    [[FriendsManager sharedManager] loadFriendsFromURLbyUser:userID completion:^(BOOL success, NSError *error) {
-        [hud hide:YES];
-        [_tableView reloadData];
-    }];
+    [self performSelector:@selector(reloadFriend) withObject:nil afterDelay:0.55];
     
 }
 
@@ -84,6 +75,19 @@ typedef void (^FinishBlock)();
         [_tableView reloadData];
     }];
     [super viewDidAppear:animated];
+}
+
+-(void) reloadFriend
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeAnnularDeterminate;
+    hud.labelText = @"Loading";
+    
+    NSString *userID = [[UserManager sharedInstance] accID];
+    [[FriendsManager sharedManager] loadFriendsFromURLbyUser:userID completion:^(BOOL success, NSError *error) {
+        [hud hide:YES];
+        [_tableView reloadData];
+    }];
 }
 
 -(void) addFriendView
@@ -145,6 +149,8 @@ typedef void (^FinishBlock)();
         drawerView.delegate = self;
         
         cell.drawerView = drawerView;
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
     
     //cell.delegate = self;

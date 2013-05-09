@@ -240,7 +240,8 @@
     {
         UITableViewCell *firstCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FirstCellFI"];
         firstCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        firstCell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_note.png"]];
+        //firstCell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_note.png"]];
+        firstCell.backgroundColor = [UIColor lightGrayColor];
         
         EGOImageView *imvAvatar = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"DefaultImageGrid.png"]];
         imvAvatar.frame = CGRectMake(20, 5, 80, 80);
@@ -260,7 +261,7 @@
             imvAvatar.imageURL = [NSURL URLWithString:_currentFriend.fAvatarLink];
         }
         
-        UILabel *lbName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 189, 21)];
+        UILabel *lbName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 189, 25)];
         lbName.center = CGPointMake(206, 22);
         UIFont *font = [UIFont fontWithName:@"Cochin" size:18];
         [lbName setFont:font];
@@ -268,7 +269,7 @@
         lbName.backgroundColor = [UIColor clearColor];
         [firstCell addSubview:lbName];
         
-        UILabel *lbStatus = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 189, 21)];
+        UILabel *lbStatus = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 189, 25)];
         lbStatus.center = CGPointMake(206, 52);
         [lbStatus setFont:font];
         lbStatus.text = _currentFriend.displayName;
@@ -278,7 +279,7 @@
         switch ([_currentFriend.fStatus intValue]) {
             case FriendRequest:
             {
-                lbStatus.textColor = [UIColor darkGrayColor];
+                lbStatus.textColor = [UIColor orangeColor];
                 lbStatus.text = @"Friend requesting";
             }
                 break;
@@ -303,6 +304,7 @@
         
         cell = (FriendInfoCell *)[self loadReusableTableViewCellFromNibNamed:@"FriendInfoCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        //cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_middle.png"]];
     }
     cell.btnDelete.hidden = YES;
     cell.txtTitle.hidden = YES;
