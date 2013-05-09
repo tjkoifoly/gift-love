@@ -69,12 +69,13 @@ typedef void (^FinishBlock)();
     hud.mode = MBProgressHUDModeAnnularDeterminate;
     hud.labelText = @"Loading";
     
-    [[FriendsManager sharedManager] loadFriends];
+//    [[FriendsManager sharedManager] loadFriends];
     NSString *userID = [[UserManager sharedInstance] accID];
     [[FriendsManager sharedManager] loadFriendsFromURLbyUser:userID completion:^(BOOL success, NSError *error) {
         [hud hide:YES];
+        [_tableView reloadData];
     }];
-    [_tableView reloadData];
+    
     [super viewDidAppear:animated];
 }
 

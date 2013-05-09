@@ -8,12 +8,18 @@
 
 #import "AddFriendViewController.h"
 #import "SearchFriendCell.h"
+#import "NKApiClient.h"
+#import "AFNetworking.h"
+#import "JSONKit.h"
+#import "UserManager.h"
 
 @interface AddFriendViewController ()
 
 @end
 
 @implementation AddFriendViewController
+
+@synthesize result  = _result;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,6 +54,18 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendFriendRequest:) name:kNotificationSendFriendRequest object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cancelFriendRequest:) name:kNotificationCancelFriendRequest object:nil];
+    
+    if (!_result) {
+        _result = [[NSMutableArray alloc] init];
+    }
+    
+    NSString *userID = [[UserManager sharedInstance] accID];
+    NSDictionary*dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                               userID, @"finderID", nil];
+    [self loadResultWithParams:dictParams];
+    
 }
 
 -(void) doneAction
@@ -68,11 +86,15 @@
 }
 
 - (void)viewDidUnload {
+    [self setResult:nil];
     [self setBtnSelect:nil];
     [self setTxtFindWord:nil];
     [self setTableView:nil];
     [[NSNotificationCenter defaultCenter ] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter ] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter ] removeObserver:self name:kNotificationCancelFriendRequest object:nil];
+    [[NSNotificationCenter defaultCenter ] removeObserver:self name:kNotificationSendFriendRequest object:nil];
+
     [self setViewBack:nil];
     [self setImvBack:nil];
     [self setImvTxtBack:nil];
@@ -82,7 +104,7 @@
 
 - (IBAction)selectClicked:(id)sender {
     NSArray * arr = [[NSArray alloc] init];
-    arr = [NSArray arrayWithObjects:@"User name", @"Email",nil];
+    arr = [NSArray arrayWithObjects:@"username", @"email",nil];
     if(dropDown == nil) {
         CGFloat f = 80;
         dropDown = [[NIDropDown alloc]showDropDown:sender :&f :arr :@"up"];
@@ -108,7 +130,39 @@
     [_txtFindWord resignFirstResponder];
 }
 - (IBAction)find:(id)sender {
+    
+    NSString *titleSearch = _btnSelect.titleLabel.text;
+    NSString *contentSearch = _txtFindWord.text;
+    NSString *userID = [[UserManager sharedInstance] accID];
+    NSDictionary*dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                               userID, @"finderID",
+                               contentSearch, titleSearch,
+                               nil];
+    
+    [self loadResultWithParams:dictParams];
     [self resignKeyboard];
+}
+
+-(void) loadResultWithParams: (NSDictionary *)dictParams
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeAnnularDeterminate;
+    hud.labelText = @"Loading";
+    
+    [[NKApiClient shareInstace] postPath:@"find_friends.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        self.result = [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Friend = %@", _result);
+        [self.tableView reloadData];
+        
+        [hud hide:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+        [hud hide:YES];
+        NSLog(@"HTTP ERROR = %@", error);
+        
+    }];
 }
 
 #pragma mark - TableView
@@ -119,7 +173,7 @@
 }
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return [_result count];
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -141,13 +195,9 @@
         NSLog(@"init cell %@",  [cell reuseIdentifier]);
     }
     
-    Friend *f1 = [[Friend alloc] init];
-    f1.displayName = @"Cong Nguyen Chi";
-    f1.userName = @"foly01";
-    
+    id person = [_result objectAtIndex:indexPath.row];
     cell.imvAvata.image =[UIImage imageNamed:@"noavata.png"];
-    cell.friendObject = f1;
-    [cell reloadCell];
+    cell.lbName.text = [person valueForKey:kAccName];
     
     return cell;
     
@@ -200,6 +250,29 @@
     CGRect frame = v.frame;
     frame.origin.y += height;
     [v setFrame:frame];
+}
+
+-(void) sendFriendRequest: (NSNotification *) notification
+{
+    NSLog(@"Object = %@", notification.object);
+    SearchFriendCell *cell = (SearchFriendCell *) notification.object;
+    NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
+    NSInteger row = indexPath.row;
+    
+    id object = [_result objectAtIndex:row];
+    NSLog(@"Send to : %@",object);
+    
+}
+
+-(void) cancelFriendRequest: (NSNotification *) notification
+{
+    NSLog(@"Object = %@", notification.object);
+    SearchFriendCell *cell = (SearchFriendCell *) notification.object;
+    NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
+    NSInteger row = indexPath.row;
+    
+    id object = [_result objectAtIndex:row];
+    NSLog(@"Cancel to : %@",object);
 }
 
 @end

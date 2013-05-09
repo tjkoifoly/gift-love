@@ -48,6 +48,11 @@
 #define kNotificationSendGiftToFriend   @"NotificationSendGiftToFriend"
 #define kNotificationSignUpSuccessful @"NotificaionSignUpSuccessful" 
 
+#define kNotificationSendFriendRequest   @"NotificationSendFriendRequest"
+#define kNotificationCancelFriendRequest   @"NotificationCancelFriendRequest"
+#define kNotificationAccpetFriendRequest  @"NotificationAccpetFriendRequest"
+#define kNotificationDenyFriendRequest   @"NotificationDenyFriendRequest"
+
 #define kGiftPaper      @"gift-paper"
 #define kGiftBG         @"gift-bg"
 #define kGiftFrame      @"gift-frame"

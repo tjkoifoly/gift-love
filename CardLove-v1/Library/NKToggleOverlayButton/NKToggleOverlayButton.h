@@ -48,6 +48,8 @@ typedef void (^NKToggleActionBlock)(NKToggleOverlayButton *button);
 // analogous to the setImage:forState: method of UIButton
 - (void)setOnImage:(UIImage *)image forState:(UIControlState)state;
 - (void)setOffImage:(UIImage *)image forState:(UIControlState)state;
+-(void) changeToState: (BOOL) state;
+
 
 // Title label
 @property (nonatomic, retain) UILabel *titleLabel;

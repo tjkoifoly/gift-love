@@ -595,10 +595,8 @@
     [self.birthdayDatePicker setDate:[[UserManager sharedInstance] birthday] animated:NO];
    
     NSString *strURL = [[UserManager sharedInstance] imgAvata];
-    if (!strURL) {
-        //[self.photoButton setImage:[UIImage imageNamed:@"noavata.png"] forState:UIControlStateNormal];
-    }else
-    {
+    
+    if (strURL != (id)[NSNull null] && strURL.length != 0) {
         NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
         UIImage *photo = [UIImage imageWithData:dataImage];
         if (photo) {
@@ -606,9 +604,13 @@
             [self.photoButton setImage:self.photo forState:UIControlStateNormal];
         }else
         {
-            //[self.photoButton setImage:[UIImage imageNamed:@"noavata.png"] forState:UIControlStateNormal];
+            
         }
+        
+    }else{
+        
     }
+
     
 }
 - (void)saveInfoWithAvatar: (NSString *)avatar usage: (NSString *)usage completion:(void (^)(BOOL success, NSError *error))completionBlock {

@@ -8,9 +8,8 @@
 
 #import "SearchFriendCell.h"
 
-@implementation SearchFriendCell
 
-@synthesize friendObject =_friendObject;
+@implementation SearchFriendCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -28,39 +27,44 @@
     // Configure the view for the selected state
 }
 
--(void) reloadCell
+-(id) initWithCoder:(NSCoder *)aDecoder;
 {
-    
-    if (_friendObject) {
-        self.lbName.text = _friendObject.displayName;
+    if (self = [super initWithCoder:aDecoder]) {
+        
+        self.btnFriend = [[NKToggleOverlayButton alloc] init];
+        self.btnFriend.frame = CGRectMake(0, 0, 27, 31);
+        self.btnFriend.center = CGPointMake(286, 25);
+        [self.btnFriend setOnImage:[UIImage imageNamed:@"Check (Selected).png"] forState:UIControlStateNormal];
+        [self.btnFriend setOnImage:[UIImage imageNamed:@"Close Safari Page Button.png"] forState:UIControlStateHighlighted];
+        [self.btnFriend setOffImage:[UIImage imageNamed:@"Check (Unslected).png"] forState:UIControlStateNormal];
+        [self.btnFriend setOffImage:[UIImage imageNamed:@"Check (Selected).png"] forState:UIControlStateHighlighted];
+        self.btnFriend.overlayOnText = @"Friend request";
+        self.btnFriend.overlayOffText = @"Unfriend";
+        
+        id weakSelf = (typeof (self)) self;
+        
         self.btnFriend.toggleOnBlock = ^(NKToggleOverlayButton *button) {
             
-            //[[NSNotificationCenter defaultCenter] postNotificationName:@"" object:nil];
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationSendFriendRequest object: weakSelf];
         };
         self.btnFriend.toggleOffBlock = ^(NKToggleOverlayButton *button) {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationSendFriendRequest object: weakSelf];
             NSLog(@"Unfriend");
         };
 
+        
+        [self addSubview:self.btnFriend];
+
     }
+    return self;
 }
 
 -(void) awakeFromNib
 {
     //
     
-    self.btnFriend = [[NKToggleOverlayButton alloc] init];
-    self.btnFriend.frame = CGRectMake(0, 0, 27, 31);
-    self.btnFriend.center = CGPointMake(286, 25);
-    [self.btnFriend setOnImage:[UIImage imageNamed:@"Check (Selected).png"] forState:UIControlStateNormal];
-    [self.btnFriend setOnImage:[UIImage imageNamed:@"Close Safari Page Button.png"] forState:UIControlStateHighlighted];
-    [self.btnFriend setOffImage:[UIImage imageNamed:@"Check (Unslected).png"] forState:UIControlStateNormal];
-    [self.btnFriend setOffImage:[UIImage imageNamed:@"Check (Selected).png"] forState:UIControlStateHighlighted];
-    self.btnFriend.overlayOnText = @"Friend request";
-    self.btnFriend.overlayOffText = @"Unfriend";
-        
-     [self addSubview:self.btnFriend];
-
+   
 }
 
 - (NSString *) reuseIdentifier {

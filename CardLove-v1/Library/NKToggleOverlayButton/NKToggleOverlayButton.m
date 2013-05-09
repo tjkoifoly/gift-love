@@ -192,6 +192,12 @@ toggleOffBlock = _toggleOffBlock;
     [self animateOverlayView];
 }
 
+-(void) changeToState: (BOOL) state
+{
+    self.isOn = state;
+    [self assignButtonImagesForStates];
+}
+
 #pragma mark -
 #pragma mark Animation
 - (void)animateOverlayView

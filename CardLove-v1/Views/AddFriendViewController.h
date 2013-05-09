@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "NIDropDown.h"
 #import "UIViewController+NibCells.h"
+#import "MBProgressHUD.h"
 
 @interface AddFriendViewController : UIViewController <NIDropDownDelegate, UITableViewDataSource, UITableViewDelegate>
 {
@@ -22,5 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imvBack;
 @property (weak, nonatomic) IBOutlet UIImageView *imvTxtBack;
 @property (weak, nonatomic) IBOutlet UIButton *btnSearch;
+
+@property (strong, nonatomic) NSMutableArray *result;
 
 @end
