@@ -9,13 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "FriendsManager.h"
 #import "NKToggleOverlayButton.h"
+#import "EGOImageView.h"
+#import <QuartzCore/QuartzCore.h>
 
-@interface SearchFriendCell : UITableViewCell
+@interface SearchFriendCell : UITableViewCell <NKToggleOverlayButtonDelegate>
 
-@property (weak, nonatomic) IBOutlet UIImageView *imvAvata;
+@property (weak, nonatomic) IBOutlet EGOImageView *imvAvata;
 @property (weak, nonatomic) IBOutlet UILabel *lbName;
 @property (strong, nonatomic) IBOutlet NKToggleOverlayButton *btnFriend;
 
--(void) reloadCell;
-
+-(void) becomFriend;
+- (void)setPhoto:(NSString*)photo;
+- (void)willMoveToSuperview:(UIView *)newSuperview;
 @end

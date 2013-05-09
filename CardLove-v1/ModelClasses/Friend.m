@@ -32,7 +32,7 @@
         self.sex = [dictionary objectForKey:kAccGender];
         self.birthday = [dictionary objectForKey:kAccBirthday];
         self.phone = [dictionary objectForKey:kAccPhone];
-
+        self.fStatus = [dictionary objectForKey:kFriendStatus];
     }
     return self;
 }
@@ -49,6 +49,7 @@
     [aCoder encodeObject:self.sex forKey:kAccGender];
     [aCoder encodeObject:self.birthday forKey:kAccBirthday];
     [aCoder encodeObject:self.phone forKey:kAccPhone];
+    [aCoder encodeObject:self.fStatus forKey:kFriendStatus];
 }
 
 -(id) initWithCoder:(NSCoder *)aDecoder
@@ -64,6 +65,7 @@
         self.phone = [aDecoder decodeObjectForKey:kAccPhone];
         self.fID = [aDecoder decodeObjectForKey:kAccID];
         self.fAvatarLink = [aDecoder decodeObjectForKey:kaccAvata];
+        self.fStatus =  [aDecoder decodeObjectForKey:kFriendStatus];
     }
     
     return self;

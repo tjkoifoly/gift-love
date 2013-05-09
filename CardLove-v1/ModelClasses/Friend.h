@@ -19,6 +19,7 @@
 @property (strong, nonatomic) NSString *sex;
 @property (strong, nonatomic) NSString *birthday;
 @property (strong, nonatomic) NSString *phone;
+@property (strong, nonatomic) NSString *fStatus;
 
 -(id) initWithDictionary :(NSDictionary *) dictionary;
 

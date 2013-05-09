@@ -17,6 +17,7 @@
 #import "UANoisyGradientBackground.h"
 #import "UAGradientBackground.h"
 #import "UserManager.h"
+#import "UIImageView+AFNetworking.h"
 
 #import "FriendInfoViewController.h"
 
@@ -149,7 +150,12 @@ typedef void (^FinishBlock)();
     
     cell.textLabel.text = cF.displayName;
     cell.detailTextLabel.text = cF.userName;
-    cell.imageView.image = [UIImage imageNamed:@"avarta.jpg"];
+    
+    [cell.imageView setImage:[UIImage imageNamed:@"noavata.png"]];
+    NSString *avatarLink = cF.fAvatarLink;
+    if (avatarLink!= (id)[NSNull null] && avatarLink.length != 0) {
+       [cell.imageView setImageWithURL:[NSURL URLWithString:avatarLink] placeholderImage:[UIImage imageNamed:@"noavata.png"]];
+    }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.badgeString = [NSString stringWithFormat:@"%i", 2];

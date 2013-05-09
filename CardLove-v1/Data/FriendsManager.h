@@ -22,5 +22,8 @@
 - (void) addFriend : (Friend *) fO;
 - (void) removeFriend :(Friend *) fO;
 - (void) removeFriendAtIndex: (NSUInteger) index;
+-(id) findFriendByName: (NSString *) fName;
+- (BOOL)personExists:(NSString *)key withValue:(NSString *)value ;
+-(id) friendByName: (NSString *)fName;
 
 @end

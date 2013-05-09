@@ -107,8 +107,49 @@
     
 }
 
+-(id) findFriendByName: (NSString *) fName
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", kAccName , fName];
+    NSMutableArray *result = [NSMutableArray arrayWithArray:_friendsList];
+    [result filterUsingPredicate:predicate];
+    
+    if ([result count] == 0) {
+        return nil;
+    }
+    return [result objectAtIndex:0];
+    
+}
 
+- (BOOL)personExists:(NSString *)key withValue:(NSString *)value {
+    
+    NSPredicate *predExists = [NSPredicate predicateWithFormat:
+                               @"%K MATCHES[c] %@", key, value];
+    NSUInteger index = [self.friendsList indexOfObjectPassingTest:
+                        ^(id obj, NSUInteger idx, BOOL *stop) {
+                            return [predExists evaluateWithObject:obj];
+                        }];
+    
+    if (index == NSNotFound) {
+        return NO;
+    }
+    
+    return YES;
+}
 
+-(id) friendByName: (NSString *)fName
+{
+    
+    for (Friend *f in _friendsList)
+    {
+
+        if ([f.userName isEqualToString:fName]) {
+            return f;
+        }else{
+            continue;
+        }
+    }
+    return nil;
+}
 
 
 @end

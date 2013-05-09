@@ -446,6 +446,7 @@
 		66A327EC16DA811000AB3767 /* GHRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327E916DA811000AB3767 /* GHRootViewController.m */; };
 		66A445B41725A7AE00555626 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 66A445B31725A7AE00555626 /* Settings.bundle */; };
 		66AA4F7416FDC45D00F0DE4A /* UIView+Selection.m in Sources */ = {isa = PBXBuildFile; fileRef = 66AA4F7316FDC45D00F0DE4A /* UIView+Selection.m */; };
+		66AA9F5B173B897600D2E484 /* tick-green.png in Resources */ = {isa = PBXBuildFile; fileRef = 66AA9F5A173B897600D2E484 /* tick-green.png */; };
 		66B2C55B17112C3800C51CEB /* GiftElementsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C55A17112C3800C51CEB /* GiftElementsManager.m */; };
 		66B2C55E17112C5700C51CEB /* GiftElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C55D17112C5700C51CEB /* GiftElement.m */; };
 		66B2C56317112FE400C51CEB /* UIImage+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C56217112FE400C51CEB /* UIImage+GIF.m */; };
@@ -1404,6 +1405,7 @@
 		66A445B31725A7AE00555626 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		66AA4F7216FDC45D00F0DE4A /* UIView+Selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Selection.h"; path = "Custom/CustomView/UIView+Selection.h"; sourceTree = "<group>"; };
 		66AA4F7316FDC45D00F0DE4A /* UIView+Selection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Selection.m"; path = "Custom/CustomView/UIView+Selection.m"; sourceTree = "<group>"; };
+		66AA9F5A173B897600D2E484 /* tick-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tick-green.png"; sourceTree = "<group>"; };
 		66B2C55917112C3800C51CEB /* GiftElementsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiftElementsManager.h; path = Data/GiftElementsManager.h; sourceTree = "<group>"; };
 		66B2C55A17112C3800C51CEB /* GiftElementsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GiftElementsManager.m; path = Data/GiftElementsManager.m; sourceTree = "<group>"; };
 		66B2C55C17112C5700C51CEB /* GiftElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiftElement.h; path = ModelClasses/GiftElement.h; sourceTree = "<group>"; };
@@ -3638,6 +3640,7 @@
 		66F5A01C1711B51D00F30D6A /* _icons */ = {
 			isa = PBXGroup;
 			children = (
+				66AA9F5A173B897600D2E484 /* tick-green.png */,
 				66DDC39517390EE700595838 /* btn-accept-normal.png */,
 				66DDC39617390EE700595838 /* btn-accept-pressed.png */,
 				66DDC39717390EE700595838 /* btn-deny-normal.png */,
@@ -4349,6 +4352,7 @@
 				66DDC3A417391B5700595838 /* LionDenSearch-button.png in Resources */,
 				66DDC3AE17392C6100595838 /* FriendInfoViewController.xib in Resources */,
 				66DDC3B3173930B500595838 /* FriendInfoCell.xib in Resources */,
+				66AA9F5B173B897600D2E484 /* tick-green.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

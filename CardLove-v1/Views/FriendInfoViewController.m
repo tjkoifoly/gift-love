@@ -219,6 +219,7 @@
         imvAvatar.layer.masksToBounds = YES;
         
         [firstCell addSubview:imvAvatar];
+        
         if (_currentFriend.fAvatarLink != (id)[NSNull null] && _currentFriend.fAvatarLink.length != 0) {
             imvAvatar.imageURL = [NSURL URLWithString:_currentFriend.fAvatarLink];
         }
@@ -231,6 +232,31 @@
         lbName.text = _currentFriend.displayName;
         lbName.backgroundColor = [UIColor clearColor];
         [firstCell addSubview:lbName];
+        
+        UILabel *lbStatus = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 189, 21)];
+        lbStatus.center = CGPointMake(206, 52);
+        [lbStatus setFont:font];
+        lbStatus.text = _currentFriend.displayName;
+        lbStatus.backgroundColor = [UIColor clearColor];
+        [firstCell addSubview:lbStatus];
+
+        switch ([_currentFriend.fStatus intValue]) {
+            case FriendRequest:
+            {
+                lbStatus.textColor = [UIColor darkGrayColor];
+                lbStatus.text = @"Friend requesting";
+            }
+                break;
+            case FriendSuccessful:
+            {
+                lbStatus.textColor = [UIColor greenColor];
+                lbStatus.text = @"Friend OK";
+            }
+                break;
+                
+            default:
+                break;
+        }
 
         return firstCell;
         
@@ -264,7 +290,7 @@
             }else if (row == 4)
             {
                 cell.lbTitle.text = @"Phone";
-                cell.lbContent.text = _currentFriend.phone;
+                cell.lbContent.text = _currentFriend.phone != (id)[NSNull null]?_currentFriend.phone:@"";
             }
         }
             break;
@@ -497,8 +523,6 @@
     if ([firstResponder isKindOfClass:[UITextField class]]) {
         ((UITextField *)firstResponder).text = [[FunctionObject sharedInstance] stringFromDate:date];
     }
-
-    
 }
 
 - (void) calendarMonthView:(TKCalendarMonthView*)monthView monthDidChange:(NSDate*)month animated:(BOOL)animated

@@ -68,13 +68,15 @@
 #define kAccPhone       @"accPhone"
 #define kaccAvata       @"accImageAvata"
 
+#define kFriendStatus @"rsStatus"
+
 typedef enum {
     NavigationBarModeEdit,
     NavigationBarModeView
 }NavigationBarMode;
 
 typedef enum {
-    FriendRequest,
+    FriendRequest = 1,
     FriendSuccessful,
     Rejected
 }FriendType;

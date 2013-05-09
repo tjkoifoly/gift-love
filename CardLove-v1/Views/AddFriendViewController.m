@@ -42,7 +42,7 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnBack];
     
     
-    UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction)];
+    UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(doneAction)];
     self.navigationItem.rightBarButtonItem = btnDone;
     
     self.navigationItem.title = @"Add friends";
@@ -71,7 +71,10 @@
 -(void) doneAction
 {
     NSLog(@"Done");
-    [self backPreviousView];
+    NSString *userID = [[UserManager sharedInstance] accID];
+    NSDictionary*dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                               userID, @"finderID", nil];
+    [self loadResultWithParams:dictParams];
 }
 
 - (void)didReceiveMemoryWarning
@@ -127,7 +130,8 @@
 
 -(IBAction) resignKeyboard
 {
-    [_txtFindWord resignFirstResponder];
+    [self find:self.btnSearch];
+   
 }
 - (IBAction)find:(id)sender {
     
@@ -140,7 +144,7 @@
                                nil];
     
     [self loadResultWithParams:dictParams];
-    [self resignKeyboard];
+    [_txtFindWord resignFirstResponder];
 }
 
 -(void) loadResultWithParams: (NSDictionary *)dictParams
@@ -196,9 +200,50 @@
     }
     
     id person = [_result objectAtIndex:indexPath.row];
-    cell.imvAvata.image =[UIImage imageNamed:@"noavata.png"];
-    cell.lbName.text = [person valueForKey:kAccName];
+    NSString *name = [person valueForKey:kAccName];
+    cell.lbName.text = name;
     
+    Friend *obj = [[FriendsManager sharedManager] friendByName:name];
+    NSLog(@"STATUS = %@", obj.fStatus);
+    
+    if (!obj) {
+        [cell.btnFriend changeToState:NO];
+        cell.btnFriend.hidden = NO;
+        UIView *imv = [cell viewWithTag:999];
+        if (imv) {
+            imv.hidden = YES;
+        }
+        
+    }else{
+        
+        switch ([obj.fStatus intValue]) {
+            case FriendRequest:
+            {
+                [cell.btnFriend changeToState:YES];
+                cell.btnFriend.hidden = NO;
+                UIView *imv = [cell viewWithTag:999];
+                if (imv) {
+                    imv.hidden = YES;
+                }
+                
+            }
+                break;
+            case FriendSuccessful:
+            {
+                [cell becomFriend];
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    NSString *avatarLink = [person valueForKey:kaccAvata];
+    if (avatarLink!= (id)[NSNull null] && avatarLink.length != 0) {
+        [cell setPhoto:avatarLink];
+    }
+
     return cell;
     
 }
@@ -262,6 +307,25 @@
     id object = [_result objectAtIndex:row];
     NSLog(@"Send to : %@",object);
     
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [[UserManager sharedInstance] accID],@"sourceID",
+                            [object valueForKey:kAccID], @"friendID",
+                            @"send_request", @"usage",
+                            nil];
+    
+    [[NKApiClient shareInstace] postPath:@"add_friend.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject = [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"%@", jsonObject);
+        NSString *userID = [[UserManager sharedInstance] accID];
+        [[FriendsManager sharedManager] loadFriendsFromURLbyUser: userID completion:^(BOOL success, NSError *error) {
+            
+        }];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR : %@", error);
+    }];
+    
 }
 
 -(void) cancelFriendRequest: (NSNotification *) notification
@@ -273,6 +337,25 @@
     
     id object = [_result objectAtIndex:row];
     NSLog(@"Cancel to : %@",object);
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [[UserManager sharedInstance] accID],@"sourceID",
+                            [object valueForKey:kAccID], @"friendID",
+                            @"cancel_request", @"usage",
+                            nil];
+    
+    [[NKApiClient shareInstace] postPath:@"add_friend.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject = [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"%@", jsonObject);
+        NSString *userID = [[UserManager sharedInstance] accID];
+        [[FriendsManager sharedManager] loadFriendsFromURLbyUser: userID completion:^(BOOL success, NSError *error) {
+            
+        }];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR : %@", error);
+    }];
 }
 
 @end

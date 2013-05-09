@@ -590,12 +590,14 @@
     self.passwordTextField.text = [[UserManager sharedInstance] password];
     self.emailTextField.text = [[UserManager sharedInstance] email];
     [self setGenderWithSex:[[UserManager sharedInstance] sex]];
-    self.phoneTextField.text = [[UserManager sharedInstance] phone];
+    self.phoneTextField.text = [[[UserManager sharedInstance] phone] isEqual:[NSNull null]]?@"": [[UserManager sharedInstance] phone];
     [self setBirthdayWithDate:   [[UserManager sharedInstance] birthday]];
     [self.birthdayDatePicker setDate:[[UserManager sharedInstance] birthday] animated:NO];
    
     NSString *strURL = [[UserManager sharedInstance] imgAvata];
-    
+    if (strURL == (id)[NSNull null]) {
+       strURL = @"";
+    }
     if (strURL != (id)[NSNull null] && strURL.length != 0) {
         NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
         UIImage *photo = [UIImage imageWithData:dataImage];

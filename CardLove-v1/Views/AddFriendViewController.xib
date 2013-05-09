@@ -129,9 +129,10 @@
 						<bool key="IBUIAdjustsFontSizeToFit">YES</bool>
 						<float key="IBUIMinimumFontSize">17</float>
 						<object class="IBUITextInputTraits" key="IBUITextInputTraits">
-							<int key="IBUIReturnKeyType">9</int>
+							<int key="IBUIReturnKeyType">6</int>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
+						<int key="IBUIClearButtonMode">1</int>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">1</int>
 							<double key="pointSize">14</double>
@@ -148,7 +149,6 @@
 						<string key="NSFrame">{{275, 368}, {30, 30}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -437,20 +437,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">AddFriendViewController</string>
 					<string key="superclassName">UIViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="find:">id</string>
-						<string key="selectClicked:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="find:">
-							<string key="name">find:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="selectClicked:">
-							<string key="name">selectClicked:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="btnSearch">UIButton</string>
 						<string key="btnSelect">UIButton</string>

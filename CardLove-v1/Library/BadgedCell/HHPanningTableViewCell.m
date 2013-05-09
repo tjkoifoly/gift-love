@@ -200,7 +200,6 @@ static HHPanningTableViewCellDirection HHOppositeDirection(HHPanningTableViewCel
 }
 
 
-
 #pragma mark -
 #pragma mark Initialization
 
@@ -209,6 +208,7 @@ static HHPanningTableViewCellDirection HHOppositeDirection(HHPanningTableViewCel
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
 
 	if (self != nil) {
+        
         [self configureSelf];
 		[self panningTableViewCellInit];
         
@@ -222,6 +222,8 @@ static HHPanningTableViewCellDirection HHOppositeDirection(HHPanningTableViewCel
 	self = [super initWithCoder:coder];
 
 	if (self != nil) {
+
+
         [self configureSelf];
 		[self panningTableViewCellInit];
         

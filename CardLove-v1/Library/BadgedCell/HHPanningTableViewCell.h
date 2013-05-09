@@ -29,6 +29,8 @@
 #import <UIKit/UIKit.h>
 #import "TDBadgedCell.h"
 
+@class EGOImageView;
+
 @class HHPanningTableViewCell;
 @protocol HHPanningTableViewCellDelegate;
 
@@ -41,6 +43,9 @@ typedef enum {
 typedef void (^ActionBlock)(void);
 
 @interface HHPanningTableViewCell : UITableViewCell
+{
+
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString*)reuseIdentifier;
 
