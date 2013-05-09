@@ -13,6 +13,11 @@
 #import "FunctionObject.h"
 #import "BButton.h"
 #import <QuartzCore/QuartzCore.h>
+#import "NKApiClient.h"
+#import "AFNetworking.h"
+#import "JSONKit.h"
+#import "MBProgressHUD.h"
+#import "UserManager.h"
 
 #define kbHeightPortrait 254.000000
 
@@ -94,6 +99,14 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+    
+    NSString *userID = [[UserManager sharedInstance] accID];
+    NSDictionary*dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                               userID, @"sourceID",
+                               _currentFriend.fID, @"friendID",
+                               nil];
+    [self loadResultWithParams:dictParams];
+
 }
 -(void) backPreviousView
 {
@@ -114,6 +127,29 @@
     [[NSNotificationCenter defaultCenter ] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [super viewDidUnload];
 }
+
+-(void) loadResultWithParams: (NSDictionary *)dictParams
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeAnnularDeterminate;
+    hud.labelText = @"Loading";
+    
+    [[NKApiClient shareInstace] postPath:@"list_special_days.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSArray *jsonArray = [[JSONDecoder decoder] objectWithData:responseObject];
+        [self.specials addObjectsFromArray:jsonArray];
+        NSLog(@"JSON Friend = %@", _specials);
+        [self.tableView reloadData];
+        
+        [hud hide:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [hud hide:YES];
+        NSLog(@"HTTP ERROR = %@", error);
+        
+    }];
+}
+
 
 #pragma mark - Load View
 -(void) loadSpecialsDayWith: (NSString *)sourceID andFriend: (NSString *) friendID
@@ -224,7 +260,6 @@
             imvAvatar.imageURL = [NSURL URLWithString:_currentFriend.fAvatarLink];
         }
         
-        
         UILabel *lbName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 189, 21)];
         lbName.center = CGPointMake(206, 22);
         UIFont *font = [UIFont fontWithName:@"Cochin" size:18];
@@ -277,7 +312,7 @@
         case 0:
         {
             if (row==1) {
-                cell.lbTitle.text = @"User";
+                cell.lbTitle.text = @"Username";
                 cell.lbContent.text = _currentFriend.userName;
             }else if(row == 2)
             {
@@ -302,19 +337,25 @@
                 cell.lbContent.text = _currentFriend.birthday;
             }else
             {
-                cell.lbTitle.text = [[[_specials objectAtIndex:row-1] allKeys] objectAtIndex:0];
-                cell.lbContent.text = [[FunctionObject sharedInstance] stringFromDate:(NSDate *)[[_specials objectAtIndex:row-1] valueForKey:cell.lbTitle.text]];
                 
-                cell.txtTitle.hidden = NO;
-                cell.txtContent.hidden = NO;
+                id currentObject = [_specials objectAtIndex:row-1];
+                //NSLog(@"Current = %@", currentObject);
+                cell.lbTitle.text = [currentObject valueForKey:kSpecialDayTitle];
+                cell.lbContent.text = [currentObject valueForKey:kSpecialDayDate];
                 
-                cell.lbTitle.hidden = YES;
-                cell.lbContent.hidden = YES;
+//                cell.lbTitle.hidden = YES;
+//                cell.lbContent.hidden = YES;
+//                
+//                cell.txtTitle.hidden = NO;
+//                cell.txtContent.hidden = NO;
+                
                 cell.txtTitle.tag = 2*row;
                 cell.txtContent.tag = 2*row + 1;
+                
                 cell.txtTitle.inputAccessoryView = self.keyboardToolbar;
                 cell.txtContent.inputAccessoryView = self.keyboardToolbar;
                 cell.txtContent.inputView = self.monthViewCalendar;
+                
                 cell.delegate = self;
                 cell.btnDelete.hidden = NO;
             }
@@ -338,7 +379,9 @@
 -(void) addSpecialDay: (id) sender
 {
    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSDate date],@"Love", nil];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                 @"",kSpecialDayTitle,
+                                 @"", kSpecialDayDate, nil];
     [self.specials addObject:dict];
     
     NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_tableView numberOfRowsInSection:1]) inSection:1];
@@ -346,17 +389,51 @@
     [_tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:lastIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
     FriendInfoCell *cell = (FriendInfoCell *)[_tableView cellForRowAtIndexPath:lastIndexPath];
+    
+    cell.lbTitle.hidden = YES;
+    cell.lbContent.hidden = YES;
+    
+    cell.txtTitle.hidden = NO;
+    cell.txtContent.hidden = NO;
+
     [cell.txtTitle becomeFirstResponder];
     [self.tableView scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    
 }
 
--(void) FriendInfoCellOnDelete:(FriendInfoCell *)cell
+-(void) modifyDaysWithParams: (NSDictionary *) params  completion:(void (^)(BOOL success, NSError *error, NSString *result))completionBlock
 {
-    NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
-    NSInteger indexSpecial = indexPath.row-1;
-    [self.specials removeObjectAtIndex:indexSpecial];
-    
-    [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [[NKApiClient shareInstace] postPath:@"add_special_day.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSArray * jsonObject = [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"RESULT = %@", jsonObject);
+        completionBlock(YES, nil, [jsonObject objectAtIndex:0]);
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR : %@", error);
+         completionBlock(NO, nil, @"");
+    }];
+
+}
+
+-(void) friendInfoCellOnDelete:(FriendInfoCell *)cell
+{
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [[UserManager sharedInstance] accID],@"sourceID",
+                            _currentFriend.fID, @"friendID",
+                            @"delete_day", @"usage",
+                            cell.lbTitle.text, kSpecialDayTitle,
+                            cell.lbContent.text, kSpecialDayDate,
+                            nil];
+    [self modifyDaysWithParams:params completion:^(BOOL success, NSError *error, NSString * result) {
+        if ([result isEqualToString:@"Success"]) {
+            NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
+            NSInteger indexSpecial = indexPath.row-1;
+            [self.specials removeObjectAtIndex:indexSpecial];
+            
+            [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+    }];
 }
 
 #pragma mark - Keyboard events
@@ -424,11 +501,16 @@
         
     }
     
-     NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_tableView numberOfRowsInSection:1] - 1) inSection:1];
-    NSInteger indexSpecial = lastIndexPath.row-1;
+    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_tableView numberOfRowsInSection:1] - 1) inSection:1];
+    [self deleteRowAtPath:lastIndexPath];
+}
+
+-(void) deleteRowAtPath: (NSIndexPath *) indexPath
+{
+    NSInteger indexSpecial = indexPath.row-1;
     [self.specials removeObjectAtIndex:indexSpecial];
     
-    [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:lastIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (id)getFirstResponder
@@ -493,18 +575,33 @@
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:indexCell inSection:1];
             FriendInfoCell *cell = (FriendInfoCell *)[_tableView cellForRowAtIndexPath:indexPath];
             
-            
             cell.lbTitle.text = title;
             cell.lbContent.text = content;
             
             cell.lbTitle.hidden = NO;
             cell.lbContent.hidden = NO;
             
+            NSMutableDictionary *mDict = [_specials objectAtIndex:indexPath.row-1];
+            [mDict setValue:title forKey:kSpecialDayTitle];
+            [mDict setValue:content forKey:kSpecialDayDate];
+            
             prevField.hidden = YES;
             endField.hidden = YES;
             
-            
             [firstResponder resignFirstResponder];
+            
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [[UserManager sharedInstance] accID],@"sourceID",
+                                    _currentFriend.fID, @"friendID",
+                                    @"add_day", @"usage",
+                                    title, kSpecialDayTitle,
+                                    content, kSpecialDayDate,
+                                    nil];
+            [self modifyDaysWithParams:params completion:^(BOOL success, NSError *error, NSString *result) {
+                if (![result isEqualToString:@"Success"]) {
+                    [self deleteRowAtPath:indexPath];
+                }
+            }];
         }
     }
 }

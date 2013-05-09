@@ -68,6 +68,9 @@
 #define kAccPhone       @"accPhone"
 #define kaccAvata       @"accImageAvata"
 
+#define kSpecialDayTitle    @"sdTitle"
+#define kSpecialDayDate     @"sdDay"
+
 #define kFriendStatus @"rsStatus"
 
 typedef enum {

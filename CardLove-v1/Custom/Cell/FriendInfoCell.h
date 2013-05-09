@@ -11,7 +11,7 @@
 @protocol FriendInfoCellDelegate <NSObject>
 
 @optional
--(void) FriendInfoCellOnDelete: (FriendInfoCell *) cell;
+-(void) friendInfoCellOnDelete: (FriendInfoCell *) cell;
 
 @end
 @interface FriendInfoCell : UITableViewCell

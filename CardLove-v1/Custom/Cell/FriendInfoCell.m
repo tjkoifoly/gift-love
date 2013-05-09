@@ -39,7 +39,7 @@
     return @"FriendInfoCell";
 }
 - (IBAction)deleteThisCell:(id)sender {
-    [self.delegate FriendInfoCellOnDelete:self];
+    [self.delegate friendInfoCellOnDelete:self];
 }
 
 @end
