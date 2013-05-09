@@ -377,6 +377,7 @@
 		66923A2916FAE928003F589D /* resize.png in Resources */ = {isa = PBXBuildFile; fileRef = 66923A2716FAE928003F589D /* resize.png */; };
 		66923A2A16FAE928003F589D /* resize@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66923A2816FAE928003F589D /* resize@2x.png */; };
 		66923A2E16FB00BF003F589D /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 66923A2D16FB00BF003F589D /* mask.png */; };
+		6694D1C2173C2C0C002D04F2 /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6694D1C1173C2C0C002D04F2 /* UIView+Layout.m */; };
 		669B787E16E9F95A00F4437F /* SSCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 669B787D16E9F95A00F4437F /* SSCollectionViewItem.xib */; };
 		669B78A416E9FA9B00F4437F /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 669B788016E9FA9B00F4437F /* background.png */; };
 		669B78A516E9FA9B00F4437F /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669B788116E9FA9B00F4437F /* background@2x.png */; };
@@ -1326,6 +1327,8 @@
 		66923A2716FAE928003F589D /* resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = resize.png; path = Resources/resize.png; sourceTree = "<group>"; };
 		66923A2816FAE928003F589D /* resize@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "resize@2x.png"; path = "Resources/resize@2x.png"; sourceTree = "<group>"; };
 		66923A2D16FB00BF003F589D /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mask.png; path = ../../PSD/mask.png; sourceTree = "<group>"; };
+		6694D1C0173C2C0C002D04F2 /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
+		6694D1C1173C2C0C002D04F2 /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
 		669B787D16E9F95A00F4437F /* SSCollectionViewItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SSCollectionViewItem.xib; path = ../../Custom/CollectionView/SSCollectionViewItem.xib; sourceTree = "<group>"; };
 		669B788016E9FA9B00F4437F /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		669B788116E9FA9B00F4437F /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
@@ -2392,6 +2395,8 @@
 			children = (
 				661F4E5416E838970005B8F0 /* DDActionHeaderView.h */,
 				661F4E5516E838970005B8F0 /* DDActionHeaderView.m */,
+				6694D1C0173C2C0C002D04F2 /* UIView+Layout.h */,
+				6694D1C1173C2C0C002D04F2 /* UIView+Layout.m */,
 			);
 			name = HeaderView;
 			path = Library/HeaderView;
@@ -4638,6 +4643,7 @@
 				66DDC3A91739285A00595838 /* UIViewController+NibCells.m in Sources */,
 				66DDC3AD17392C6100595838 /* FriendInfoViewController.m in Sources */,
 				66DDC3B11739308200595838 /* FriendInfoCell.m in Sources */,
+				6694D1C2173C2C0C002D04F2 /* UIView+Layout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

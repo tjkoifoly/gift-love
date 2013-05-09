@@ -93,12 +93,16 @@
 	actionPickerGradientLayer_.colors = [NSArray arrayWithObjects:(id)[UIColor grayColor].CGColor, (id)[UIColor darkGrayColor].CGColor, nil];
 	[actionPickerView_.layer addSublayer:actionPickerGradientLayer_];
 	
+    [actionPickerView_ setUserInteractionEnabled:YES];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleActionPickerViewTap:)];
+    tapGesture.numberOfTapsRequired = 1;
+	tapGesture.delegate = self;
+	[self addGestureRecognizer:tapGesture];
+	[tapGesture release];
+    
 	[self addSubview:actionPickerView_];
 	
-	UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleActionPickerViewTap:)];
-	tapGesture.delegate = self;
-	[actionPickerView_ addGestureRecognizer:tapGesture];
-	[tapGesture release];
+	
 		
 	borderGradientHidden_ = NO;	
 }
@@ -122,7 +126,7 @@
 	if (CGRectIsEmpty(self.actionPickerView.frame)) {
 		self.actionPickerView.frame = CGRectMake(self.frame.size.width - 60.0f, 7.0f, 50.0f, 50.0f);        		
 	} else {
-		__block __typeof__(self) blockSelf = self;
+		__unsafe_unretained __typeof__(self) blockSelf = self;
 		[UIView animateWithDuration:0.2 
 						 animations:^{
 							 if (blockSelf.titleLabel.isHidden) {
@@ -200,7 +204,8 @@
 
 - (void)shrinkActionPicker {
     self.titleLabel.hidden = NO;
-    [self setNeedsLayout];
+    [self setNeedsLayoutRecursively];
+    [self layoutIfNeeded];
 }
 
 #pragma mark Accessors
@@ -231,12 +236,27 @@
     }
 }
 
+-(void) expandPicker:(BOOL) on
+{
+    self.titleLabel.hidden = on;
+    [UIView animateWithDuration:0.2
+                     animations:^{
+                         if (on) {
+                             
+                             self.actionPickerView.frame = CGRectMake(10.0f, 7.0f, self.frame.size.width - 20.0f, 50.0f);
+                         } else {
+                             self.actionPickerView.frame = CGRectMake(self.frame.size.width - 60.0f, 7.0f, 50.0f, 50.0f);
+                         }
+                     }];
+}
+
 #pragma mark -
 #pragma mark UITapGestureRecognizer & UIGestureRecognizerDelegate
 
 - (void)handleActionPickerViewTap:(UIGestureRecognizer *)gestureRecognizer {
+    
     self.titleLabel.hidden = !self.titleLabel.isHidden;
-    [self setNeedsLayout];
+    [self setNeedsLayoutRecursively];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
@@ -246,7 +266,7 @@
             return NO;
         }
     }
-        
+    
     return YES;
 }
 

@@ -211,8 +211,31 @@ typedef void (^FinishBlock)();
 
 -(void) itemAction:(id)sender
 {
-    self.actionHeaderView.titleLabel.text = @"Contacts List";
-    [self.actionHeaderView shrinkActionPicker];
+    switch ([sender tag]) {
+        case 1:
+        {
+            BOOL show = !self.actionHeaderView.titleLabel.hidden;
+            [self.actionHeaderView expandPicker:show];
+            NSLog(@"DCM");
+        }
+            break;
+        case 2:
+        {
+            self.actionHeaderView.titleLabel.text = @"Friends List";
+            [self.actionHeaderView shrinkActionPicker];
+        }
+            break;
+        case 3:
+        {
+            self.actionHeaderView.titleLabel.text = @"Friends Request";
+            [self.actionHeaderView shrinkActionPicker];
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
 }
 
 -(void) loadActionHeaderView
@@ -221,6 +244,7 @@ typedef void (^FinishBlock)();
     self.actionHeaderView.titleLabel.text = @"Friends List";
     
     UIButton *mainButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    mainButton.tag = 1;
     [mainButton addTarget:self action:@selector(itemAction:) forControlEvents:UIControlEventTouchUpInside];
     [mainButton setImage:[UIImage imageNamed:@"mainButton"] forState:UIControlStateNormal];
     mainButton.frame = CGRectMake(0.0f, 0.0f, 50.0f, 50.0f);
@@ -228,6 +252,7 @@ typedef void (^FinishBlock)();
     mainButton.center = CGPointMake(25.0f, 25.0f);
     
     UIButton *friendsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    friendsButton.tag = 2;
     [friendsButton addTarget:self action:@selector(itemAction:) forControlEvents:UIControlEventTouchUpInside];
     [friendsButton setImage:[UIImage imageNamed:@"friend-button"] forState:UIControlStateNormal];
     friendsButton.frame = CGRectMake(0.0f, 0.0f, 50.0f, 50.0f);
@@ -235,6 +260,7 @@ typedef void (^FinishBlock)();
     friendsButton.center = CGPointMake(75.0f, 25.0f);
     
     UIButton *contactsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    contactsButton.tag = 3;
     [contactsButton addTarget:self action:@selector(itemAction:) forControlEvents:UIControlEventTouchUpInside];
     [contactsButton setImage:[UIImage imageNamed:@"ContactsList"] forState:UIControlStateNormal];
     contactsButton.frame = CGRectMake(0.0f, 0.0f, 50.0f, 50.0f);

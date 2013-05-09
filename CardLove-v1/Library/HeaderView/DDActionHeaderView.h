@@ -26,6 +26,7 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "UIView+Layout.h"
 
 @interface DDActionHeaderView : UIView <UIGestureRecognizerDelegate> {
 @protected
@@ -44,5 +45,6 @@
 @property(nonatomic, copy) NSArray *items; // Array of UIView subclass instances, will be added into a (DDActionHeaderView's width - 20)px width and 50px height action picker.
 
 - (void)shrinkActionPicker; // Shrink action picker to its minimal size.
+-(void) expandPicker:(BOOL) on;
 @end
 

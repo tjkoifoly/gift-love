@@ -279,7 +279,7 @@
         switch ([_currentFriend.fStatus intValue]) {
             case FriendRequest:
             {
-                lbStatus.textColor = [UIColor orangeColor];
+                lbStatus.textColor = [UIColor yellowColor];
                 lbStatus.text = @"Friend requesting";
             }
                 break;
