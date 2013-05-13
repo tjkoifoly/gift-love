@@ -17,6 +17,7 @@
 #import "JSONKit.h"
 #import "UserManager.h"
 #import "FriendsManager.h"
+#import "FriendsViewController.h"
 
 @interface LoginViewController ()
 
@@ -193,9 +194,14 @@
         appDelegate.overlayView.layer.opacity = 0;
     } completion:^(BOOL finished) {
         appDelegate.overlayView.hidden = YES;
+        
         DoorsTransition *_transition = [[DoorsTransition alloc] init];
         [[HMGLTransitionManager sharedTransitionManager] setTransition:_transition];
         [[HMGLTransitionManager sharedTransitionManager] dismissModalViewController:self];
+        
+//        FriendsViewController *friendsVC = (FriendsViewController *)[appDelegate.revealController contentViewController];
+//        [friendsVC reloadFriend];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadFriendsList object:nil];
     }];
     
 }

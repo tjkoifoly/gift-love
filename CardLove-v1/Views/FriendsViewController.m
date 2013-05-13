@@ -21,12 +21,14 @@
 #import "AFNetworking.h"
 #import "JSONKit.h"
 #import "FriendInfoViewController.h"
+#import "SendGiftViewController.h"
 
 typedef void (^FinishBlock)();
 
 @interface FriendsViewController ()
 {
     NSIndexPath *currentIndexPath;
+    Friend *currentFriend;
 }
 @end
 
@@ -64,7 +66,8 @@ typedef void (^FinishBlock)();
     UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFriendView)];
     self.navigationItem.rightBarButtonItem = btnAdd;
     
-    [self performSelector:@selector(reloadFriend) withObject:nil afterDelay:0.55];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadFriend) name:kNotificationReloadFriendsList object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendGiftView:) name:kNotificationSendGiftToFriend object:nil];
     
 }
 
@@ -116,6 +119,14 @@ typedef void (^FinishBlock)();
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidUnload {
+    [self setTableView:nil];
+    [self setActionHeaderView:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationReloadFriendsList object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationSendGiftToFriend object:nil];
+    [super viewDidUnload];
 }
 
 #pragma mark - TableView Methods
@@ -316,11 +327,15 @@ typedef void (^FinishBlock)();
 //    NSIndexPath *indexPathMenu = [NSIndexPath indexPathForRow:3 inSection:1];
 //    [appDelegate.menuController._menuTableView selectRowAtIndexPath:indexPathMenu animated:YES scrollPosition:UITableViewScrollPositionBottom];
     
+    currentFriend = [[[FriendsManager sharedManager] friendsList] objectAtIndex:indexPath.row];
+    
     ModalPanelPickerView *modalPanel = [[ModalPanelPickerView alloc] initWithFrame:self.view.bounds title:@"Choose a gift" mode:ModalPickerGifts] ;
     modalPanel.onClosePressed = ^(UAModalPanel* panel) {
         // [panel hide];
         [panel hideWithOnComplete:^(BOOL finished) {
             [panel removeFromSuperview];
+            currentFriend = nil;
+            NSLog(@"CURRENT = nil");
         }];
         UADebugLog(@"onClosePressed block called from panel: %@", modalPanel);
     };
@@ -421,12 +436,23 @@ typedef void (^FinishBlock)();
     reloadBlock();
 }
 
+#pragma mark - Notifications
+-(void) sendGiftView:(NSNotification *)notification
+{
+    NSString *pathGift = notification.object;
+    NSLog(@"GIFT = %@", pathGift);
 
-- (void)viewDidUnload {
-    [self setTableView:nil];
-    [self setActionHeaderView:nil];
-    [super viewDidUnload];
+    SendGiftViewController *sgvc = [[SendGiftViewController alloc] initWithNibName:@"SendGiftViewController" bundle:nil];
+    sgvc.toFriend = currentFriend;
+    sgvc.pathGift = pathGift;
+    
+    currentFriend = nil;
+    UINavigationController *navSendGift = [[UINavigationController alloc] initWithRootViewController:sgvc];
+    [self presentModalViewController:navSendGift animated:YES];
 }
+
+
+
 
 #pragma mark - UAModalDisplayPanelViewDelegate
 

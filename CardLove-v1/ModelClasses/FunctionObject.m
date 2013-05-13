@@ -36,6 +36,26 @@
     return [dateFormatter stringFromDate:date];
 }
 
+-(NSString *)stringFromDateTime: (NSDate *) date
+{
+    NSDateFormatter* df_local = [[NSDateFormatter alloc] init];
+    [df_local setTimeZone:[NSTimeZone systemTimeZone]];
+    [df_local setDateFormat:@"yyyy-MM-dd' 'HH:mm:ss"];
+
+    NSString *dateOput = [df_local stringFromDate:date];
+    return dateOput;
+}
+
+-(NSDate *)dateFromStringDateTime: (NSString *) dateString
+{
+    NSDateFormatter* df_local = [[NSDateFormatter alloc] init];
+    [df_local setTimeZone:[NSTimeZone systemTimeZone]];
+    [df_local setDateFormat:@"yyyy-MM-dd' 'HH:mm:ss"];
+    
+    NSDate *dateOput = [df_local dateFromString:dateString];
+    return dateOput;
+}
+
 -(NSString *) dataFilePath: (NSString *) comp
 {
     NSArray * dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
@@ -43,6 +63,7 @@
     NSString *docsDir = [dirPaths objectAtIndex:0];
     return  [docsDir stringByAppendingPathComponent:comp];
 }
+
 
 
 

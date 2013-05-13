@@ -403,7 +403,9 @@
     NSBubbleData *sayBubble = [NSBubbleData dataWithText:_tfMessage.text date:[NSDate dateWithTimeIntervalSinceNow:0] type:BubbleTypeMine];
     [bubbleData addObject:sayBubble];
     
+    [_bubbleTable beginUpdates];
     [_bubbleTable reloadData];
+    [_bubbleTable endUpdates];
     
     NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)] - 1) inSection:(_bubbleTable.numberOfSections - 1)];
     [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];

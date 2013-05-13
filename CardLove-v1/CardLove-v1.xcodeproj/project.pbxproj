@@ -374,6 +374,8 @@
 		66868D85170D892D008A056F /* fireball.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66868D80170D892D008A056F /* fireball.jpg */; };
 		66868D86170D892D008A056F /* snowfall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66868D81170D892D008A056F /* snowfall.jpg */; };
 		66868D87170D892D008A056F /* soda.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66868D82170D892D008A056F /* soda.jpg */; };
+		6689E7E71740C7DA00C1942C /* SendGiftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6689E7E51740C7DA00C1942C /* SendGiftViewController.m */; };
+		6689E7E81740C7DA00C1942C /* SendGiftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6689E7E61740C7DA00C1942C /* SendGiftViewController.xib */; };
 		66923A2916FAE928003F589D /* resize.png in Resources */ = {isa = PBXBuildFile; fileRef = 66923A2716FAE928003F589D /* resize.png */; };
 		66923A2A16FAE928003F589D /* resize@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66923A2816FAE928003F589D /* resize@2x.png */; };
 		66923A2E16FB00BF003F589D /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 66923A2D16FB00BF003F589D /* mask.png */; };
@@ -1324,6 +1326,9 @@
 		66868D80170D892D008A056F /* fireball.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fireball.jpg; sourceTree = "<group>"; };
 		66868D81170D892D008A056F /* snowfall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = snowfall.jpg; sourceTree = "<group>"; };
 		66868D82170D892D008A056F /* soda.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = soda.jpg; sourceTree = "<group>"; };
+		6689E7E41740C7DA00C1942C /* SendGiftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SendGiftViewController.h; path = Views/SendGiftViewController.h; sourceTree = "<group>"; };
+		6689E7E51740C7DA00C1942C /* SendGiftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SendGiftViewController.m; path = Views/SendGiftViewController.m; sourceTree = "<group>"; };
+		6689E7E61740C7DA00C1942C /* SendGiftViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SendGiftViewController.xib; path = Views/SendGiftViewController.xib; sourceTree = "<group>"; };
 		66923A2716FAE928003F589D /* resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = resize.png; path = Resources/resize.png; sourceTree = "<group>"; };
 		66923A2816FAE928003F589D /* resize@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "resize@2x.png"; path = "Resources/resize@2x.png"; sourceTree = "<group>"; };
 		66923A2D16FB00BF003F589D /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mask.png; path = ../../PSD/mask.png; sourceTree = "<group>"; };
@@ -3273,6 +3278,9 @@
 				66DDC3AA17392C6100595838 /* FriendInfoViewController.h */,
 				66DDC3AB17392C6100595838 /* FriendInfoViewController.m */,
 				66DDC3AC17392C6100595838 /* FriendInfoViewController.xib */,
+				6689E7E41740C7DA00C1942C /* SendGiftViewController.h */,
+				6689E7E51740C7DA00C1942C /* SendGiftViewController.m */,
+				6689E7E61740C7DA00C1942C /* SendGiftViewController.xib */,
 			);
 			name = "Friends+Messages";
 			sourceTree = "<group>";
@@ -4358,6 +4366,7 @@
 				66DDC3AE17392C6100595838 /* FriendInfoViewController.xib in Resources */,
 				66DDC3B3173930B500595838 /* FriendInfoCell.xib in Resources */,
 				66AA9F5B173B897600D2E484 /* tick-green.png in Resources */,
+				6689E7E81740C7DA00C1942C /* SendGiftViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4644,6 +4653,7 @@
 				66DDC3AD17392C6100595838 /* FriendInfoViewController.m in Sources */,
 				66DDC3B11739308200595838 /* FriendInfoCell.m in Sources */,
 				6694D1C2173C2C0C002D04F2 /* UIView+Layout.m in Sources */,
+				6689E7E71740C7DA00C1942C /* SendGiftViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

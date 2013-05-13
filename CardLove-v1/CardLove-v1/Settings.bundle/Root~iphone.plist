@@ -25,6 +25,16 @@
 			<false/>
 		</dict>
 		<dict>
+			<key>Title</key>
+			<string>Auto remember</string>
+			<key>Key</key>
+			<string>auto_remember_preference</string>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>DefaultValue</key>
+			<string>NO</string>
+		</dict>
+		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>

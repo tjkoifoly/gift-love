@@ -24,4 +24,6 @@
 
 -(void) itemAction: (id)sender;
 
+-(void) reloadFriend;
+
 @end
