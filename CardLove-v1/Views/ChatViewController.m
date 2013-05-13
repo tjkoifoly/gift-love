@@ -64,7 +64,17 @@
     
     //UI
     if (_friendChatting) {
-        UILabel *labelTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
+        UITextField *labelTitle = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
+        [labelTitle setFont:[UIFont boldSystemFontOfSize:18]];
+        labelTitle.textColor= [UIColor whiteColor];
+        labelTitle.backgroundColor = [UIColor clearColor];
+        labelTitle.textAlignment = NSTextAlignmentCenter;
+        labelTitle.text = _friendChatting.displayName;
+        labelTitle.enabled = NO;
+        self.navigationItem.titleView = labelTitle;
+    }else if (_groupMembers)
+    {
+        UITextField *labelTitle = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
         [labelTitle setFont:[UIFont boldSystemFontOfSize:18]];
         labelTitle.textColor= [UIColor whiteColor];
         labelTitle.backgroundColor = [UIColor clearColor];
@@ -327,6 +337,10 @@
         return;
     }
     
+    if (![_tfMessage isFirstResponder]) {
+        return;
+    }
+    
         [UIView animateWithDuration:0.2f animations:^{
             
             CGRect frame = _tbTextField.frame;
@@ -359,6 +373,9 @@
     keyboardHeight = 0;
     
     if ([tokenFieldView.tokenField isFirstResponder]) {
+        return;
+    }
+    if (![_tfMessage isFirstResponder]) {
         return;
     }
         NSDictionary* info = [aNotification userInfo];
@@ -505,6 +522,12 @@
 {
     [self.inputToolbar.textView resignFirstResponder];
     [tokenFieldView.tokenField resignFirstResponder];
+    
+    if ([self.navigationItem.titleView isFirstResponder]) {
+        UITextField *tfTitle = (UITextField *)self.navigationItem.titleView;
+        [tfTitle resignFirstResponder];
+        NSLog(@"Title = %@", tfTitle.text);
+    }
 }
 
 

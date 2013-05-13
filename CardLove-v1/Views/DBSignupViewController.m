@@ -88,6 +88,7 @@
             self.navigationItem.title = @"Sign up";
             UIBarButtonItem *signupBarItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Sign up", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(signup:)];
             self.navigationItem.rightBarButtonItem = signupBarItem;
+            self.photo = nil;
 
         }
             break;
@@ -702,7 +703,7 @@
     
     if (urlIMG) {
         [mDict setValue:urlIMG forKey:kaccAvata];
-    }else
+    }else if([usage isEqualToString:@"update_info"])
     {
         [mDict setValue:[[UserManager sharedInstance] imgAvata] forKey:kaccAvata];
     }

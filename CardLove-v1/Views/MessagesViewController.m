@@ -163,8 +163,15 @@
     [modalPanel hideWithOnComplete:^(BOOL finished) {
 
         ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
-        chatVC.mode = ChatModeGroup;
-        chatVC.groupMembers = newGroup;
+        if ([newGroup count]==1) {
+            chatVC.mode = ChatModeSigle;
+            chatVC.friendChatting = [newGroup objectAtIndex:0];
+        }else if ([newGroup count]>1)
+        {
+            chatVC.mode = ChatModeGroup;
+            chatVC.groupMembers = newGroup;
+        }
+        
         [self.navigationController pushViewController:chatVC animated:YES];
         newGroup = nil;
         

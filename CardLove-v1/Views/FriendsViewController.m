@@ -181,7 +181,7 @@ typedef void (^FinishBlock)();
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.badgeString = [NSString stringWithFormat:@"%i", 2];
+    cell.badgeString = [NSString stringWithFormat:@"%i", 0];
     
     cell.badgeColor = [UIColor colorWithRed:0.792 green:0.197 blue:0.219 alpha:1.000];
     cell.showShadow = YES;
