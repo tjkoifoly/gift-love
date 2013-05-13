@@ -85,3 +85,11 @@ typedef enum {
     Rejected
 }FriendType;
 
+typedef enum {
+    MessageText,
+    MessageEmoticon,
+    MessageImage
+} MessageType;
+
+
+

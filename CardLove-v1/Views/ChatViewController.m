@@ -10,6 +10,13 @@
 #import "UIBubbleTableView.h"
 #import "NSBubbleData.h"
 #import "UITableView+reloadDataWithAnimation.h"
+#import "NKApiClient.h"
+#import "AFNetworking.h"
+#import "UIImageView+AFNetworking.h"
+#import "JSONKit.h"
+#import "UserManager.h"
+#import "FunctionObject.h"
+#import "EGOImageLoader.h"
 
 #define kStatusBarHeight 20
 #define kDefaultToolbarHeight 40
@@ -19,6 +26,9 @@
 @interface ChatViewController ()
 {
     NSMutableArray *bubbleData;
+    UIImage *avataMe;
+    UIImage *avataFriend;
+    NSTimer *timerSchedule;
 }
 
 @end
@@ -143,7 +153,40 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[[UserManager sharedInstance] imgAvata]]];
+        avataMe = [UIImage imageWithData:data];
+    });
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:_friendChatting.fAvatarLink]];
+        avataFriend = [UIImage imageWithData:data];
+    });
 
+
+}
+
+-(void) viewWillAppear:(BOOL)animated{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self getMessageFromFriend:_friendChatting completion:^(BOOL success, NSError *error) {
+            [_bubbleTable reloadData];
+            NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)] - 1) inSection:(_bubbleTable.numberOfSections - 1)];
+            [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        }];
+
+    });
+    dispatch_async(dispatch_get_main_queue(), ^{
+        timerSchedule = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(reloadMessages) userInfo:nil repeats:YES];
+    });
+
+    [super viewWillAppear:animated];
+}
+
+-(void) viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [timerSchedule invalidate];
+    timerSchedule = nil;
 }
 
 - (void)viewDidUnload {
@@ -294,11 +337,18 @@
 -(void)emojiPopover:(SYEmojiPopover *)emojiPopover didClickedOnCharacter:(NSString *)character
 {
     _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
-    NSBubbleType type = arc4random() % 2;
+    
     UIFont *customFont = [UIFont fontWithName:@"AppleColorEmoji" size:50.0f];
-    NSBubbleData *sayBubble = [NSBubbleData dataWithText:character date:[NSDate dateWithTimeIntervalSinceNow:0] type:type font:customFont];
+    NSBubbleData *sayBubble = [NSBubbleData dataWithText:character date:[NSDate dateWithTimeIntervalSinceNow:0] type:BubbleTypeMine font:customFont];
+    
+    NSLog(@"FONT = %@", customFont);
+    
+    sayBubble.avatar = avataMe;
     [bubbleData addObject:sayBubble];
     [_bubbleTable reloadData];
+    [self postMessage:character withType:MessageEmoticon toFriend:_friendChatting completion:^(BOOL success, NSError *error) {
+        
+    }];
     
     NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)]-1) inSection:(_bubbleTable.numberOfSections - 1)];
     [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
@@ -337,7 +387,7 @@
         return;
     }
     
-    if (![_tfMessage isFirstResponder]) {
+    if ([self.navigationItem.titleView isFirstResponder]) {
         return;
     }
     
@@ -375,7 +425,7 @@
     if ([tokenFieldView.tokenField isFirstResponder]) {
         return;
     }
-    if (![_tfMessage isFirstResponder]) {
+    if ([self.navigationItem.titleView isFirstResponder]) {
         return;
     }
         NSDictionary* info = [aNotification userInfo];
@@ -418,6 +468,7 @@
     }
     _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
     NSBubbleData *sayBubble = [NSBubbleData dataWithText:_tfMessage.text date:[NSDate dateWithTimeIntervalSinceNow:0] type:BubbleTypeMine];
+    sayBubble.avatar = avataMe;
     [bubbleData addObject:sayBubble];
     
     [_bubbleTable beginUpdates];
@@ -481,8 +532,9 @@
     
     _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
     
-    NSBubbleType type = arc4random() % 2;
-    NSBubbleData *sayBubble = [NSBubbleData dataWithImage:image date:[NSDate dateWithTimeIntervalSinceNow:0] type:type];
+    NSBubbleData *sayBubble = [NSBubbleData dataWithImage:image date:[NSDate dateWithTimeIntervalSinceNow:0] type:BubbleTypeMine];
+    sayBubble.avatar = avataMe;
+    
     [bubbleData addObject:sayBubble];
     
     [_bubbleTable reloadData];
@@ -507,10 +559,17 @@
         return;
     }
     _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
-    NSBubbleType type = arc4random() % 2;
-    NSBubbleData *sayBubble = [NSBubbleData dataWithText:inputText date:[NSDate dateWithTimeIntervalSinceNow:0] type:type];
+    NSBubbleData *sayBubble = [NSBubbleData dataWithText:inputText date:[NSDate dateWithTimeIntervalSinceNow:0] type:BubbleTypeMine];
+    sayBubble.avatar = avataMe;
     [bubbleData addObject:sayBubble];
+    
     [_bubbleTable reloadData];
+//    [_bubbleTable beginUpdates];
+//    [_bubbleTable endUpdates];
+    [self postMessage:inputText withType:MessageText toFriend:_friendChatting completion:^(BOOL success, NSError *error) {
+        NSLog(@"CLGT");
+    }];
+   
     
     NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)]-1) inSection:(_bubbleTable.numberOfSections - 1)];
     [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
@@ -530,7 +589,92 @@
     }
 }
 
+#pragma MARK    - Network
+-(void) getMessageFromFriend: (Friend *)cF completion:(void (^)(BOOL success, NSError *error))completionBlock
+{
+    NSString *userID = [[UserManager sharedInstance] accID];
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                userID,@"senderID",
+                                cF.fID, @"recieverID", nil];
+    [[NKApiClient shareInstace] postPath:@"get_message.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Result = %@", jsonObject);
+        if (bubbleData) {
+            [bubbleData removeAllObjects];
+        }
+        for(NSDictionary *dictMsg in jsonObject)
+        {
+            NSBubbleType type;
+            if ([[dictMsg valueForKey:@"mbSenderID"] isEqualToString: [[UserManager sharedInstance] accID]]) {
+                type = BubbleTypeMine;
+            }else{
+                type = BubbleTypeSomeoneElse;
+            }
+            
+            NSBubbleData *data = nil;
+            
+            if ([[dictMsg valueForKey:@"msType"] intValue] == MessageEmoticon) {
+                UIFont *customFont = [UIFont fontWithName:@"AppleColorEmoji" size:50.0f];
+                
+                data = [[NSBubbleData alloc] initWithText:[dictMsg valueForKey:@"msMessage" ] date:[[FunctionObject sharedInstance] dateFromStringDateTime:[dictMsg valueForKey:@"msDateSent"]] type:type font:customFont];
+            }else if ([[dictMsg valueForKey:@"msType"] intValue] == MessageText)
+            {
+                data = [[NSBubbleData alloc] initWithText:[dictMsg valueForKey:@"msMessage" ] date:[[FunctionObject sharedInstance] dateFromStringDateTime:[dictMsg valueForKey:@"msDateSent"]] type:type];
+            }else if ([[dictMsg valueForKey:@"msType"] intValue] == MessageImage)
+            {
+                UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dictMsg valueForKey:@"msMessage" ]]]];
+                
+                data = [NSBubbleData dataWithImage:image date:[[FunctionObject sharedInstance] dateFromStringDateTime:[dictMsg valueForKey:@"msDateSent"]] type:BubbleTypeMine];
 
+            }
+
+                
+            if ([[dictMsg valueForKey:@"mbSenderID"] isEqualToString: [[UserManager sharedInstance] accID]]) {
+                data.avatar = avataMe;
+            }else{
+                data.avatar = avataFriend;
+            }
+                        
+            [bubbleData addObject:data];
+        }
+        completionBlock(YES, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil);
+    }];
+
+}
+
+-(void) reloadMessages
+{
+    [self getMessageFromFriend:_friendChatting completion:^(BOOL success, NSError *error) {
+        [_bubbleTable reloadData];
+    }];
+}
+
+-(void) postMessage:(NSString *)message withType:(MessageType)msType toFriend: (Friend *)cF completion:(void (^)(BOOL success, NSError *error))completionBlock
+{
+    NSString *userID = [[UserManager sharedInstance] accID];
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                userID,@"senderID",
+                                cF.fID, @"recieverID",
+                                message, @"message",
+                                [NSString stringWithFormat:@"%i", msType],@"msType",nil];
+    [[NKApiClient shareInstace] postPath:@"post_message.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Result = %@", jsonObject);
+        
+        completionBlock(YES, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil);
+    }];
+    
+}
 
 
 @end
