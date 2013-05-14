@@ -65,9 +65,10 @@
     [super viewWillAppear:animated];
 }
 
--(void) viewWillDisappear:(BOOL)animated
+-(void) viewDidDisappear:(BOOL)animated
 {
-    
+    [super viewDidDisappear:animated];
+    [newGroup removeAllObjects];
 }
 
 -(void) newMessageAction
@@ -208,6 +209,7 @@
             //Create group
             
             MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            __weak typeof(self) weakBlock = self;
             
             [self createGroup:[[UserManager sharedInstance] accID] completion:^(BOOL success, NSError *error, id result) {
                 
@@ -216,22 +218,22 @@
                 NSMutableString *mFriendList = [[NSMutableString alloc] init];
                 for(int i = 0; i < newGroup.count; i++)
                 {
-                    [mFriendList appendFormat:@"%@%@", ((Friend *)[newGroup objectAtIndex:i]).fID, i==(newGroup.count -1)?@",":@""];
+                    [mFriendList appendFormat:@"%@%@", ((Friend *)[newGroup objectAtIndex:i]).fID, i!=(newGroup.count -1)?@",":@""];
                 }
                 
                 NSLog(@"LIST = %@", mFriendList);
-                
-                [HUD hide:YES];
-                chatVC.mode = ChatModeGroup;
-                chatVC.group = group;
-                [self.navigationController pushViewController:chatVC animated:YES];
-                [newGroup removeAllObjects];
+                [self addListFriend:mFriendList toGroup:[group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error) {
+                    
+                    [HUD hide:YES];
+                    chatVC.mode = ChatModeGroup;
+                    chatVC.group = group;
+  
+                    [weakBlock.navigationController pushViewController:chatVC animated:YES];
+                }];
                 
             }];
             
         }
-        
-        
         
     }];
 }
@@ -309,6 +311,26 @@
         completionBlock(NO, nil);
     }];
 }
+
+-(void) addListFriend: (NSString*)listFriend toGroup: (NSString *) groupID completion:(void (^)(BOOL success, NSError *error))completionBlock{
+    
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                groupID,@"gmID",
+                                listFriend,@"listFriend",
+                                nil];
+    [[NKApiClient shareInstace] postPath:@"add_friend_to_group.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Add friend to group = %@", jsonObject);
+        
+        completionBlock (YES, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil);
+    }];
+}
+
 
 
 
