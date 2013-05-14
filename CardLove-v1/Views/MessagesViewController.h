@@ -11,9 +11,11 @@
 #import "FriendsManager.h"
 #import "TDBadgedCell.h"
 #import "ModalPanelPickerView.h"
+#import "MBProgressHUD.h"
 
 @interface MessagesViewController : GHRootViewController <UITableViewDataSource, UITableViewDelegate, UAModalPanelDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSMutableArray *listGroups;
 
 @end

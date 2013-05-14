@@ -39,6 +39,7 @@
 @synthesize inputToolbar = _inputToolbar;
 @synthesize mode = _mode;
 @synthesize groupMembers = _groupMembers;
+@synthesize group = _group;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -82,15 +83,17 @@
         labelTitle.text = _friendChatting.displayName;
         labelTitle.enabled = NO;
         self.navigationItem.titleView = labelTitle;
-    }else if (_groupMembers)
+    }else if (_group)
     {
         UITextField *labelTitle = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
         [labelTitle setFont:[UIFont boldSystemFontOfSize:18]];
         labelTitle.textColor= [UIColor whiteColor];
         labelTitle.backgroundColor = [UIColor clearColor];
         labelTitle.textAlignment = NSTextAlignmentCenter;
-        labelTitle.text = _friendChatting.displayName;
+        labelTitle.text = [_group valueForKey:@"gmName"];
         self.navigationItem.titleView = labelTitle;
+        
+       
     }
     
     bubbleData = [[NSMutableArray alloc] init];
@@ -100,7 +103,6 @@
     _bubbleTable.snapInterval = 120;
     _bubbleTable.showAvatars = YES;
     
-    _bubbleTable.typingBubble = NSBubbleTypingTypeSomebody;
     [_bubbleTable reloadData];
     
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDetected:)];
@@ -111,7 +113,7 @@
     //Add token field
     if (_mode == ChatModeGroup) {
         tokenFieldView = [[TITokenFieldView alloc] initWithFrame:self.bubbleTable.bounds];
-        [tokenFieldView setSourceArray:[Names listOfNames]];
+        [tokenFieldView setSourceArray:[[FriendsManager sharedManager] friendsList]];
         tokenFieldView.backgroundColor = [UIColor clearColor];
         tokenFieldView.tokenField.backgroundColor = [UIColor colorWithWhite:1 alpha:0.6];
         tokenFieldView.tokenField.leftView.backgroundColor = [UIColor clearColor];
@@ -122,7 +124,7 @@
         
        for(Friend *f in _groupMembers)
        {
-           TIToken * token = [tokenFieldView.tokenField addTokenWithTitle:f.displayName];
+           TIToken * token = [tokenFieldView.tokenField addTokenWithTitle:f.userName representedObject:f];
            [tokenFieldView.tokenField addToken:token];
        }
         
@@ -139,6 +141,8 @@
         
         [_bubbleTable setAutoresizingMask:UIViewAutoresizingNone];
         [tokenFieldView.contentView addSubview:_bubbleTable];
+
+        
     }
     
     /* Calculate screen size */
@@ -154,33 +158,95 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    //Listeners
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removePersonFromGroup:) name:kNotificationRemovePersonFromGroup object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addPersonToGroup:) name:kNotificationAddPersonToGroup object:nil];
+
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[[UserManager sharedInstance] imgAvata]]];
         avataMe = [UIImage imageWithData:data];
     });
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:_friendChatting.fAvatarLink]];
-        avataFriend = [UIImage imageWithData:data];
-    });
+   
+    switch (_mode) {
+        case ChatModeSigle:
+        {
+            dispatch_async(queue, ^{
+                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:_friendChatting.fAvatarLink]];
+                avataFriend = [UIImage imageWithData:data];
+            });
+        }
+            break;
+        case ChatModeGroup:
+        {
+            [self listFriendsInGroup:[_group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error, id result) {
+                [_groupMembers removeAllObjects];
+                for(NSDictionary *dictFriend in result)
+                {
+                    Friend *nF = [[Friend alloc] initWithDictionary:dictFriend];
+                    [_groupMembers addObject:nF];
+                    TIToken *token = [tokenFieldView.tokenField addTokenWithTitle:nF.userName representedObject:nF];
+                    if (token) {
+                        [tokenFieldView.tokenField autoAddToken:token];
+                    }
+                                      
+                }
+                 [tokenFieldView.tokenField resignFirstResponder];
+                [tokenFieldView.tokenField didEndEditing];
+            }];
+
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
 
 
 }
 
 -(void) viewWillAppear:(BOOL)animated{
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self getMessageFromFriend:_friendChatting completion:^(BOOL success, NSError *error) {
-            [_bubbleTable reloadData];
-            NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)] - 1) inSection:(_bubbleTable.numberOfSections - 1)];
-            [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-        }];
-
-    });
-    dispatch_async(dispatch_get_main_queue(), ^{
+    [tokenFieldView resignFirstResponder];
+    
+    dispatch_queue_t queue = dispatch_get_main_queue();
+    switch (_mode) {
+        case ChatModeGroup:
+        {
+                    }
+            break;
+        case ChatModeSigle:
+        {
+            dispatch_async(queue, ^{
+                [self getMessageFromFriend:_friendChatting completion:^(BOOL success, NSError *error) {
+                    [_bubbleTable reloadData];
+                    
+                    if ([bubbleData count] > 0) {
+                        [self scrollToBottom];
+                    }
+                   
+                }];
+            });
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    dispatch_async(queue, ^{
         timerSchedule = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(reloadMessages) userInfo:nil repeats:YES];
     });
 
     [super viewWillAppear:animated];
+}
+
+-(void) scrollToBottom
+{
+    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)] - 1) inSection:(_bubbleTable.numberOfSections - 1)];
+    [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
@@ -189,6 +255,12 @@
     timerSchedule = nil;
 }
 
+-(void) backPreviousView
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 - (void)viewDidUnload {
     [self setTbTextField:nil];
     [self setBubbleTable:nil];
@@ -196,6 +268,13 @@
     [self setFriendChatting:nil];
     [self setInputToolbar:nil];
     [self setGroupMembers:nil];
+    [self setGroup:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationAddPersonToGroup object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationRemovePersonFromGroup object:nil];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+
     [super viewDidUnload];
 }
 
@@ -223,10 +302,12 @@
             inputToolbarIsVisible = NO;
         }];
     }
+    
+    
 }
 
 - (void)showContactsPicker:(id)sender {
-	
+	/*
 	// Show some kind of contacts picker in here.
 	// For now, here's how to add and customize tokens.
 	
@@ -251,6 +332,31 @@
 	
 	NSUInteger tokenCount = tokenFieldView.tokenField.tokens.count;
 	[token setTintColor:((tokenCount % 3) == 0 ? [TIToken redTintColor] : ((tokenCount % 2) == 0 ? [TIToken greenTintColor] : [TIToken blueTintColor]))];
+     */
+    
+    [tokenFieldView.tokenField resignFirstResponder];
+    
+    ModalPanelPickerView *modalPanel = [[ModalPanelPickerView alloc] initWithFrame:self.view.bounds title:@"Choose Friend" mode:ModalPickerFriends] ;
+    [modalPanel.actionButton setTitle:@"Add" forState:UIControlStateNormal];
+    
+    modalPanel.onClosePressed = ^(UAModalPanel* panel) {
+        // [panel hide];
+        [panel hideWithOnComplete:^(BOOL finished) {
+            [panel removeFromSuperview];
+        }];
+        UADebugLog(@"onClosePressed block called from panel: %@", modalPanel);
+    };
+    
+    ///////////////////////////////////////////
+    //   Panel is a reference to the modalPanel
+    modalPanel.delegate =self;
+    
+    [self.view addSubview:modalPanel];
+	
+	///////////////////////////////////
+	// Show the panel from the center of the button that was pressed
+	[modalPanel showFromPoint:self.view.center];
+
 }
 
 -(void) tapTokenDetected: (UITapGestureRecognizer *) reg
@@ -291,15 +397,34 @@
 	[_bubbleTable setFrame:tokenFieldView.contentView.bounds];
 }
 
+-(void) tokenField:(TITokenField *)tokenField didAddTokenBySearch:(id)token{
+    
+    NSLog(@"ID = %@", token);
+    if ([token isKindOfClass:[Friend class]]) {
+        
+        [self addFriend:((Friend *)token).fID toGroup:[_group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error) {
+            
+        }];
+    }
+    
+}
+
+#pragma mark - Panel Delegate
+- (void)didSelectActionButton:(UAModalPanel *)modalPanel {
+	UADebugLog(@"didSelectActionButton called with modalPanel: %@", modalPanel);
+    [modalPanel hideWithOnComplete:^(BOOL finished) {
+               
+    }];
+}
+
+
+
+#pragma mark - Emoticon
+
 
 //------------------------------------------------------
 
 
-
--(void) backPreviousView
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 -(void) pickerImage: (id) sender
 {
@@ -586,10 +711,55 @@
         UITextField *tfTitle = (UITextField *)self.navigationItem.titleView;
         [tfTitle resignFirstResponder];
         NSLog(@"Title = %@", tfTitle.text);
+        
+        [self changeGroup:[_group valueForKey:@"gmID"] withName:tfTitle.text completion:^(BOOL success, NSError *error) {
+            if (success) {
+                NSLog(@"OK");
+            }
+        }];
     }
 }
 
-#pragma MARK    - Network
+#pragma mark - TokenField
+-(NSString *) tokenField:(TITokenField *)tokenField displayStringForRepresentedObject:(id)object{
+    if ([object isKindOfClass:[Friend class]]){
+		return ((Friend *)object).userName;
+	}
+	
+	return [NSString stringWithFormat:@"%@", object];
+}
+
+- (NSString *)tokenField:(TITokenField *)tokenField searchResultStringForRepresentedObject:(id)object
+{
+    if ([object isKindOfClass:[Friend class]]){
+		return ((Friend *)object).userName;
+	}
+	
+	return [NSString stringWithFormat:@"%@", object];
+}
+
+-(void) addPersonToGroup: (NSNotification *) notification
+{
+    Friend *nF = notification.object;
+    [_groupMembers addObject:nF];
+    TIToken *token = [tokenFieldView.tokenField addTokenWithTitle:nF.userName representedObject:nF];
+    if (token) {
+        [tokenFieldView.tokenField autoAddToken:token];
+        [self addFriend:nF.fID toGroup:[_group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error) {
+            
+        }];
+    }
+    
+    [tokenFieldView.tokenField resignFirstResponder];
+    [tokenFieldView.tokenField didEndEditing];
+
+}
+-(void) removePersonFromGroup: (NSNotification *) notification
+{
+    
+}
+
+#pragma mark  - Network -------------------------------------------------
 -(void) getMessageFromFriend: (Friend *)cF completion:(void (^)(BOOL success, NSError *error))completionBlock
 {
     NSString *userID = [[UserManager sharedInstance] accID];
@@ -649,9 +819,24 @@
 
 -(void) reloadMessages
 {
-    [self getMessageFromFriend:_friendChatting completion:^(BOOL success, NSError *error) {
-        [_bubbleTable reloadData];
-    }];
+    switch (_mode) {
+        case ChatModeGroup:
+        {
+            
+        }
+            break;
+        case ChatModeSigle:
+        {
+            [self getMessageFromFriend:_friendChatting completion:^(BOOL success, NSError *error) {
+                [_bubbleTable reloadData];
+            }];
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
 }
 
 -(void) postMessage:(NSString *)message withType:(MessageType)msType toFriend: (Friend *)cF completion:(void (^)(BOOL success, NSError *error))completionBlock
@@ -675,6 +860,60 @@
     }];
     
 }
+
+-(void) listFriendsInGroup: (NSString*)groupID completion:(void (^)(BOOL success, NSError *error , id result))completionBlock{
+    
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:groupID,@"gmID", nil];
+    [[NKApiClient shareInstace] postPath:@"get_friends_in_group.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Friends in Group = %@", jsonObject);
+        
+        completionBlock (YES, nil, jsonObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil, nil);
+    }];
+}
+
+-(void) changeGroup: (NSString*)groupID withName: (NSString *) gName completion:(void (^)(BOOL success, NSError *error))completionBlock{
+    
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                groupID,@"groupID",
+                                gName,@"groupName",nil];
+    [[NKApiClient shareInstace] postPath:@"update_group_name.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON GROUP Name = %@", jsonObject);
+        
+        completionBlock (YES, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil);
+    }];
+}
+
+-(void) addFriend: (NSString*)friendID toGroup: (NSString *) groupID completion:(void (^)(BOOL success, NSError *error))completionBlock{
+    
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                groupID,@"gmID",
+                                friendID,@"friendID",
+                                @"add", @"usage",nil];
+    [[NKApiClient shareInstace] postPath:@"add_friend_to_group.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Add friend to group = %@", jsonObject);
+        
+        completionBlock (YES, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil);
+    }];
+}
+
 
 
 @end

@@ -9,6 +9,10 @@
 #import "MessagesViewController.h"
 #import "ChatViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "NKApiClient.h"
+#import "AFNetworking.h"
+#import "JSONKit.h"
+#import "UserManager.h"
 
 @interface MessagesViewController ()
 {
@@ -19,6 +23,7 @@
 
 @implementation MessagesViewController
 
+@synthesize listGroups = _listGroups;
 @synthesize tableView = _tableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -44,6 +49,24 @@
     //Listeners
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removePersonFromGroup:) name:kNotificationRemovePersonFromGroup object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addPersonToGroup:) name:kNotificationAddPersonToGroup object:nil];
+    
+    if (!_listGroups) {
+        _listGroups = [[NSMutableArray alloc] init];
+    }
+    
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+    NSString *memberID = [[UserManager sharedInstance] accID];
+    [self loadGroupsByMember:memberID completion:^(BOOL success, NSError *error) {
+        [_tableView reloadData];
+    }];
+    [super viewWillAppear:animated];
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
     
 }
 
@@ -80,6 +103,7 @@
 
 - (void)viewDidUnload {
     [self setTableView:nil];
+    [self setListGroups:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationAddPersonToGroup object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationRemovePersonFromGroup object:nil];
     [super viewDidUnload];
@@ -94,7 +118,7 @@
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return [_listGroups count];
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -106,13 +130,18 @@
     if(!cell)
     {
         cell = [[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
     
-    cell.imageView.image = [UIImage imageNamed:@"avarta.jpg"];
+    cell.imageView.image = [UIImage imageNamed:@"ButtonAddFriend.png"];
+    cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
     
-    cell.textLabel.text = @"Nguyen Chi Cong";
-    cell.detailTextLabel.text = @"foly";
-    cell.badgeString = [NSString stringWithFormat:@"%i", 10];
+    id group = [_listGroups objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = [group valueForKey:@"gmName"];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ member(s)",[group valueForKey:@"numbersMember"]];
+    
+    cell.badgeString = [NSString stringWithFormat:@"%i", 1];
     cell.badgeColor = [UIColor colorWithRed:0.792 green:0.197 blue:0.219 alpha:1.000];
     cell.badgeColorHighlighted = [UIColor colorWithRed:0.1 green:0.8 blue:0.219 alpha:1.000];
     cell.showShadow = YES;
@@ -125,8 +154,14 @@
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    id group = [_listGroups objectAtIndex:indexPath.row];
+
     ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
+    chatVC.mode = ChatModeGroup;
+    //chatVC.groupMembers = newGroup;
+    chatVC.group = group;
     [self.navigationController pushViewController:chatVC animated:YES];
+    [newGroup removeAllObjects];
 }
 
 #pragma mark - Notification
@@ -166,15 +201,112 @@
         if ([newGroup count]==1) {
             chatVC.mode = ChatModeSigle;
             chatVC.friendChatting = [newGroup objectAtIndex:0];
+            [self.navigationController pushViewController:chatVC animated:YES];
+            [newGroup removeAllObjects];
         }else if ([newGroup count]>1)
         {
-            chatVC.mode = ChatModeGroup;
-            chatVC.groupMembers = newGroup;
+            //Create group
+            
+            MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            
+            [self createGroup:[[UserManager sharedInstance] accID] completion:^(BOOL success, NSError *error, id result) {
+                
+                NSDictionary *group = [result objectAtIndex:0];
+               
+                NSMutableString *mFriendList = [[NSMutableString alloc] init];
+                for(int i = 0; i < newGroup.count; i++)
+                {
+                    [mFriendList appendFormat:@"%@%@", ((Friend *)[newGroup objectAtIndex:i]).fID, i==(newGroup.count -1)?@",":@""];
+                }
+                
+                NSLog(@"LIST = %@", mFriendList);
+                
+                [HUD hide:YES];
+                chatVC.mode = ChatModeGroup;
+                chatVC.group = group;
+                [self.navigationController pushViewController:chatVC animated:YES];
+                [newGroup removeAllObjects];
+                
+            }];
+            
         }
         
-        [self.navigationController pushViewController:chatVC animated:YES];
-        newGroup = nil;
         
+        
+    }];
+}
+
+#pragma mark - Network
+-(void) loadGroupsByMember: (NSString*)memberID completion:(void (^)(BOOL success, NSError *error))completionBlock{
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:memberID,@"memberID", nil];
+    [[NKApiClient shareInstace] postPath:@"list_groups.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Groups = %@", jsonObject);
+        
+        [_listGroups removeAllObjects];
+        for(NSDictionary *dictGroup in jsonObject)
+        {
+            
+            [_listGroups addObject:dictGroup];
+            
+        }
+        completionBlock (YES, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil);
+    }];
+}
+
+-(void) listFriendsInGroup: (NSString*)groupID completion:(void (^)(BOOL success, NSError *error , id result))completionBlock{
+    
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:groupID,@"gmID", nil];
+    [[NKApiClient shareInstace] postPath:@"get_friends_in_group.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Friends in Group = %@", jsonObject);
+        
+        completionBlock (YES, nil, jsonObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil, nil);
+    }];
+}
+
+-(void) createGroup: (NSString*)userID completion:(void (^)(BOOL success, NSError *error , id result))completionBlock{
+    
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:userID,@"creatorID", nil];
+    [[NKApiClient shareInstace] postPath:@"create_group.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Create Group = %@", jsonObject);
+        
+        completionBlock (YES, nil, jsonObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil, nil);
+    }];
+}
+
+-(void) addFriend: (NSString*)friendID toGroup: (NSString *) groupID completion:(void (^)(BOOL success, NSError *error))completionBlock{
+    
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                groupID,@"gmID",
+                                friendID,@"friendID",
+                                @"add", @"usage",nil];
+    [[NKApiClient shareInstace] postPath:@"add_friend_to_group.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Add friend to group = %@", jsonObject);
+        
+        completionBlock (YES, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil);
     }];
 }
 

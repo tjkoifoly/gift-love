@@ -217,6 +217,7 @@
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	[self setSearchResultsVisible:NO];
+    [self.tokenField.delegate tokenField:self.tokenField didAddTokenBySearch:representedObject];
 }
 
 #pragma mark TextField Methods
@@ -553,19 +554,22 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 
 #pragma mark Token Handling
 - (TIToken *)addTokenWithTitle:(NSString *)title {
-	return [self addTokenWithTitle:title representedObject:nil];
+
+    return [self addTokenWithTitle:title representedObject:nil];
 }
 
 - (TIToken *)addTokenWithTitle:(NSString *)title representedObject:(id)object {
 	
-	if (title.length){
+	if (title.length && ([self.tokenTitles indexOfObject:title] > self.tokenTitles.count)){
 		TIToken * token = [[TIToken alloc] initWithTitle:title representedObject:object font:self.font];
-		[self addToken:token];
+		//[self addToken:token];
 		return [token autorelease];
 	}
 	
 	return nil;
 }
+
+
 
 - (void)addToken:(TIToken *)token {
 	
@@ -592,6 +596,34 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 		
 		[self setResultsModeEnabled:NO];
 		[self deselectSelectedToken];
+	}
+}
+
+- (void)autoAddToken:(TIToken *)token {
+	
+	BOOL shouldAdd = YES;
+	if ([delegate respondsToSelector:@selector(tokenField:willAddToken:)]){
+		shouldAdd = [delegate tokenField:self willAddToken:token];
+	}
+	
+	if (shouldAdd){
+       
+        
+		[token addTarget:self action:@selector(tokenTouchDown:) forControlEvents:UIControlEventTouchDown];
+		[token addTarget:self action:@selector(tokenTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+		[self addSubview:token];
+		
+		if (![tokens containsObject:token]) {
+			[tokens addObject:token];
+            [self layoutTokensAnimated:YES];
+            
+			if ([delegate respondsToSelector:@selector(tokenField:didAddToken:)]){
+				[delegate tokenField:self didAddToken:token];
+			}
+		}
+        [self setResultsModeEnabled:NO];
+		[self deselectSelectedToken];
+         [self resignFirstResponder];
 	}
 }
 

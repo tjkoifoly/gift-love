@@ -13,7 +13,8 @@
 
 typedef enum {
     ModalPickerGifts,
-    ModalPickerFriends
+    ModalPickerFriends,
+    ModalPickerFriendsToAdd
 }ModalPickerMode;
 
 @interface ModalPanelPickerView : UATitledModalPanel <UITableViewDataSource,UITableViewDelegate>

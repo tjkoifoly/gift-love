@@ -39,6 +39,7 @@
 - (void)tokenField:(TITokenField *)tokenField didAddToken:(TIToken *)token;
 - (BOOL)tokenField:(TITokenField *)tokenField willRemoveToken:(TIToken *)token;
 - (void)tokenField:(TITokenField *)tokenField didRemoveToken:(TIToken *)token;
+-(void) tokenField:(TITokenField *)tokenField didAddTokenBySearch:(id)token;
 
 - (void)tokenField:(TITokenField *)tokenField didFinishSearch:(NSArray *)matches;
 - (NSString *)tokenField:(TITokenField *)tokenField displayStringForRepresentedObject:(id)object;
@@ -124,6 +125,8 @@ typedef enum {
 @property (nonatomic, readonly) int numberOfLines;
 @property (nonatomic, retain) NSCharacterSet * tokenizingCharacters;
 
+- (void)didEndEditing;
+- (void)autoAddToken:(TIToken *)token;
 - (void)addToken:(TIToken *)title;
 - (TIToken *)addTokenWithTitle:(NSString *)title;
 - (TIToken *)addTokenWithTitle:(NSString *)title representedObject:(id)object;
