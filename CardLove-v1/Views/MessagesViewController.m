@@ -227,7 +227,7 @@
                     [HUD hide:YES];
                     chatVC.mode = ChatModeGroup;
                     chatVC.group = group;
-  
+                    chatVC.newGroup = YES;
                     [weakBlock.navigationController pushViewController:chatVC animated:YES];
                 }];
                 

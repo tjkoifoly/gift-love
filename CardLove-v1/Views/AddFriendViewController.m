@@ -12,6 +12,7 @@
 #import "AFNetworking.h"
 #import "JSONKit.h"
 #import "UserManager.h"
+#import "ChatViewController.h"
 
 @interface AddFriendViewController ()
 
@@ -246,6 +247,17 @@
 
     return cell;
     
+}
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    id person = [_result objectAtIndex:indexPath.row];
+    Friend *tempFriend = [[Friend alloc] initWithDictionary:person];
+    
+    ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
+    chatVC.friendChatting = tempFriend;
+    [self.navigationController pushViewController:chatVC animated:YES];
 }
 
 #pragma mark - Keyboard events

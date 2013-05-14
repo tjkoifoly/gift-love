@@ -86,7 +86,10 @@
     }else if (_group)
     {
         UITextField *labelTitle = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
+        labelTitle.tag = 1234;
+        labelTitle.placeholder = @"Group name";
         [labelTitle setFont:[UIFont boldSystemFontOfSize:18]];
+        labelTitle.minimumFontSize = 10.0f;
         labelTitle.textColor= [UIColor whiteColor];
         labelTitle.backgroundColor = [UIColor clearColor];
         labelTitle.textAlignment = NSTextAlignmentCenter;
@@ -173,13 +176,17 @@
         case ChatModeSigle:
         {
             dispatch_async(queue, ^{
-                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:_friendChatting.fAvatarLink]];
-                avataFriend = [UIImage imageWithData:data];
+                if ([_friendChatting.fAvatarLink length]) {
+                    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:_friendChatting.fAvatarLink]];
+                    avataFriend = [UIImage imageWithData:data];
+                }
+                
             });
         }
             break;
         case ChatModeGroup:
         {
+        
             [self listFriendsInGroup:[_group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error, id result) {
                 [_groupMembers removeAllObjects];
                 for(NSDictionary *dictFriend in result)
@@ -194,6 +201,12 @@
                 }
                  [tokenFieldView.tokenField resignFirstResponder];
                 [tokenFieldView.tokenField didEndEditing];
+                
+                if (_newGroup) {
+                    UIView *v = [self.navigationController.view viewWithTag:1234];
+                    [v becomeFirstResponder];
+                }
+                
             }];
 
         }

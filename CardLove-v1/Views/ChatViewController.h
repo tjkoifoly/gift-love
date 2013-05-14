@@ -38,6 +38,7 @@ typedef enum {
 @property (nonatomic) ChatMode mode;
 @property (strong, nonatomic) NSMutableArray *groupMembers;
 @property (strong, nonatomic) id group;
+@property (nonatomic) BOOL newGroup;
 @property (nonatomic, strong) UIInputToolbar *inputToolbar;
 @property (strong, nonatomic) Friend *friendChatting;
 @property (weak, nonatomic) IBOutlet UIToolbar *tbTextField;
