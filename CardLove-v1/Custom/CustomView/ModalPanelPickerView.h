@@ -22,8 +22,10 @@ typedef enum {
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *dataSource;
 @property (nonatomic) ModalPickerMode mode;
+@property (strong, nonatomic) NSMutableArray *result;
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title;
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title mode: (ModalPickerMode) mode;
+- (id)initWithFrame:(CGRect)frame title:(NSString *)title mode: (ModalPickerMode) mode subArray:(NSArray *) array;
 
 @end

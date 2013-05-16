@@ -136,7 +136,7 @@
     return YES;
 }
 
--(id) friendByName: (NSString *)fName
+-(Friend *) friendByName: (NSString *)fName
 {
     
     for (Friend *f in _friendsList)

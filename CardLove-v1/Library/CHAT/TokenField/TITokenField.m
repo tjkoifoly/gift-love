@@ -497,6 +497,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 
 - (void)didBeginEditing {
 	[tokens enumerateObjectsUsingBlock:^(TIToken * token, NSUInteger idx, BOOL *stop){[self addToken:token];}];
+    
 }
 
 - (void)didEndEditing {
@@ -658,6 +659,15 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	}];
 	
     [self setText:@""];
+}
+
+-(void) removeTokenWithTitle: (NSString *) title
+{
+    [tokens enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(TIToken * token, NSUInteger idx, BOOL *stop) {
+		if ([token.title isEqualToString:title]) {
+            [self removeToken:token];
+        }
+	}];
 }
 
 - (void)selectToken:(TIToken *)token {
@@ -919,7 +929,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	}
 	
 	if ([textField.text isEqualToString:kTextHidden]){
-		[tokenField removeToken:tokenField.selectedToken];
+		//[tokenField removeToken:tokenField.selectedToken];
 		return (![string isEqualToString:@""]);
 	}
 	

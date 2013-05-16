@@ -132,6 +132,7 @@ typedef enum {
 - (TIToken *)addTokenWithTitle:(NSString *)title representedObject:(id)object;
 - (void)removeToken:(TIToken *)token;
 - (void)removeAllTokens;
+-(void) removeTokenWithTitle: (NSString *) title;
 
 - (void)selectToken:(TIToken *)token;
 - (void)deselectSelectedToken;

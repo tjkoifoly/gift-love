@@ -44,5 +44,6 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIToolbar *tbTextField;
 @property (weak, nonatomic) IBOutlet UIBubbleTableView *bubbleTable;
 @property (weak, nonatomic) IBOutlet UITextField *tfMessage;
+@property (strong, nonatomic) TITokenFieldView * tokenFieldView;
 
 @end

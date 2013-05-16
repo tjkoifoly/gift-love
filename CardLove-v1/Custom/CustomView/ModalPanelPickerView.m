@@ -8,20 +8,28 @@
 
 #import "ModalPanelPickerView.h"
 #import "UILabel+dynamicSizeMe.h"
+#import "UIImageView+AFNetworking.h"
 
 #define BLACK_BAR_COMPONENTS				{ 0.22, 0.22, 0.22, 1.0, 0.07, 0.07, 0.07, 1.0 }
 
 @implementation ModalPanelPickerView
+{
+    
+}
 
 @synthesize tableView = _tableView;
 @synthesize dataSource = _dataSource;
 @synthesize mode = _mode;
+@synthesize result = _result;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        if (!_result) {
+            _result = [[NSMutableArray alloc] init];
+        }
     }
     return self;
 }
@@ -78,6 +86,52 @@
     return self;
 }
 
+- (id)initWithFrame:(CGRect)frame title:(NSString *)title mode: (ModalPickerMode) mode subArray:(NSArray *) array
+{
+    if ((self = [self initWithFrame:frame title:title])) {
+        _mode = mode;
+        
+        switch (mode) {
+            case ModalPickerFriends:
+            {
+                _dataSource = [NSMutableArray arrayWithArray:[[FriendsManager sharedManager] friendsList]];
+                
+                for(Friend *f in array)
+                {
+                    Friend *findFriend = [[FriendsManager sharedManager] friendByName:f.userName];
+                    if (findFriend) {
+                        [_dataSource removeObject:findFriend];
+                    }
+                }
+                
+            }
+                break;
+                
+            case ModalPickerGifts:
+            {
+                NSString *pathGift = [[FunctionObject sharedInstance] dataFilePath:kPackages];
+                NSFileManager *fileMgr = [NSFileManager defaultManager];
+                
+                NSError *error = nil;
+                NSArray *subDirs = [fileMgr contentsOfDirectoryAtPath:pathGift error:&error];
+                
+                _dataSource = [NSMutableArray arrayWithArray:subDirs];
+                if ([_dataSource count] >0) {
+                    if ([[_dataSource objectAtIndex:0] isEqual:@".DS_Store"]) {
+                        [_dataSource removeObjectAtIndex:0];
+                    }
+                }
+                
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+    return self;
+}
+
 -(void) layoutSubviews
 {
     [super layoutSubviews];
@@ -109,9 +163,14 @@
             
         case ModalPickerFriends:
         {
-            cell.imageView.image = [UIImage imageNamed:@"avarta.jpg"];
             Friend *f = [_dataSource objectAtIndex:indexPath.row];
             cell.textLabel.text = [NSString stringWithFormat:@"%@", f.displayName];
+            [cell.imageView setImage:[UIImage imageNamed:@"noavata.png"]];
+            NSString *avatarLink = f.fAvatarLink;
+            if (avatarLink!= (id)[NSNull null] && avatarLink.length != 0) {
+                [cell.imageView setImageWithURL:[NSURL URLWithString:avatarLink] placeholderImage:[UIImage imageNamed:@"noavata.png"]];
+            }
+
         }
             break;
             
@@ -173,7 +232,8 @@
             break;
     }
 
-    }
+}
+
 
 
 @end
