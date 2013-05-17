@@ -622,7 +622,6 @@
         
         if (operation.response.statusCode == 200 || operation.response.statusCode == 201) {
             NSLog(@"STATUS = %i", operation.response.statusCode);
-            NSLog(@"DDDDDCCCCMMM _> %@", responseObject);
             id jsonObject = [[JSONDecoder decoder] objectWithData:responseObject];
             NSLog(@"JSON = %@", jsonObject);
             [[UserManager sharedInstance] updateInfoWithDictionary:[jsonObject objectAtIndex:0]];
@@ -647,9 +646,9 @@
     
     //make sure none of the parameters are nil, otherwise it will mess up our dictionary
     NSDictionary *params = @{
-                             @"latte[location]" : @"VN",
-                             @"latte[submitted_by]" : @"foly",
-                             @"latte[comments]" : @"CLGT"
+                             @"gift-love[location]" : @"VN",
+                             @"gift-love[submitted_by]" : @"foly",
+                             @"gift-love[comments]" : @"No"
                              };
     
     NSURLRequest *postRequest = [[NKApiClient shareInstace] multipartFormRequestWithMethod:@"POST"
@@ -671,7 +670,7 @@
         NSLog(@"CODE = %i", operation.response.statusCode);
         
         if (operation.response.statusCode == 200 || operation.response.statusCode == 201) {
-            NSLog(@"CLASS = %@", [responseObject class]);
+            NSLog(@"OBJECT = %@", responseObject);
 
             NSString *urlImage = [responseObject objectAtIndex:0];
             NSLog(@"URL = %@", urlImage);

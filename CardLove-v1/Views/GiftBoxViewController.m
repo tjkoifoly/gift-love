@@ -123,7 +123,7 @@
     self.viewControllers = controllers;
     self.customizableViewControllers = controllers;
     [self setSelectedViewController:nav3];
-    
+    self.delegate = self;
 }
 
 -(void) viewDidUnload
@@ -204,6 +204,14 @@
 -(void) storeCardViewControllerGiftDidSelected:(NSString *)giftPath
 {
     [self viewGiftCardWithPath:giftPath];
+}
+
+-(void) tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    if (_mode == NavigationBarModeEdit) {
+        [self switchBartToMode:NavigationBarModeView];
+    }
+
 }
 
 

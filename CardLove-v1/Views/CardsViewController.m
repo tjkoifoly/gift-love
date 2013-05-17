@@ -18,7 +18,6 @@
 #import "CollectionHeaderView.h"
 #import <QuartzCore/QuartzCore.h>
 
-
 @interface CardsViewController ()
 {
     NSMutableArray *_listToEdit;
@@ -72,6 +71,8 @@
     }
     
     [self.collectionView reloadData];
+    [_listItems removeAllObjects];
+    [_listToEdit removeAllObjects];
 
     [super viewDidAppear:animated];
     
@@ -196,8 +197,19 @@
         backgroundView.backgroundColor = [UIColor clearColor];
         backgroundView.image = [UIImage imageNamed:@"mask.png"];
         [item setSelectedBackgroundView:backgroundView];
+        
+        UILabel *selected = [[UILabel alloc] initWithFrame:CGRectMake(2, cellHeight-textLabelHeight-2, cellWidth-4   , textLabelHeight)];
+        selected.tag = tagSelected;
+        selected.backgroundColor = [UIColor darkGrayColor];
+        selected.textColor = [UIColor whiteColor];
+        selected.text = @"DELETE";
+        selected.textAlignment = NSTextAlignmentCenter;
+        selected.font = [UIFont systemFontOfSize:defaultFontSize];
+        
+        [item addSubview:selected];
     }
     
+    [[item viewWithTag:tagSelected] setAlpha:cellAHidden];
     [item setSelected:NO];
     id gift = [_listGifts objectAtIndex:indexPath.row];
     NSLog(@"Gift object = %@", gift);
@@ -219,7 +231,7 @@
 #pragma mark - SSCollectionViewDelegate
 
 - (CGSize)collectionView:(SSCollectionView *)aCollectionView itemSizeForSection:(NSUInteger)section {
-	return CGSizeMake(150, 120);
+	return CGSizeMake(cellWidth, cellHeight);
 }
 
 
@@ -246,6 +258,7 @@
         {
             if (itemSelected.isSelected) {
                 [itemSelected setSelected:NO];
+                [[itemSelected viewWithTag:tagSelected] setAlpha:cellAHidden];
                 
                 if ([_listItems containsObject:indexPath]) {
                     [_listItems removeObject:indexPath];
@@ -256,6 +269,7 @@
                 }
             }else{
                 [itemSelected setSelected:YES];
+                [[itemSelected viewWithTag:tagSelected] setAlpha:cellAAcitve];
                 
                 if (![_listItems containsObject:indexPath]) {
                     [_listItems addObject:indexPath];
@@ -274,6 +288,11 @@
             break;
     }
    
+}
+
+-(void) collectionView:(SSCollectionView *)aCollectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
 }
 
 

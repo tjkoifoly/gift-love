@@ -69,6 +69,8 @@
     }
     
     [self.collectionView reloadData];
+    [_listItems removeAllObjects];
+    [_listToEdit removeAllObjects];
 
     
 }
@@ -110,7 +112,19 @@
         backgroundView.backgroundColor = [UIColor clearColor];
         backgroundView.image = [UIImage imageNamed:@"mask.png"];
         [item setSelectedBackgroundView:backgroundView];
+        
+        UILabel *selected = [[UILabel alloc] initWithFrame:CGRectMake(2, cellHeight-textLabelHeight-2, cellWidth-4   , textLabelHeight)];
+        selected.tag = tagSelected;
+        selected.backgroundColor = [UIColor darkGrayColor];
+        selected.textColor = [UIColor whiteColor];
+        selected.text = @"DELETE";
+        selected.textAlignment = NSTextAlignmentCenter;
+        selected.font = [UIFont systemFontOfSize:defaultFontSize];
+        
+        [item addSubview:selected];
     }
+    [[item viewWithTag:tagSelected] setAlpha:cellAHidden];
+    [item setSelected:NO];
     NSString *gift = [_listGifts objectAtIndex:indexPath.row];
     item.titleLabel.text = gift;
     item.imageView.image = [UIImage imageNamed:@"card-icon2.jpg"];
@@ -152,6 +166,7 @@
         {
             if (itemSelected.isSelected) {
                 [itemSelected setSelected:NO];
+                [[itemSelected viewWithTag:tagSelected] setAlpha:cellAHidden];
                 
                 if ([_listItems containsObject:indexPath]) {
                     [_listItems removeObject:indexPath];
@@ -162,6 +177,7 @@
                 }
             }else{
                 [itemSelected setSelected:YES];
+                [[itemSelected viewWithTag:tagSelected] setAlpha:cellAAcitve];
                 
                 if (![_listItems containsObject:indexPath]) {
                     [_listItems addObject:indexPath];
@@ -179,10 +195,8 @@
         default:
             break;
     }
-
    
 }
-
 
 - (CGFloat)collectionView:(SSCollectionView *)aCollectionView heightForHeaderInSection:(NSUInteger)section {
 	return 40.0f;
