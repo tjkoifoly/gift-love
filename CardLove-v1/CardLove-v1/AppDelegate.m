@@ -77,7 +77,7 @@
                         @[
                             @{kSidebarCellImageKey: [UIImage imageNamed:@"user.png"], kSidebarCellTextKey: NSLocalizedString(@"Friends", @"")},
                             @{kSidebarCellImageKey: [UIImage imageNamed:@"user.png"], kSidebarCellTextKey: NSLocalizedString(@"Messages", @"")},
-                            @{kSidebarCellImageKey: [UIImage imageNamed:@"shop.png"], kSidebarCellTextKey: NSLocalizedString(@"Shopping", @"")},
+                            @{kSidebarCellImageKey: [UIImage imageNamed:@"shop.png"], kSidebarCellTextKey: NSLocalizedString(@"Gift Inbox", @"")},
                             @{kSidebarCellImageKey: [UIImage imageNamed:@"gift-box.png"], kSidebarCellTextKey: NSLocalizedString(@"Gift Box", @"")},
                             
                             ],

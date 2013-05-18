@@ -7,6 +7,9 @@
 //
 
 #import "FunctionObject.h"
+#import "AFNetworking.h"
+#import "NKApiClient.h"
+#import "JSONKit.h"
 
 @implementation FunctionObject
 
@@ -64,7 +67,195 @@
     return  [docsDir stringByAppendingPathComponent:comp];
 }
 
+-(BOOL)fileHasBeenCreatedAtPath:(NSString *)path
+{
+    BOOL result = NO;
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    if([fileManager fileExistsAtPath:path])
+    {
+        result = YES;
+    }
+    
+    return result;
+}
 
+-(void)createNewFolder: (NSString *)foleder
+{
+    NSFileManager *filemgr;
+    NSArray *dirPaths;
+    NSString *docsDir;
+    NSString *newDir;
+    
+    filemgr =[NSFileManager defaultManager];
+    
+    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                   NSUserDomainMask, YES);
+    
+    docsDir = [dirPaths objectAtIndex:0];
+    
+    newDir = [docsDir stringByAppendingPathComponent:foleder];
+    
+    BOOL isDir;
+    if([filemgr fileExistsAtPath:newDir isDirectory:&isDir])
+    {
+        if (!isDir) {
+            if ([filemgr createDirectoryAtPath:newDir withIntermediateDirectories:YES attributes:nil error: NULL] == NO)
+            {
+                // Failed to create directory
+                NSLog(@" Failed to create directory");
+            }
+        }
+    }else if ([filemgr createDirectoryAtPath:newDir withIntermediateDirectories:YES attributes:nil error: NULL] == NO)
+    {
+        // Failed to create directory
+        NSLog(@" Failed to create directory");
+    }
+}
+
+-(void) uploadGift:(NSData *) data withProgress:(void (^)(CGFloat progress))progressBlock completion:(void (^)(BOOL success, NSError *error, NSString *urlUpload))completionBlock
+{
+    //make sure none of the parameters are nil, otherwise it will mess up our dictionary
+    NSDictionary *params = @{
+                             @"gift-love[location]" : @"VN",
+                             @"gift-love[submitted_by]" : @"foly",
+                             @"gift-love[comments]" : @"No"
+                             };
+    
+    NSURLRequest *postRequest = [[NKApiClient shareInstace] multipartFormRequestWithMethod:@"POST"
+                                                                                      path:@"upload_gift.php"
+                                                                                parameters:params
+                                                                 constructingBodyWithBlock:^(id formData) {
+                                                                     [formData appendPartWithFileData:data
+                                                                                                 name:@"avatar"
+                                                                                             fileName:[NSString stringWithFormat:@"gift.zip"]
+                                                                                             mimeType:@"application/zip"];
+                                                                 }];
+    
+    AFHTTPRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:postRequest];
+    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        
+        CGFloat progress = ((CGFloat)totalBytesWritten) / totalBytesExpectedToWrite;
+        progressBlock(progress);
+    }];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"CODE = %i", operation.response.statusCode);
+        
+        if (operation.response.statusCode == 200 || operation.response.statusCode == 201) {
+            NSLog(@"GIFT UPLOAD = %@", responseObject);
+            
+            NSString *urlImage = [responseObject objectAtIndex:0];
+            NSLog(@"URL = %@", urlImage);
+            completionBlock(YES, nil, urlImage);
+            
+            
+        } else {
+            completionBlock(NO, nil, nil);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completionBlock(NO, error, nil);
+        NSLog(@"ERROR %@", error);
+    }];
+    
+    [[NKApiClient shareInstace] enqueueHTTPRequestOperation:operation];
+}
+
+-(void) dowloadFromURL: (NSString *) urlString toPath:(NSString *) pathSave withProgress:(void (^)(CGFloat progress))progressBlock completion:(void (^)(BOOL success, NSError *error))completionBlock
+{
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        CGFloat progress = ((CGFloat)totalBytesRead) / totalBytesExpectedToRead;
+        progressBlock(progress);
+    }];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        completionBlock(YES, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completionBlock(NO, error);
+        NSLog(@"ERROR %@", error);
+    }];
+     operation.outputStream = [NSOutputStream outputStreamToFileAtPath:pathSave append:NO];
+    
+    [[NKApiClient shareInstace] enqueueHTTPRequestOperation:operation];
+}
+
+
+
+-(void) sendGift: (NSString *)urlGift withParams:(NSDictionary *)params  completion:(void (^)(BOOL success, NSError *error))completionBlock
+{
+    NSMutableDictionary *dictParams = [NSMutableDictionary dictionaryWithDictionary:params];
+    [dictParams setValue:urlGift forKey:@"gfResources"];
+    
+    [[NKApiClient shareInstace] postPath:@"send_gift.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Result = %@", jsonObject);
+        
+        completionBlock(YES, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil);
+    }];
+    
+}
+
+
+
+
+-(void) loadGiftbyUser: (NSString*)userID completion:(void (^)(BOOL success, NSError *error, id result))completionBlock{
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:userID,@"userID", nil];
+    [[NKApiClient shareInstace] postPath:@"get_gift.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Gift LIST = %@", jsonObject);
+    
+        completionBlock (YES, nil, jsonObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil, nil);
+    }];
+}
+
+-(NSMutableArray *) filterGift:(NSArray *)list bySender:(NSString *) senderID
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", @"gfSenderID" , senderID];
+    NSMutableArray *result = [NSMutableArray arrayWithArray:list];
+    
+    [result filterUsingPredicate:predicate];
+    
+    return result;
+}
+
+-(NSMutableArray *) filterGift:(NSArray *)list byReciver:(NSString *) reciverID
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", @"gfRecieverID" , reciverID];
+    NSMutableArray *result = [NSMutableArray arrayWithArray:list];
+    
+    [result filterUsingPredicate:predicate];
+    
+    return result;
+}
+
+-(void) unzipFileAtPath:(NSString *)pathFile toPath:(NSString *)unzipPath withCompetionBlock:(void(^)(NSString *pathToOpen))completionBlock
+{
+    
+    NSFileManager *fmgr = [[NSFileManager alloc] init] ;
+    
+    [fmgr createDirectoryAtPath:unzipPath withIntermediateDirectories:YES attributes:nil error:NULL];
+    
+    if ([fmgr fileExistsAtPath:unzipPath]) {
+        ZipArchive *za = [[ZipArchive alloc] init];
+        if ([za UnzipOpenFile:pathFile]) {
+            BOOL ret = [za UnzipFileTo:unzipPath overWrite:YES];
+            if (NO == ret){}
+            [za UnzipCloseFile];
+        }
+    }
+
+    completionBlock(unzipPath);
+}
 
 
 @end

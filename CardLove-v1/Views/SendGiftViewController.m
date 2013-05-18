@@ -10,6 +10,7 @@
 #import "UIColor+Hex.h"
 #import "FunctionObject.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UserManager.h"
 
 @interface SendGiftViewController ()
 
@@ -116,7 +117,19 @@
 
 -(void) sendGift:(id) sender
 {
-    [self dismissModalViewControllerAnimated:YES];
+    //[[self.cell viewWithTag:111] resignFirstResponder];
+    //[[self.cell viewWithTag:112] resignFirstResponder];
+    
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [[UserManager sharedInstance]accID],@"senderID",
+                                _toFriend.fID,@"recieverID",
+                                _txtTitle.text,@"gfTitle",
+                                _txtDateChoose.text,@"gfDate"
+                                , nil];
+    NSLog(@"Date sent : %@", _txtDate.text);
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationSendGiftFromChoice object:_pathGift userInfo:dictParams];
+    
+    [self dismissView:nil];
 }
 
 #pragma mark - TableView

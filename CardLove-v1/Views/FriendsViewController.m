@@ -68,6 +68,7 @@ typedef void (^FinishBlock)();
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadFriend) name:kNotificationReloadFriendsList object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendGiftView:) name:kNotificationSendGiftToFriend object:nil];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendGiftToFriend:) name:kNotificationSendGiftFromChoice object:nil];
     
 }
 
@@ -126,6 +127,7 @@ typedef void (^FinishBlock)();
     [self setActionHeaderView:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationReloadFriendsList object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationSendGiftToFriend object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationSendGiftFromChoice object:nil];
     [super viewDidUnload];
 }
 
@@ -451,7 +453,29 @@ typedef void (^FinishBlock)();
     [self presentModalViewController:navSendGift animated:YES];
 }
 
+-(void) sendGiftToFriend: (NSNotification *) notificaion
+{
+    NSLog(@"Notification = %@", notificaion);
+    
+    MBProgressHUD *hud;
+    hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    
+    NSData *giftData = [NSData dataWithContentsOfFile:notificaion.object];
+    [[FunctionObject sharedInstance] uploadGift:giftData withProgress:^(CGFloat progress) {
+        hud.mode = MBProgressHUDModeDeterminate;
+        hud.progress = progress;
+    } completion:^(BOOL success, NSError *error, NSString *urlUpload) {
+        
+        [[FunctionObject sharedInstance] sendGift:urlUpload withParams:notificaion.userInfo completion:^(BOOL success, NSError *error) {
+            hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.labelText = @"Send gift successful";
+            [hud hide:YES afterDelay:0.5];
+            
+        }];
+    }];
 
+}
 
 
 #pragma mark - UAModalDisplayPanelViewDelegate

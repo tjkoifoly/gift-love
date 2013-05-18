@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "Friend.h"
+#import "FunctionObject.h"
+#import "MBProgressHUD.h"
 
 @interface SendGiftViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 

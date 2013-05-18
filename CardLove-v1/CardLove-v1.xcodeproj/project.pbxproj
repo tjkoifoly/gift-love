@@ -379,6 +379,7 @@
 		66868D87170D892D008A056F /* soda.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66868D82170D892D008A056F /* soda.jpg */; };
 		6689E7E71740C7DA00C1942C /* SendGiftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6689E7E51740C7DA00C1942C /* SendGiftViewController.m */; };
 		6689E7E81740C7DA00C1942C /* SendGiftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6689E7E61740C7DA00C1942C /* SendGiftViewController.xib */; };
+		668AE8651747318A00BEF685 /* AJNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 668AE8641747318A00BEF685 /* AJNotificationView.m */; };
 		66923A2916FAE928003F589D /* resize.png in Resources */ = {isa = PBXBuildFile; fileRef = 66923A2716FAE928003F589D /* resize.png */; };
 		66923A2A16FAE928003F589D /* resize@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66923A2816FAE928003F589D /* resize@2x.png */; };
 		66923A2E16FB00BF003F589D /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 66923A2D16FB00BF003F589D /* mask.png */; };
@@ -1354,6 +1355,8 @@
 		6689E7E41740C7DA00C1942C /* SendGiftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SendGiftViewController.h; path = Views/SendGiftViewController.h; sourceTree = "<group>"; };
 		6689E7E51740C7DA00C1942C /* SendGiftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SendGiftViewController.m; path = Views/SendGiftViewController.m; sourceTree = "<group>"; };
 		6689E7E61740C7DA00C1942C /* SendGiftViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SendGiftViewController.xib; path = Views/SendGiftViewController.xib; sourceTree = "<group>"; };
+		668AE8631747318A00BEF685 /* AJNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJNotificationView.h; sourceTree = "<group>"; };
+		668AE8641747318A00BEF685 /* AJNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJNotificationView.m; sourceTree = "<group>"; };
 		66923A2716FAE928003F589D /* resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = resize.png; path = Resources/resize.png; sourceTree = "<group>"; };
 		66923A2816FAE928003F589D /* resize@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "resize@2x.png"; path = "Resources/resize@2x.png"; sourceTree = "<group>"; };
 		66923A2D16FB00BF003F589D /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mask.png; path = ../../PSD/mask.png; sourceTree = "<group>"; };
@@ -2926,6 +2929,7 @@
 		6653731F16EB457D000648B3 /* AlertView */ = {
 			isa = PBXGroup;
 			children = (
+				668AE8621747318A00BEF685 /* AJNotificationView */,
 				66B580B71745444C00B3E276 /* TSMessageView */,
 				6653732A16EB49F5000648B3 /* MBProgressHUD.h */,
 				6653732B16EB49F5000648B3 /* MBProgressHUD.m */,
@@ -3072,6 +3076,15 @@
 			);
 			name = _animations;
 			path = Resources/_animations;
+			sourceTree = "<group>";
+		};
+		668AE8621747318A00BEF685 /* AJNotificationView */ = {
+			isa = PBXGroup;
+			children = (
+				668AE8631747318A00BEF685 /* AJNotificationView.h */,
+				668AE8641747318A00BEF685 /* AJNotificationView.m */,
+			);
+			path = AJNotificationView;
 			sourceTree = "<group>";
 		};
 		669B787916E9F8D900F4437F /* CollectionView */ = {
@@ -4795,6 +4808,7 @@
 				66B580D11745444C00B3E276 /* TSMessageView.m in Sources */,
 				66B580E11745444C00B3E276 /* UIColor+MLColorAdditions.m in Sources */,
 				663AC2531745DC9E0084A6E1 /* HMSideMenu.m in Sources */,
+				668AE8651747318A00BEF685 /* AJNotificationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

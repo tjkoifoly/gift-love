@@ -10,13 +10,14 @@
 #import "NKApiClient.h"
 #import "AFNetworking.h"
 #import "MacroDefine.h"
+#import "MBProgressHUD.h"
 
 typedef enum {
     ProfileViewTypeSignUp,
     ProfileViewTypeEdit
 }ProfileViewType;
 
-@interface DBSignupViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
+@interface DBSignupViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MBProgressHUDDelegate> {
     UITextField *nameTextField_;
     UITextField *lastNameTextField_;
     UITextField *emailTextField_;
@@ -40,6 +41,8 @@ typedef enum {
     NSDate *birthday_;
     NSString *gender_;
     UIImage *photo_;
+    
+    MBProgressHUD *HUD;
 }
 
 @property (nonatomic) ProfileViewType viewMode;

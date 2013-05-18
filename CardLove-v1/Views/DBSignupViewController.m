@@ -262,16 +262,27 @@
 
 -(void) saveWithMethodUsage: (NSString *)usage
 {
+    HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+	HUD.delegate = self;
+    
     if (changeAvatar) {
         NSData *imgData = UIImagePNGRepresentation(self.photo);
         [self saveInfo:imgData WithProgress:^(CGFloat progress) {
-            
+            HUD.mode = MBProgressHUDModeDeterminate;
+            HUD.progress = progress;
         } completion:^(BOOL success, NSError *error, NSString *urlUpload) {
             if (success) {
                 [self saveInfoWithAvatar:urlUpload usage:usage completion:^(BOOL success, NSError *error) {
                     if (success) {
-                        NSLog(@"Update successful!");
-                        [self backPreviousView:nil];
+                        NSString *msgNotif = [usage isEqualToString:@"update_info"]?@"Update successful":@"Sign up successful";
+                        NSLog(@"%@", msgNotif);
+                        
+                        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+                        HUD.mode = MBProgressHUDModeCustomView;
+                        HUD.labelText = msgNotif;
+                        [HUD hide:YES afterDelay:0.5];
+                        
+                        [self performSelector:@selector(backPreviousView:) withObject:nil afterDelay:0.5];
                     }else
                     {
                         NSLog(@"Update failed!");
@@ -286,11 +297,18 @@
     {
         [self saveInfoWithAvatar:nil usage:usage completion:^(BOOL success, NSError *error) {
             if (success) {
-                NSLog(@"Update successful!");
-                [self backPreviousView:nil];
+                NSString *msgNotif = [usage isEqualToString:@"update_info"]?@"Update successful":@"Sign up successful";
+                NSLog(@"%@", msgNotif);
+                
+                HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+                HUD.mode = MBProgressHUDModeCustomView;
+                HUD.labelText = msgNotif;
+                [HUD hide:YES afterDelay:0.5];
+                
+                [self performSelector:@selector(backPreviousView:) withObject:nil afterDelay:0.5];
             }else
             {
-                NSLog(@"Update failed!");
+                NSLog(@"HTTP failed!");
             }
         }];
         
@@ -643,7 +661,7 @@
 }
 
 - (void)saveInfo: (NSData *) imgData WithProgress:(void (^)(CGFloat progress))progressBlock completion:(void (^)(BOOL success, NSError *error, NSString *urlUpload))completionBlock {
-    
+
     //make sure none of the parameters are nil, otherwise it will mess up our dictionary
     NSDictionary *params = @{
                              @"gift-love[location]" : @"VN",
@@ -663,6 +681,7 @@
     
     AFHTTPRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:postRequest];
     [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        
         CGFloat progress = ((CGFloat)totalBytesWritten) / totalBytesExpectedToWrite;
         progressBlock(progress);
     }];
@@ -719,5 +738,15 @@
 //                          nil];
     return mDict;
 }
+
+#pragma mark -
+#pragma mark MBProgressHUDDelegate method
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+    [HUD removeFromSuperview];
+    HUD = nil;
+}
+
 
 @end

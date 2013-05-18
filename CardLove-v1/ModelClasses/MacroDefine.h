@@ -54,6 +54,8 @@
 #define kNotificationDenyFriendRequest      @"NotificationDenyFriendRequest"
 #define kNotificationReloadFriendsList      @"NotificationReloadFriendsList"
 
+#define kNotificationSendGiftFromChoice @"NotificationSendGiftFromChoice"
+
 #define kGiftPaper      @"gift-paper"
 #define kGiftBG         @"gift-bg"
 #define kGiftFrame      @"gift-frame"

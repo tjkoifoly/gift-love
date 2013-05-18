@@ -107,7 +107,7 @@
     cvc = [[CardsViewController alloc] initWithNibName:@"CardsViewController" bundle:nil];
     cvc.delegate = self;
     cvc.tabBarItem.image = [UIImage imageNamed:@"cards.png"];
-    cvc.tabBarItem.title = @"Inbox";
+    cvc.tabBarItem.title = @"Box Created";
     UINavigationController *nav3 = [[UINavigationController alloc] initWithRootViewController:cvc];
     [nav3 setNavigationBarHidden:YES];
     [controllers addObject:nav3];
@@ -115,7 +115,7 @@
     fvc = [[StoredCardsViewController alloc] initWithNibName:@"StoredCardsViewController" bundle:nil];
     fvc.delegate = self;
     fvc.tabBarItem.image = [UIImage imageNamed:@"Stored.png"];
-    fvc.tabBarItem.title = @"Stored";
+    fvc.tabBarItem.title = @"Box Saved";
     UINavigationController *nav1 = [[UINavigationController alloc] initWithRootViewController:fvc];
     [nav1 setNavigationBarHidden:YES];
     [controllers addObject:nav1];

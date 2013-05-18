@@ -10,6 +10,7 @@
 #import "SSCollectionViewController.h"
 #import "MacroDefine.h"
 #import "CreateCardViewController.h"
+#import "FunctionObject.h"
 
 @class StoredCardsViewController;
 @protocol StoreCardViewControllerDelegate <NSObject>
