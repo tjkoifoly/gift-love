@@ -154,11 +154,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         //Not save
         [self showNameAlertWithTitle:@"Not save?" andOther:@"Delete"];
     }else{
-        [self saveCard];
+        [self saveData];
         [self back];
     }
-    
-        
 }
 
 -(void)back
@@ -281,6 +279,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     }else
     {
         [self saveData];
+        [self performSelector:@selector(showMessageWithCompletedView:) withObject:@"Saved !" afterDelay:0.5];
     }
 }
 
@@ -327,7 +326,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
             if ([[GiftElementsManager sharedManager] saveListElements]) {
                 NSLog(@"Saved gift successful.");
                 //[self saveAsZip];
-                [self performSelector:@selector(showMessageWithCompletedView:) withObject:@"Saved !" afterDelay:0.5];
+                
             }
         }
     }
