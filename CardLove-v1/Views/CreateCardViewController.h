@@ -29,6 +29,7 @@
 #import "TapkuLibrary.h"
 #import "ConfigurationViewController.h"
 #import "ViewStyle.h"
+#import "FunctionObject.h"
 
 @interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate, GestureLabelDelegate, MusicViewControllerDelegate, AnimationViewControllerDelegate, GiftElementsDelegate, ViewGiftControllerDelegate, ViewStyleDelegate>
 {

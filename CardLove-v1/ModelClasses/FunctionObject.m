@@ -257,5 +257,31 @@
     completionBlock(unzipPath);
 }
 
+-(void ) saveAsZipFromPath:(NSString *)fromPath toPath:(NSString *)toPath withCompletionBlock:(void(^)(NSString *pathResult))completionBlock
+{
+    ZipArchive *za = [[ZipArchive alloc] init];
+    [za CreateZipFile2:toPath];
+    
+    //[za addDirectoryToZip:projectPath];
+    NSArray *filesInDirectory = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:fromPath error:NULL];
+    NSMutableArray *mutFiles = [NSMutableArray arrayWithArray:filesInDirectory];
+    
+    for(id file in mutFiles)
+    {
+        NSLog(@"Adding file = %@ ...", file);
+        [za addFileToZip:[fromPath stringByAppendingPathComponent:file] newname:file];
+    }
+    
+    BOOL success = [za CloseZipFile2];
+    
+    if (success) {
+        completionBlock(toPath);
+    }else{
+        completionBlock(nil);
+    }
+
+}
+
+
 
 @end

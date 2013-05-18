@@ -11,7 +11,7 @@
 #import "OLImage.h"
 #import "OLImageView.h"
 
-#define kNewProject     @"NewTemplate"
+#define kNewProject     @"NewTemplate1234567890acbdefghijklmnoprstuvwxyz"
 #define kProjects       @"Projects"
 #define kGift           @"Gifts"
 #define kCards          @"Cards"

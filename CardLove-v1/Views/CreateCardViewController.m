@@ -150,6 +150,19 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) backPreviousView
 {
+    if ([kNewProject isEqualToString:_giftName]) {
+        //Not save
+        [self showNameAlertWithTitle:@"Not save?" andOther:@"Delete"];
+    }else{
+        [self saveCard];
+        [self back];
+    }
+    
+        
+}
+
+-(void)back
+{
     if ([[SoundManager sharedManager] isPlayingMusic]) {
         [[SoundManager sharedManager] stopMusic];
     }
@@ -160,9 +173,8 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         }];
     }else
     {
-         [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
     }
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -265,7 +277,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 {
     if ([kNewProject isEqualToString:_giftName]) {
         //Show popUp to rename
-        [self showNameAlertWithTitle:@"Enter a name for gift"];
+        [self showNameAlertWithTitle:@"Enter a name for gift" andOther:@"Cancel"];
     }else
     {
         [self saveData];
@@ -323,9 +335,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     NSLog(@"PHOTOS = %@", listItems);
 }
 
--(void) showNameAlertWithTitle: (NSString *) titleText
+-(void) showNameAlertWithTitle: (NSString *) titleText andOther:(NSString *)otherTitle
 {
-    PromptAlert *pAlert = [[PromptAlert alloc] initWithTitle:titleText delegate:self cancelButtonTitle:@"OK" otherButtonTitle:@"Cancel"];
+    PromptAlert *pAlert = [[PromptAlert alloc] initWithTitle:titleText delegate:self cancelButtonTitle:@"Save" otherButtonTitle:otherTitle];
     [pAlert show];
 }
 
@@ -399,7 +411,6 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     NSString *projectPath = _pathResources;
     
     NSString *docspath = [self dataFilePath:kPackages];
-    
     NSString *zipFile1 = [docspath stringByAppendingPathComponent:_giftName];
     NSString *zipFile = [zipFile1 stringByAppendingPathExtension:@"zip"];
     
@@ -422,6 +433,44 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     NSLog(@"Zip Path = %@", zipFile);
     
     return zipFile;
+}
+
+-(void) sendGift
+{
+    //    NSString *docspath = [self dataFilePath:kPackages];
+    //    NSString *zipFile = [docspath stringByAppendingPathComponent:_giftName];
+    //
+    //    NSString *projectPath = [self dataFilePath:kGift];
+    //    NSString *unzipPath = [projectPath stringByAppendingPathComponent:_giftName];
+    //    NSFileManager *fmgr = [[NSFileManager alloc] init] ;
+    //
+    //   [fmgr createDirectoryAtPath:unzipPath withIntermediateDirectories:YES attributes:nil error:NULL];
+    //
+    //    if ([fmgr fileExistsAtPath:unzipPath]) {
+    //        ZipArchive *za = [[ZipArchive alloc] init];
+    //        if ([za UnzipOpenFile:zipFile]) {
+    //           BOOL ret = [za UnzipFileTo:unzipPath overWrite:YES];
+    //            if (NO == ret){} [za UnzipCloseFile];
+    //        }
+    //    }
+    
+    [self createNewFolder:kPackages];
+    NSString *projectPath = _pathResources;
+    
+    NSString *docspath = [self dataFilePath:kPackages];
+    NSString *zipFile1 = [docspath stringByAppendingPathComponent:_giftName];
+    NSString *zipFile = [zipFile1 stringByAppendingPathExtension:@"zip"];
+    
+    [[FunctionObject sharedInstance] saveAsZipFromPath:projectPath toPath:zipFile withCompletionBlock:^(NSString *pathResult) {
+        
+//        NSError *error = nil;
+//        [[NSFileManager defaultManager] removeItemAtPath:[self dataFilePath:kNewProject] error: &error];
+//        if (!error) {
+//            NSLog(@"Delte template ok");
+//        }
+        NSLog(@"Sent path = %@", pathResult);
+    }];
+    
 }
 
 -(void) saveAsImage
@@ -475,26 +524,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 	[[HMGLTransitionManager sharedTransitionManager] dismissModalViewController:modalController];
 }
 
--(void) sendGift
-{
-    NSString *docspath = [self dataFilePath:kPackages];
-    NSString *zipFile = [docspath stringByAppendingPathComponent:_giftName];
-    
-    NSString *projectPath = [self dataFilePath:kGift];
-    NSString *unzipPath = [projectPath stringByAppendingPathComponent:_giftName];
-    NSFileManager *fmgr = [[NSFileManager alloc] init] ;
-    
-   [fmgr createDirectoryAtPath:unzipPath withIntermediateDirectories:YES attributes:nil error:NULL];
-    
-    if ([fmgr fileExistsAtPath:unzipPath]) {
-        ZipArchive *za = [[ZipArchive alloc] init];
-        if ([za UnzipOpenFile:zipFile]) {
-           BOOL ret = [za UnzipFileTo:unzipPath overWrite:YES];
-            if (NO == ret){} [za UnzipCloseFile];
-        }
-    }
-    
-}
+
 /* ------------------------------------------------------------------------------------------- */
 -(void) removeImageView
 {
@@ -1186,12 +1216,30 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
                     
                 }else
                 {
-                    [self showNameAlertWithTitle: @"Enter a other name"];
+                    [self showNameAlertWithTitle: @"Enter a other name" andOther:@"Cancel"];
                 }
             }
                 break;
+            case 1:
+            {
+                if ([@"Not save?" isEqualToString:alertView.title]) {
+                    PromptAlert *pAlert = (PromptAlert *) alertView;
+                    NSError *error =nil;
+                    [[NSFileManager defaultManager] removeItemAtPath:[self dataFilePath:kNewProject] error:&error];
+                    if (!error) {
+                        [pAlert.filedName resignFirstResponder];
+                        [self performSelector:@selector(back) withObject:nil afterDelay:0.25];
+                    }else
+                    {
+                        NSLog(@"ERROR = %@", error);
+                    }
+                }
+            }
                 
             default:
+            {
+                
+            }
                 break;
         }
     }
@@ -1208,7 +1256,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     if ([[NSFileManager defaultManager] fileExistsAtPath:pathOfThisGift isDirectory:&isDir]) {
 
         if (isDir) {
-            [self showNameAlertWithTitle: @"Enter a other name"];
+            [self showNameAlertWithTitle: @"Enter a other name" andOther:@"Cancel"];
         }
         return;
     }

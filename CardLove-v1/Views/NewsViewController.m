@@ -198,7 +198,7 @@
 	NSString *title = [NSString stringWithFormat:@"You selected %@",[_currentGift valueForKey:@"gfTitle"]];
     NSString *message = [NSString stringWithFormat:@"Download and view gift"];
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self
-										  cancelButtonTitle:@"Download" otherButtonTitles:@"Cancel", nil];
+										  cancelButtonTitle:@"View" otherButtonTitles:@"Cancel", nil];
 	[alert show];
 }
 
