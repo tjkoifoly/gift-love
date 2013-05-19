@@ -10,9 +10,17 @@
 #import "Friend.h"
 #import "FunctionObject.h"
 #import "MBProgressHUD.h"
+@class SendGiftViewController;
+@protocol SendGiftViewControllerDelegate <NSObject>
+
+@optional
+-(void) sendGiftViewController:(SendGiftViewController *)sgvc didSendGift:(NSString *)path withParams:(NSDictionary *) dictParams;
+
+@end
 
 @interface SendGiftViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
+@property (assign, nonatomic) id<SendGiftViewControllerDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UITableViewCell *cell;
 @property (strong, nonatomic) Friend *toFriend;

@@ -17,6 +17,7 @@
 #import "HMGLTransitionManager.h"
 #import "DoorsTransition.h"
 #import "ViewGiftViewController.h"
+#import "FriendsManager.h"
 
 @interface NewsViewController : SSCollectionViewController<UIAlertViewDelegate, ViewGiftControllerDelegate>
 

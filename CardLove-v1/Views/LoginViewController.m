@@ -158,7 +158,7 @@
     [dictParams setValue:userName forKey:@"username"];
     [dictParams setValue:passWord forKey:@"password"];
     
-    [[NKApiClient shareInstace] getPath:@"login.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[NKApiClient shareInstace] postPath:@"login.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         id jsonObject = [[JSONDecoder decoder] objectWithData:responseObject];
         NSLog(@"JSON OBJECT = %@", jsonObject);

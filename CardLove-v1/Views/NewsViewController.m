@@ -117,17 +117,20 @@
     item.imageView.image = [UIImage imageNamed:@"card-icon.jpg"];
     NSUInteger section = indexPath.section;
     NSUInteger row = indexPath.row;
-    NSDictionary *dictGift;
+    NSDictionary *dictGift = nil;
+    NSString *name = nil;
     
     switch (section) {
         case 0:
         {
             dictGift = [_recieveArray objectAtIndex:row];
+            name = [[FriendsManager sharedManager] friendNameByID:[dictGift valueForKey:@"gfSenderID"]]; 
         }
             break;
         case 1:
         {
             dictGift = [_sentArray objectAtIndex:row];
+            name = [[FriendsManager sharedManager] friendNameByID:[dictGift valueForKey:@"gfRecieverID"]]; 
         }
             break;
             
@@ -135,6 +138,7 @@
             break;
     }
     item.titleLabel.text = [dictGift valueForKey:@"gfTitle"];
+    item.nameLabel.text = name;;
     NSDate *date = [[FunctionObject sharedInstance] dateFromStringDateTime:[dictGift valueForKey:@"gfDateSent"]];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterLongStyle];
@@ -196,9 +200,9 @@
     }
 
 	NSString *title = [NSString stringWithFormat:@"You selected %@",[_currentGift valueForKey:@"gfTitle"]];
-    NSString *message = [NSString stringWithFormat:@"Download and view gift"];
+    NSString *message = [NSString stringWithFormat:@"Download and play gift"];
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self
-										  cancelButtonTitle:@"View" otherButtonTitles:@"Cancel", nil];
+										  cancelButtonTitle:@"Cancel" otherButtonTitles:@"Play", nil];
 	[alert show];
 }
 
@@ -218,7 +222,7 @@
    
     
     switch (buttonIndex) {
-        case 0:
+        case 1:
         {
             //Download
             MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
@@ -245,16 +249,18 @@
             
         }
             break;
-        case 1:
+        case 0:
         {
             //cancel
+            _currentGift = nil;
         }
+            break;
+        case 2:
             break;
             
         default:
             break;
     }
-     _currentGift = nil;
 }
 
 -(NSString *) pathDownload: (NSDictionary *) objGift
@@ -270,15 +276,17 @@
     [[FunctionObject sharedInstance] createNewFolder:kGift];
     NSString *docUnzip = [[FunctionObject sharedInstance] dataFilePath:kGift];
     
-    NSString *pathUnzip = [docUnzip stringByAppendingPathComponent:[path lastPathComponent]];
+    NSString *pathUnzip = [docUnzip stringByAppendingPathComponent:[[path lastPathComponent] substringToIndex:[path lastPathComponent].length-3]];
     [[FunctionObject sharedInstance] unzipFileAtPath:path toPath:pathUnzip withCompetionBlock:^(NSString *pathToOpen) {
         NSLog(@"PATH = %@", pathToOpen);
         ViewGiftViewController *cvcv = [[ViewGiftViewController alloc] initWithNibName:@"ViewGiftViewController" bundle:nil];
         cvcv.giftPath = pathToOpen;
+        cvcv.sender = [[FriendsManager sharedManager] friendByID:[_currentGift objectForKey:@"gfSenderID"]];
         cvcv.delegate = self;
         
         [[HMGLTransitionManager sharedTransitionManager] setTransition:[[DoorsTransition alloc] init]];
         [[HMGLTransitionManager sharedTransitionManager] presentModalViewController:cvcv onViewController:self.navigationController];
+        _currentGift = nil;
     }];
 }
 

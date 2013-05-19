@@ -137,7 +137,7 @@
     CollectionHeaderView *header = [[[NSBundle mainBundle] loadNibNamed:@"CollectionHeaderView" owner:self options:nil] objectAtIndex:0];
     header.lbTitle.text = [NSString stringWithFormat:@"Favorite"];
     
-    return header;
+    return nil;
 }
 
 
@@ -196,10 +196,6 @@
             break;
     }
    
-}
-
-- (CGFloat)collectionView:(SSCollectionView *)aCollectionView heightForHeaderInSection:(NSUInteger)section {
-	return 40.0f;
 }
 
 -(void) editDone

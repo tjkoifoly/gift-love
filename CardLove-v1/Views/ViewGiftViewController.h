@@ -17,11 +17,17 @@
 #import "UIEffectDesignerView.h"
 #import "ZipArchive.h"
 #import "FunctionObject.h"
+#import "Friend.h"
+#import "SendGiftViewController.h"
+#import "ModalPanelPickerView.h"
+#import "FunctionObject.h"
 
 @class ViewGiftViewController;
 @protocol ViewGiftControllerDelegate <NSObject>
 
+@optional
 - (void)modalControllerDidFinish:(ViewGiftViewController*)modalController;
+- (void)modalControllerDidFinish:(ViewGiftViewController*)modalController withBlock:(void(^)()) completion;
 
 @end
 
@@ -29,6 +35,8 @@
 
 @property (assign, nonatomic) id<ViewGiftControllerDelegate> delegate;
 @property (strong, nonatomic) NSString * giftPath;
+@property (strong, nonatomic) Friend *sender;
+@property (nonatomic) BOOL preview;
 
 
 @property (weak, nonatomic) IBOutlet UIView *viewGift;

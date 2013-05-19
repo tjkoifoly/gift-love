@@ -30,8 +30,11 @@
 #import "ConfigurationViewController.h"
 #import "ViewStyle.h"
 #import "FunctionObject.h"
+#import "ModalPanelPickerView.h"
+#import "SendGiftViewController.h"
 
-@interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate, GestureLabelDelegate, MusicViewControllerDelegate, AnimationViewControllerDelegate, GiftElementsDelegate, ViewGiftControllerDelegate, ViewStyleDelegate>
+
+@interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate, GestureLabelDelegate, MusicViewControllerDelegate, AnimationViewControllerDelegate, GiftElementsDelegate, ViewGiftControllerDelegate, ViewStyleDelegate, UAModalPanelDelegate, SendGiftViewControllerDelegate>
 {
     MBProgressHUD *HUD;
 }

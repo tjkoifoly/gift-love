@@ -25,5 +25,7 @@
 -(id) findFriendByName: (NSString *) fName;
 - (BOOL)personExists:(NSString *)key withValue:(NSString *)value ;
 -(Friend *) friendByName: (NSString *)fName;
+-(Friend *) friendByID: (NSString *)fID;
+-(NSString *) friendNameByID: (NSString *)fID;
 
 @end

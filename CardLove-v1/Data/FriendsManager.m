@@ -144,11 +144,44 @@
 
         if ([f.userName isEqualToString:fName]) {
             return f;
+            
         }else{
             continue;
         }
     }
     return nil;
+}
+
+-(Friend *) friendByID: (NSString *)fID
+{
+    
+    for (Friend *f in _friendsList)
+    {
+        
+        if ([f.fID isEqualToString:fID]) {
+            return f;
+            
+        }else{
+            continue;
+        }
+    }
+    return nil;
+}
+
+-(NSString *) friendNameByID: (NSString *)fID
+{
+    for (Friend *f in _friendsList)
+    {
+        
+        if ([f.fID isEqualToString:fID]) {
+            return f.userName;
+            
+        }else{
+            continue;
+        }
+    }
+    return nil;
+
 }
 
 

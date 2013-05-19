@@ -33,6 +33,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @property (nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 
 /**
  Returns the label used for the main textual content of the table cell. (read-only)

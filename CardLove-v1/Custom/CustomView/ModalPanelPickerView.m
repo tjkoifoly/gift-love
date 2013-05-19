@@ -63,7 +63,7 @@
                 
             case ModalPickerGifts:
             {
-                NSString *pathGift = [[FunctionObject sharedInstance] dataFilePath:kPackages];
+                NSString *pathGift = [[FunctionObject sharedInstance] dataFilePath:kProjects];
                 NSFileManager *fileMgr = [NSFileManager defaultManager];
                 
                 NSError *error = nil;
@@ -80,6 +80,9 @@
                 break;
                 
             default:
+            {
+                _dataSource = [NSMutableArray arrayWithArray:[[FriendsManager sharedManager] friendsList]];
+            }
                 break;
         }
     }
@@ -109,7 +112,7 @@
                 
             case ModalPickerGifts:
             {
-                NSString *pathGift = [[FunctionObject sharedInstance] dataFilePath:kPackages];
+                NSString *pathGift = [[FunctionObject sharedInstance] dataFilePath:kProjects];
                 NSFileManager *fileMgr = [NSFileManager defaultManager];
                 
                 NSError *error = nil;
@@ -122,6 +125,20 @@
                     }
                 }
                 
+            }
+                break;
+                
+            case ModalPickerFriendsToSend:
+            {
+                _dataSource = [NSMutableArray arrayWithArray:[[FriendsManager sharedManager] friendsList]];
+                
+                for(Friend *f in array)
+                {
+                    Friend *findFriend = [[FriendsManager sharedManager] friendByName:f.userName];
+                    if (findFriend) {
+                        [_dataSource removeObject:findFriend];
+                    }
+                } 
             }
                 break;
                 
@@ -174,6 +191,18 @@
         }
             break;
             
+        case ModalPickerFriendsToSend:
+        {
+            Friend *f = [_dataSource objectAtIndex:indexPath.row];
+            cell.textLabel.text = [NSString stringWithFormat:@"%@", f.displayName];
+            [cell.imageView setImage:[UIImage imageNamed:@"noavata.png"]];
+            NSString *avatarLink = f.fAvatarLink;
+            if (avatarLink!= (id)[NSNull null] && avatarLink.length != 0) {
+                [cell.imageView setImageWithURL:[NSURL URLWithString:avatarLink] placeholderImage:[UIImage imageNamed:@"noavata.png"]];
+            }  
+        }
+            break;
+            
         default:
             break;
     }
@@ -216,15 +245,30 @@
              cell.accessoryType = UITableViewCellAccessoryCheckmark;
             [self hideWithOnComplete:^(BOOL finished) {
                 NSLog(@"Panel hidden");
-                NSString *fileName = [_dataSource objectAtIndex:indexPath.row];
-                NSString *pathPackages = [[FunctionObject sharedInstance] dataFilePath:kPackages];
-                NSString *pathGift = [pathPackages stringByAppendingPathComponent:fileName];
-                NSLog(@"PICK = %@", pathGift);
+                NSString *giftName = [_dataSource objectAtIndex:indexPath.row];
+                NSString *pathProjects = [[FunctionObject sharedInstance] dataFilePath:kProjects];
+                NSString *pathGift = [pathProjects stringByAppendingPathComponent:giftName];
                 
-                [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationSendGiftToFriend object:pathGift];
-
+                NSString *pathPackages = [[FunctionObject sharedInstance] dataFilePath:kPackages];
+                NSString *pathZip1 = [pathPackages stringByAppendingPathComponent:giftName];
+                NSString *pathZip2 = [pathZip1 stringByAppendingPathExtension:@"zip"];
+                
+                [[FunctionObject sharedInstance] saveAsZipFromPath:pathGift toPath:pathZip2 withCompletionBlock:^(NSString *pathResult) {
+                    [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationSendGiftToFriend object:pathResult];
+                }];
             }];
 
+        }
+            break;
+            
+        case ModalPickerFriendsToSend:
+        {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            Friend *f = [_dataSource objectAtIndex:indexPath.row];
+            [self hideWithOnComplete:^(BOOL finished) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationSendGiftToFriend object:f];
+                
+            }];
         }
             break;
             

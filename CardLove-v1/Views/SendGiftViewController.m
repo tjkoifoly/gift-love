@@ -127,7 +127,13 @@
                                 _txtDateChoose.text,@"gfDate"
                                 , nil];
     NSLog(@"Date sent : %@", _txtDate.text);
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationSendGiftFromChoice object:_pathGift userInfo:dictParams];
+    
+    if (_delegate) {
+        [self.delegate sendGiftViewController:self didSendGift:_pathGift withParams:dictParams];
+    }else{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationSendGiftFromChoice object:_pathGift userInfo:dictParams];
+    }
+    
     
     [self dismissView:nil];
 }

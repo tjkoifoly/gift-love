@@ -19,6 +19,7 @@
 #import "AnimationsViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MacroDefine.h"
+#import "SendGiftViewController.h"
 
 #define kCanvasSize     200
 #define kImageMaxSize   400
@@ -146,6 +147,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     //Listeners
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadConfigurationWithPath:) name:kNotificationGiftConfig object:nil];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendGiftView:) name:kNotificationSendGiftToFriend object:nil];
 }
 
 -(void) backPreviousView
@@ -191,6 +193,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self setPathConf:nil];
     [self setPathResources:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNotificationGiftConfig object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:kNotificationSendGiftToFriend object:nil];
     [super viewDidUnload];
 }
 
@@ -281,6 +284,56 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         [self saveData];
         [self performSelector:@selector(showMessageWithCompletedView:) withObject:@"Saved !" afterDelay:0.5];
     }
+}
+
+-(void) saveDataWithCompletion:(void(^)())completionBlock
+{
+    [self saveMusic];
+    [self saveAnimation];
+    
+    NSMutableArray *listItems = [[NSMutableArray alloc] init];
+    NSMutableArray *listLabels = [[NSMutableArray alloc] init];
+    NSMutableArray *listElements = [[NSMutableArray alloc] init];
+    
+    NSArray *arrPhotos = [self.viewCard subviews];
+    NSLog(@"ARR = %@", arrPhotos);
+    
+    for(UIView *subview in arrPhotos)
+    {
+        if([subview isKindOfClass:[GestureView class]])
+        {
+            GestureView *temp = (GestureView *) subview;
+            
+            GiftItem *gi = [[GiftItem alloc] initWithGestureView:temp];
+            [listItems addObject:gi];
+        }else if ([subview isKindOfClass:[GestureLabel class]])
+        {
+            GestureLabel *gtemp = (GestureLabel *) subview;
+            GiftLabel *gl = [[GiftLabel alloc] initWithGestureLabel:gtemp];
+            [listLabels addObject:gl];
+        }else if ([subview isKindOfClass:[GestureImageView class]])
+        {
+            GestureImageView *etem = (GestureImageView *)subview;
+            GiftElement *ge = [[GiftElement alloc] initWithGestureImageView:etem];
+            [listElements addObject:ge];
+        }
+        
+    }
+    
+    [[GiftItemManager sharedManager] setListItems:listItems];
+    [[GiftLabelsManager sharedManager] setListLabels:listLabels];
+    [[GiftElementsManager sharedManager] setListElenemts:listElements];
+    
+    if ([[GiftItemManager sharedManager] saveList]) {
+        if ([[GiftLabelsManager sharedManager] saveListLabel]) {
+            if ([[GiftElementsManager sharedManager] saveListElements]) {
+                NSLog(@"Saved gift successful.");
+                //[self saveAsZip];
+                completionBlock();
+            }
+        }
+    }
+
 }
 
 -(void) saveData
@@ -436,40 +489,36 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) sendGift
 {
-    //    NSString *docspath = [self dataFilePath:kPackages];
-    //    NSString *zipFile = [docspath stringByAppendingPathComponent:_giftName];
-    //
-    //    NSString *projectPath = [self dataFilePath:kGift];
-    //    NSString *unzipPath = [projectPath stringByAppendingPathComponent:_giftName];
-    //    NSFileManager *fmgr = [[NSFileManager alloc] init] ;
-    //
-    //   [fmgr createDirectoryAtPath:unzipPath withIntermediateDirectories:YES attributes:nil error:NULL];
-    //
-    //    if ([fmgr fileExistsAtPath:unzipPath]) {
-    //        ZipArchive *za = [[ZipArchive alloc] init];
-    //        if ([za UnzipOpenFile:zipFile]) {
-    //           BOOL ret = [za UnzipFileTo:unzipPath overWrite:YES];
-    //            if (NO == ret){} [za UnzipCloseFile];
-    //        }
-    //    }
-    
-    [self createNewFolder:kPackages];
-    NSString *projectPath = _pathResources;
-    
-    NSString *docspath = [self dataFilePath:kPackages];
-    NSString *zipFile1 = [docspath stringByAppendingPathComponent:_giftName];
-    NSString *zipFile = [zipFile1 stringByAppendingPathExtension:@"zip"];
-    
-    [[FunctionObject sharedInstance] saveAsZipFromPath:projectPath toPath:zipFile withCompletionBlock:^(NSString *pathResult) {
+    if ([kNewProject isEqualToString:_giftName]) {
+        //Not save
+        [self showNameAlertWithTitle:@"Save gift before !" andOther:@"Cancel"];
+    }else{
+        [self saveDataWithCompletion:^{
+            ModalPanelPickerView *modalPanel = [[ModalPanelPickerView alloc] initWithFrame:self.view.bounds title:@"Choose a friend" mode:ModalPickerFriendsToSend] ;
+            modalPanel.onClosePressed = ^(UAModalPanel* panel) {
+                // [panel hide];
+                [panel hideWithOnComplete:^(BOOL finished) {
+                    [panel removeFromSuperview];
+                    NSLog(@"CURRENT = nil");
+                }];
+                UADebugLog(@"onClosePressed block called from panel: %@", modalPanel);
+            };
+            
+            ///////////////////////////////////////////
+            //   Panel is a reference to the modalPanel
+            modalPanel.onActionPressed = ^(UAModalPanel* panel) {
+                UADebugLog(@"onActionPressed block called from panel: %@", modalPanel);
+            };
+            
+            [self.navigationController.view addSubview:modalPanel];
+            modalPanel.delegate = self;
+            
+            ///////////////////////////////////
+            // Show the panel from the center of the button that was pressed
+            [modalPanel showFromPoint:self.view.center];
+        }];
         
-//        NSError *error = nil;
-//        [[NSFileManager defaultManager] removeItemAtPath:[self dataFilePath:kNewProject] error: &error];
-//        if (!error) {
-//            NSLog(@"Delte template ok");
-//        }
-        NSLog(@"Sent path = %@", pathResult);
-    }];
-    
+    }
 }
 
 -(void) saveAsImage
@@ -505,6 +554,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     ViewGiftViewController *vgvc = [[ViewGiftViewController alloc] initWithNibName:@"ViewGiftViewController" bundle:nil];
     vgvc.giftPath = _pathResources;
     vgvc.delegate = self;
+    vgvc.preview = YES;
     
     DoorsTransition *transition = [[DoorsTransition alloc] init];
     transition.transitionType = DoorsTransitionTypeOpen;
@@ -1763,7 +1813,93 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [dict writeToFile:filePath atomically:YES];
 }
 
+#pragma mark - Notifications
+-(void) sendGiftView:(NSNotification *) notification
+{
+    Friend *toFriend = notification.object;
+    [self createNewFolder:kPackages];
+    NSString *projectPath = _pathResources;
+    
+    NSString *docspath = [self dataFilePath:kPackages];
+    NSString *zipFile1 = [docspath stringByAppendingPathComponent:_giftName];
+    NSString *zipFile = [zipFile1 stringByAppendingPathExtension:@"zip"];
+    
+    [[FunctionObject sharedInstance] saveAsZipFromPath:projectPath toPath:zipFile withCompletionBlock:^(NSString *pathResult) {
+        
+        SendGiftViewController *sgvc = [[SendGiftViewController alloc] initWithNibName:@"SendGiftViewController" bundle:nil];
+        sgvc.toFriend = toFriend;
+        sgvc.pathGift = pathResult;
+        sgvc.delegate = self;
+    
+        UINavigationController *navSendGift = [[UINavigationController alloc] initWithRootViewController:sgvc];
+        [self.navigationController presentModalViewController:navSendGift animated:YES];
+    }];
+}
 
+#pragma mark - Send gift delegate
+-(void) sendGiftViewController:(SendGiftViewController *)sgvc didSendGift:(NSString *)path withParams:(NSDictionary *)dictParams
+{
+    MBProgressHUD *hud;
+    hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    
+    NSData *giftData = [NSData dataWithContentsOfFile:path];
+    [[FunctionObject sharedInstance] uploadGift:giftData withProgress:^(CGFloat progress) {
+        hud.mode = MBProgressHUDModeDeterminate;
+        hud.progress = progress;
+    } completion:^(BOOL success, NSError *error, NSString *urlUpload) {
+        
+        [[FunctionObject sharedInstance] sendGift:urlUpload withParams:dictParams completion:^(BOOL success, NSError *error) {
+            hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.labelText = @"Send gift successful";
+            [hud hide:YES afterDelay:0.5];
+            
+        }];
+    }];
+
+}
+
+#pragma mark - UAModalDisplayPanelViewDelegate
+
+// Optional: This is called before the open animations.
+//   Only used if delegate is set.
+- (void)willShowModalPanel:(UAModalPanel *)modalPanel {
+	UADebugLog(@"willShowModalPanel called with modalPanel: %@", modalPanel);
+}
+
+// Optional: This is called after the open animations.
+//   Only used if delegate is set.
+- (void)didShowModalPanel:(UAModalPanel *)modalPanel {
+	UADebugLog(@"didShowModalPanel called with modalPanel: %@", modalPanel);
+}
+
+// Optional: This is called when the close button is pressed
+//   You can use it to perform validations
+//   Return YES to close the panel, otherwise NO
+//   Only used if delegate is set.
+- (BOOL)shouldCloseModalPanel:(UAModalPanel *)modalPanel {
+	UADebugLog(@"shouldCloseModalPanel called with modalPanel: %@", modalPanel);
+	return YES;
+}
+
+// Optional: This is called when the action button is pressed
+//   Action button is only visible when its title is non-nil;
+//   Only used if delegate is set and not using blocks.
+- (void)didSelectActionButton:(UAModalPanel *)modalPanel {
+	UADebugLog(@"didSelectActionButton called with modalPanel: %@", modalPanel);
+}
+
+// Optional: This is called before the close animations.
+//   Only used if delegate is set.
+- (void)willCloseModalPanel:(UAModalPanel *)modalPanel {
+	UADebugLog(@"willCloseModalPanel called with modalPanel: %@", modalPanel);
+}
+
+// Optional: This is called after the close animations.
+//   Only used if delegate is set.
+- (void)didCloseModalPanel:(UAModalPanel *)modalPanel {
+	UADebugLog(@"didCloseModalPanel called with modalPanel: %@", modalPanel);
+}
 
 
 @end

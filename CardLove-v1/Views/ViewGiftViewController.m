@@ -8,9 +8,11 @@
 
 #import "ViewGiftViewController.h"
 #import "SoundManager.h"
+#import "HMSideMenu.h"
 
 @interface ViewGiftViewController ()
 
+@property (nonatomic, strong) HMSideMenu *sideMenu;
 @end
 
 @implementation ViewGiftViewController
@@ -34,15 +36,21 @@
     [[SoundManager sharedManager] prepareToPlay];
     
     self.viewCard.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cover-01.png"]];
+
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     //Update View
+    if (!_preview) {
+        [self performSelector:@selector(loadMenu) withObject:nil afterDelay:1];
+    }
+    
     [self loadGiftByPath:_giftPath];
     [self loadConfigurationWithPath:_giftPath];
 }
 
 -(void) viewDidAppear:(BOOL)animated
 {
+    
     [super viewDidAppear:animated];
 //    
 //    [UIView animateWithDuration:0.5 animations:^{
@@ -58,6 +66,61 @@
         [[SoundManager sharedManager] stopMusic];
     }
     [self.delegate modalControllerDidFinish:self];
+}
+
+-(void) loadMenu
+{
+    UIView *emailItem = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    [emailItem setMenuActionWithBlock:^{
+        NSLog(@"tapped email item");
+    }];
+    UIImageView *emailIcon = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 30 , 30)];
+    [emailIcon setImage:[UIImage imageNamed:@"mn-mail.png"]];
+    [emailItem addSubview:emailIcon];
+    
+    UIView *giftItem = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    [giftItem setMenuActionWithBlock:^{
+        NSLog(@"tapped gift item");
+        ModalPanelPickerView *modalPanel = [[ModalPanelPickerView alloc] initWithFrame:self.view.bounds title:@"Choose a friend" mode:ModalPickerFriendsToSend] ;
+        modalPanel.onClosePressed = ^(UAModalPanel* panel) {
+            // [panel hide];
+            [panel hideWithOnComplete:^(BOOL finished) {
+                [panel removeFromSuperview];
+                NSLog(@"CURRENT = nil");
+            }];
+            UADebugLog(@"onClosePressed block called from panel: %@", modalPanel);
+        };
+        
+        ///////////////////////////////////////////
+        //   Panel is a reference to the modalPanel
+        modalPanel.onActionPressed = ^(UAModalPanel* panel) {
+            UADebugLog(@"onActionPressed block called from panel: %@", modalPanel);
+        };
+        
+        [self.view addSubview:modalPanel];
+        
+        ///////////////////////////////////
+        // Show the panel from the center of the button that was pressed
+        [modalPanel showFromPoint:self.view.center];
+    }];
+    UIImageView *giftIcon = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 30 , 30)];
+    [giftIcon setImage:[UIImage imageNamed:@"mn-gift.png"]];
+    [giftItem addSubview:giftIcon];
+    
+    UIView *chatItem = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    [chatItem setMenuActionWithBlock:^{
+        // EDIT
+        
+    }];
+    UIImageView *chatIcon = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 30 , 30)];
+    [chatIcon setImage:[UIImage imageNamed:@"mg-chat.png"]];
+    [chatItem addSubview:chatIcon];
+    
+    self.sideMenu = [[HMSideMenu alloc] initWithItems:@[emailItem, giftItem, chatItem]];
+    [self.sideMenu setItemSpacing:5.0f];
+    self.sideMenu.menuPosition = HMSideMenuPositionBottom;
+    [self.view addSubview:self.sideMenu];
+    [self.sideMenu open];
 }
 
 -(void) loadGiftByPath: (NSString *) pathOfGift
@@ -325,6 +388,28 @@
     //Set message
 }
 
+#pragma mark - Notifications
+-(void) sendGiftView:(NSNotification *) notification
+{
+    Friend *toFriend = notification.object;
+
+    NSString *projectPath = _giftPath;
+    
+    [[FunctionObject sharedInstance] createNewFolder:kPackages];
+    NSString *docspath = [[FunctionObject sharedInstance] dataFilePath:kPackages];
+    NSString *zipFile1 = [docspath stringByAppendingPathComponent:[_giftPath lastPathComponent]];
+    NSString *zipFile = [zipFile1 stringByAppendingPathExtension:@"zip"];
+    
+    [[FunctionObject sharedInstance] saveAsZipFromPath:projectPath toPath:zipFile withCompletionBlock:^(NSString *pathResult) {
+        
+        SendGiftViewController *sgvc = [[SendGiftViewController alloc] initWithNibName:@"SendGiftViewController" bundle:nil];
+        sgvc.toFriend = toFriend;
+        sgvc.pathGift = pathResult;
+        
+        UINavigationController *navSendGift = [[UINavigationController alloc] initWithRootViewController:sgvc];
+        [self.navigationController presentModalViewController:navSendGift animated:YES];
+    }];
+}
 
 
 
