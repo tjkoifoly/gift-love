@@ -40,9 +40,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     //Update View
-    if (!_preview) {
-        [self performSelector:@selector(loadMenu) withObject:nil afterDelay:1];
-    }
+    
     
     [self loadGiftByPath:_giftPath];
     [self loadConfigurationWithPath:_giftPath];
@@ -50,7 +48,9 @@
 
 -(void) viewDidAppear:(BOOL)animated
 {
-    
+    if (!_preview) {
+        [self performSelector:@selector(loadMenu) withObject:nil afterDelay:1];
+    }
     [super viewDidAppear:animated];
 //    
 //    [UIView animateWithDuration:0.5 animations:^{
@@ -73,47 +73,66 @@
     UIView *emailItem = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     [emailItem setMenuActionWithBlock:^{
         NSLog(@"tapped email item");
+        if ([self.delegate respondsToSelector:@selector(modalControllerDidFinish:toTalk:)]) {
+            if ([[SoundManager sharedManager] isPlayingMusic]) {
+                [[SoundManager sharedManager] stopMusic];
+            }
+            [self.delegate modalControllerDidFinish:self toTalk:_sender];
+        }
+        
     }];
     UIImageView *emailIcon = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 30 , 30)];
-    [emailIcon setImage:[UIImage imageNamed:@"mn-mail.png"]];
+    [emailIcon setImage:[UIImage imageNamed:@"mn_talk.png"]];
     [emailItem addSubview:emailIcon];
     
     UIView *giftItem = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     [giftItem setMenuActionWithBlock:^{
+        
+        if ([self.delegate respondsToSelector:@selector(modalControllerDidFinish:toSend:withPath:)]) {
+            ModalPanelPickerView *modalPanel = [[ModalPanelPickerView alloc] initWithFrame:self.view.bounds title:@"Choose a friend" mode:ModalPickerFriendsToSend] ;
+            modalPanel.onClosePressed = ^(UAModalPanel* panel) {
+                // [panel hide];
+                [panel hideWithOnComplete:^(BOOL finished) {
+                    [panel removeFromSuperview];
+                    NSLog(@"CURRENT = nil");
+                }];
+                UADebugLog(@"onClosePressed block called from panel: %@", modalPanel);
+            };
+            
+            ///////////////////////////////////////////
+            //   Panel is a reference to the modalPanel
+            modalPanel.onActionPressed = ^(UAModalPanel* panel) {
+                UADebugLog(@"onActionPressed block called from panel: %@", modalPanel);
+            };
+            
+            [self.view addSubview:modalPanel];
+            modalPanel.delegate = self;
+            
+            ///////////////////////////////////
+            // Show the panel from the center of the button that was pressed
+            [modalPanel showFromPoint:self.view.center];
+        }
+        
         NSLog(@"tapped gift item");
-        ModalPanelPickerView *modalPanel = [[ModalPanelPickerView alloc] initWithFrame:self.view.bounds title:@"Choose a friend" mode:ModalPickerFriendsToSend] ;
-        modalPanel.onClosePressed = ^(UAModalPanel* panel) {
-            // [panel hide];
-            [panel hideWithOnComplete:^(BOOL finished) {
-                [panel removeFromSuperview];
-                NSLog(@"CURRENT = nil");
-            }];
-            UADebugLog(@"onClosePressed block called from panel: %@", modalPanel);
-        };
         
-        ///////////////////////////////////////////
-        //   Panel is a reference to the modalPanel
-        modalPanel.onActionPressed = ^(UAModalPanel* panel) {
-            UADebugLog(@"onActionPressed block called from panel: %@", modalPanel);
-        };
-        
-        [self.view addSubview:modalPanel];
-        
-        ///////////////////////////////////
-        // Show the panel from the center of the button that was pressed
-        [modalPanel showFromPoint:self.view.center];
     }];
     UIImageView *giftIcon = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 30 , 30)];
-    [giftIcon setImage:[UIImage imageNamed:@"mn-gift.png"]];
+    [giftIcon setImage:[UIImage imageNamed:@"mn_send.png"]];
     [giftItem addSubview:giftIcon];
     
     UIView *chatItem = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     [chatItem setMenuActionWithBlock:^{
         // EDIT
+        if ( [self.delegate respondsToSelector:@selector(modalControllerDidFinish:toEditWithPath:)]) {
+            if ([[SoundManager sharedManager] isPlayingMusic]) {
+                [[SoundManager sharedManager] stopMusic];
+            }
+            [self.delegate modalControllerDidFinish:self toEditWithPath:_giftPath];
+        }
         
     }];
     UIImageView *chatIcon = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 30 , 30)];
-    [chatIcon setImage:[UIImage imageNamed:@"mg-chat.png"]];
+    [chatIcon setImage:[UIImage imageNamed:@"mn_edit.png"]];
     [chatItem addSubview:chatIcon];
     
     self.sideMenu = [[HMSideMenu alloc] initWithItems:@[emailItem, giftItem, chatItem]];
@@ -389,10 +408,12 @@
 }
 
 #pragma mark - Notifications
--(void) sendGiftView:(NSNotification *) notification
-{
-    Friend *toFriend = notification.object;
 
+
+#pragma mark - UAModalDisplayPanelViewDelegate
+
+-(void) modalPanel:(ModalPanelPickerView *)panelView didAddFriendToSendGift:(Friend *)sF
+{
     NSString *projectPath = _giftPath;
     
     [[FunctionObject sharedInstance] createNewFolder:kPackages];
@@ -402,15 +423,52 @@
     
     [[FunctionObject sharedInstance] saveAsZipFromPath:projectPath toPath:zipFile withCompletionBlock:^(NSString *pathResult) {
         
-        SendGiftViewController *sgvc = [[SendGiftViewController alloc] initWithNibName:@"SendGiftViewController" bundle:nil];
-        sgvc.toFriend = toFriend;
-        sgvc.pathGift = pathResult;
-        
-        UINavigationController *navSendGift = [[UINavigationController alloc] initWithRootViewController:sgvc];
-        [self.navigationController presentModalViewController:navSendGift animated:YES];
+        if ([[SoundManager sharedManager] isPlayingMusic]) {
+            [[SoundManager sharedManager] stopMusic];
+        }
+        [self.delegate modalControllerDidFinish:self toSend:sF withPath:pathResult];
     }];
+
 }
 
+// Optional: This is called before the open animations.
+//   Only used if delegate is set.
+- (void)willShowModalPanel:(UAModalPanel *)modalPanel {
+	UADebugLog(@"willShowModalPanel called with modalPanel: %@", modalPanel);
+}
 
+// Optional: This is called after the open animations.
+//   Only used if delegate is set.
+- (void)didShowModalPanel:(UAModalPanel *)modalPanel {
+	UADebugLog(@"didShowModalPanel called with modalPanel: %@", modalPanel);
+}
+
+// Optional: This is called when the close button is pressed
+//   You can use it to perform validations
+//   Return YES to close the panel, otherwise NO
+//   Only used if delegate is set.
+- (BOOL)shouldCloseModalPanel:(UAModalPanel *)modalPanel {
+	UADebugLog(@"shouldCloseModalPanel called with modalPanel: %@", modalPanel);
+	return YES;
+}
+
+// Optional: This is called when the action button is pressed
+//   Action button is only visible when its title is non-nil;
+//   Only used if delegate is set and not using blocks.
+- (void)didSelectActionButton:(UAModalPanel *)modalPanel {
+	UADebugLog(@"didSelectActionButton called with modalPanel: %@", modalPanel);
+}
+
+// Optional: This is called before the close animations.
+//   Only used if delegate is set.
+- (void)willCloseModalPanel:(UAModalPanel *)modalPanel {
+	UADebugLog(@"willCloseModalPanel called with modalPanel: %@", modalPanel);
+}
+
+// Optional: This is called after the close animations.
+//   Only used if delegate is set.
+- (void)didCloseModalPanel:(UAModalPanel *)modalPanel {
+	UADebugLog(@"didCloseModalPanel called with modalPanel: %@", modalPanel);
+}
 
 @end

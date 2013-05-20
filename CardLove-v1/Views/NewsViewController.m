@@ -21,6 +21,8 @@
 
 @implementation NewsViewController
 
+@synthesize actionBlock = _actionBlock;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -296,5 +298,65 @@
     [[HMGLTransitionManager sharedTransitionManager] setTransition:[[DoorsTransition alloc] init]];
 	[[HMGLTransitionManager sharedTransitionManager] dismissModalViewController:modalController];
 }
+
+
+-(void) modalControllerDidFinish:(ViewGiftViewController *)modalController toSend:(Friend *)sF withPath:(NSString *)giftPath
+{
+    [[HMGLTransitionManager sharedTransitionManager] setTransition:[[DoorsTransition alloc] init]];
+	[[HMGLTransitionManager sharedTransitionManager] dismissModalViewController:modalController];
+    
+    __weak typeof(self) weakSelf = self;
+    _actionBlock = ^{
+        
+        SendGiftViewController *sgvc = [[SendGiftViewController alloc] initWithNibName:@"SendGiftViewController" bundle:nil];
+        sgvc.toFriend = sF;
+        sgvc.pathGift = giftPath;
+        [weakSelf.navigationController pushViewController:sgvc animated:YES];
+    };
+    
+    [self performSelector:@selector(runBlock:) withObject:_actionBlock afterDelay:0.75];
+    
+}
+
+-(void) modalControllerDidFinish:(ViewGiftViewController *)modalController toEditWithPath:(NSString *)gifPath
+{
+    [[HMGLTransitionManager sharedTransitionManager] setTransition:[[DoorsTransition alloc] init]];
+	[[HMGLTransitionManager sharedTransitionManager] dismissModalViewController:modalController];
+    
+    __weak typeof(self) weakSelf = self;
+    _actionBlock = ^{
+        
+        CreateCardViewController *ccvc = [[CreateCardViewController alloc] initWithNibName:@"CreateCardViewController" bundle:nil];
+        ccvc.giftPath = gifPath;
+        [weakSelf.navigationController pushViewController:ccvc animated:YES];
+    };
+    
+    [self performSelector:@selector(runBlock:) withObject:_actionBlock afterDelay:0.75];
+}
+
+-(void) modalControllerDidFinish:(ViewGiftViewController *)modalController toTalk:(Friend *)sF
+{
+    [[HMGLTransitionManager sharedTransitionManager] setTransition:[[DoorsTransition alloc] init]];
+	[[HMGLTransitionManager sharedTransitionManager] dismissModalViewController:modalController];
+    
+    __weak typeof(self) weakSelf = self;
+    _actionBlock = ^{
+        
+        ChatViewController *ccvc = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
+        ccvc.friendChatting = sF;
+        ccvc.mode = ChatModeSigle;
+        [weakSelf.navigationController pushViewController:ccvc animated:YES];
+    };
+    
+    [self performSelector:@selector(runBlock:) withObject:_actionBlock afterDelay:0.75];
+
+}
+
+-(void) runBlock:(ActionGiftBlock) actionBlock
+{
+    NSLog(@"SHIT");
+    actionBlock();
+}
+
 
 @end

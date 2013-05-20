@@ -18,9 +18,13 @@
 #import "DoorsTransition.h"
 #import "ViewGiftViewController.h"
 #import "FriendsManager.h"
+#import "CreateCardViewController.h"
+#import "ChatViewController.h"
+#import "MacroDefine.h"
 
 @interface NewsViewController : SSCollectionViewController<UIAlertViewDelegate, ViewGiftControllerDelegate>
 
+@property (strong, nonatomic) ActionGiftBlock actionBlock;
 @property (strong, nonatomic) NSMutableArray *sentArray;
 @property (strong, nonatomic) NSMutableArray *recieveArray;
 

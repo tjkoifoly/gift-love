@@ -13,7 +13,7 @@
 #import "ModalPanelPickerView.h"
 #import "MBProgressHUD.h"
 
-@interface MessagesViewController : GHRootViewController <UITableViewDataSource, UITableViewDelegate, UAModalPanelDelegate>
+@interface MessagesViewController : GHRootViewController <UITableViewDataSource, UITableViewDelegate,  ModalPanelDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *listGroups;

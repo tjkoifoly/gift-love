@@ -34,7 +34,7 @@
 #import "SendGiftViewController.h"
 
 
-@interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate, GestureLabelDelegate, MusicViewControllerDelegate, AnimationViewControllerDelegate, GiftElementsDelegate, ViewGiftControllerDelegate, ViewStyleDelegate, UAModalPanelDelegate, SendGiftViewControllerDelegate>
+@interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate, GestureLabelDelegate, MusicViewControllerDelegate, AnimationViewControllerDelegate, GiftElementsDelegate, ViewGiftControllerDelegate, ViewStyleDelegate, ModalPanelDelegate, SendGiftViewControllerDelegate>
 {
     MBProgressHUD *HUD;
 }
@@ -46,5 +46,6 @@
 @property (weak, nonatomic) IBOutlet UIView *viewGift;
 
 @property (strong, nonatomic) NSString *giftName;
+@property (strong, nonatomic) NSString *giftPath;
 
 @end

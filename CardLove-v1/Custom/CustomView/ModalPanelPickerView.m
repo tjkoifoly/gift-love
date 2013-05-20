@@ -21,6 +21,7 @@
 @synthesize dataSource = _dataSource;
 @synthesize mode = _mode;
 @synthesize result = _result;
+@synthesize delegate = _delegate;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -265,10 +266,12 @@
         {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
             Friend *f = [_dataSource objectAtIndex:indexPath.row];
+            
             [self hideWithOnComplete:^(BOOL finished) {
-                [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationSendGiftToFriend object:f];
-                
+                //[[NSNotificationCenter defaultCenter]postNotificationName:kNotificationSendGiftToFriend object:f];
+                [self.delegate modalPanel:self didAddFriendToSendGift:f];
             }];
+            
         }
             break;
             

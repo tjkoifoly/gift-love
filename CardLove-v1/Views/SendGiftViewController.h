@@ -26,6 +26,7 @@
 @property (strong, nonatomic) Friend *toFriend;
 @property (strong, nonatomic) NSString *pathGift;
 
+@property (nonatomic) BOOL isPresenting;
 @property (weak, nonatomic) IBOutlet UIView *viewContainer;
 @property (weak, nonatomic) IBOutlet UIButton *btnPhoto;
 @property (strong, nonatomic) IBOutlet UITextField *txtTitle;

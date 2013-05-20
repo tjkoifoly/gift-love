@@ -52,6 +52,7 @@ HMGLTransitionType;
 
 // Must be set at the beginning
 - (void)setTransition:(HMGLTransition*)transition;
+-(void) setDelegate:(id<HMGLTransitionViewDelegate>) delegate;
 
 // UIView transitions
 - (void)beginTransition:(UIView*)containerView;

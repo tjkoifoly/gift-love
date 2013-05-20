@@ -53,6 +53,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 @synthesize pathResources   = _pathResources;
 @synthesize exportMenu      = _exportMenu;
 @synthesize giftName        = _giftName;
+@synthesize giftPath        = _giftPath;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -94,6 +95,12 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         _pathResources = [pathProjs stringByAppendingPathComponent:_giftName];
 
         self.navigationItem.title = _giftName;        
+    }
+    if(_giftPath)
+    {
+        _pathResources = _giftPath;
+        _giftName = [_giftPath lastPathComponent];
+        self.navigationItem.title = _giftName;
     }
     NSLog(@"PATH = %@", _pathResources);
     _pathConf = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:kIndex]];
@@ -147,7 +154,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     //Listeners
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadConfigurationWithPath:) name:kNotificationGiftConfig object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendGiftView:) name:kNotificationSendGiftToFriend object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendGiftView:) name:kNotificationSendGiftToFriend object:nil];
 }
 
 -(void) backPreviousView
@@ -193,7 +200,6 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [self setPathConf:nil];
     [self setPathResources:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNotificationGiftConfig object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:kNotificationSendGiftToFriend object:nil];
     [super viewDidUnload];
 }
 
@@ -1814,9 +1820,10 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 }
 
 #pragma mark - Notifications
--(void) sendGiftView:(NSNotification *) notification
+
+#pragma mark - ModalPanelDelegate
+-(void) modalPanel:(ModalPanelPickerView *)panelView didAddFriendToSendGift:(Friend *)sF
 {
-    Friend *toFriend = notification.object;
     [self createNewFolder:kPackages];
     NSString *projectPath = _pathResources;
     
@@ -1827,13 +1834,15 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     [[FunctionObject sharedInstance] saveAsZipFromPath:projectPath toPath:zipFile withCompletionBlock:^(NSString *pathResult) {
         
         SendGiftViewController *sgvc = [[SendGiftViewController alloc] initWithNibName:@"SendGiftViewController" bundle:nil];
-        sgvc.toFriend = toFriend;
+        sgvc.toFriend = sF;
         sgvc.pathGift = pathResult;
         sgvc.delegate = self;
-    
+        sgvc.isPresenting = YES;
+        
         UINavigationController *navSendGift = [[UINavigationController alloc] initWithRootViewController:sgvc];
         [self.navigationController presentModalViewController:navSendGift animated:YES];
     }];
+
 }
 
 #pragma mark - Send gift delegate

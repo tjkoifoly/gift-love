@@ -27,11 +27,14 @@
 
 @optional
 - (void)modalControllerDidFinish:(ViewGiftViewController*)modalController;
-- (void)modalControllerDidFinish:(ViewGiftViewController*)modalController withBlock:(void(^)()) completion;
+- (void)modalControllerDidFinish:(ViewGiftViewController*)modalController toEditWithPath:(NSString *) gifPath;
+- (void)modalControllerDidFinish:(ViewGiftViewController*)modalController toSend:(Friend *)sF withPath:(NSString *) giftPath;
+- (void)modalControllerDidFinishToMail:(ViewGiftViewController*)modalController;
+- (void)modalControllerDidFinish:(ViewGiftViewController*)modalController toTalk:(Friend *)sF;
 
 @end
 
-@interface ViewGiftViewController : UIViewController 
+@interface ViewGiftViewController : UIViewController  <ModalPanelDelegate>
 
 @property (assign, nonatomic) id<ViewGiftControllerDelegate> delegate;
 @property (strong, nonatomic) NSString * giftPath;

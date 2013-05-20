@@ -23,6 +23,7 @@
 
 @synthesize transition = _transition;
 @synthesize mode = _mode;
+@synthesize actionBlock = _actionBlock;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -212,6 +213,52 @@
         [self switchBartToMode:NavigationBarModeView];
     }
 
+}
+
+-(void) modalControllerDidFinish:(ViewGiftViewController *)modalController toEditWithPath:(NSString *)gifPath
+{
+    [[HMGLTransitionManager sharedTransitionManager] setTransition:[[DoorsTransition alloc] init]];
+	[[HMGLTransitionManager sharedTransitionManager] dismissModalViewController:modalController];
+   
+    MBProgressHUD *hud;
+    hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    
+    __weak typeof(self) weakSelf = self;
+    _actionBlock = ^{
+        
+        CreateCardViewController *ccvc = [[CreateCardViewController alloc] initWithNibName:@"CreateCardViewController" bundle:nil];
+        ccvc.giftPath = gifPath;
+        [hud hide:YES];
+        [weakSelf.navigationController pushViewController:ccvc animated:YES];
+    };
+    
+    [self performSelector:@selector(runBlock:) withObject:_actionBlock afterDelay:0.75];
+}
+
+-(void) modalControllerDidFinish:(ViewGiftViewController *)modalController toSend:(Friend *)sF withPath:(NSString *)giftPath
+{
+    [[HMGLTransitionManager sharedTransitionManager] setTransition:[[DoorsTransition alloc] init]];
+	[[HMGLTransitionManager sharedTransitionManager] dismissModalViewController:modalController];
+    
+    __weak typeof(self) weakSelf = self;
+    _actionBlock = ^{
+        
+        SendGiftViewController *sgvc = [[SendGiftViewController alloc] initWithNibName:@"SendGiftViewController" bundle:nil];
+        sgvc.toFriend = sF;
+        sgvc.pathGift = giftPath;
+        [weakSelf.navigationController pushViewController:sgvc animated:YES];
+    };
+    
+    [self performSelector:@selector(runBlock:) withObject:_actionBlock afterDelay:0.75];
+    
+}
+
+
+-(void) runBlock:(ActionGiftBlock) actionBlock
+{
+    NSLog(@"SHIT");
+    actionBlock();
+    
 }
 
 

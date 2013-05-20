@@ -13,6 +13,7 @@
 #import "ViewGiftViewController.h"
 #import "HMGLTransitionManager.h"
 #import "DoorsTransition.h"
+#import "MBProgressHUD.h"
 
 @interface GiftBoxViewController : UITabBarController <CardViewControllerDelegate, ViewGiftControllerDelegate, StoreCardViewControllerDelegate, UITabBarControllerDelegate>
 {
@@ -20,6 +21,7 @@
 	RevealBlock _revealBlock;
 }
 
+@property (strong, nonatomic) ActionGiftBlock actionBlock;
 @property (nonatomic, strong) HMGLTransition *transition;
 @property (nonatomic) NavigationBarMode mode;
 

@@ -14,10 +14,10 @@
 #import "HHPanningTableViewCell.h"
 #import "DrawerViewMenu.h"
 #import "AddFriendViewController.h"
-#import "UAModalPanel.h"
+#import "ModalPanelPickerView.h"
 #import "MBProgressHUD.h"
 
-@interface FriendsViewController : GHRootViewController <UITableViewDataSource, UITableViewDelegate, HHPanningTableViewCellDelegate, DrawerMenuDelegate, UIActionSheetDelegate, UAModalPanelDelegate>
+@interface FriendsViewController : GHRootViewController <UITableViewDataSource, UITableViewDelegate, HHPanningTableViewCellDelegate, DrawerMenuDelegate, UIActionSheetDelegate, ModalPanelDelegate >
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) DDActionHeaderView *actionHeaderView;

@@ -85,6 +85,8 @@
 #define cellAHidden 0.0
 #define defaultFontSize 10.0
 
+typedef void (^ActionGiftBlock)(void);
+
 typedef enum {
     NavigationBarModeEdit,
     NavigationBarModeView

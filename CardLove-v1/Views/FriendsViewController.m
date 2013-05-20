@@ -447,6 +447,7 @@ typedef void (^FinishBlock)();
     SendGiftViewController *sgvc = [[SendGiftViewController alloc] initWithNibName:@"SendGiftViewController" bundle:nil];
     sgvc.toFriend = currentFriend;
     sgvc.pathGift = pathGift;
+    sgvc.isPresenting = YES;
     
     currentFriend = nil;
     UINavigationController *navSendGift = [[UINavigationController alloc] initWithRootViewController:sgvc];

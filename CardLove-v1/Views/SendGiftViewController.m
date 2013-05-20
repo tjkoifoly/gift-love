@@ -13,7 +13,6 @@
 #import "UserManager.h"
 
 @interface SendGiftViewController ()
-
 @end
 
 @implementation SendGiftViewController
@@ -74,13 +73,15 @@
 
 
 - (void)viewWillAppear:(BOOL)animated{
+    if(_isPresenting )
+    {
+        [self setViewStyle];
+    }
     [super viewWillAppear:animated];
-    [self setViewStyle];
-}
+    }
 
 - (void)viewDidAppear:(BOOL)animated{
 	[super viewDidAppear:animated];
-    [self setViewStyle];
     [[self.cell viewWithTag:111] becomeFirstResponder];
 }
 
@@ -112,7 +113,13 @@
 
 -(void) dismissView: (id) sender
 {
-    [self dismissModalViewControllerAnimated:YES];
+    if (!_isPresenting) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }else
+    {
+        [self dismissModalViewControllerAnimated:YES];
+    }
+   
 }
 
 -(void) sendGift:(id) sender

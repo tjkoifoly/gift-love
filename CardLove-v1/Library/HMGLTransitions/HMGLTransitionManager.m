@@ -80,6 +80,12 @@ static HMGLTransitionManager *sharedTransitionManager = nil;
 #pragma mark Setters
 - (void)setTransition:(HMGLTransition*)transition {
 	self.transitionView.transition = transition;
+
+}
+
+-(void) setDelegate:(id<HMGLTransitionViewDelegate>) delegate
+{
+    self.transitionView.delegate = self;
 }
 
 #pragma mark -
@@ -170,7 +176,7 @@ static HMGLTransitionManager *sharedTransitionManager = nil;
 }
 
 - (void)presentModalViewController:(UIViewController*)modalViewController onViewController:(UIViewController*)viewController {
-
+    
 	transitionType = HMGLTransitionTypeControllerPresentation;
 	self.oldController = viewController;
 	self.currentController = modalViewController;
