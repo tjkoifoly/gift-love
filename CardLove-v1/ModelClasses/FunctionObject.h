@@ -26,6 +26,12 @@
 
 -(void) sendGift: (NSString *)urlGift withParams:(NSDictionary *)params  completion:(void (^)(BOOL success, NSError *error))completionBlock;
 -(void) loadGiftbyUser: (NSString*)userID completion:(void (^)(BOOL success, NSError *error, id result))completionBlock;
+
+-(void) openGift:(NSString *)giftID completion:(void (^)(BOOL success, NSError *error))completionBlock;
+
+-(void) loadRequest: (NSString*)userID completion:(void (^)(BOOL success, NSError *error, id result))completionBlock;
+-(void) responeRequestWithUser:(NSString *)userID person:(NSString *)friendID  preRelationship:(NSString *)rsID andState:(NSString *)rsStatus completion:(void (^)(BOOL success, NSError *error))completionBlock;
+
 -(NSMutableArray *) filterGift:(NSArray *)list bySender:(NSString *) senderID;
 -(NSMutableArray *) filterGift:(NSArray *)list byReciver:(NSString *) reciverID;
 

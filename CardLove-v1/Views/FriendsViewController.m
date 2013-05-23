@@ -63,6 +63,11 @@ typedef void (^FinishBlock)();
     //    [btnAddFriend addTarget:self action:@selector(addFriendView) forControlEvents:UIControlEventTouchUpInside];
     //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnAddFriend];
     
+    _mode = FriendModeList;
+    if (!_listRequest) {
+        _listRequest = [[NSMutableArray alloc] init];
+    }
+    
     UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFriendView)];
     self.navigationItem.rightBarButtonItem = btnAdd;
     
@@ -125,6 +130,7 @@ typedef void (^FinishBlock)();
 - (void)viewDidUnload {
     [self setTableView:nil];
     [self setActionHeaderView:nil];
+    [self setListRequest:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationReloadFriendsList object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationSendGiftToFriend object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationSendGiftFromChoice object:nil];
@@ -145,50 +151,120 @@ typedef void (^FinishBlock)();
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[[FriendsManager sharedManager] friendsList] count];
+    switch (_mode) {
+        case FriendModeList:
+        {
+            return [[[FriendsManager sharedManager] friendsList] count];
+        }
+            break;
+        case RequestModeList:
+        {
+            return [_listRequest count];
+        }
+            break;
+            
+        default:
+            break;
+    }
+    return 0;
+    
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"FriendCell";
-    
-    HHPanningTableViewCell *cell = (HHPanningTableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if(!cell)
-    {
-        cell = [[HHPanningTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        DrawerViewMenu *drawerView = [[[NSBundle mainBundle] loadNibNamed:@"DrawerViewMenu" owner:nil options:nil] objectAtIndex:0];
-        drawerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dark_dotted.png"]];
-        drawerView.delegate = self;
-        
-        cell.drawerView = drawerView;
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    switch (_mode) {
+        case FriendModeList:
+        {
+            static NSString *CellIdentifier = @"FriendCell";
+            
+            HHPanningTableViewCell *cell = (HHPanningTableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            
+            if(!cell)
+            {
+                cell = [[HHPanningTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+                DrawerViewMenu *drawerView = [[[NSBundle mainBundle] loadNibNamed:@"DrawerViewMenu" owner:nil options:nil] objectAtIndex:0];
+                drawerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dark_dotted.png"]];
+                drawerView.delegate = self;
+                
+                cell.drawerView = drawerView;
+                
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
+            }
+            
+            //cell.delegate = self;
+            cell.directionMask = HHPanningTableViewCellDirectionLeft;
+            
+            ((DrawerViewMenu *)cell.drawerView).indexPath = indexPath;
+            
+            Friend *cF = [[[FriendsManager sharedManager] friendsList] objectAtIndex:indexPath.row];
+            
+            cell.textLabel.text = cF.displayName;
+            cell.detailTextLabel.text = cF.userName;
+            
+            [cell.imageView setImage:[UIImage imageNamed:@"noavata.png"]];
+            NSString *avatarLink = cF.fAvatarLink;
+            if (avatarLink!= (id)[NSNull null] && avatarLink.length != 0) {
+                [cell.imageView setImageWithURL:[NSURL URLWithString:avatarLink] placeholderImage:[UIImage imageNamed:@"noavata.png"]];
+            }
+            
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.badgeString = [NSString stringWithFormat:@"%i", 0];
+            
+            cell.badgeColor = [UIColor colorWithRed:0.792 green:0.197 blue:0.219 alpha:1.000];
+            cell.showShadow = YES;
+            
+            return cell;
+        }
+            break;
+        case RequestModeList:
+        {
+            static NSString *cellIdetifier = @"FriendRequestCell";
+            FriendRequestCell *cell = (FriendRequestCell*)[tableView dequeueReusableCellWithIdentifier:cellIdetifier];
+            if (!cell) {
+                cell = (FriendRequestCell *)[self loadReusableTableViewCellFromNibNamed:@"FriendRequestCell"];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.delegate = self;
+            }
+            
+            NSDictionary *dictPerson = [_listRequest objectAtIndex:indexPath.row];
+            cell.lbName.text = [dictPerson valueForKey:@"accDisplayName"];
+            cell.lbNick.text = [dictPerson valueForKey:@"accName"];
+            
+            [cell.imvAvarta setImage:[UIImage imageNamed:@"noavata.png"]];
+            NSString *avatarLink = [dictPerson valueForKey:@"accImageAvata"];
+            if (avatarLink!= (id)[NSNull null] && avatarLink.length != 0) {
+                [cell.imvAvarta setImageWithURL:[NSURL URLWithString:avatarLink] placeholderImage:[UIImage imageNamed:@"noavata.png"]];
+            }
+            
+            return cell;
+        }
+            break;
+            
+        default:
+            break;
     }
     
-    //cell.delegate = self;
-    cell.directionMask = HHPanningTableViewCellDirectionLeft;
-    
-    ((DrawerViewMenu *)cell.drawerView).indexPath = indexPath;
-    
-    Friend *cF = [[[FriendsManager sharedManager] friendsList] objectAtIndex:indexPath.row];
-    
-    cell.textLabel.text = cF.displayName;
-    cell.detailTextLabel.text = cF.userName;
-    
-    [cell.imageView setImage:[UIImage imageNamed:@"noavata.png"]];
-    NSString *avatarLink = cF.fAvatarLink;
-    if (avatarLink!= (id)[NSNull null] && avatarLink.length != 0) {
-       [cell.imageView setImageWithURL:[NSURL URLWithString:avatarLink] placeholderImage:[UIImage imageNamed:@"noavata.png"]];
+    return nil;
+}
+
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (_mode) {
+        case FriendModeList:
+        {
+            return 44;
+        }
+            break;
+        case RequestModeList:
+        {
+            return 60;
+        }
+            break;
+            
+        default:
+            break;
     }
-    
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.badgeString = [NSString stringWithFormat:@"%i", 0];
-    
-    cell.badgeColor = [UIColor colorWithRed:0.792 green:0.197 blue:0.219 alpha:1.000];
-    cell.showShadow = YES;
-    
-    return cell;
+    return 44;
 }
 
 #pragma mark -
@@ -212,6 +288,10 @@ typedef void (^FinishBlock)();
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (_mode == RequestModeList) {
+        return;
+    }
+    
     NSLog(@"LOG = %@", [[[[FriendsManager sharedManager] friendsList] objectAtIndex:indexPath.row] displayName]);
     
     Friend *f = [[[FriendsManager sharedManager] friendsList] objectAtIndex:indexPath.row];
@@ -229,19 +309,22 @@ typedef void (^FinishBlock)();
         {
             BOOL show = !self.actionHeaderView.titleLabel.hidden;
             [self.actionHeaderView expandPicker:show];
-            NSLog(@"DCM");
         }
             break;
         case 2:
         {
             self.actionHeaderView.titleLabel.text = @"Friends List";
             [self.actionHeaderView shrinkActionPicker];
+            _mode = FriendModeList;
+            [self reloadFriend];
         }
             break;
         case 3:
         {
             self.actionHeaderView.titleLabel.text = @"Friends Request";
             [self.actionHeaderView shrinkActionPicker];
+            _mode = RequestModeList;
+            [self reloadRequest];
         }
             break;
             
@@ -519,6 +602,28 @@ typedef void (^FinishBlock)();
 //   Only used if delegate is set.
 - (void)didCloseModalPanel:(UAModalPanel *)modalPanel {
 	UADebugLog(@"didCloseModalPanel called with modalPanel: %@", modalPanel);
+}
+
+#pragma mark - FriendRequestDelegate
+-(void) requestCell:(FriendRequestCell *)cell withState:(FriendType)state
+{
+    NSIndexPath *curPath = [self.tableView indexPathForCell:cell];
+    NSDictionary *dictPerson = [self.listRequest objectAtIndex:curPath.row];
+    
+    [[FunctionObject sharedInstance] responeRequestWithUser:[[UserManager sharedInstance] accID] person:[dictPerson valueForKey:@"accID"] preRelationship:[dictPerson valueForKey:@"rsID"] andState:[NSString stringWithFormat:@"%i", state] completion:^(BOOL success, NSError *error) {
+        [self reloadRequest];
+    }];
+    
+}
+
+-(void) reloadRequest
+{
+    [[FunctionObject sharedInstance] loadRequest:[[UserManager sharedInstance] accID] completion:^(BOOL success, NSError *error, id result) {
+        if (success) {
+            _listRequest = result;
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 @end

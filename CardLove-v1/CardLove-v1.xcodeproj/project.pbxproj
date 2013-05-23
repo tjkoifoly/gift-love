@@ -277,6 +277,10 @@
 		6632EA0816E2388300770AEF /* TSPopoverPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6632EA0016E2388300770AEF /* TSPopoverPopoverView.m */; };
 		6632EA0916E2388300770AEF /* TSPopoverTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6632EA0316E2388300770AEF /* TSPopoverTouchView.m */; };
 		6632EA0A16E2388300770AEF /* UIBarButtonItem+WEPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 6632EA0516E2388300770AEF /* UIBarButtonItem+WEPopover.m */; };
+		6632EA32174DFF9100E906F4 /* NEW ARRIVALS-GREEN.png in Resources */ = {isa = PBXBuildFile; fileRef = 6632EA30174DFF9100E906F4 /* NEW ARRIVALS-GREEN.png */; };
+		6632EA33174DFF9100E906F4 /* NEW ARRIVALS-RED.png in Resources */ = {isa = PBXBuildFile; fileRef = 6632EA31174DFF9100E906F4 /* NEW ARRIVALS-RED.png */; };
+		6632EA36174E087A00E906F4 /* FriendRequestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6632EA35174E087A00E906F4 /* FriendRequestCell.m */; };
+		6632EA38174E089000E906F4 /* FriendRequestCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6632EA37174E089000E906F4 /* FriendRequestCell.xib */; };
 		6634C8951712A7930048D862 /* FXLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6634C8911712A7930048D862 /* FXLabel.m */; };
 		6634C8961712A7930048D862 /* THLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6634C8941712A7930048D862 /* THLabel.m */; };
 		6634C89C1712AB720048D862 /* AUIAnimatableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6634C8991712AB720048D862 /* AUIAnimatableLabel.m */; };
@@ -1219,6 +1223,11 @@
 		6632EA0316E2388300770AEF /* TSPopoverTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSPopoverTouchView.m; sourceTree = "<group>"; };
 		6632EA0416E2388300770AEF /* UIBarButtonItem+WEPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+WEPopover.h"; sourceTree = "<group>"; };
 		6632EA0516E2388300770AEF /* UIBarButtonItem+WEPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+WEPopover.m"; sourceTree = "<group>"; };
+		6632EA30174DFF9100E906F4 /* NEW ARRIVALS-GREEN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NEW ARRIVALS-GREEN.png"; sourceTree = "<group>"; };
+		6632EA31174DFF9100E906F4 /* NEW ARRIVALS-RED.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NEW ARRIVALS-RED.png"; sourceTree = "<group>"; };
+		6632EA34174E087A00E906F4 /* FriendRequestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendRequestCell.h; sourceTree = "<group>"; };
+		6632EA35174E087A00E906F4 /* FriendRequestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendRequestCell.m; sourceTree = "<group>"; };
+		6632EA37174E089000E906F4 /* FriendRequestCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendRequestCell.xib; sourceTree = "<group>"; };
 		6634C8901712A7930048D862 /* FXLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXLabel.h; sourceTree = "<group>"; };
 		6634C8911712A7930048D862 /* FXLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXLabel.m; sourceTree = "<group>"; };
 		6634C8931712A7930048D862 /* THLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THLabel.h; sourceTree = "<group>"; };
@@ -2585,6 +2594,8 @@
 		662507A517106B0A00FF3F8B /* _bg */ = {
 			isa = PBXGroup;
 			children = (
+				6632EA30174DFF9100E906F4 /* NEW ARRIVALS-GREEN.png */,
+				6632EA31174DFF9100E906F4 /* NEW ARRIVALS-RED.png */,
 				663AC2541745F5F30084A6E1 /* loading01.gif */,
 				663AC2551745F5F30084A6E1 /* loading02.gif */,
 				66DDC3A317391B5700595838 /* LionDenSearch-button.png */,
@@ -3210,6 +3221,9 @@
 				66DDC3AF1739308200595838 /* FriendInfoCell.h */,
 				66DDC3B01739308200595838 /* FriendInfoCell.m */,
 				66DDC3B2173930B500595838 /* FriendInfoCell.xib */,
+				6632EA34174E087A00E906F4 /* FriendRequestCell.h */,
+				6632EA35174E087A00E906F4 /* FriendRequestCell.m */,
+				6632EA37174E089000E906F4 /* FriendRequestCell.xib */,
 			);
 			name = Cell;
 			path = Custom/Cell;
@@ -4538,6 +4552,9 @@
 				665E23621749C504001C99CB /* mn_mail.png in Resources */,
 				665E23631749C504001C99CB /* mn_send.png in Resources */,
 				665E23641749C504001C99CB /* mn_talk.png in Resources */,
+				6632EA32174DFF9100E906F4 /* NEW ARRIVALS-GREEN.png in Resources */,
+				6632EA33174DFF9100E906F4 /* NEW ARRIVALS-RED.png in Resources */,
+				6632EA38174E089000E906F4 /* FriendRequestCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4831,6 +4848,7 @@
 				663AC2531745DC9E0084A6E1 /* HMSideMenu.m in Sources */,
 				668AE8651747318A00BEF685 /* AJNotificationView.m in Sources */,
 				66545F81174DD6E3001A0B5D /* NSArray+findObject.m in Sources */,
+				6632EA36174E087A00E906F4 /* FriendRequestCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

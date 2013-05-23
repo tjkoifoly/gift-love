@@ -218,6 +218,58 @@
     }];
 }
 
+-(void) loadRequest: (NSString*)userID completion:(void (^)(BOOL success, NSError *error, id result))completionBlock{
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:userID,@"userID", nil];
+    [[NKApiClient shareInstace] postPath:@"get_friend_requests.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON REQUEST = %@", jsonObject);
+        
+        completionBlock (YES, nil, jsonObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil, nil);
+    }];
+}
+
+-(void) responeRequestWithUser:(NSString *)userID person:(NSString *)friendID  preRelationship:(NSString *)rsID andState:(NSString *)rsStatus completion:(void (^)(BOOL success, NSError *error))completionBlock
+{
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                userID, @"sourceID",
+                                friendID, @"friendID",
+                                rsID, @"rsID",
+                                rsStatus, @"rsStatus",
+                                 nil];
+    
+    [[NKApiClient shareInstace] postPath:@"respone_friend_request.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Result = %@", jsonObject);
+        
+        completionBlock(YES, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil);
+    }];
+}
+
+-(void) openGift:(NSString *)giftID completion:(void (^)(BOOL success, NSError *error))completionBlock
+{
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:giftID,@"gfID", nil];
+    
+    [[NKApiClient shareInstace] postPath:@"open_gift.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Result = %@", jsonObject);
+        
+        completionBlock(YES, nil);
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil);
+    }];
+}
+
 -(NSMutableArray *) filterGift:(NSArray *)list bySender:(NSString *) senderID
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", @"gfSenderID" , senderID];

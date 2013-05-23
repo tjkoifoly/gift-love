@@ -126,13 +126,21 @@
         case 0:
         {
             dictGift = [_recieveArray objectAtIndex:row];
-            name = [[FriendsManager sharedManager] friendNameByID:[dictGift valueForKey:@"gfSenderID"]]; 
+            name = [[FriendsManager sharedManager] friendNameByID:[dictGift valueForKey:@"gfSenderID"]];
+            if ([[dictGift valueForKey:@"gfMarkOpened"] intValue] == 0) {
+                item.imvNew.hidden = NO;
+            }else
+            {
+                item.imvNew.hidden = YES;
+            }
+            
         }
             break;
         case 1:
         {
             dictGift = [_sentArray objectAtIndex:row];
-            name = [[FriendsManager sharedManager] friendNameByID:[dictGift valueForKey:@"gfRecieverID"]]; 
+            name = [[FriendsManager sharedManager] friendNameByID:[dictGift valueForKey:@"gfRecieverID"]];
+            item.imvNew.hidden = YES;
         }
             break;
             
@@ -230,21 +238,32 @@
             MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             
             NSString *pathDownload = [self pathDownload:_currentGift];
+            
+            NSLog(@"OPEN %@", [_currentGift valueForKey:@"gfID"]);
+            
+            [[FunctionObject sharedInstance] openGift:[_currentGift valueForKey:@"gfID"] completion:^(BOOL success, NSError *error) {
+                
+            }];
+            
             if ([[FunctionObject sharedInstance] fileHasBeenCreatedAtPath:pathDownload]) {
                 [HUD hide:YES afterDelay:0.5];
                 [self performSelector:@selector(unzipAndOpenWithPath:) withObject:pathDownload afterDelay:0.5];
             }else{
                 NSString *urlDownload = [_currentGift valueForKey:@"gfResourcesLink"];
+
+                
                 [[FunctionObject sharedInstance] dowloadFromURL:urlDownload toPath:pathDownload withProgress:^(CGFloat progress) {
                     HUD.mode = MBProgressHUDModeDeterminate;
                     HUD.progress = progress;
                 } completion:^(BOOL success, NSError *error) {
+                    
+                    
+                    
                     HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
                     HUD.mode = MBProgressHUDModeCustomView;
                     HUD.labelText = @"Download gift successful";
                     [HUD hide:YES afterDelay:0.5];
                     [self performSelector:@selector(unzipAndOpenWithPath:) withObject:pathDownload afterDelay:0.5];
-
                 }];
 
             }
@@ -275,6 +294,7 @@
 
 -(void) unzipAndOpenWithPath:(NSString *)path
 {
+    
     [[FunctionObject sharedInstance] createNewFolder:kGift];
     NSString *docUnzip = [[FunctionObject sharedInstance] dataFilePath:kGift];
     
@@ -357,6 +377,8 @@
     NSLog(@"SHIT");
     actionBlock();
 }
+
+
 
 
 @end

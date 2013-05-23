@@ -31,6 +31,7 @@ typedef enum {
  `SSCollectionViewItem` creates the image view object when you create the item.
  */
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *imvNew;
 
 @property (nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

@@ -350,13 +350,6 @@
             }
         }
         
-//        [_listGroups removeAllObjects];
-//        for(NSDictionary *dictGroup in jsonObject)
-//        {
-//            
-//            [_listGroups addObject:dictGroup];
-//            
-//        }
         completionBlock (YES, nil);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

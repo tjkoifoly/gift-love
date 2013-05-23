@@ -291,6 +291,10 @@
                 break;
                 
             default:
+            {
+                lbStatus.textColor  = [UIColor redColor];
+                lbStatus.text = @"Rejected";
+            }
                 break;
         }
 
