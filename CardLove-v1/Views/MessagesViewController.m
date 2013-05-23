@@ -13,6 +13,7 @@
 #import "AFNetworking.h"
 #import "JSONKit.h"
 #import "UserManager.h"
+#import "NSArray+findObject.h"
 
 @interface MessagesViewController ()
 {
@@ -52,6 +53,9 @@
     
     if (!_listGroups) {
         _listGroups = [[NSMutableArray alloc] init];
+    }
+    if (!_listNewMsgs) {
+        _listNewMsgs = [[NSMutableArray alloc] init];
     }
     
 }
@@ -114,12 +118,47 @@
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+        case 0:
+        {
+            return @"Message Groups";
+        }
+            break;
+        case 1:
+        {
+            return @"New Messages";
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    return nil;
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_listGroups count];
+    switch (section) {
+        case 0:
+        {
+            return [_listGroups count];
+        }
+            break;
+        case 1:
+        {
+            return [_listNewMsgs count];
+        }
+            
+        default:
+            break;
+    }
+    return 0;
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -132,38 +171,88 @@
     {
         cell = [[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
+        cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"btn-ass2.png"]];
+        
+        cell.badgeColor = [UIColor colorWithRed:0.792 green:0.197 blue:0.219 alpha:1.000];
+        cell.badgeColorHighlighted = [UIColor colorWithRed:0.1 green:0.8 blue:0.219 alpha:1.000];
+        cell.showShadow = YES;
     }
     
-    cell.imageView.image = [UIImage imageNamed:@"ButtonAddFriend.png"];
-    cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    
-    id group = [_listGroups objectAtIndex:indexPath.row];
-    
-    cell.textLabel.text = [group valueForKey:@"gmName"];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ member(s)",[group valueForKey:@"numbersMember"]];
-    
-    cell.badgeString = [NSString stringWithFormat:@"%i", 1];
-    cell.badgeColor = [UIColor colorWithRed:0.792 green:0.197 blue:0.219 alpha:1.000];
-    cell.badgeColorHighlighted = [UIColor colorWithRed:0.1 green:0.8 blue:0.219 alpha:1.000];
-    cell.showShadow = YES;
-    
-    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"btn-ass2.png"]];
+    switch (indexPath.section) {
+        case 0:
+        {
+            id group = [_listGroups objectAtIndex:indexPath.row];
+            cell.imageView.image = [UIImage imageNamed:@"ButtonAddFriend.png"];
+            cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+            
+            cell.textLabel.text = [group valueForKey:@"gmName"];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ member(s)",[group valueForKey:@"numbersMember"]];
+        }
+            break;
+        case 1:
+        {
+            id person = [_listNewMsgs objectAtIndex:indexPath.row];
+            
+            [cell.imageView setImage:[UIImage imageNamed:@"noavata.png"]];
+            NSString *avatarLink = [person valueForKey:@"accImageAvata"];
+            if (avatarLink!= (id)[NSNull null] && avatarLink.length != 0) {
+                [cell.imageView setImageWithURL:[NSURL URLWithString:avatarLink] placeholderImage:[UIImage imageNamed:@"noavata.png"]];
+            }
+            cell.textLabel.text = [person valueForKey:@"accDisplayName"];
+            cell.detailTextLabel.text = [person valueForKey:@"accName"];
+            cell.badgeString = [NSString stringWithFormat:@"%@", [person valueForKey:@"newMsgs"]];
 
+        }
+            break;
+            
+        default:
+            break;
+    }
     return cell;
     
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id group = [_listGroups objectAtIndex:indexPath.row];
+    switch (indexPath.section) {
+        case 0:
+        {
+            id group = [_listGroups objectAtIndex:indexPath.row];
+            
+            ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
+            chatVC.mode = ChatModeGroup;
+            //chatVC.groupMembers = newGroup;
+            chatVC.group = group;
+            [self.navigationController pushViewController:chatVC animated:YES];
+            [newGroup removeAllObjects];
 
-    ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
-    chatVC.mode = ChatModeGroup;
-    //chatVC.groupMembers = newGroup;
-    chatVC.group = group;
-    [self.navigationController pushViewController:chatVC animated:YES];
-    [newGroup removeAllObjects];
-}
+        }
+            break;
+        case 1:
+        {
+            NSMutableDictionary* person = [_listNewMsgs objectAtIndex:indexPath.row];
+            TDBadgedCell *cell = (TDBadgedCell *)[_tableView cellForRowAtIndexPath:indexPath];
+            cell.badgeString = @"0";
+            [person setValue:@"0" forKey:@"newMsgs"];
+            
+            
+            [self readMessagesOfPerson:[person valueForKey:@"accID"] completion:^(BOOL success, NSError *error) {
+                if (success) {
+                    Friend *newFriend = [[Friend alloc] initWithDictionary:person];
+                    ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
+                    chatVC.mode = ChatModeSigle;
+                    chatVC.friendChatting = newFriend;
+                    [self.navigationController pushViewController:chatVC animated:YES];
+                }
+            }];
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    }
 
 #pragma mark - Notification
 -(void) chatWithPerson: (NSNotification *) notification
@@ -244,15 +333,30 @@
     [[NKApiClient shareInstace] postPath:@"list_groups.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
-        NSLog(@"JSON Groups = %@", jsonObject);
+        NSLog(@"JSON class = %@ and object = %@", [jsonObject class], jsonObject);
         
-        [_listGroups removeAllObjects];
-        for(NSDictionary *dictGroup in jsonObject)
+        _listGroups = [jsonObject objectForKey:@"groups"];
+        NSArray *newPeople = [jsonObject objectForKey:@"people"];
+        
+        for(id dict in newPeople)
         {
             
-            [_listGroups addObject:dictGroup];
-            
+            if([_listNewMsgs hasObjectWithKey:@"accID" andValue:[dict valueForKey:@"accID"]])
+            {
+                NSMutableDictionary *xxx = [_listNewMsgs findObjectWithKey:@"accID" andValue:[dict valueForKey:@"accID"]];
+                [xxx setValue:[dict valueForKey:@"newMsgs"] forKey:@"newMsgs"];
+            }else{
+                [_listNewMsgs addObject:[NSMutableDictionary dictionaryWithDictionary:dict]];
+            }
         }
+        
+//        [_listGroups removeAllObjects];
+//        for(NSDictionary *dictGroup in jsonObject)
+//        {
+//            
+//            [_listGroups addObject:dictGroup];
+//            
+//        }
         completionBlock (YES, nil);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -290,6 +394,25 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"HTTP ERROR = %@", error);
         completionBlock(NO, nil, nil);
+    }];
+}
+
+-(void) readMessagesOfPerson:(NSString *) senderID completion:(void (^)(BOOL success, NSError *error))completionBlock
+{
+    
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [[UserManager sharedInstance] accID],@"recieverID",
+                                senderID,@"senderID",
+                                nil];
+    
+    [[NKApiClient shareInstace] postPath:@"read_message.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Add friend to group = %@", jsonObject);
+        
+        completionBlock (YES, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil);
     }];
 }
 

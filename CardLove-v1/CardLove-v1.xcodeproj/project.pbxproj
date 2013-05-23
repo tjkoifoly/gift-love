@@ -337,6 +337,7 @@
 		6653732616EB457D000648B3 /* EKNotifView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6653732316EB457D000648B3 /* EKNotifView.m */; };
 		6653732916EB45E3000648B3 /* MBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6653732816EB45E3000648B3 /* MBCategory.m */; };
 		6653732C16EB49F5000648B3 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 6653732B16EB49F5000648B3 /* MBProgressHUD.m */; };
+		66545F81174DD6E3001A0B5D /* NSArray+findObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 66545F80174DD6E3001A0B5D /* NSArray+findObject.m */; };
 		665D8569172F4B15006670CB /* libAviarySDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 665D8566172F4B15006670CB /* libAviarySDK.a */; };
 		665D856A172F4B15006670CB /* AviarySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 665D8568172F4B15006670CB /* AviarySDKResources.bundle */; };
 		665D856D172F59B0006670CB /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 665D856C172F59B0006670CB /* UserManager.m */; };
@@ -1298,6 +1299,8 @@
 		6653732816EB45E3000648B3 /* MBCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBCategory.m; sourceTree = "<group>"; };
 		6653732A16EB49F5000648B3 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		6653732B16EB49F5000648B3 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		66545F7F174DD6E3001A0B5D /* NSArray+findObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+findObject.h"; sourceTree = "<group>"; };
+		66545F80174DD6E3001A0B5D /* NSArray+findObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+findObject.m"; sourceTree = "<group>"; };
 		665D8560172F4B15006670CB /* AFOpenGLManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOpenGLManager.h; sourceTree = "<group>"; };
 		665D8561172F4B15006670CB /* AFPhotoEditorContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFPhotoEditorContext.h; sourceTree = "<group>"; };
 		665D8562172F4B15006670CB /* AFPhotoEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFPhotoEditorController.h; sourceTree = "<group>"; };
@@ -1907,6 +1910,8 @@
 				66E443991714237D00F2D151 /* UINavigationController+Fade.m */,
 				666615211721B4CD009ACC1E /* UITableView+reloadDataWithAnimation.h */,
 				666615221721B4CD009ACC1E /* UITableView+reloadDataWithAnimation.m */,
+				66545F7F174DD6E3001A0B5D /* NSArray+findObject.h */,
+				66545F80174DD6E3001A0B5D /* NSArray+findObject.m */,
 			);
 			name = Categories;
 			path = Library/Categories;
@@ -4825,6 +4830,7 @@
 				66B580E11745444C00B3E276 /* UIColor+MLColorAdditions.m in Sources */,
 				663AC2531745DC9E0084A6E1 /* HMSideMenu.m in Sources */,
 				668AE8651747318A00BEF685 /* AJNotificationView.m in Sources */,
+				66545F81174DD6E3001A0B5D /* NSArray+findObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

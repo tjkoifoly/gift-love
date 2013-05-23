@@ -17,5 +17,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *listGroups;
+@property (strong, nonatomic) NSMutableArray *listNewMsgs;
 
 @end
