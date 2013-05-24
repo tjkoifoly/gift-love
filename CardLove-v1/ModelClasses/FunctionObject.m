@@ -200,7 +200,20 @@
     
 }
 
-
+-(void) loadNotificationsbyUser: (NSString*)userID completion:(void (^)(BOOL success, NSError *error, id result))completionBlock{
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:userID,@"userID", nil];
+    [[NKApiClient shareInstace] postPath:@"get_notifications.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON NOTIFICATIONS = %@", jsonObject);
+        
+        completionBlock (YES, nil, jsonObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil, nil);
+    }];
+}
 
 
 -(void) loadGiftbyUser: (NSString*)userID completion:(void (^)(BOOL success, NSError *error, id result))completionBlock{
@@ -334,6 +347,13 @@
 
 }
 
+
+-(void) setNewBadgeWithValue: (NSInteger) badge forView:(UIView *) viewBadge
+{
+    viewBadge.badge.outlineWidth = 1;
+    viewBadge.badge.badgeValue = badge;
+    viewBadge.badge.badgeColor = [UIColor redColor];
+}
 
 
 @end

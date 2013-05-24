@@ -392,6 +392,7 @@
 		66923A2916FAE928003F589D /* resize.png in Resources */ = {isa = PBXBuildFile; fileRef = 66923A2716FAE928003F589D /* resize.png */; };
 		66923A2A16FAE928003F589D /* resize@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66923A2816FAE928003F589D /* resize@2x.png */; };
 		66923A2E16FB00BF003F589D /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 66923A2D16FB00BF003F589D /* mask.png */; };
+		6692F02C174F1CD200D50813 /* UIView+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 6692F02B174F1CD200D50813 /* UIView+Badge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6694D1C2173C2C0C002D04F2 /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6694D1C1173C2C0C002D04F2 /* UIView+Layout.m */; };
 		669B787E16E9F95A00F4437F /* SSCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 669B787D16E9F95A00F4437F /* SSCollectionViewItem.xib */; };
 		669B78A416E9FA9B00F4437F /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 669B788016E9FA9B00F4437F /* background.png */; };
@@ -1380,6 +1381,8 @@
 		66923A2716FAE928003F589D /* resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = resize.png; path = Resources/resize.png; sourceTree = "<group>"; };
 		66923A2816FAE928003F589D /* resize@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "resize@2x.png"; path = "Resources/resize@2x.png"; sourceTree = "<group>"; };
 		66923A2D16FB00BF003F589D /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mask.png; path = ../../PSD/mask.png; sourceTree = "<group>"; };
+		6692F02A174F1CD200D50813 /* UIView+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Badge.h"; sourceTree = "<group>"; };
+		6692F02B174F1CD200D50813 /* UIView+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Badge.m"; sourceTree = "<group>"; };
 		6694D1C0173C2C0C002D04F2 /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
 		6694D1C1173C2C0C002D04F2 /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
 		669B787D16E9F95A00F4437F /* SSCollectionViewItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SSCollectionViewItem.xib; path = ../../Custom/CollectionView/SSCollectionViewItem.xib; sourceTree = "<group>"; };
@@ -1907,6 +1910,8 @@
 		6604FA6616DBCD4200295209 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				6692F02A174F1CD200D50813 /* UIView+Badge.h */,
+				6692F02B174F1CD200D50813 /* UIView+Badge.m */,
 				66DDC3A71739285A00595838 /* UIViewController+NibCells.h */,
 				66DDC3A81739285A00595838 /* UIViewController+NibCells.m */,
 				66D4C67216F59D14004DC5A4 /* AUISelectiveBordersLayer.h */,
@@ -4849,6 +4854,7 @@
 				668AE8651747318A00BEF685 /* AJNotificationView.m in Sources */,
 				66545F81174DD6E3001A0B5D /* NSArray+findObject.m in Sources */,
 				6632EA36174E087A00E906F4 /* FriendRequestCell.m in Sources */,
+				6692F02C174F1CD200D50813 /* UIView+Badge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

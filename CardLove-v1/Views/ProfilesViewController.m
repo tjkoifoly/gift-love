@@ -15,6 +15,7 @@
 #import "RotateTransition.h"
 #import "FlipTransition.h"
 #import "UserManager.h"
+#import "AppDelegate.h"
 
 @interface ProfilesViewController ()
 
@@ -125,6 +126,9 @@
     RotateTransition *_transition = [[RotateTransition alloc] init];
     [[HMGLTransitionManager sharedTransitionManager] setTransition:_transition];
     [[HMGLTransitionManager sharedTransitionManager] presentModalViewController:navLogin onViewController:self.navigationController];
+    
+//    AppDelegate *appDelegate  = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    [appDelegate.timerScheduleNotifications invalidate];
     
 }
 

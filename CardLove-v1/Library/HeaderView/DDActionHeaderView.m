@@ -28,7 +28,7 @@
 
 @interface DDActionHeaderView ()
 @property(nonatomic, retain) UILabel *titleLabel;
-@property(nonatomic, retain) UIView *actionPickerView;
+
 @property(nonatomic, retain) CAGradientLayer *actionPickerGradientLayer;
 
 - (void)setup;
@@ -77,6 +77,7 @@
 	titleLabel_.shadowOffset = CGSizeMake(0.0f, 1.0f);
 	titleLabel_.hidden = NO;
 	titleLabel_.opaque = NO;
+    titleLabel_.clipsToBounds = NO;
 	[self addSubview:titleLabel_];
 	
 	actionPickerView_ = [[UIView alloc] initWithFrame:CGRectZero];

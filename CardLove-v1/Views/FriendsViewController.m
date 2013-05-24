@@ -22,6 +22,10 @@
 #import "JSONKit.h"
 #import "FriendInfoViewController.h"
 #import "SendGiftViewController.h"
+#import "UIView+Badge.h"
+#import "UILabel+dynamicSizeMe.h"
+#import "NSArray+findObject.h"
+#import "AJNotificationView.h"
 
 typedef void (^FinishBlock)();
 
@@ -29,7 +33,9 @@ typedef void (^FinishBlock)();
 {
     NSIndexPath *currentIndexPath;
     Friend *currentFriend;
+    
 }
+@property (strong, nonatomic) NSTimer *timerScheduleRequest;
 @end
 
 @implementation FriendsViewController
@@ -79,15 +85,7 @@ typedef void (^FinishBlock)();
 
 -(void) viewDidAppear:(BOOL)animated
 {
-    NSString *userID = [[UserManager sharedInstance] accID];
-    [[FriendsManager sharedManager] loadFriendsFromURLbyUser:userID completion:^(BOOL success, NSError *error) {
-        [_tableView reloadData];
-    }];
-    [super viewDidAppear:animated];
-}
-
--(void) reloadFriend
-{
+    
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeAnnularDeterminate;
     hud.labelText = @"Loading";
@@ -97,6 +95,30 @@ typedef void (^FinishBlock)();
         [hud hide:YES];
         [_tableView reloadData];
     }];
+    
+    _timerScheduleRequest = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(reloadAll) userInfo:nil repeats:YES];
+
+    [super viewDidAppear:animated];
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [_timerScheduleRequest invalidate];
+}
+
+-(void) reloadFriend
+{
+    NSString *userID = [[UserManager sharedInstance] accID];
+    [[FriendsManager sharedManager] loadFriendsFromURLbyUser:userID completion:^(BOOL success, NSError *error) {
+        [_tableView reloadData];
+    }];
+}
+
+-(void) reloadAll
+{
+    [self reloadFriend];
+    [self reloadRequest];
 }
 
 -(void) addFriendView
@@ -208,9 +230,19 @@ typedef void (^FinishBlock)();
             }
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.badgeString = [NSString stringWithFormat:@"%i", 0];
+            cell.badgeString = [NSString stringWithFormat:@" "];
             
-            cell.badgeColor = [UIColor colorWithRed:0.792 green:0.197 blue:0.219 alpha:1.000];
+            if ([cF.fStatus intValue]==FriendRequest) {
+                cell.badgeColor = [UIColor colorWithRed:0.992 green:0.897 blue:0.019 alpha:1.000];
+                
+            }else if ([cF.fStatus intValue] == FriendSuccessful)
+            {
+                cell.badgeColor = [UIColor colorWithRed:0.192 green:0.797 blue:0.219 alpha:1.000];
+            }else
+            {
+                cell.badgeColor = [UIColor colorWithRed:0.792 green:0.197 blue:0.219 alpha:1.000];
+            }
+            
             cell.showShadow = YES;
             
             return cell;
@@ -304,9 +336,11 @@ typedef void (^FinishBlock)();
 
 -(void) itemAction:(id)sender
 {
+    
     switch ([sender tag]) {
         case 1:
         {
+            
             BOOL show = !self.actionHeaderView.titleLabel.hidden;
             [self.actionHeaderView expandPicker:show];
         }
@@ -322,22 +356,26 @@ typedef void (^FinishBlock)();
         case 3:
         {
             self.actionHeaderView.titleLabel.text = @"Friends Request";
+           
+            
             [self.actionHeaderView shrinkActionPicker];
             _mode = RequestModeList;
-            [self reloadRequest];
+            [self.tableView reloadData];
         }
             break;
             
         default:
             break;
     }
-    
 }
+
+
 
 -(void) loadActionHeaderView
 {
     self.actionHeaderView = [[DDActionHeaderView alloc] initWithFrame:self.view.bounds];
     self.actionHeaderView.titleLabel.text = @"Friends List";
+    
     
     UIButton *mainButton = [UIButton buttonWithType:UIButtonTypeCustom];
     mainButton.tag = 1;
@@ -613,6 +651,7 @@ typedef void (^FinishBlock)();
     [[FunctionObject sharedInstance] responeRequestWithUser:[[UserManager sharedInstance] accID] person:[dictPerson valueForKey:@"accID"] preRelationship:[dictPerson valueForKey:@"rsID"] andState:[NSString stringWithFormat:@"%i", state] completion:^(BOOL success, NSError *error) {
         [self reloadRequest];
     }];
+    [self.listRequest removeObject:dictPerson];
     
 }
 
@@ -620,7 +659,44 @@ typedef void (^FinishBlock)();
 {
     [[FunctionObject sharedInstance] loadRequest:[[UserManager sharedInstance] accID] completion:^(BOOL success, NSError *error, id result) {
         if (success) {
-            _listRequest = result;
+            NSMutableArray *mATemp = [[NSMutableArray alloc] init];
+            
+            for(id dict in result)
+            {
+                if ([_listRequest hasObjectWithKey:@"accID" andValue:[dict valueForKey:@"accID"]]) {
+                    continue;
+                }else
+                {
+                    [mATemp addObject: dict];
+                    
+                }
+            }
+            
+            [_listRequest addObjectsFromArray:mATemp];
+            if ([mATemp count] > 0) {
+                NSString *msg = @"";
+                
+                if ([mATemp count] == 1) {
+                    msg = [NSString stringWithFormat:@"%@ requests friend to you !", [[mATemp objectAtIndex:0] valueForKey:@"accName"]];
+                }else{
+                    msg = [NSString stringWithFormat: @"%i person(s) request friend with you!", [mATemp count]];
+                }
+                [AJNotificationView showNoticeInView:self.navigationController.view
+                                                type:AJNotificationTypeBlue
+                                               title:msg
+                                     linedBackground:AJLinedBackgroundTypeAnimated
+                                           hideAfter:2.5f
+                                            response:^{
+                                                //This block is called when user taps in the notification
+                                                NSLog(@"Response block");
+                                            }
+                 ];
+            }
+            
+            
+            mATemp = nil;
+            
+            [[FunctionObject sharedInstance] setNewBadgeWithValue:[result count] forView:self.actionHeaderView.titleLabel];
             [self.tableView reloadData];
         }
     }];

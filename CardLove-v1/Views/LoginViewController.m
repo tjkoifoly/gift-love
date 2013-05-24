@@ -189,6 +189,7 @@
     }
     
     AppDelegate *appDelegate  = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    //appDelegate.timerScheduleNotifications = [NSTimer scheduledTimerWithTimeInterval:1 target:appDelegate selector:@selector(getNotifications) userInfo:nil repeats:YES];
     
     [UIView animateWithDuration:0.5 animations:^{
         appDelegate.overlayView.layer.opacity = 0;

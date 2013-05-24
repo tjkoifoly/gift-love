@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ZipArchive.h"
+#import "UIView+Badge.h"
 
 @interface FunctionObject : NSObject
 
@@ -29,6 +30,8 @@
 
 -(void) openGift:(NSString *)giftID completion:(void (^)(BOOL success, NSError *error))completionBlock;
 
+-(void) loadNotificationsbyUser: (NSString*)userID completion:(void (^)(BOOL success, NSError *error, id result))completionBlock;
+
 -(void) loadRequest: (NSString*)userID completion:(void (^)(BOOL success, NSError *error, id result))completionBlock;
 -(void) responeRequestWithUser:(NSString *)userID person:(NSString *)friendID  preRelationship:(NSString *)rsID andState:(NSString *)rsStatus completion:(void (^)(BOOL success, NSError *error))completionBlock;
 
@@ -39,5 +42,7 @@
 //ZIP
 -(void) unzipFileAtPath:(NSString *)pathFile toPath:(NSString *)unzipPath withCompetionBlock:(void(^)(NSString *pathToOpen))completionBlock;
 -(void ) saveAsZipFromPath:(NSString *)fromPath toPath:(NSString *)toPath withCompletionBlock:(void(^)(NSString *pathResult))completionBlock;
+
+-(void) setNewBadgeWithValue: (NSInteger) badge forView:(UIView *) viewBadge;
 
  @end

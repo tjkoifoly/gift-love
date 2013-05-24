@@ -143,10 +143,38 @@
     [[HMGLTransitionManager sharedTransitionManager] presentModalViewController:navLogin onViewController:self.revealController];
     
 //    [self customizeAppearance];
+    [self resetParams];
     
     self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+-(void) resetParams
+{
+    _numNewGifts    = 0;
+    _numNewMessages = 0;
+    _numRequest     = 0;
+}
+
+-(void) getNotifications
+{
+    [[FunctionObject sharedInstance] loadNotificationsbyUser:[[UserManager sharedInstance] accID] completion:^(BOOL success, NSError *error, id result) {
+        if (success) {
+            NSInteger numReq = [[result valueForKey:@"NumReq"] integerValue];
+            _numRequest = numReq;
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+            [[FunctionObject sharedInstance] setNewBadgeWithValue:_numRequest forView:[self.menuController._menuTableView cellForRowAtIndexPath:indexPath].imageView];
+            NSInteger numMsgs = [[result valueForKey:@"NumMsg"] integerValue];
+            _numNewMessages = numMsgs;
+            indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+            [[FunctionObject sharedInstance] setNewBadgeWithValue:_numNewMessages forView:[self.menuController._menuTableView cellForRowAtIndexPath:indexPath].imageView];
+            NSInteger numGift = [[result valueForKey:@"NumGift"] integerValue];
+            _numNewGifts = numGift;
+            indexPath = [NSIndexPath indexPathForRow:2 inSection:1];
+            [[FunctionObject sharedInstance] setNewBadgeWithValue:_numNewGifts forView:[self.menuController._menuTableView cellForRowAtIndexPath:indexPath].imageView];
+        }
+    }];
 }
 
 #pragma mark GHSidebarSearchViewControllerDelegate

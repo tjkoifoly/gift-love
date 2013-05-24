@@ -56,6 +56,8 @@
 
 #define kNotificationSendGiftFromChoice @"NotificationSendGiftFromChoice"
 
+#define kNotificationRefreshBadge @"NotificationRefreshBadge"
+
 #define kGiftPaper      @"gift-paper"
 #define kGiftBG         @"gift-bg"
 #define kGiftFrame      @"gift-frame"

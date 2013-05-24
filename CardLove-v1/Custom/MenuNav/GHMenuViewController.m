@@ -87,6 +87,7 @@
     GHMenuCell *cell = (GHMenuCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[GHMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
     }
 	NSDictionary *info = _cellInfos[indexPath.section][indexPath.row];
 	cell.textLabel.text = info[kSidebarCellTextKey];

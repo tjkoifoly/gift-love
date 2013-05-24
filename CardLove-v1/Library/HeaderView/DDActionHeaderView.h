@@ -39,6 +39,7 @@
     CAGradientLayer *actionPickerGradientLayer_;
 }
 
+@property(nonatomic, retain) UIView *actionPickerView;
 @property(nonatomic, assign, getter=isBorderGradientHidden) BOOL borderGradientHidden; // Default is NO. Set YES to hide transparent gradient below the bottom border.
 @property(nonatomic, readonly) BOOL isActionPickerExpanded;
 @property(nonatomic, retain, readonly) UILabel *titleLabel; // Readonly, but you can change its properties freely.
