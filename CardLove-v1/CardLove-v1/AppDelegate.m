@@ -23,6 +23,8 @@
 #import "HMGLTransition.h"
 #import "DoorsTransition.h"
 #import "GiftsManager.h"
+#import "RequestsManager.h"
+#import "GroupsManager.h"
 
 @interface AppDelegate() 
 @end
@@ -178,12 +180,15 @@
     }];
 }
 
--(void) getNewGiftsWithCompletion:(NSTimer *)timerCompletionBlock
+-(void) getNewNotfWithCompletion:(NSTimer *)timerCompletionBlock
 {
     NSString *userID = [[UserManager sharedInstance] accID];
     CompletionBlockWithResult completionBlock = (CompletionBlockWithResult)timerCompletionBlock.userInfo;
     [[GiftsManager sharedManager] loadGiftbyUser:userID completion:completionBlock];
+    [[RequestsManager sharedManager] loadRequest:userID completion:completionBlock];
+    [[GroupsManager sharedManager] loadGroupsByMember:userID completion:completionBlock];
 }
+
 
 #pragma mark GHSidebarSearchViewControllerDelegate
 - (void)searchResultsForText:(NSString *)text withScope:(NSString *)scope callback:(SearchResultsBlock)callback {

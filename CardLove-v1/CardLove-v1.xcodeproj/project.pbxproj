@@ -446,6 +446,8 @@
 		669B78E516EA47C600F4437F /* button-editphoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 669B78E116EA47C500F4437F /* button-editphoto.png */; };
 		669B78E616EA47C600F4437F /* button-music.png in Resources */ = {isa = PBXBuildFile; fileRef = 669B78E216EA47C600F4437F /* button-music.png */; };
 		669B78E716EA47C600F4437F /* button-text.png in Resources */ = {isa = PBXBuildFile; fileRef = 669B78E316EA47C600F4437F /* button-text.png */; };
+		669C5CC51750A32D006D99B6 /* RequestsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 669C5CC41750A32D006D99B6 /* RequestsManager.m */; };
+		669C5CC81750A33C006D99B6 /* GroupsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 669C5CC71750A33C006D99B6 /* GroupsManager.m */; };
 		66A327AA16DA505D00AB3767 /* MSBarButtonIconNavigationPane.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A327A816DA505D00AB3767 /* MSBarButtonIconNavigationPane.png */; };
 		66A327AB16DA505D00AB3767 /* MSBarButtonIconNavigationPane@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A327A916DA505D00AB3767 /* MSBarButtonIconNavigationPane@2x.png */; };
 		66A327CB16DA6F4400AB3767 /* ProfilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A327C916DA6F4400AB3767 /* ProfilesViewController.m */; };
@@ -1439,6 +1441,10 @@
 		669B78E116EA47C500F4437F /* button-editphoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-editphoto.png"; path = "Resources/button-editphoto.png"; sourceTree = "<group>"; };
 		669B78E216EA47C600F4437F /* button-music.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-music.png"; path = "Resources/button-music.png"; sourceTree = "<group>"; };
 		669B78E316EA47C600F4437F /* button-text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-text.png"; path = "Resources/button-text.png"; sourceTree = "<group>"; };
+		669C5CC31750A32D006D99B6 /* RequestsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RequestsManager.h; path = Data/RequestsManager.h; sourceTree = "<group>"; };
+		669C5CC41750A32D006D99B6 /* RequestsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RequestsManager.m; path = Data/RequestsManager.m; sourceTree = "<group>"; };
+		669C5CC61750A33C006D99B6 /* GroupsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsManager.h; sourceTree = "<group>"; };
+		669C5CC71750A33C006D99B6 /* GroupsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsManager.m; sourceTree = "<group>"; };
 		66A327A816DA505D00AB3767 /* MSBarButtonIconNavigationPane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MSBarButtonIconNavigationPane.png; path = Resources/MSBarButtonIconNavigationPane.png; sourceTree = "<group>"; };
 		66A327A916DA505D00AB3767 /* MSBarButtonIconNavigationPane@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MSBarButtonIconNavigationPane@2x.png"; path = "Resources/MSBarButtonIconNavigationPane@2x.png"; sourceTree = "<group>"; };
 		66A327C816DA6F4400AB3767 /* ProfilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfilesViewController.h; path = Views/ProfilesViewController.h; sourceTree = "<group>"; };
@@ -4001,6 +4007,10 @@
 				665D856C172F59B0006670CB /* UserManager.m */,
 				66BB060017503B7C003D4E91 /* GiftsManager.h */,
 				66BB060117503B7C003D4E91 /* GiftsManager.m */,
+				669C5CC31750A32D006D99B6 /* RequestsManager.h */,
+				669C5CC41750A32D006D99B6 /* RequestsManager.m */,
+				669C5CC61750A33C006D99B6 /* GroupsManager.h */,
+				669C5CC71750A33C006D99B6 /* GroupsManager.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -4861,6 +4871,8 @@
 				6632EA36174E087A00E906F4 /* FriendRequestCell.m in Sources */,
 				6692F02C174F1CD200D50813 /* UIView+Badge.m in Sources */,
 				66BB060217503B7C003D4E91 /* GiftsManager.m in Sources */,
+				669C5CC51750A32D006D99B6 /* RequestsManager.m in Sources */,
+				669C5CC81750A33C006D99B6 /* GroupsManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

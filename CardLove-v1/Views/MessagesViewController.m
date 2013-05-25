@@ -14,6 +14,8 @@
 #import "JSONKit.h"
 #import "UserManager.h"
 #import "NSArray+findObject.h"
+#import "GroupsManager.h"
+#import "AJNotificationView.h"
 
 @interface MessagesViewController ()
 {
@@ -51,21 +53,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removePersonFromGroup:) name:kNotificationRemovePersonFromGroup object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addPersonToGroup:) name:kNotificationAddPersonToGroup object:nil];
     
-    if (!_listGroups) {
-        _listGroups = [[NSMutableArray alloc] init];
-    }
-    if (!_listNewMsgs) {
-        _listNewMsgs = [[NSMutableArray alloc] init];
-    }
+    [[NSNotificationCenter defaultCenter] addObserver:self.tableView selector:@selector(reloadData) name:kNotificationReload object:nil];
     
+    _listGroups = [[GroupsManager sharedManager] listGroups];
+    _listNewMsgs  = [[GroupsManager sharedManager] listMessages];
 }
 
 -(void) viewWillAppear:(BOOL)animated
 {
-    NSString *memberID = [[UserManager sharedInstance] accID];
-    [self loadGroupsByMember:memberID completion:^(BOOL success, NSError *error) {
-        [_tableView reloadData];
-    }];
     [super viewWillAppear:animated];
 }
 
@@ -111,6 +106,7 @@
     [self setListGroups:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationAddPersonToGroup object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationRemovePersonFromGroup object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.tableView name:kNotificationReload object:nil];
     [super viewDidUnload];
 }
 
@@ -223,6 +219,7 @@
             chatVC.mode = ChatModeGroup;
             //chatVC.groupMembers = newGroup;
             chatVC.group = group;
+            chatVC.delegate = self;
             [self.navigationController pushViewController:chatVC animated:YES];
             [newGroup removeAllObjects];
 
@@ -317,6 +314,7 @@
                     chatVC.mode = ChatModeGroup;
                     chatVC.group = group;
                     chatVC.newGroup = YES;
+                    chatVC.delegate = weakBlock;
                     [weakBlock.navigationController pushViewController:chatVC animated:YES];
                 }];
                 
@@ -447,6 +445,16 @@
     }];
 }
 
+#pragma mark - Leave Group
+-(void) leaveGroup:(id)group
+{
+    [_listGroups removeObject:group];
+    [self.tableView reloadData];
+    NSString *msg = [NSString stringWithFormat:@"You has leaved from group %@!", [group valueForKey:@"gmName"]];
+    [AJNotificationView showNoticeInView:self.navigationController.view type:AJNotificationTypeOrange title:msg hideAfter:2.5f];
+    
+    
+}
 
 
 

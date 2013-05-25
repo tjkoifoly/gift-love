@@ -28,7 +28,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) DDActionHeaderView *actionHeaderView;
 @property (nonatomic) FriendMode mode;
-@property (strong, nonatomic) NSMutableArray *listRequest;
+@property (unsafe_unretained, nonatomic) NSMutableArray *listRequest;
 -(void) itemAction: (id)sender;
 
 -(void) reloadFriend;

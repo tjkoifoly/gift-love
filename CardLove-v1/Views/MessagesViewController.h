@@ -12,11 +12,14 @@
 #import "TDBadgedCell.h"
 #import "ModalPanelPickerView.h"
 #import "MBProgressHUD.h"
+#import "ChatViewController.h"
 
-@interface MessagesViewController : GHRootViewController <UITableViewDataSource, UITableViewDelegate,  ModalPanelDelegate>
+@interface MessagesViewController : GHRootViewController <UITableViewDataSource, UITableViewDelegate,  ModalPanelDelegate, ChatViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) NSMutableArray *listGroups;
-@property (strong, nonatomic) NSMutableArray *listNewMsgs;
+@property (unsafe_unretained, nonatomic) NSMutableArray *listGroups;
+@property (unsafe_unretained, nonatomic) NSMutableArray *listNewMsgs;
+
+
 
 @end

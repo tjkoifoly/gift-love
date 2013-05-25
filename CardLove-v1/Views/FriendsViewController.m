@@ -26,6 +26,7 @@
 #import "UILabel+dynamicSizeMe.h"
 #import "NSArray+findObject.h"
 #import "AJNotificationView.h"
+#import "RequestsManager.h"
 
 typedef void (^FinishBlock)();
 
@@ -70,9 +71,7 @@ typedef void (^FinishBlock)();
     //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnAddFriend];
     
     _mode = FriendModeList;
-    if (!_listRequest) {
-        _listRequest = [[NSMutableArray alloc] init];
-    }
+    _listRequest = [[RequestsManager sharedManager] listRequests];
     
     UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFriendView)];
     self.navigationItem.rightBarButtonItem = btnAdd;
@@ -80,6 +79,7 @@ typedef void (^FinishBlock)();
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadFriend) name:kNotificationReloadFriendsList object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendGiftView:) name:kNotificationSendGiftToFriend object:nil];
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendGiftToFriend:) name:kNotificationSendGiftFromChoice object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshRequest) name:kNotificationReload object:nil];
     
 }
 
@@ -96,9 +96,9 @@ typedef void (^FinishBlock)();
         [_tableView reloadData];
     }];
     
-    if (!_timerScheduleRequest) {
-         _timerScheduleRequest = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(reloadAll) userInfo:nil repeats:YES];
-    }
+//    if (!_timerScheduleRequest) {
+//         _timerScheduleRequest = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(reloadAll) userInfo:nil repeats:YES];
+//    }
 
     [super viewDidAppear:animated];
 }
@@ -118,11 +118,6 @@ typedef void (^FinishBlock)();
     }];
 }
 
--(void) reloadAll
-{
-    [self reloadFriend];
-    [self reloadRequest];
-}
 
 -(void) addFriendView
 {
@@ -160,6 +155,7 @@ typedef void (^FinishBlock)();
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationReloadFriendsList object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationSendGiftToFriend object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationSendGiftFromChoice object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationReload object:nil];
     [super viewDidUnload];
 }
 
@@ -361,7 +357,6 @@ typedef void (^FinishBlock)();
         {
             self.actionHeaderView.titleLabel.text = @"Friends Request";
            
-            
             [self.actionHeaderView shrinkActionPicker];
             _mode = RequestModeList;
             [self.tableView reloadData];
@@ -653,57 +648,16 @@ typedef void (^FinishBlock)();
     NSDictionary *dictPerson = [self.listRequest objectAtIndex:curPath.row];
     
     [[FunctionObject sharedInstance] responeRequestWithUser:[[UserManager sharedInstance] accID] person:[dictPerson valueForKey:@"accID"] preRelationship:[dictPerson valueForKey:@"rsID"] andState:[NSString stringWithFormat:@"%i", state] completion:^(BOOL success, NSError *error) {
-        [self reloadRequest];
+        [self refreshRequest];
     }];
     [self.listRequest removeObject:dictPerson];
     
 }
 
--(void) reloadRequest
+-(void) refreshRequest
 {
-    [[FunctionObject sharedInstance] loadRequest:[[UserManager sharedInstance] accID] completion:^(BOOL success, NSError *error, id result) {
-        if (success) {
-            NSMutableArray *mATemp = [[NSMutableArray alloc] init];
-            
-            for(id dict in result)
-            {
-                if ([_listRequest hasObjectWithKey:@"accID" andValue:[dict valueForKey:@"accID"]]) {
-                    continue;
-                }else
-                {
-                    [mATemp addObject: dict];
-                    
-                }
-            }
-            
-            [_listRequest addObjectsFromArray:mATemp];
-            if ([mATemp count] > 0) {
-                NSString *msg = @"";
-                
-                if ([mATemp count] == 1) {
-                    msg = [NSString stringWithFormat:@"%@ requests friend to you !", [[mATemp objectAtIndex:0] valueForKey:@"accName"]];
-                }else{
-                    msg = [NSString stringWithFormat: @"%i person(s) request friend with you!", [mATemp count]];
-                }
-                [AJNotificationView showNoticeInView:self.navigationController.view
-                                                type:AJNotificationTypeBlue
-                                               title:msg
-                                     linedBackground:AJLinedBackgroundTypeAnimated
-                                           hideAfter:2.5f
-                                            response:^{
-                                                //This block is called when user taps in the notification
-                                                NSLog(@"Response block");
-                                            }
-                 ];
-            }
-            
-            
-            mATemp = nil;
-            
-            [[FunctionObject sharedInstance] setNewBadgeWithValue:[result count] forView:self.actionHeaderView.titleLabel];
-            [self.tableView reloadData];
-        }
-    }];
+    [[FunctionObject sharedInstance] setNewBadgeWithValue:[_listRequest count] forView:self.actionHeaderView.titleLabel];
+    [self.tableView reloadData];
 }
 
 @end

@@ -18,6 +18,8 @@
 
 + (id)sharedManager;
 
+-(void) resetData;
+
 -(void) loadGiftbyUser: (NSString*)userID completion:(void (^)(BOOL success, NSError *error, id result))completionBlock;
 
 @end

@@ -434,6 +434,9 @@
         TIToken *tk = (TIToken *)[reg view];
         [tokenFieldView.tokenField removeToken:tk];
         [self.navigationController popViewControllerAnimated:YES];
+        if ([self.delegate respondsToSelector:@selector(leaveGroup:)]) {
+            [self.delegate leaveGroup:self.group];
+        }
     }];
 }
 

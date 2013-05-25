@@ -20,6 +20,8 @@
 #import "FriendsViewController.h"
 #import "NewsViewController.h"
 #import "GiftsManager.h"
+#import "RequestsManager.h"
+#import "GroupsManager.h"
 
 @interface LoginViewController ()
 
@@ -208,12 +210,14 @@
     }];
     
     [[GiftsManager sharedManager] setViewContainer:appDelegate.window];
+    [[RequestsManager sharedManager] setViewContainer:appDelegate.window];
+    [[GroupsManager sharedManager] setViewContainer:appDelegate.window];
     
     CompletionBlockWithResult completionBlock = ^(BOOL success, NSError *error, id result)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReload object:nil userInfo:nil];
     };
-    appDelegate.timerScheduleNotifications = [NSTimer scheduledTimerWithTimeInterval:2 target:appDelegate selector:@selector(getNewGiftsWithCompletion:) userInfo:completionBlock repeats:YES];
+    appDelegate.timerScheduleNotifications = [NSTimer scheduledTimerWithTimeInterval:2 target:appDelegate selector:@selector(getNewNotfWithCompletion:) userInfo:completionBlock repeats:YES];
     
 }
 -(void) loginFailed

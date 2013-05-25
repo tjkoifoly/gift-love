@@ -16,6 +16,9 @@
 #import "FlipTransition.h"
 #import "UserManager.h"
 #import "AppDelegate.h"
+#import "GiftsManager.h"
+#import "RequestsManager.h"
+#import "GroupsManager.h"
 
 @interface ProfilesViewController ()
 
@@ -127,9 +130,12 @@
     [[HMGLTransitionManager sharedTransitionManager] setTransition:_transition];
     [[HMGLTransitionManager sharedTransitionManager] presentModalViewController:navLogin onViewController:self.navigationController];
     
-//    AppDelegate *appDelegate  = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//    [appDelegate.timerScheduleNotifications invalidate];
+    AppDelegate *appDelegate  = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate.timerScheduleNotifications invalidate];
     
+    [[GiftsManager sharedManager] resetData];
+    [[RequestsManager sharedManager] resetData];
+    [[GroupsManager sharedManager] resetData];
 }
 
 -(void) loadInfo

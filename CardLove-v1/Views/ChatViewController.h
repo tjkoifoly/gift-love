@@ -22,6 +22,15 @@ typedef enum {
     ChatModeGroup
 }ChatMode;
 
+@class ChatViewController;
+
+@protocol ChatViewControllerDelegate <NSObject>
+
+@optional
+-(void) leaveGroup:(id)group;
+
+@end
+
 @interface ChatViewController : UIViewController <UIBubbleTableViewDataSource, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIInputToolbarDelegate, UIGestureRecognizerDelegate, SYEmojiPopoverDelegate, TITokenFieldDelegate, ModalPanelDelegate>
 {
     UIInputToolbar *_inputToolbar;
@@ -33,11 +42,11 @@ typedef enum {
     BOOL inputToolbarIsVisible;
     SYEmojiPopover *_emojiPopover;
 }
-
+@property (assign, nonatomic) id<ChatViewControllerDelegate> delegate;
 
 @property (nonatomic) ChatMode mode;
 @property (strong, nonatomic) NSMutableArray *groupMembers;
-@property (strong, nonatomic) id group;
+@property (assign, nonatomic) id group;
 @property (nonatomic) BOOL newGroup;
 @property (nonatomic, strong) UIInputToolbar *inputToolbar;
 @property (strong, nonatomic) Friend *friendChatting;

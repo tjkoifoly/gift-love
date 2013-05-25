@@ -41,6 +41,12 @@
     return self;
 }
 
+-(void) resetData
+{
+    [_listSentGifts removeAllObjects];
+    [_listRecievedGifts removeAllObjects];
+}
+
 -(void) loadGiftbyUser: (NSString*)userID completion:(CompletionBlockWithResult) completionBlock{
     NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:userID,@"userID", nil];
     [[NKApiClient shareInstace] postPath:@"get_gift.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
