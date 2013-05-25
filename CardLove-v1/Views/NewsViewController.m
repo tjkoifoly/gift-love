@@ -11,6 +11,8 @@
 #import "SSCollectionViewItem.h"
 #import "CollectionHeaderView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "GiftsManager.h"
+#import "AJNotificationView.h"
 
 @interface NewsViewController ()
 {
@@ -42,29 +44,16 @@
     UIBarButtonItem *btnRefesh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refeshList:)];
     self.navigationItem.rightBarButtonItem = btnRefesh;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self.collectionView selector:@selector(reloadData) name:kNotificationReload object:nil];
     self.collectionView.extremitiesStyle = SSCollectionViewExtremitiesStyleScrolling;
-    
-    if (!_recieveArray) {
-        _recieveArray = [[NSMutableArray alloc] init];
-    }
-    if (!_sentArray) {
-        _sentArray = [[NSMutableArray alloc] init];
-    }
+
+    _recieveArray = [[GiftsManager sharedManager] listRecievedGifts];
+    _sentArray = [[GiftsManager sharedManager] listSentGifts];
 }
 
 -(void) viewWillAppear:(BOOL)animated
 {
-    MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    NSString *userID = [[UserManager sharedInstance] accID];
-    [[FunctionObject sharedInstance] loadGiftbyUser:userID completion:^(BOOL success, NSError *error, NSArray * result) {
-        
-        _sentArray = [[FunctionObject sharedInstance] filterGift:result bySender:userID];
-        _recieveArray = [[FunctionObject sharedInstance]filterGift:result byReciver:userID];
-        
-        [self.collectionView reloadData];
-        [HUD hide:YES];
-        
-    }];
+    
     [super viewWillAppear:animated];
 }
 
@@ -72,6 +61,7 @@
 {
     [self setRecieveArray:nil];
     [self setSentArray:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.collectionView name:kNotificationReload object:nil];
     [super viewDidUnload];
 }
 

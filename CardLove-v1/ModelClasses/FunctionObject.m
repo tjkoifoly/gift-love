@@ -216,20 +216,7 @@
 }
 
 
--(void) loadGiftbyUser: (NSString*)userID completion:(void (^)(BOOL success, NSError *error, id result))completionBlock{
-    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:userID,@"userID", nil];
-    [[NKApiClient shareInstace] postPath:@"get_gift.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
-        NSLog(@"JSON Gift LIST = %@", jsonObject);
-    
-        completionBlock (YES, nil, jsonObject);
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"HTTP ERROR = %@", error);
-        completionBlock(NO, nil, nil);
-    }];
-}
+
 
 -(void) loadRequest: (NSString*)userID completion:(void (^)(BOOL success, NSError *error, id result))completionBlock{
     NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:userID,@"userID", nil];

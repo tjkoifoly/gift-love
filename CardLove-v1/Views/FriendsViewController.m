@@ -96,15 +96,18 @@ typedef void (^FinishBlock)();
         [_tableView reloadData];
     }];
     
-    _timerScheduleRequest = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(reloadAll) userInfo:nil repeats:YES];
+    if (!_timerScheduleRequest) {
+         _timerScheduleRequest = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(reloadAll) userInfo:nil repeats:YES];
+    }
 
     [super viewDidAppear:animated];
 }
 
--(void) viewWillAppear:(BOOL)animated
+-(void) viewWillDisappear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
     [_timerScheduleRequest invalidate];
+    [super viewWillDisappear:animated];
+    
 }
 
 -(void) reloadFriend
@@ -153,6 +156,7 @@ typedef void (^FinishBlock)();
     [self setTableView:nil];
     [self setActionHeaderView:nil];
     [self setListRequest:nil];
+    [self setTimerScheduleRequest:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationReloadFriendsList object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationSendGiftToFriend object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationSendGiftFromChoice object:nil];

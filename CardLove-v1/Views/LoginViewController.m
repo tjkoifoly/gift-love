@@ -18,6 +18,8 @@
 #import "UserManager.h"
 #import "FriendsManager.h"
 #import "FriendsViewController.h"
+#import "NewsViewController.h"
+#import "GiftsManager.h"
 
 @interface LoginViewController ()
 
@@ -204,6 +206,14 @@
 //        [friendsVC reloadFriend];
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadFriendsList object:nil];
     }];
+    
+    [[GiftsManager sharedManager] setViewContainer:appDelegate.window];
+    
+    CompletionBlockWithResult completionBlock = ^(BOOL success, NSError *error, id result)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReload object:nil userInfo:nil];
+    };
+    appDelegate.timerScheduleNotifications = [NSTimer scheduledTimerWithTimeInterval:2 target:appDelegate selector:@selector(getNewGiftsWithCompletion:) userInfo:completionBlock repeats:YES];
     
 }
 -(void) loginFailed

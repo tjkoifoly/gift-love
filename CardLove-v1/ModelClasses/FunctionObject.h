@@ -26,7 +26,6 @@
 -(void) dowloadFromURL: (NSString *) urlString toPath:(NSString *) pathSave  withProgress:(void (^)(CGFloat progress))progressBlock completion:(void (^)(BOOL success, NSError *error))completionBlock;
 
 -(void) sendGift: (NSString *)urlGift withParams:(NSDictionary *)params  completion:(void (^)(BOOL success, NSError *error))completionBlock;
--(void) loadGiftbyUser: (NSString*)userID completion:(void (^)(BOOL success, NSError *error, id result))completionBlock;
 
 -(void) openGift:(NSString *)giftID completion:(void (^)(BOOL success, NSError *error))completionBlock;
 

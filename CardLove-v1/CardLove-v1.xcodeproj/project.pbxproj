@@ -560,6 +560,7 @@
 		66BADFB116E9EF4300A8E60C /* SSCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 66BADFA816E9EF4300A8E60C /* SSCollectionViewItem.m */; };
 		66BADFB216E9EF4300A8E60C /* SSCollectionViewItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66BADFAB16E9EF4300A8E60C /* SSCollectionViewItemTableViewCell.m */; };
 		66BADFB316E9EF4300A8E60C /* SSCollectionViewTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66BADFAD16E9EF4300A8E60C /* SSCollectionViewTableView.m */; };
+		66BB060217503B7C003D4E91 /* GiftsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66BB060117503B7C003D4E91 /* GiftsManager.m */; };
 		66D4C67016F587DD004DC5A4 /* 37x-Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 66D4C66E16F587DD004DC5A4 /* 37x-Checkmark.png */; };
 		66D4C67116F587DD004DC5A4 /* 37x-Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66D4C66F16F587DD004DC5A4 /* 37x-Checkmark@2x.png */; };
 		66D4C67616F59D14004DC5A4 /* AUISelectiveBordersLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D4C67316F59D14004DC5A4 /* AUISelectiveBordersLayer.m */; };
@@ -1586,6 +1587,8 @@
 		66BADFAB16E9EF4300A8E60C /* SSCollectionViewItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCollectionViewItemTableViewCell.m; sourceTree = "<group>"; };
 		66BADFAC16E9EF4300A8E60C /* SSCollectionViewTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSCollectionViewTableView.h; sourceTree = "<group>"; };
 		66BADFAD16E9EF4300A8E60C /* SSCollectionViewTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCollectionViewTableView.m; sourceTree = "<group>"; };
+		66BB060017503B7C003D4E91 /* GiftsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiftsManager.h; path = Data/GiftsManager.h; sourceTree = "<group>"; };
+		66BB060117503B7C003D4E91 /* GiftsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GiftsManager.m; path = Data/GiftsManager.m; sourceTree = "<group>"; };
 		66D4C66E16F587DD004DC5A4 /* 37x-Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "37x-Checkmark.png"; path = "Resources/37x-Checkmark.png"; sourceTree = "<group>"; };
 		66D4C66F16F587DD004DC5A4 /* 37x-Checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "37x-Checkmark@2x.png"; path = "Resources/37x-Checkmark@2x.png"; sourceTree = "<group>"; };
 		66D4C67216F59D14004DC5A4 /* AUISelectiveBordersLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUISelectiveBordersLayer.h; sourceTree = "<group>"; };
@@ -3996,6 +3999,8 @@
 				66B2C55A17112C3800C51CEB /* GiftElementsManager.m */,
 				665D856B172F59B0006670CB /* UserManager.h */,
 				665D856C172F59B0006670CB /* UserManager.m */,
+				66BB060017503B7C003D4E91 /* GiftsManager.h */,
+				66BB060117503B7C003D4E91 /* GiftsManager.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -4855,6 +4860,7 @@
 				66545F81174DD6E3001A0B5D /* NSArray+findObject.m in Sources */,
 				6632EA36174E087A00E906F4 /* FriendRequestCell.m in Sources */,
 				6692F02C174F1CD200D50813 /* UIView+Badge.m in Sources */,
+				66BB060217503B7C003D4E91 /* GiftsManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

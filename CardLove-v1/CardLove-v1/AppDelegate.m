@@ -22,6 +22,7 @@
 #import "HMGLTransitionManager.h"
 #import "HMGLTransition.h"
 #import "DoorsTransition.h"
+#import "GiftsManager.h"
 
 @interface AppDelegate() 
 @end
@@ -175,6 +176,13 @@
             [[FunctionObject sharedInstance] setNewBadgeWithValue:_numNewGifts forView:[self.menuController._menuTableView cellForRowAtIndexPath:indexPath].imageView];
         }
     }];
+}
+
+-(void) getNewGiftsWithCompletion:(NSTimer *)timerCompletionBlock
+{
+    NSString *userID = [[UserManager sharedInstance] accID];
+    CompletionBlockWithResult completionBlock = (CompletionBlockWithResult)timerCompletionBlock.userInfo;
+    [[GiftsManager sharedManager] loadGiftbyUser:userID completion:completionBlock];
 }
 
 #pragma mark GHSidebarSearchViewControllerDelegate

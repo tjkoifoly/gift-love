@@ -25,8 +25,8 @@
 @interface NewsViewController : SSCollectionViewController<UIAlertViewDelegate, ViewGiftControllerDelegate>
 
 @property (strong, nonatomic) ActionGiftBlock actionBlock;
-@property (strong, nonatomic) NSMutableArray *sentArray;
-@property (strong, nonatomic) NSMutableArray *recieveArray;
+@property (unsafe_unretained, nonatomic) NSMutableArray *sentArray;
+@property (unsafe_unretained, nonatomic) NSMutableArray *recieveArray;
 
 
 @end

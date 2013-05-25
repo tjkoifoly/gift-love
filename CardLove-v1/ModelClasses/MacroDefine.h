@@ -56,7 +56,8 @@
 
 #define kNotificationSendGiftFromChoice @"NotificationSendGiftFromChoice"
 
-#define kNotificationRefreshBadge @"NotificationRefreshBadge"
+#define kNotificationRefreshBadge   @"NotificationRefreshBadge"
+#define kNotificationReload         @"NotificationReload"
 
 #define kGiftPaper      @"gift-paper"
 #define kGiftBG         @"gift-bg"
@@ -88,6 +89,7 @@
 #define defaultFontSize 10.0
 
 typedef void (^ActionGiftBlock)(void);
+typedef void (^CompletionBlockWithResult) (BOOL success, NSError *error, id result);
 
 typedef enum {
     NavigationBarModeEdit,

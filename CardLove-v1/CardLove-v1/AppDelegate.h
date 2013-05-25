@@ -47,5 +47,6 @@
 - (NSURL *)applicationDocumentsDirectory;
 -(void) getNotifications;
 -(void) resetParams;
+-(void) getNewGiftsWithCompletion:(NSTimer *)timerCompletionBlock;
 
 @end
