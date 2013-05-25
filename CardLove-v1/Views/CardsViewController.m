@@ -212,6 +212,13 @@
     [[item viewWithTag:tagSelected] setAlpha:cellAHidden];
     [item setSelected:NO];
     id gift = [_listGifts objectAtIndex:indexPath.row];
+    if ([_listToEdit containsObject:gift]) {
+        [item setSelected:YES];
+        [[item viewWithTag:tagSelected] setAlpha:cellAAcitve];
+    }else{
+        [item setSelected:NO];
+        [[item viewWithTag:tagSelected] setAlpha:cellAHidden];
+    }
     NSLog(@"Gift object = %@", gift);
     item.titleLabel.text = [NSString stringWithFormat:@"%@", gift ];
     item.imageView.image = [UIImage imageNamed:@"card-icon.jpg"];
