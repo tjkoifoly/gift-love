@@ -17,6 +17,7 @@
 #define FIELDS_COUNT            7
 #define BIRTHDAY_FIELD_TAG      5
 #define GENDER_FIELD_TAG        6
+#define EMAIL_FIELD_TAG         3
 
 @implementation DBSignupViewController
 {
@@ -254,10 +255,24 @@
     [self signup:sender];
 }
 
+-(BOOL)checkInput
+{
+    if (![self NSStringIsValidEmail:emailTextField_.text]) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Email is not correct !"];
+        return NO;
+    }
+    if ([passwordTextField_.text length] < 6) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Password is too short !"];
+        return NO;
+    }
+    return YES;
+}
+
 -(void) saveProfiles: (id) sender
 {
-    [self saveWithMethodUsage:@"update_info"];
-    
+    if ([self checkInput]) {
+        [self saveWithMethodUsage:@"update_info"];
+    }
 }
 
 -(void) saveWithMethodUsage: (NSString *)usage
@@ -324,10 +339,9 @@
     [self resignKeyboard:nil];
     
     // Check fields
-    
-    // Make request
-    [self saveWithMethodUsage:@"sign_up"];
-   
+    if ([self checkInput]) {
+         [self saveWithMethodUsage:@"sign_up"];
+    }    
 }
 
 - (void)resignKeyboard:(id)sender
@@ -510,9 +524,28 @@
     NSUInteger tag = [textField tag];
     if (tag == BIRTHDAY_FIELD_TAG || tag == GENDER_FIELD_TAG) {
         return NO;
+    }else if (tag == EMAIL_FIELD_TAG)
+    {
+        NSCharacterSet *unacceptedInput = nil;
+        if ([[textField.text componentsSeparatedByString:@"@"] count] > 1) {
+            unacceptedInput = [[NSCharacterSet characterSetWithCharactersInString:[ALPHA_NUMERIC stringByAppendingString:@".-"]] invertedSet];
+        } else {
+            unacceptedInput = [[NSCharacterSet characterSetWithCharactersInString:[ALPHA_NUMERIC stringByAppendingString:@".!#$%&'*+-/=?^_`{|}~@"]] invertedSet];
+        }
+        return ([[string componentsSeparatedByCharactersInSet:unacceptedInput] count] <= 1);
     }
     
     return YES;
+}
+
+-(BOOL) NSStringIsValidEmail:(NSString *)checkString
+{
+    BOOL stricterFilter = YES; // Discussion http://blog.logichigh.com/2010/09/02/validating-an-e-mail-address/
+    NSString *stricterFilterString = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSString *laxString = @".+@.+\\.[A-Za-z]{2}[A-Za-z]*";
+    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:checkString];
 }
 
 

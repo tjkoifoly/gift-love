@@ -11,6 +11,12 @@
 #import "OLImage.h"
 #import "OLImageView.h"
 
+#define ALPHA                   @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+#define NUMERIC                 @"1234567890"
+#define ALPHA_NUMERIC           ALPHA NUMERIC
+
+#define kLoadingImageURL        @"http://localhost:8888/gift-love/loading01.gif"
+
 #define kNewProject     @"NewTemplate1234567890acbdefghijklmnoprstuvwxyz"
 #define kProjects       @"Projects"
 #define kGift           @"Gifts"

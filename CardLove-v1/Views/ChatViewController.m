@@ -189,6 +189,18 @@
         {
     
 #pragma mark - List Friend -----------------------
+            dispatch_async(dispatch_get_main_queue(),  ^{
+                NSString *notificationTitle = NSLocalizedString(@"To leave group?", nil);
+                NSString *notificationDescription = NSLocalizedString(@"Open token field and double tap on your username to leave this group !", nil) ;
+                
+                CGFloat duration = 4;
+                
+                [TSMessage showNotificationInViewController:self
+                                                  withTitle:notificationTitle
+                                                withMessage:notificationDescription
+                                                   withType:TSMessageNotificationTypeMessage
+                                               withDuration:duration];
+            });
             
             [self listFriendsInGroup:[_group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error, id result) {
                 [_groupMembers removeAllObjects];
@@ -260,19 +272,7 @@
                     //[self scrollToBottom];
                 }];
             });
-            dispatch_async(queue,  ^{
-                NSString *notificationTitle = NSLocalizedString(@"To leave group?", nil);
-                NSString *notificationDescription = NSLocalizedString(@"Open token field and double tap on your username to leave this group !", nil) ;
-                
-                CGFloat duration = 4;
-                
-                [TSMessage showNotificationInViewController:self
-                                                  withTitle:notificationTitle
-                                                withMessage:notificationDescription
-                                                   withType:TSMessageNotificationTypeMessage
-                                               withDuration:duration];
-            });
-
+            
 
         }
             break;
@@ -529,7 +529,7 @@
         self->_emojiPopover = [[SYEmojiPopover alloc] init];
     
     [self->_emojiPopover setDelegate:self];
-    [self->_emojiPopover showFromPoint:CGPointMake(sender.center.x, sender.bounds.size.height) inView:self.navigationController.view withTitle:@"Click on a character to see it in big"];
+    [self->_emojiPopover showFromPoint:CGPointMake(sender.center.x, sender.bounds.size.height) inView:self.navigationController.view withTitle:@"Click on a character to send it"];
 }
 
 #pragma mark - SYEmojiPopoverDelegate methods
@@ -549,14 +549,14 @@
     switch (_mode) {
         case ChatModeGroup:
         {
-            [self postMessage:character withType:MessageEmoticon toGroup:[_group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error) {
+            [self postMessage:character withType:MessageEmoticon toGroup:[_group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error, id result) {
                 
             }];
         }
             break;
         case ChatModeSigle:
         {
-            [self postMessage:character withType:MessageEmoticon toFriend:_friendChatting completion:^(BOOL success, NSError *error) {
+            [self postMessage:character withType:MessageEmoticon toFriend:_friendChatting completion:^(BOOL success, NSError *error, id result) {
                 //
             }];
         }
@@ -747,19 +747,59 @@
 	[picker dismissModalViewControllerAnimated:YES];
 	UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     
-    _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
-    
-    NSBubbleData *sayBubble = [NSBubbleData dataWithImage:image date:[NSDate dateWithTimeIntervalSinceNow:0] type:BubbleTypeMine];
-    sayBubble.avatar = avataMe;
-    
-    [bubbleData addObject:sayBubble];
-    
-    [_bubbleTable reloadData];
-    
-    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)] - 1) inSection:(_bubbleTable.numberOfSections - 1)];
-    [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-
+//    _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
+//    
+//    NSBubbleData *sayBubble = [NSBubbleData dataWithImage:image date:[NSDate dateWithTimeIntervalSinceNow:0] type:BubbleTypeMine];
+//    sayBubble.avatar = avataMe;
+//    
+//    [bubbleData addObject:sayBubble];
+//    
+//    [_bubbleTable reloadData];
+//    
+//    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)] - 1) inSection:(_bubbleTable.numberOfSections - 1)];
+//    [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 	NSLog(@"Photo = %@", image);
+    switch (_mode) {
+        case ChatModeSigle:
+        {
+            [self postMessage:@"" withType:MessageImage toFriend:_friendChatting completion:^(BOOL success, NSError *error, id result) {
+                if (result) {
+                    NSData *dataImage = UIImagePNGRepresentation(image);
+                    [[FunctionObject sharedInstance] sendPhoto:dataImage WithProgress:^(CGFloat progress) {
+                        NSLog(@"Uploading ..... %f %%", progress);
+                    } completion:^(BOOL success, NSError *error, NSString *urlUpload) {
+                        [[FunctionObject sharedInstance] updatePhotoMessage:result withLink:urlUpload andType:@"0" completion:^(BOOL success, NSError *error) {
+                            [self scrollToBottom];
+                        }];
+                    }];
+                }
+            }];
+
+        }
+            break;
+        case ChatModeGroup:
+        {
+            [self postMessage:@"" withType:MessageImage toGroup:[_group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error, id result) {
+                if (result) {
+                    NSData *dataImage = UIImagePNGRepresentation(image);
+                    [[FunctionObject sharedInstance] sendPhoto:dataImage WithProgress:^(CGFloat progress) {
+                        NSLog(@"Uploading ..... %f %%", progress);
+                    } completion:^(BOOL success, NSError *error, NSString *urlUpload) {
+                        [[FunctionObject sharedInstance] updatePhotoMessage:result withLink:urlUpload andType:@"1" completion:^(BOOL success, NSError *error) {
+                            
+                            NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)]-1) inSection:(_bubbleTable.numberOfSections - 1)];
+                            [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                        }];
+                    }];
+                }
+            }];
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
 }
 
 
@@ -787,14 +827,14 @@
     switch (_mode) {
         case ChatModeSigle:
         {
-            [self postMessage:inputText withType:MessageText toFriend:_friendChatting completion:^(BOOL success, NSError *error) {
+            [self postMessage:inputText withType:MessageText toFriend:_friendChatting completion:^(BOOL success, NSError *error, id result) {
                 NSLog(@"POST");
             }];
         }
             break;
         case ChatModeGroup:
         {
-            [self postMessage:inputText withType:MessageText toGroup:[_group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error) {
+            [self postMessage:inputText withType:MessageText toGroup:[_group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error, id result) {
                 
             }];
         }
@@ -886,7 +926,7 @@
     [[NKApiClient shareInstace] postPath:@"get_message.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
-        NSLog(@"JSON Result = %@", jsonObject);
+        //NSLog(@"JSON Result = %@", jsonObject);
         if (bubbleData) {
             [bubbleData removeAllObjects];
         }
@@ -910,6 +950,7 @@
                 data = [[NSBubbleData alloc] initWithText:[dictMsg valueForKey:@"msMessage" ] date:[[FunctionObject sharedInstance] dateFromStringDateTime:[dictMsg valueForKey:@"msDateSent"]] type:type];
             }else if ([[dictMsg valueForKey:@"msType"] intValue] == MessageImage)
             {
+                
                 UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dictMsg valueForKey:@"msMessage" ]]]];
                 
                 data = [NSBubbleData dataWithImage:image date:[[FunctionObject sharedInstance] dateFromStringDateTime:[dictMsg valueForKey:@"msDateSent"]] type:BubbleTypeMine];
@@ -942,7 +983,7 @@
     [[NKApiClient shareInstace] postPath:@"get_messages_group.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
-        NSLog(@"JSON Result Message Group = %@", jsonObject);
+        //NSLog(@"JSON Result Message Group = %@", jsonObject);
         if (bubbleData) {
             [bubbleData removeAllObjects];
         }
@@ -966,12 +1007,12 @@
                 data = [[NSBubbleData alloc] initWithText:[dictMsg valueForKey:@"mgMessage" ] date:[[FunctionObject sharedInstance] dateFromStringDateTime:[dictMsg valueForKey:@"mgDateSent"]] type:type];
             }else if ([[dictMsg valueForKey:@"mgType"] intValue] == MessageImage)
             {
+                
                 UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dictMsg valueForKey:@"mgMessage" ]]]];
                 
                 data = [NSBubbleData dataWithImage:image date:[[FunctionObject sharedInstance] dateFromStringDateTime:[dictMsg valueForKey:@"mgDateSent"]] type:BubbleTypeMine];
                 
             }
-            
             
             if ([[dictMsg valueForKey:@"mgSenderID"] isEqualToString: [[UserManager sharedInstance] accID]]) {
                 data.avatar = avataMe;
@@ -1015,7 +1056,7 @@
     
 }
 
--(void) postMessage:(NSString *)message withType:(MessageType)msType toFriend: (Friend *)cF completion:(void (^)(BOOL success, NSError *error))completionBlock
+-(void) postMessage:(NSString *)message withType:(MessageType)msType toFriend: (Friend *)cF completion:(CompletionBlockWithResult)completionBlock
 {
     NSString *userID = [[UserManager sharedInstance] accID];
     NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -1028,16 +1069,25 @@
         id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
         NSLog(@"JSON Result = %@", jsonObject);
         
-        completionBlock(YES, nil);
+        if (msType == MessageImage) {
+            id result = nil;
+            if ([jsonObject isKindOfClass:[NSArray class]]) {
+                result = [jsonObject objectAtIndex:0];
+            }
+            completionBlock(YES, nil, result);
+        }else{
+            completionBlock(YES, nil, nil);
+        }
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"HTTP ERROR = %@", error);
-        completionBlock(NO, nil);
+        completionBlock(NO, nil, nil);
     }];
     
 }
 
--(void) postMessage:(NSString *)message withType:(MessageType)msType toGroup: (NSString *)groupID completion:(void (^)(BOOL success, NSError *error))completionBlock
+-(void) postMessage:(NSString *)message withType:(MessageType)msType toGroup: (NSString *)groupID completion:(CompletionBlockWithResult)completionBlock
 {
     NSString *userID = [[UserManager sharedInstance] accID];
     NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -1050,11 +1100,19 @@
         id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
         NSLog(@"JSON Result Post message = %@", jsonObject);
         
-        completionBlock(YES, nil);
+        if (msType == MessageImage) {
+            id result = nil;
+            if ([jsonObject isKindOfClass:[NSArray class]]) {
+                result = [jsonObject objectAtIndex:0];
+            }
+            completionBlock(YES, nil, result);
+        }else{
+            completionBlock(YES, nil, nil);
+        }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"HTTP ERROR = %@", error);
-        completionBlock(NO, nil);
+        completionBlock(NO, error, nil);
     }];
 }
 

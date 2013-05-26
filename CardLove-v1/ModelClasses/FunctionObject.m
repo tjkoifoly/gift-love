@@ -237,6 +237,72 @@
     }];
 }
 
+- (void)sendPhoto: (NSData *) imgData WithProgress:(void (^)(CGFloat progress))progressBlock completion:(void (^)(BOOL success, NSError *error, NSString *urlUpload))completionBlock {
+    
+    //make sure none of the parameters are nil, otherwise it will mess up our dictionary
+    NSDictionary *params = @{
+                             @"gift-love[location]" : @"VN",
+                             @"gift-love[submitted_by]" : @"foly",
+                             @"gift-love[comments]" : @"No"
+                             };
+    
+    NSURLRequest *postRequest = [[NKApiClient shareInstace] multipartFormRequestWithMethod:@"POST"
+                                                                                      path:@"upload_image.php"
+                                                                                parameters:params
+                                                                 constructingBodyWithBlock:^(id formData) {
+                                                                     [formData appendPartWithFileData:imgData
+                                                                                                 name:@"avatar"
+                                                                                             fileName:@"photo.png"
+                                                                                             mimeType:@"image/png"];
+                                                                 }];
+    
+    AFHTTPRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:postRequest];
+    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        
+        CGFloat progress = ((CGFloat)totalBytesWritten) / totalBytesExpectedToWrite;
+        progressBlock(progress);
+    }];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"CODE = %i", operation.response.statusCode);
+        
+        if (operation.response.statusCode == 200 || operation.response.statusCode == 201) {
+            NSLog(@"OBJECT = %@", responseObject);
+            
+            NSString *urlImage = [responseObject objectAtIndex:0];
+            NSLog(@"URL = %@", urlImage);
+            completionBlock(YES, nil, urlImage);
+            
+            
+        } else {
+            completionBlock(NO, nil, nil);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completionBlock(NO, error, nil);
+        NSLog(@"ERROR %@", error);
+    }];
+    
+    [[NKApiClient shareInstace] enqueueHTTPRequestOperation:operation];
+};
+
+-(void) updatePhotoMessage:(NSString *)msID withLink:(NSString *)urlString andType:(NSString *)type completion:(void (^)(BOOL success, NSError *error)) completionBlock
+{
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                msID, @"msID",
+                                urlString, @"msLink",
+                                type, @"type"
+                                , nil];
+    
+    [[NKApiClient shareInstace] postPath:@"update_sent_photo.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Result = %@", jsonObject);
+
+        completionBlock(YES, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completionBlock(NO, error);
+        NSLog(@"ERROR %@", error);
+    }];
+}
+
 -(void) openGift:(NSString *)giftID completion:(void (^)(BOOL success, NSError *error))completionBlock
 {
     NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:giftID,@"gfID", nil];

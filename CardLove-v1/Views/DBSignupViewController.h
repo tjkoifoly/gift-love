@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "MacroDefine.h"
 #import "MBProgressHUD.h"
+#import "TapkuLibrary.h"
 
 typedef enum {
     ProfileViewTypeSignUp,
