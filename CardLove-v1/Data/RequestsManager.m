@@ -47,7 +47,7 @@
     [[NKApiClient shareInstace] postPath:@"get_friend_requests.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
-        NSLog(@"JSON REQUEST = %@", jsonObject);
+        //NSLog(@"JSON REQUEST = %@", jsonObject);
         
         
         NSMutableArray *mATemp = [[NSMutableArray alloc] init];

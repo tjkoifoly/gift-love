@@ -13,12 +13,18 @@
 #import "JSONKit.h"
 #import "UserManager.h"
 #import "ChatViewController.h"
+#import "RequestsManager.h"
+#import "NSArray+findObject.h"
 
 @interface AddFriendViewController ()
 
 @end
 
 @implementation AddFriendViewController
+{
+    id currentObject;
+    SearchFriendCell *currentCell;
+}
 
 @synthesize result  = _result;
 
@@ -66,6 +72,16 @@
     NSDictionary*dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
                                userID, @"finderID", nil];
     [self loadResultWithParams:dictParams];
+    
+    if (pullRefreshView == nil) {
+		
+        pullRefreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
+		pullRefreshView.delegate = self;
+		[self.tableView addSubview:pullRefreshView];
+	}
+	
+	//  update the last update date
+	[pullRefreshView refreshLastUpdatedDate];
     
 }
 
@@ -148,6 +164,38 @@
     [_txtFindWord resignFirstResponder];
 }
 
+-(void) refreshDataWithBlock:(void(^)())completionBlock
+{
+    NSString *titleSearch = _btnSelect.titleLabel.text;
+    NSString *contentSearch = _txtFindWord.text;
+    NSString *userID = [[UserManager sharedInstance] accID];
+    NSDictionary*dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                               userID, @"finderID",
+                               contentSearch, titleSearch,
+                               nil];
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeAnnularDeterminate;
+    hud.labelText = @"Loading";
+    
+    [[NKApiClient shareInstace] postPath:@"find_friends.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSArray *listFound = [[JSONDecoder decoder] objectWithData:responseObject];
+        self.result = [NSMutableArray arrayWithArray:listFound];
+        NSLog(@"JSON Friend = %@", _result);
+        [self.tableView reloadData];
+        [hud hide:YES];
+        
+        completionBlock();
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
+        NSLog(@"HTTP ERROR = %@", error);
+        
+    }];
+
+}
+
 -(void) loadResultWithParams: (NSDictionary *)dictParams
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -156,7 +204,8 @@
     
     [[NKApiClient shareInstace] postPath:@"find_friends.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        self.result = [[JSONDecoder decoder] objectWithData:responseObject];
+        NSArray *listFound = [[JSONDecoder decoder] objectWithData:responseObject];
+        self.result = [NSMutableArray arrayWithArray:listFound];
         NSLog(@"JSON Friend = %@", _result);
         [self.tableView reloadData];
         
@@ -319,24 +368,32 @@
     id object = [_result objectAtIndex:row];
     NSLog(@"Send to : %@",object);
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [[UserManager sharedInstance] accID],@"sourceID",
-                            [object valueForKey:kAccID], @"friendID",
-                            @"send_request", @"usage",
-                            nil];
-    
-    [[NKApiClient shareInstace] postPath:@"add_friend.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSMutableArray *arrRequests = [[RequestsManager sharedManager] listRequests];
+    if (![arrRequests hasObjectWithKey:kAccID andValue:[object valueForKey:kAccID]]) {
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [[UserManager sharedInstance] accID],@"sourceID",
+                                [object valueForKey:kAccID], @"friendID",
+                                @"send_request", @"usage",
+                                nil];
         
-        id jsonObject = [[JSONDecoder decoder] objectWithData:responseObject];
-        NSLog(@"%@", jsonObject);
-        NSString *userID = [[UserManager sharedInstance] accID];
-        [[FriendsManager sharedManager] loadFriendsFromURLbyUser: userID completion:^(BOOL success, NSError *error) {
+        [[NKApiClient shareInstace] postPath:@"add_friend.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
+            id jsonObject = [[JSONDecoder decoder] objectWithData:responseObject];
+            NSLog(@"%@", jsonObject);
+            NSString *userID = [[UserManager sharedInstance] accID];
+            [[FriendsManager sharedManager] loadFriendsFromURLbyUser: userID completion:^(BOOL success, NSError *error) {
+                
+            }];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"HTTP ERROR : %@", error);
         }];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"HTTP ERROR : %@", error);
-    }];
+    }else
+    {
+        [[[UIAlertView alloc] initWithTitle:@"Do you want to accept?" message:@"This account sent a friend request to you." delegate:self cancelButtonTitle:@"Not now" otherButtonTitles:@"Accept", nil] show];
+        currentObject = object;
+        currentCell = cell;
+    }  
     
 }
 
@@ -369,5 +426,90 @@
         NSLog(@"HTTP ERROR : %@", error);
     }];
 }
+
+#pragma mark - AlertViewDelegate
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        NSLog(@"ACCEPT REQUEST to %@", currentObject);
+        
+        [[FunctionObject sharedInstance] responeRequestWithUser:[[UserManager sharedInstance] accID] person:[currentObject valueForKey:@"accID"] preRelationship:@"0" andState:[NSString stringWithFormat:@"%i", 2] completion:^(BOOL success, NSError *error) {
+            [self.result removeObject:currentObject];
+            [self.tableView reloadData];
+            
+            NSMutableArray *maRequsts = [[RequestsManager sharedManager] listRequests];
+            id xxx = [maRequsts findObjectWithKey:kAccID andValue:[currentObject valueForKey:kAccID]];
+            [maRequsts removeObject:xxx];
+            
+            currentCell = nil;
+            currentObject = nil;
+        }];
+    }else
+    {
+        [currentCell.btnFriend changeToState:NO];
+        currentCell = nil;
+    }
+}
+
+#pragma mark -
+#pragma mark Data Source Loading / Reloading Methods
+
+- (void)reloadTableViewDataSource{
+	
+	//  should be calling your tableviews data source model to reload
+	//  put here just for demo
+	isLoading = YES;
+	
+}
+
+- (void)doneLoadingTableViewData{
+	
+	//  model should call this when its done loading
+	isLoading = NO;
+	[pullRefreshView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+	
+}
+
+
+#pragma mark -
+#pragma mark UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+	
+	[pullRefreshView egoRefreshScrollViewDidScroll:scrollView];
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+	
+	[pullRefreshView egoRefreshScrollViewDidEndDragging:scrollView];
+	
+}
+
+
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+	
+	[self reloadTableViewDataSource];
+    [self refreshDataWithBlock:^{
+        [self doneLoadingTableViewData];
+    }];
+	
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+	
+	return isLoading; // should return if data source model is reloading
+	
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+	
+	return [NSDate date]; // should return date data source was last changed
+	
+}
+
 
 @end

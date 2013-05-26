@@ -11,10 +11,13 @@
 #import "NIDropDown.h"
 #import "UIViewController+NibCells.h"
 #import "MBProgressHUD.h"
+#import "EGORefreshTableHeaderView.h"
 
-@interface AddFriendViewController : UIViewController <NIDropDownDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface AddFriendViewController : UIViewController <NIDropDownDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, EGORefreshTableHeaderDelegate>
 {
     NIDropDown *dropDown;
+    EGORefreshTableHeaderView *pullRefreshView;
+    BOOL isLoading;
 }
 @property (weak, nonatomic) IBOutlet UIButton *btnSelect;
 @property (weak, nonatomic) IBOutlet UITextField *txtFindWord;

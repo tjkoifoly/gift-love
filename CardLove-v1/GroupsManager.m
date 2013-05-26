@@ -53,7 +53,7 @@
     [[NKApiClient shareInstace] postPath:@"list_groups.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
-        NSLog(@"JSON class = %@ and object = %@", [jsonObject class], jsonObject);
+        //NSLog(@"JSON class = %@ and object = %@", [jsonObject class], jsonObject);
         
         NSMutableArray *listGroups = [jsonObject objectForKey:@"groups"];
         for(id gDict in listGroups)
