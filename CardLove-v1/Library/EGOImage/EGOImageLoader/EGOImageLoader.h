@@ -27,7 +27,7 @@
 #import <Foundation/Foundation.h>
 
 #ifndef __EGOIL_USE_BLOCKS
-#define __EGOIL_USE_BLOCKS 1
+#define __EGOIL_USE_BLOCKS 0
 #endif
 
 #ifndef __EGOIL_USE_NOTIF
