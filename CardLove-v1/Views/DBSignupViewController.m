@@ -295,13 +295,13 @@
                         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
                         HUD.mode = MBProgressHUDModeCustomView;
                         HUD.labelText = msgNotif;
-                        [HUD hide:YES afterDelay:0.5];
                         
                         [self performSelector:@selector(backPreviousView:) withObject:nil afterDelay:0.5];
                     }else
                     {
                         NSLog(@"Update failed!");
                     }
+                    [HUD hide:YES afterDelay:0.5];
                 }];
             }else{
                 NSLog(@"Update failed!");
@@ -318,13 +318,14 @@
                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
                 HUD.mode = MBProgressHUDModeCustomView;
                 HUD.labelText = msgNotif;
-                [HUD hide:YES afterDelay:0.5];
+                
                 
                 [self performSelector:@selector(backPreviousView:) withObject:nil afterDelay:0.5];
             }else
             {
                 NSLog(@"HTTP failed!");
             }
+            [HUD hide:YES afterDelay:0.5];
         }];
         
     }
@@ -688,6 +689,7 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"[HTTPClient Error]: %@", error.localizedDescription);
+         [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Network Error\nServer is Offline"];
         completionBlock(NO, nil);
     }];
 
@@ -735,6 +737,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         completionBlock(NO, error, nil);
         NSLog(@"ERROR %@", error);
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Network Error\nServer is Offline"];
     }];
     
     [[NKApiClient shareInstace] enqueueHTTPRequestOperation:operation];

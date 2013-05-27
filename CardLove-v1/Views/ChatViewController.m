@@ -145,8 +145,10 @@
         [tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidEnd];
         
         [_bubbleTable setAutoresizingMask:UIViewAutoresizingNone];
+                
         [tokenFieldView.contentView addSubview:_bubbleTable];
         [_bubbleTable setScrollEnabled:NO];
+        
         lastDate = @"";
     }
     
@@ -184,24 +186,31 @@
                 }
                 
             });
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                [self getMessageFromFriend:_friendChatting completion:^(BOOL success, NSError *error) {
+                    [_bubbleTable reloadData];
+                    
+                    if ([bubbleData count] > 0) {
+                        [self scrollToBottom:NO];
+                    }
+                    [HUD hide:YES];
+                }];
+            });
         }
             break;
         case ChatModeGroup:
         {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self getMessageFromGroup:[_group valueForKey:@"gmID"] withLastDate:lastDate completion:^(BOOL success, NSError *error) {
+                    [_bubbleTable reloadData];
+                }];
+            });
     
 #pragma mark - List Friend -----------------------
-            dispatch_async(dispatch_get_main_queue(),  ^{
-                NSString *notificationTitle = NSLocalizedString(@"To leave group?", nil);
-                NSString *notificationDescription = NSLocalizedString(@"Open token field and double tap on your username to leave this group !", nil) ;
-                
-                CGFloat duration = 4;
-                
-                [TSMessage showNotificationInViewController:self
-                                                  withTitle:notificationTitle
-                                                withMessage:notificationDescription
-                                                   withType:TSMessageNotificationTypeMessage
-                                               withDuration:duration];
-            });
             
             [self listFriendsInGroup:[_group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error, id result) {
                 [_groupMembers removeAllObjects];
@@ -255,6 +264,11 @@
             break;
     }
     
+    if (!timerSchedule) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            timerSchedule = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(reloadMessages) userInfo:nil repeats:YES];
+        });
+    }
 
 
 }
@@ -262,73 +276,40 @@
 -(void) viewWillAppear:(BOOL)animated{
     
     [tokenFieldView resignFirstResponder];
-    
-    dispatch_queue_t queue = dispatch_get_main_queue();
-    switch (_mode) {
-        case ChatModeGroup:
-        {
-            dispatch_async(queue, ^{
-                [self getMessageFromGroup:[_group valueForKey:@"gmID"] withLastDate:lastDate completion:^(BOOL success, NSError *error) {
-                    [_bubbleTable reloadData];
-                    
-                }];
-            });
-            
-
-        }
-            break;
-        case ChatModeSigle:
-        {
-            dispatch_async(queue, ^{
-                
-                MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-                [self getMessageFromFriend:_friendChatting completion:^(BOOL success, NSError *error) {
-                    [_bubbleTable reloadData];
-                    
-                    if ([bubbleData count] > 0) {
-                        [self scrollToBottom];
-                    }
-                    [HUD hide:YES];
-                }];
-            });
-        }
-            break;
-            
-        default:
-            break;
-    }
-    
-    dispatch_async(queue, ^{
-        timerSchedule = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(reloadMessages) userInfo:nil repeats:YES];
-    });
-
     [super viewWillAppear:animated];
+    
 }
 -(void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
 }
 
--(void) scrollToBottom
+-(void) scrollToBottom :(BOOL) animated
 {
-//    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)] - 1) inSection:(_bubbleTable.numberOfSections - 1)];
-//    [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
     
     CGFloat height = self.bubbleTable.contentSize.height - self.bubbleTable.bounds.size.height;
     if (height > 0) {
-        [self.bubbleTable setContentOffset:CGPointMake(0, height) animated:YES];
+        [self.bubbleTable setContentOffset:CGPointMake(0, height) animated:animated];
     }
+}
+
+-(void) scrollToLastIndexPath
+{
+    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)] - 1) inSection:(_bubbleTable.numberOfSections - 1)];
+    [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [timerSchedule invalidate];
-    timerSchedule = nil;
+    
 }
 
 -(void) backPreviousView
 {
     [self.navigationController popViewControllerAnimated:YES];
+    [timerSchedule invalidate];
+    timerSchedule = nil;
 }
 
 
@@ -351,6 +332,21 @@
 
 #pragma mark - Token field
 - (void)tokenFieldChangedEditing:(TITokenField *)tokenField {
+    
+    if (tokenField.editing) {
+        dispatch_async(dispatch_get_main_queue(),  ^{
+            NSString *notificationTitle = NSLocalizedString(@"To leave group?", nil);
+            NSString *notificationDescription = NSLocalizedString(@"Open token field and double tap on your username to leave this group !", nil) ;
+            
+            CGFloat duration = 4;
+            
+            [TSMessage showNotificationInViewController:self
+                                              withTitle:notificationTitle
+                                            withMessage:notificationDescription
+                                               withType:TSMessageNotificationTypeMessage
+                                           withDuration:duration];
+        });
+    }
     
 	// There's some kind of annoying bug where UITextFieldViewModeWhile/UnlessEditing doesn't do anything.
 	[tokenField setRightViewMode:(tokenField.editing ? UITextFieldViewModeAlways : UITextFieldViewModeNever)];
@@ -448,13 +444,14 @@
 	[self contentDidChange:_bubbleTable];
 }
 
-- (void)contentDidChange:(UITableView *)textView {
+- (void)contentDidChange:(UITableView *)tbView {
 	
 	CGFloat oldHeight = tokenFieldView.frame.size.height - tokenFieldView.tokenField.frame.size.height;
-	CGFloat newHeight = textView.contentSize.height;
+    //CGFloat oldHeight = tbView.frame.size.height;
+	CGFloat newHeight = tbView.contentSize.height;
 	
-	CGRect newTextFrame = textView.frame;
-	newTextFrame.size = textView.contentSize;
+	CGRect newTextFrame = tbView.frame;
+	newTextFrame.size = tbView.contentSize;
 	newTextFrame.size.height = newHeight;
 	
 	CGRect newFrame = tokenFieldView.contentView.frame;
@@ -466,9 +463,18 @@
 	}
     
 	[tokenFieldView.contentView setFrame:newFrame];
-	[textView setFrame:newTextFrame];
+	[tbView setFrame:newTextFrame];
 	[tokenFieldView updateContentSize];
     
+}
+
+-(void) updateContentFrame
+{
+    CGRect tableFrame = _bubbleTable.frame;
+    tableFrame.size = _bubbleTable.contentSize;
+    
+    tokenFieldView.contentView.frame = tableFrame;
+    [tokenFieldView updateContentSize];
 }
 
 - (void)resizeViews {
@@ -541,16 +547,7 @@
 
 -(void)emojiPopover:(SYEmojiPopover *)emojiPopover didClickedOnCharacter:(NSString *)character
 {
-    _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
     
-    UIFont *customFont = [UIFont fontWithName:@"AppleColorEmoji" size:50.0f];
-    NSBubbleData *sayBubble = [NSBubbleData dataWithText:character date:[NSDate dateWithTimeIntervalSinceNow:0] type:BubbleTypeMine font:customFont];
-    
-    NSLog(@"FONT = %@", customFont);
-    
-    sayBubble.avatar = avataMe;
-    [bubbleData addObject:sayBubble];
-    [_bubbleTable reloadData];
     switch (_mode) {
         case ChatModeGroup:
         {
@@ -561,6 +558,17 @@
             break;
         case ChatModeSigle:
         {
+            _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
+            
+            UIFont *customFont = [UIFont fontWithName:@"AppleColorEmoji" size:50.0f];
+            NSBubbleData *sayBubble = [NSBubbleData dataWithText:character date:[NSDate dateWithTimeIntervalSinceNow:0] type:BubbleTypeMine font:customFont];
+            
+            NSLog(@"FONT = %@", customFont);
+            
+            sayBubble.avatar = avataMe;
+            [bubbleData addObject:sayBubble];
+            [_bubbleTable reloadData];
+            
             [self postMessage:character withType:MessageEmoticon toFriend:_friendChatting completion:^(BOOL success, NSError *error, id result) {
                 //
             }];
@@ -572,8 +580,7 @@
     }
    
     
-    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)]-1) inSection:(_bubbleTable.numberOfSections - 1)];
-    [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    [self scrollToBottom:YES];
 
 }
 
@@ -752,21 +759,20 @@
 	[picker dismissModalViewControllerAnimated:YES];
 	UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     
-//    _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
-//    
-//    NSBubbleData *sayBubble = [NSBubbleData dataWithImage:image date:[NSDate dateWithTimeIntervalSinceNow:0] type:BubbleTypeMine];
-//    sayBubble.avatar = avataMe;
-//    
-//    [bubbleData addObject:sayBubble];
-//    
-//    [_bubbleTable reloadData];
-//    
-//    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)] - 1) inSection:(_bubbleTable.numberOfSections - 1)];
-//    [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 	NSLog(@"Photo = %@", image);
     switch (_mode) {
         case ChatModeSigle:
         {
+            _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
+            
+            NSBubbleData *sayBubble = [NSBubbleData dataWithImage:image date:[NSDate dateWithTimeIntervalSinceNow:0] type:BubbleTypeMine];
+            sayBubble.avatar = avataMe;
+            
+            [bubbleData addObject:sayBubble];
+            [_bubbleTable reloadData];
+            
+            [self scrollToBottom:YES];
+            
             [self postMessage:@"" withType:MessageImage toFriend:_friendChatting completion:^(BOOL success, NSError *error, id result) {
                 if (result) {
                     NSData *dataImage = UIImagePNGRepresentation(image);
@@ -774,7 +780,15 @@
                         NSLog(@"Uploading ..... %f %%", progress);
                     } completion:^(BOOL success, NSError *error, NSString *urlUpload) {
                         [[FunctionObject sharedInstance] updatePhotoMessage:result withLink:urlUpload andType:@"0" completion:^(BOOL success, NSError *error) {
-                            [self scrollToBottom];
+                            
+                            NSString *notificationTitle = @"Sent successfully";
+                            NSString *notificationDescription = [NSString stringWithFormat: @"You has just sent a phto to %@", _friendChatting.userName];
+                            [TSMessage showNotificationInViewController:self
+                                                              withTitle:notificationTitle
+                                                            withMessage:notificationDescription
+                                                               withType:TSMessageNotificationTypeSuccess
+                                                           withDuration:2];
+                            
                         }];
                     }];
                 }
@@ -820,18 +834,18 @@
     if ([inputText isEqualToString:@""]) {
         return;
     }
-    _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
-    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0] ;
-    lastDate = [[FunctionObject sharedInstance] stringFromDateTime:date];
-    NSBubbleData *sayBubble = [NSBubbleData dataWithText:inputText date:date type:BubbleTypeMine];
-    sayBubble.avatar = avataMe;
-    [bubbleData addObject:sayBubble];
-    [_bubbleTable reloadData];
-    [self scrollToBottom];
     
     switch (_mode) {
         case ChatModeSigle:
         {
+            _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
+            NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0] ;
+            lastDate = [[FunctionObject sharedInstance] stringFromDateTime:date];
+            NSBubbleData *sayBubble = [NSBubbleData dataWithText:inputText date:date type:BubbleTypeMine];
+            sayBubble.avatar = avataMe;
+            [bubbleData addObject:sayBubble];
+            [_bubbleTable reloadData];
+            [self scrollToBottom:YES];
             [self postMessage:inputText withType:MessageText toFriend:_friendChatting completion:^(BOOL success, NSError *error, id result) {
                 NSLog(@"POST message: %@", inputText);
             }];
@@ -1022,7 +1036,7 @@
             
             [bubbleData addObject:data];
             [_bubbleTable reloadData];
-            [self scrollToBottom];
+            [self scrollToBottom:YES];
         }
         completionBlock(YES, nil);
         
@@ -1078,7 +1092,9 @@
             }
             
             [bubbleData addObject:data];
+            [_bubbleTable reloadData];
         }
+        
         if([jsonObject count] > 0)
         {
             NSDictionary *mDict = [jsonObject lastObject];
@@ -1103,7 +1119,7 @@
         {
             [self getMessageFromGroup:[_group valueForKey:@"gmID"] withLastDate:lastDate completion:^(BOOL success, NSError *error) {
                 [_bubbleTable reloadData];
-                //[self contentDidChange:_bubbleTable];
+                [self scrollToBottom:YES];
             }];
         }
             break;

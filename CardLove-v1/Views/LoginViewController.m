@@ -178,6 +178,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
         NSLog(@"Error = %@", error);
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Network Error\nServer is Offline"];
         
     }];
     
@@ -223,6 +224,7 @@
 -(void) loginFailed
 {
     NSLog(@"Login failed");
+    [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Username or password is not correct !"];
 }
 
 -(void) signupAccountSuccessful: (NSNotification *) notification
