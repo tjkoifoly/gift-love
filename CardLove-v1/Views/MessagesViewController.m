@@ -232,16 +232,17 @@
             cell.badgeString = @"0";
             [person setValue:@"0" forKey:@"newMsgs"];
             
+            Friend *newFriend = [[Friend alloc] initWithDictionary:person];
+            ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
+            chatVC.mode = ChatModeSigle;
+            chatVC.friendChatting = newFriend;
+            [self.navigationController pushViewController:chatVC animated:YES];
             
-            [self readMessagesOfPerson:[person valueForKey:@"accID"] completion:^(BOOL success, NSError *error) {
-                if (success) {
-                    Friend *newFriend = [[Friend alloc] initWithDictionary:person];
-                    ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
-                    chatVC.mode = ChatModeSigle;
-                    chatVC.friendChatting = newFriend;
-                    [self.navigationController pushViewController:chatVC animated:YES];
-                }
-            }];
+//            [self readMessagesOfPerson:[person valueForKey:@"accID"] completion:^(BOOL success, NSError *error) {
+//                if (success) {
+//                    
+//                }
+//            }];
         }
             break;
             

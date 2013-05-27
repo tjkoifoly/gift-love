@@ -31,6 +31,7 @@
     UIImage *avataFriend;
     NSTimer *timerSchedule;
     NSMutableDictionary *dictAvatar;
+    NSString *lastDate;
 }
 
 @end
@@ -146,7 +147,7 @@
         [_bubbleTable setAutoresizingMask:UIViewAutoresizingNone];
         [tokenFieldView.contentView addSubview:_bubbleTable];
         [_bubbleTable setScrollEnabled:NO];
-        
+        lastDate = @"";
     }
     
     /* Calculate screen size */
@@ -267,9 +268,9 @@
         case ChatModeGroup:
         {
             dispatch_async(queue, ^{
-                [self getMessageFromGroup:[_group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error) {
+                [self getMessageFromGroup:[_group valueForKey:@"gmID"] withLastDate:lastDate completion:^(BOOL success, NSError *error) {
                     [_bubbleTable reloadData];
-                    //[self scrollToBottom];
+                    
                 }];
             });
             
@@ -279,13 +280,15 @@
         case ChatModeSigle:
         {
             dispatch_async(queue, ^{
+                
+                MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
                 [self getMessageFromFriend:_friendChatting completion:^(BOOL success, NSError *error) {
                     [_bubbleTable reloadData];
                     
                     if ([bubbleData count] > 0) {
                         [self scrollToBottom];
                     }
-                   
+                    [HUD hide:YES];
                 }];
             });
         }
@@ -310,6 +313,7 @@
 {
 //    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)] - 1) inSection:(_bubbleTable.numberOfSections - 1)];
 //    [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    
     CGFloat height = self.bubbleTable.contentSize.height - self.bubbleTable.bounds.size.height;
     if (height > 0) {
         [self.bubbleTable setContentOffset:CGPointMake(0, height) animated:YES];
@@ -464,6 +468,7 @@
 	[tokenFieldView.contentView setFrame:newFrame];
 	[textView setFrame:newTextFrame];
 	[tokenFieldView updateContentSize];
+    
 }
 
 - (void)resizeViews {
@@ -816,19 +821,19 @@
         return;
     }
     _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
-    NSBubbleData *sayBubble = [NSBubbleData dataWithText:inputText date:[NSDate dateWithTimeIntervalSinceNow:0] type:BubbleTypeMine];
+    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0] ;
+    lastDate = [[FunctionObject sharedInstance] stringFromDateTime:date];
+    NSBubbleData *sayBubble = [NSBubbleData dataWithText:inputText date:date type:BubbleTypeMine];
     sayBubble.avatar = avataMe;
     [bubbleData addObject:sayBubble];
-    
     [_bubbleTable reloadData];
-//    [_bubbleTable beginUpdates];
-//    [_bubbleTable endUpdates];
+    [self scrollToBottom];
     
     switch (_mode) {
         case ChatModeSigle:
         {
             [self postMessage:inputText withType:MessageText toFriend:_friendChatting completion:^(BOOL success, NSError *error, id result) {
-                NSLog(@"POST");
+                NSLog(@"POST message: %@", inputText);
             }];
         }
             break;
@@ -844,10 +849,6 @@
             break;
     }
     
-   
-    
-    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)]-1) inSection:(_bubbleTable.numberOfSections - 1)];
-    [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     
 }
 
@@ -953,7 +954,7 @@
                 
                 UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dictMsg valueForKey:@"msMessage" ]]]];
                 
-                data = [NSBubbleData dataWithImage:image date:[[FunctionObject sharedInstance] dateFromStringDateTime:[dictMsg valueForKey:@"msDateSent"]] type:BubbleTypeMine];
+                data = [NSBubbleData dataWithImage:image date:[[FunctionObject sharedInstance] dateFromStringDateTime:[dictMsg valueForKey:@"msDateSent"]] type:type];
 
             }
 
@@ -975,18 +976,74 @@
 
 }
 
--(void) getMessageFromGroup: (NSString *)groupID completion:(void (^)(BOOL success, NSError *error))completionBlock
+-(void) getNewMessagesFromFriend: (Friend *)cF completion:(void (^)(BOOL success, NSError *error))completionBlock
+{
+    NSString *userID = [[UserManager sharedInstance] accID];
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                userID,@"senderID",
+                                cF.fID, @"recieverID", nil];
+    [[NKApiClient shareInstace] postPath:@"get_new_messages.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        //NSLog(@"JSON Result = %@", jsonObject);
+        
+        for(NSDictionary *dictMsg in jsonObject)
+        {
+            NSBubbleType type;
+            if ([[dictMsg valueForKey:@"mbSenderID"] isEqualToString: [[UserManager sharedInstance] accID]]) {
+                type = BubbleTypeMine;
+            }else{
+                type = BubbleTypeSomeoneElse;
+            }
+            
+            NSBubbleData *data = nil;
+            
+            if ([[dictMsg valueForKey:@"msType"] intValue] == MessageEmoticon) {
+                UIFont *customFont = [UIFont fontWithName:@"AppleColorEmoji" size:50.0f];
+                
+                data = [[NSBubbleData alloc] initWithText:[dictMsg valueForKey:@"msMessage" ] date:[[FunctionObject sharedInstance] dateFromStringDateTime:[dictMsg valueForKey:@"msDateSent"]] type:type font:customFont];
+            }else if ([[dictMsg valueForKey:@"msType"] intValue] == MessageText)
+            {
+                data = [[NSBubbleData alloc] initWithText:[dictMsg valueForKey:@"msMessage" ] date:[[FunctionObject sharedInstance] dateFromStringDateTime:[dictMsg valueForKey:@"msDateSent"]] type:type];
+            }else if ([[dictMsg valueForKey:@"msType"] intValue] == MessageImage)
+            {
+                
+                UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dictMsg valueForKey:@"msMessage" ]]]];
+                
+                data = [NSBubbleData dataWithImage:image date:[[FunctionObject sharedInstance] dateFromStringDateTime:[dictMsg valueForKey:@"msDateSent"]] type:type];
+                
+            }
+            
+            if ([[dictMsg valueForKey:@"mbSenderID"] isEqualToString: [[UserManager sharedInstance] accID]]) {
+                data.avatar = avataMe;
+            }else{
+                data.avatar = avataFriend;
+            }
+            
+            [bubbleData addObject:data];
+            [_bubbleTable reloadData];
+            [self scrollToBottom];
+        }
+        completionBlock(YES, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil);
+    }];
+    
+}
+
+-(void) getMessageFromGroup: (NSString *)groupID withLastDate:(NSString *)strDate completion:(void (^)(BOOL success, NSError *error))completionBlock
 {
     NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
                                 groupID,@"groupID",
+                                strDate, @"limit",
                                  nil];
     [[NKApiClient shareInstace] postPath:@"get_messages_group.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
         //NSLog(@"JSON Result Message Group = %@", jsonObject);
-        if (bubbleData) {
-            [bubbleData removeAllObjects];
-        }
+        
         for(NSDictionary *dictMsg in jsonObject)
         {
             NSBubbleType type;
@@ -1010,7 +1067,7 @@
                 
                 UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dictMsg valueForKey:@"mgMessage" ]]]];
                 
-                data = [NSBubbleData dataWithImage:image date:[[FunctionObject sharedInstance] dateFromStringDateTime:[dictMsg valueForKey:@"mgDateSent"]] type:BubbleTypeMine];
+                data = [NSBubbleData dataWithImage:image date:[[FunctionObject sharedInstance] dateFromStringDateTime:[dictMsg valueForKey:@"mgDateSent"]] type:type];
                 
             }
             
@@ -1022,6 +1079,14 @@
             
             [bubbleData addObject:data];
         }
+        if([jsonObject count] > 0)
+        {
+            NSDictionary *mDict = [jsonObject lastObject];
+            lastDate = [mDict valueForKey:@"mgDateSent"];
+        }
+        NSLog(@"LAST DATE = %@", lastDate);
+            
+        
         completionBlock(YES, nil);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -1036,7 +1101,7 @@
     switch (_mode) {
         case ChatModeGroup:
         {
-            [self getMessageFromGroup:[_group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error) {
+            [self getMessageFromGroup:[_group valueForKey:@"gmID"] withLastDate:lastDate completion:^(BOOL success, NSError *error) {
                 [_bubbleTable reloadData];
                 //[self contentDidChange:_bubbleTable];
             }];
@@ -1044,8 +1109,8 @@
             break;
         case ChatModeSigle:
         {
-            [self getMessageFromFriend:_friendChatting completion:^(BOOL success, NSError *error) {
-                [_bubbleTable reloadData];
+            [self getNewMessagesFromFriend:_friendChatting completion:^(BOOL success, NSError *error) {
+                
             }];
         }
             break;

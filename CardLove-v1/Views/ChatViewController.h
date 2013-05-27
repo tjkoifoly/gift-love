@@ -16,6 +16,7 @@
 #import "Names.h"
 #import "FriendsManager.h"
 #import "ModalPanelPickerView.h"
+#import "MBProgressHUD.h"
 
 typedef enum {
     ChatModeSigle,
