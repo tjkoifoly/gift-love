@@ -32,6 +32,7 @@
     NSTimer *timerSchedule;
     NSMutableDictionary *dictAvatar;
     NSString *lastDate;
+    BOOL firstLoad;
 }
 
 @end
@@ -76,6 +77,7 @@
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"style_8.png"]];
     inputToolbarIsVisible = NO;
+    firstLoad = NO;
     
     //UI
     if (_friendChatting) {
@@ -205,8 +207,10 @@
         {
             
             dispatch_async(dispatch_get_main_queue(), ^{
+                MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
                 [self getMessageFromGroup:[_group valueForKey:@"gmID"] withLastDate:lastDate completion:^(BOOL success, NSError *error) {
                     [_bubbleTable reloadData];
+                    [HUD hide:YES];
                 }];
             });
     
@@ -269,8 +273,6 @@
             timerSchedule = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(reloadMessages) userInfo:nil repeats:YES];
         });
     }
-
-
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -1125,12 +1127,13 @@
             [_bubbleTable reloadData];
             [self updateContentFrame];
             
-            [self scrollToBottom:NO];
+            [self scrollToBottom:firstLoad];
+            firstLoad = YES;
             
         }
-        NSLog(@"LAST Content size = %@", NSStringFromCGSize(_bubbleTable.contentSize) );
-        NSLog(@"LAST Frame = %@", NSStringFromCGRect(_bubbleTable.frame) );
-            
+//        NSLog(@"LAST Content size = %@", NSStringFromCGSize(_bubbleTable.contentSize) );
+//        NSLog(@"LAST Frame = %@", NSStringFromCGRect(_bubbleTable.frame) );
+        
         
         completionBlock(YES, nil);
         
