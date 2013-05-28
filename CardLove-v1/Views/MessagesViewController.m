@@ -168,10 +168,6 @@
         cell = [[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
         cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"btn-ass2.png"]];
-        
-        cell.badgeColor = [UIColor colorWithRed:0.792 green:0.197 blue:0.219 alpha:1.000];
-        cell.badgeColorHighlighted = [UIColor colorWithRed:0.1 green:0.8 blue:0.219 alpha:1.000];
-        cell.showShadow = YES;
     }
     
     switch (indexPath.section) {
@@ -183,6 +179,7 @@
             
             cell.textLabel.text = [group valueForKey:@"gmName"];
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ member(s)",[group valueForKey:@"numbersMember"]];
+            cell.badge.hidden = YES;
         }
             break;
         case 1:
@@ -196,7 +193,11 @@
             }
             cell.textLabel.text = [person valueForKey:@"accDisplayName"];
             cell.detailTextLabel.text = [person valueForKey:@"accName"];
+            cell.badgeColor = [UIColor colorWithRed:0.792 green:0.197 blue:0.219 alpha:1.000];
+            cell.badgeColorHighlighted = [UIColor colorWithRed:0.1 green:0.8 blue:0.219 alpha:1.000];
+            cell.showShadow = YES;
             cell.badgeString = [NSString stringWithFormat:@"%@", [person valueForKey:@"newMsgs"]];
+            cell.badge.hidden = NO;
 
         }
             break;

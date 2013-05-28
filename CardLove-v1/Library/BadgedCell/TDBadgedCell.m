@@ -175,10 +175,10 @@
 	if(self.badgeString)
 	{
 		//force badges to hide on edit.
-		if(self.editing)
-			[self.badge setHidden:YES];
-		else
-			[self.badge setHidden:NO];
+//		if(self.editing)
+//			[self.badge setHidden:YES];
+//		else
+//			[self.badge setHidden:NO];
 		
 		
 		CGSize badgeSize = [self.badgeString sizeWithFont:[UIFont boldSystemFontOfSize: 11]];
@@ -255,18 +255,18 @@
 {
 	[super setEditing:editing animated:animated];
 	
-	if (editing) 
-    {
-		self.badge.hidden = YES;
-		[self.badge setNeedsDisplay];
-		[self setNeedsDisplay];
-	}
-	else 
-	{
-		self.badge.hidden = NO;
-		[self.badge setNeedsDisplay];
-		[self setNeedsDisplay];
-	}
+//	if (editing) 
+//    {
+//		self.badge.hidden = YES;
+//		[self.badge setNeedsDisplay];
+//		[self setNeedsDisplay];
+//	}
+//	else 
+//	{
+//		self.badge.hidden = NO;
+//		[self.badge setNeedsDisplay];
+//		[self setNeedsDisplay];
+//	}
 }
 
 - (void)dealloc 
