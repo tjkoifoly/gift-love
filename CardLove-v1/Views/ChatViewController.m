@@ -100,6 +100,7 @@
         labelTitle.backgroundColor = [UIColor clearColor];
         labelTitle.textAlignment = NSTextAlignmentCenter;
         labelTitle.text = [_group valueForKey:@"gmName"];
+        labelTitle.delegate = self;
         self.navigationItem.titleView = labelTitle;
         
        
@@ -205,15 +206,18 @@
             break;
         case ChatModeGroup:
         {
+            NSLog(@"GROUP = %@", _group);
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-                [self getMessageFromGroup:[_group valueForKey:@"gmID"] withLastDate:lastDate completion:^(BOOL success, NSError *error) {
-                    [_bubbleTable reloadData];
-                    [HUD hide:YES];
-                }];
-            });
-    
+            if (!_newGroup) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                    [self getMessageFromGroup:[_group valueForKey:@"gmID"] withLastDate:lastDate completion:^(BOOL success, NSError *error) {
+                        [_bubbleTable reloadData];
+                        [HUD hide:YES];
+                    }];
+                });
+            }
+            
 #pragma mark - List Friend -----------------------
             
             [self listFriendsInGroup:[_group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error, id result) {
@@ -293,6 +297,7 @@
         
         CGPoint bottomOffset = CGPointMake(0, height) ;
         [tokenFieldView setContentOffset:bottomOffset animated:animated];
+                
         return;
     }
     
@@ -481,8 +486,11 @@
 -(void) updateContentFrame
 {
     CGRect tableFrame = _bubbleTable.frame;
+    CGFloat oldHeight = tableFrame.size.height - keyboardHeight;
+    CGFloat newHeight = _bubbleTable.contentSize.height;
+
+    oldHeight<newHeight?(tableFrame.size.height = newHeight):(tableFrame.size.height = oldHeight);
     
-    tableFrame.size.height = _bubbleTable.contentSize.height;
     [_bubbleTable setFrame:tableFrame];
     tableFrame.origin.y = tokenFieldView.tokenField.frame.size.height;
     tokenFieldView.contentView.frame = tableFrame;
@@ -648,10 +656,11 @@
         } completion:^(BOOL finished) {
              
             if (_mode == ChatModeGroup) {
+                [tokenFieldView updateContentSize];
                 CGRect frameToken = tokenFieldView.frame;
                 frameToken.size.height -= kbSize.height;
                 tokenFieldView.frame = frameToken;
-
+                
             }else
             {
                 CGRect frame = _bubbleTable.frame;
@@ -740,6 +749,47 @@
     //[textField resignFirstResponder];
 }
 
+-(void) textFieldDidBeginEditing:(UITextField *)textField
+{
+    UITextField *tfTitle = (UITextField *)self.navigationItem.titleView;
+    if (textField == tfTitle) {
+        NSLog(@"CHUAN MEN");
+        if (inputToolbarIsVisible) {
+            [UIView animateWithDuration:0.2f animations:^{
+                
+                CGRect frame = _tbTextField.frame;
+                frame.origin.y += keyboardHeight;
+                _tbTextField.frame = frame;
+                
+                CGRect rf = _inputToolbar.frame;
+                rf.origin.y += keyboardHeight;
+                _inputToolbar.frame = rf;
+                
+                inputToolbarIsVisible = NO;
+                
+            } completion:^(BOOL finished) {
+                
+                [UIView beginAnimations:nil context:NULL];
+                [UIView setAnimationDuration:0.0];
+                [UIView setAnimationBeginsFromCurrentState:YES];
+                
+                if (_mode == ChatModeGroup) {
+                    CGRect frameToken = tokenFieldView.frame;
+                    frameToken.size.height += keyboardHeight;
+                    tokenFieldView.frame = frameToken;
+                }else
+                {
+                    CGRect frame = _bubbleTable.frame;
+                    frame.size.height += keyboardHeight;
+                    _bubbleTable.frame = frame;
+                }
+                
+                [UIView commitAnimations];
+                
+            }];
+        }
+    }
+}
 -(IBAction)resignKeyboard:(id)sender
 {
     [_tfMessage resignFirstResponder];
@@ -812,7 +862,6 @@
                                                             withMessage:notificationDescription
                                                                withType:TSMessageNotificationTypeSuccess
                                                            withDuration:2];
-                            
                         }];
                     }];
                 }
@@ -893,19 +942,22 @@
 #pragma mark - Gesture Delegate
 -(void) tapDetected: (UITapGestureRecognizer *) tapRecognizer
 {
-    [self.inputToolbar.textView resignFirstResponder];
-    [tokenFieldView.tokenField resignFirstResponder];
     
     if ([self.navigationItem.titleView isFirstResponder]) {
         UITextField *tfTitle = (UITextField *)self.navigationItem.titleView;
         [tfTitle resignFirstResponder];
         NSLog(@"Title = %@", tfTitle.text);
         
+        [self.group setValue:tfTitle.text forKey:@"gmName"];
+        
         [self changeGroup:[_group valueForKey:@"gmID"] withName:tfTitle.text completion:^(BOOL success, NSError *error) {
             if (success) {
                 NSLog(@"OK");
             }
         }];
+    }else{
+        [self.inputToolbar.textView resignFirstResponder];
+        [tokenFieldView.tokenField resignFirstResponder];
     }
 }
 
@@ -1131,8 +1183,9 @@
             firstLoad = YES;
             
         }
-//        NSLog(@"LAST Content size = %@", NSStringFromCGSize(_bubbleTable.contentSize) );
-//        NSLog(@"LAST Frame = %@", NSStringFromCGRect(_bubbleTable.frame) );
+        
+        NSLog(@"LAST Content size = %@", NSStringFromCGSize(_bubbleTable.contentSize) );
+        NSLog(@"LAST Frame = %@", NSStringFromCGRect(_bubbleTable.frame) );
         
         
         completionBlock(YES, nil);

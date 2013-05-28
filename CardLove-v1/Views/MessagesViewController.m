@@ -79,10 +79,17 @@
         // [panel hide];
         [panel hideWithOnComplete:^(BOOL finished) {
             [panel removeFromSuperview];
+            NSLog(@"PRESS CLOSE");
         }];
         UADebugLog(@"onClosePressed block called from panel: %@", modalPanel);
     };
-    
+   
+    modalPanel.onActionPressed = ^(UAModalPanel* panel) {
+        // [panel hide];
+        [self didSelectActionButton:panel];
+        UADebugLog(@"onClosePressed block called from panel: %@", modalPanel);
+    };
+
     ///////////////////////////////////////////
     //   Panel is a reference to the modalPanel
     modalPanel.delegate =self;
@@ -301,8 +308,10 @@
             
             [self createGroup:[[UserManager sharedInstance] accID] completion:^(BOOL success, NSError *error, id result) {
                 
-                NSDictionary *group = [result objectAtIndex:0];
-               
+                NSDictionary *group = [NSMutableDictionary dictionaryWithDictionary:[result objectAtIndex:0]];
+                [group setValue:[NSString stringWithFormat:@"%i",[newGroup count]] forKey:@"numbersMember"];
+                NSLog(@"NEW GROUP = %@", group);
+                [_listGroups addObject:group];
                 NSMutableString *mFriendList = [[NSMutableString alloc] init];
                 for(int i = 0; i < newGroup.count; i++)
                 {

@@ -18,16 +18,17 @@ typedef enum {
 }ModalPickerMode;
 
 @class ModalPanelPickerView;
-@protocol ModalPanelDelegate <NSObject, UAModalPanelDelegate>
+@protocol ModalPanelDelegate <UAModalPanelDelegate>
 
 @optional
 -(void) modalPanel:(ModalPanelPickerView *)panelView didAddFriendToSendGift:(Friend *)sF;
 
 @end
 
-@interface ModalPanelPickerView : UATitledModalPanel <UITableViewDataSource,UITableViewDelegate>
+@interface ModalPanelPickerView : UATitledModalPanel <UITableViewDataSource,UITableViewDelegate, UAModalPanelDelegate>
 
 @property (unsafe_unretained, nonatomic) id<ModalPanelDelegate> delegate;
+@property (unsafe_unretained, nonatomic) id <UAModalPanelDelegate> delegate2;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *dataSource;
 @property (nonatomic) ModalPickerMode mode;
