@@ -33,6 +33,7 @@
     NSMutableDictionary *dictAvatar;
     NSString *lastDate;
     BOOL firstLoad;
+    CGFloat moveAnchor;
 }
 
 @end
@@ -208,15 +209,16 @@
         {
             NSLog(@"GROUP = %@", _group);
             
-            if (!_newGroup) {
+           
                 dispatch_async(dispatch_get_main_queue(), ^{
                     MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
                     [self getMessageFromGroup:[_group valueForKey:@"gmID"] withLastDate:lastDate completion:^(BOOL success, NSError *error) {
                         [_bubbleTable reloadData];
+                        [self updateContentFrame];
                         [HUD hide:YES];
                     }];
                 });
-            }
+            
             
 #pragma mark - List Friend -----------------------
             
@@ -429,6 +431,12 @@
         }];
         UADebugLog(@"onClosePressed block called from panel: %@", modalPanel);
     };
+    modalPanel.onActionPressed = ^(UAModalPanel* panel) {
+        // [panel hide];
+        [self didSelectActionButton:panel];
+        UADebugLog(@"onClosePressed block called from panel: %@", modalPanel);
+    };
+
     
     ///////////////////////////////////////////
     //   Panel is a reference to the modalPanel
@@ -486,7 +494,10 @@
 -(void) updateContentFrame
 {
     CGRect tableFrame = _bubbleTable.frame;
-    CGFloat oldHeight = tableFrame.size.height - keyboardHeight;
+    
+    CGFloat oldHeight = tableFrame.size.height;
+    
+    oldHeight = tableFrame.size.height - keyboardHeight;
     CGFloat newHeight = _bubbleTable.contentSize.height;
 
     oldHeight<newHeight?(tableFrame.size.height = newHeight):(tableFrame.size.height = oldHeight);
@@ -656,10 +667,11 @@
         } completion:^(BOOL finished) {
              
             if (_mode == ChatModeGroup) {
-                [tokenFieldView updateContentSize];
+                
                 CGRect frameToken = tokenFieldView.frame;
                 frameToken.size.height -= kbSize.height;
                 tokenFieldView.frame = frameToken;
+                [tokenFieldView updateContentSize];
                 
             }else
             {
