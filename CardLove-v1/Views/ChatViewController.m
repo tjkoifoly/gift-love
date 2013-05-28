@@ -286,6 +286,13 @@
 
 -(void) scrollToBottom :(BOOL) animated
 {
+    if (_mode == ChatModeGroup) {
+        CGFloat height = tokenFieldView.contentView.bounds.size.height - tokenFieldView.bounds.size.height + tokenFieldView.tokenField.bounds.size.height;
+        
+        CGPoint bottomOffset = CGPointMake(0, height) ;
+        [tokenFieldView setContentOffset:bottomOffset animated:animated];
+        return;
+    }
     
     CGFloat height = self.bubbleTable.contentSize.height - self.bubbleTable.bounds.size.height;
     if (height > 0) {
@@ -430,6 +437,7 @@
 
 -(void) tapTokenDetected: (UITapGestureRecognizer *) reg
 {
+    [timerSchedule invalidate];
     [self removeFriend:[[UserManager sharedInstance] accID] fromGroup:[_group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error) {
         TIToken *tk = (TIToken *)[reg view];
         [tokenFieldView.tokenField removeToken:tk];
@@ -471,9 +479,12 @@
 -(void) updateContentFrame
 {
     CGRect tableFrame = _bubbleTable.frame;
-    tableFrame.size = _bubbleTable.contentSize;
     
+    tableFrame.size.height = _bubbleTable.contentSize.height;
+    [_bubbleTable setFrame:tableFrame];
+    tableFrame.origin.y = tokenFieldView.tokenField.frame.size.height;
     tokenFieldView.contentView.frame = tableFrame;
+    
     [tokenFieldView updateContentSize];
 }
 
@@ -633,17 +644,21 @@
              inputToolbarIsVisible = YES;
             
         } completion:^(BOOL finished) {
-            
-            CGRect frame = _bubbleTable.frame;
-            frame.size.height -= kbSize.height;
-            _bubbleTable.frame = frame;
-            
-//            NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)] - 1) inSection:(_bubbleTable.numberOfSections - 1)];
-//            [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-            CGFloat height = self.bubbleTable.contentSize.height - self.bubbleTable.bounds.size.height;
-            if (height > 0) {
-                [self.bubbleTable setContentOffset:CGPointMake(0, height) animated:YES];
+             
+            if (_mode == ChatModeGroup) {
+                CGRect frameToken = tokenFieldView.frame;
+                frameToken.size.height -= kbSize.height;
+                tokenFieldView.frame = frameToken;
+
+            }else
+            {
+                CGRect frame = _bubbleTable.frame;
+                frame.size.height -= kbSize.height;
+                _bubbleTable.frame = frame;
+                
             }
+            [self scrollToBottom:NO];
+            
         }];
 }
 
@@ -678,9 +693,16 @@
             [UIView setAnimationDuration:0.0];
             [UIView setAnimationBeginsFromCurrentState:YES];
             
-            CGRect frame = _bubbleTable.frame;
-            frame.size.height += kbSize.height;
-            _bubbleTable.frame = frame;
+            if (_mode == ChatModeGroup) {
+                CGRect frameToken = tokenFieldView.frame;
+                frameToken.size.height += kbSize.height;
+                tokenFieldView.frame = frameToken;
+            }else
+            {
+                CGRect frame = _bubbleTable.frame;
+                frame.size.height += kbSize.height;
+                _bubbleTable.frame = frame;
+            }
             
             [UIView commitAnimations];
             
@@ -1099,8 +1121,15 @@
         {
             NSDictionary *mDict = [jsonObject lastObject];
             lastDate = [mDict valueForKey:@"mgDateSent"];
+            
+            [_bubbleTable reloadData];
+            [self updateContentFrame];
+            
+            [self scrollToBottom:NO];
+            
         }
-        NSLog(@"LAST DATE = %@", lastDate);
+        NSLog(@"LAST Content size = %@", NSStringFromCGSize(_bubbleTable.contentSize) );
+        NSLog(@"LAST Frame = %@", NSStringFromCGRect(_bubbleTable.frame) );
             
         
         completionBlock(YES, nil);
@@ -1118,8 +1147,6 @@
         case ChatModeGroup:
         {
             [self getMessageFromGroup:[_group valueForKey:@"gmID"] withLastDate:lastDate completion:^(BOOL success, NSError *error) {
-                [_bubbleTable reloadData];
-                [self scrollToBottom:YES];
             }];
         }
             break;

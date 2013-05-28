@@ -122,7 +122,7 @@
 	CGFloat width = frame.size.width;
 	[separator setFrame:((CGRect){separator.frame.origin, {width, separator.bounds.size.height}})];
 	[resultsTable setFrame:((CGRect){resultsTable.frame.origin, {width, resultsTable.bounds.size.height}})];
-	[contentView setFrame:((CGRect){contentView.frame.origin, {width, (frame.size.height - CGRectGetMaxY(tokenField.frame))}})];
+	//[contentView setFrame:((CGRect){contentView.frame.origin, {width, (frame.size.height - CGRectGetMaxY(tokenField.frame))}})];
 	[tokenField setFrame:((CGRect){tokenField.frame.origin, {width, tokenField.bounds.size.height}})];
 	
 	if (popoverController.popoverVisible){
