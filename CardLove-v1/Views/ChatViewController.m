@@ -497,7 +497,7 @@
     
     CGFloat oldHeight = tableFrame.size.height;
     
-    oldHeight = tableFrame.size.height - keyboardHeight;
+    oldHeight = self.view.frame.size.height - tokenFieldView.tokenField.frame.size.height- keyboardHeight;
     CGFloat newHeight = _bubbleTable.contentSize.height;
 
     oldHeight<newHeight?(tableFrame.size.height = newHeight):(tableFrame.size.height = oldHeight);
@@ -671,7 +671,7 @@
                 CGRect frameToken = tokenFieldView.frame;
                 frameToken.size.height -= kbSize.height;
                 tokenFieldView.frame = frameToken;
-                [tokenFieldView updateContentSize];
+                [self updateContentFrame];
                 
             }else
             {
