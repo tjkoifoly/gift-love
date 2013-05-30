@@ -42,6 +42,8 @@
                   @"track1.caf",
                   @"track2.caf",
                   @"HappyBirthday.mp3",
+                  @"Happynewyear.mp3",
+                  @"WeWishYouAMerryChristmas.mp3",
                   nil];
     //-----------UI-----------
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelMusicController)];

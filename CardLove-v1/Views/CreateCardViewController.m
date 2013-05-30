@@ -287,8 +287,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
         [self showNameAlertWithTitle:@"Enter a name for gift" andOther:@"Cancel"];
     }else
     {
-        [self saveData];
-        [self performSelector:@selector(showMessageWithCompletedView:) withObject:@"Saved !" afterDelay:0.5];
+        [self saveDataWithCompletion:^{
+            [self performSelector:@selector(showMessageWithCompletedView:) withObject:@"Saved !" afterDelay:0.5];
+        }];
     }
 }
 
@@ -1370,7 +1371,9 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
             
         }//END for
         
-        [self saveData];
+        [self saveDataWithCompletion:^{
+            [self performSelector:@selector(showMessageWithCompletedView:) withObject:@"Saved" afterDelay:0.5];
+        }];
         
     }else
     {

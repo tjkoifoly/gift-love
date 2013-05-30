@@ -97,11 +97,9 @@
     _dataSource = [NSArray arrayWithObjects:
                    @"Gift_Paper_Habitat_1.png" ,
                    @"Gift_Paper_Habitat_2.png" ,
-                   @"Gift_Paper_Habitat_1.png" ,
-                   @"Gift_Paper_Habitat_2.png" ,
-                   @"Gift_Paper_Habitat_1.png" ,
-                   @"Gift_Paper_Habitat_2.png" ,
-                   @"Gift_Paper_Habitat_1.png" , nil];
+                   @"bg-sc-1.png" ,
+                   @"bg-sc-2.png" ,
+                   nil];
 }
 
 -(void) loadBGs
@@ -109,11 +107,9 @@
     _dataSource = [NSArray arrayWithObjects:
                    @"cover-01.png" ,
                    @"cover-02.png" ,
-                   @"cover-01.png" ,
-                   @"cover-02.png" ,
-                   @"cover-01.png" ,
-                   @"cover-02.png" ,
-                   @"cover-01.png" , nil];
+                   @"cover-03.png" ,
+                   @"cover-04.png" ,
+                   nil];
 }
 
 -(void) loadFrames
@@ -121,11 +117,10 @@
     _dataSource = [NSArray arrayWithObjects:
                    @"card-frame-4.png" ,
                    @"card-frame-1.png" ,
-                   @"card-frame-4.png" ,
-                   @"card-frame-1.png" ,
-                   @"card-frame-4.png" ,
-                   @"card-frame-1.png" ,
-                   @"card-frame-4.png" , nil];
+                   @"card-frame-2.png" ,
+                   @"card-frame-3.png" ,
+                   @"card-frame-5.png" ,
+                   nil];
 }
 
 #pragma - MMGridViewDataSource
@@ -141,7 +136,7 @@
     MMGridViewDefaultCell *cell = [[MMGridViewDefaultCell alloc] initWithFrame:CGRectNull];
     NSString *imgName = [_dataSource objectAtIndex:index];
     cell.textLabel.text = [NSString stringWithFormat:@"%@",imgName];
-    cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    cell.imageView.contentMode = UIViewContentModeScaleToFill;
     //cell.imageView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg-none.png"]];
     cell.imageView.image = [UIImage imageNamed:imgName];
     

@@ -45,7 +45,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [_btnLogin setType:BButtonTypePrimary];
-    [_btnSignUp setType:BButtonTypeDanger];
+    [_btnSignUp setType:BButtonTypeInfo];
     
     //Data
     NSString *userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"username_preference"];
