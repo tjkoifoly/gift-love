@@ -18,7 +18,7 @@
 
 @end
 
-@interface SendGiftViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface SendGiftViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 @property (assign, nonatomic) id<SendGiftViewControllerDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

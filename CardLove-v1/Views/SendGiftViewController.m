@@ -11,6 +11,7 @@
 #import "FunctionObject.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UserManager.h"
+#import "TKAlertCenter.h"
 
 @interface SendGiftViewController ()
 @end
@@ -63,12 +64,22 @@
     }
     
     self.txtDateChoose.inputView = self.datePicker;
+    self.txtDateChoose.delegate = self;
 
 }
 
 - (void)birthdayDatePickerChanged:(id)sender
 {
      self.txtDateChoose.text = [[FunctionObject sharedInstance] stringFromDateTime:self.datePicker.date];
+}
+
+#pragma mark - TextField Delegate
+-(void) textFieldDidBeginEditing:(UITextField *)textField
+{
+    if ([textField isEqual:self.txtDateChoose]) {
+        NSDate *date = [NSDate date];
+        self.txtDateChoose.text = [[FunctionObject sharedInstance] stringFromDateTime:date];
+    }
 }
 
 
@@ -122,8 +133,25 @@
    
 }
 
+-(BOOL) checkInput
+{
+    if (self.txtTitle.text.length == 0) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"You should write a title for gift !"];
+        return NO;
+    }else if (self.txtDateChoose.text.length == 0)
+    {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Date Sent is not allowed blank !"];
+        return NO;
+    }
+    
+    return YES;
+}
+
 -(void) sendGift:(id) sender
 {
+    if (![self checkInput]) {
+        return;
+    }
     //[[self.cell viewWithTag:111] resignFirstResponder];
     //[[self.cell viewWithTag:112] resignFirstResponder];
     

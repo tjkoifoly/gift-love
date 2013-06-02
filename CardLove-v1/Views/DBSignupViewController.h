@@ -43,7 +43,7 @@ typedef enum {
     NSString *gender_;
     UIImage *photo_;
     
-    MBProgressHUD *HUD;
+    __block MBProgressHUD *HUD;
 }
 
 @property (nonatomic) ProfileViewType viewMode;

@@ -42,8 +42,8 @@ typedef enum {
 
 @property (nonatomic, retain) NSString *password;
 
-@property (nonatomic, copy) void(^onCorrectPassword)();
-@property (nonatomic, copy) void(^onDismissalWithoutPassword)();
+@property (nonatomic, strong) void(^onCorrectPassword)();
+@property (nonatomic, strong) void(^onDismissalWithoutPassword)();
 
 @property (assign) HashTechnique hashTechnique;
 
@@ -51,6 +51,9 @@ typedef enum {
 // Constructors for plaintext password
 - (id)initWithAlertTitle:(NSString *)title
         checkForPassword:(NSString *)password;
+
+- (id)initWithAlertTitle:(NSString *)title
+        checkForPassword:(NSString *)password delegate:(id<UIAlertViewDelegate>) deleage;
 
 - (id)initWithAlertTitle:(NSString *)title
         checkForPassword:(NSString *)password
@@ -68,6 +71,9 @@ onDismissalWithoutPassword:(void(^)())dismissalWithoutPasswordBlock;
    usingHashingTechnique:(HashTechnique)hashingTechnique
     onCorrectPassword:(void(^)())correctPasswordBlock
 onDismissalWithoutPassword:(void(^)())dismissalWithoutPasswordBlock;
+
+
+- (void)animateIncorrectPassword;
 
 @end    
 

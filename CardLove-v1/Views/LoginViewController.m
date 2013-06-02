@@ -71,6 +71,16 @@
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signupAccountSuccessful:) name:kNotificationSignUpSuccessful object:nil];
 }
 
+-(void) viewWillAppear:(BOOL)animated
+{
+    NSString *userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"username_preference"];
+    NSString *passWord = [[NSUserDefaults standardUserDefaults] stringForKey:@"password_preference"];
+    _txtUserName.text = userName;
+    _txtPassword.text = passWord;
+    
+    [super viewWillAppear:animated];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -129,6 +139,7 @@
     
     NSLog(@"AUTO = %i", autoLogin);
     if (autoLogin) {
+        _txtPassword.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"password_preference"];
         [self login:_btnLogin];
     }
 }

@@ -53,7 +53,7 @@ typedef enum {
         checkForPassword:(NSString *)password{
     
     self = [super initWithTitle:title     
-                        message:@"---blank---" // password field will go here
+                        message:@" " // password field will go here
                        delegate:self 
               cancelButtonTitle:@"Cancel" 
               otherButtonTitles:@"Enter", nil];
@@ -62,6 +62,22 @@ typedef enum {
         self.hashTechnique = HashTechniqueNone; // use no hashing by default
     }
 
+    return self;
+}
+
+- (id)initWithAlertTitle:(NSString *)title
+checkForPassword:(NSString *)password delegate:(id<UIAlertViewDelegate>) deleage{
+    
+    self = [super initWithTitle:title
+                        message:@" " // password field will go here
+                       delegate:deleage
+              cancelButtonTitle:@"Cancel"
+              otherButtonTitles:@"Enter", nil];
+    if (self) {
+        self.password = password;
+        self.hashTechnique = HashTechniqueNone; // use no hashing by default
+    }
+    
     return self;
 }
 
@@ -116,10 +132,11 @@ onDismissalWithoutPassword:(void(^)())dismissalWithoutPasswordBlock {
     
     // Textfield for the password
     // Position it over the message section of the alert
-    UITextField *passwordField = [[UITextField alloc] initWithFrame:CGRectMake(14, 45, 256, 25)];
+    UITextField *passwordField = [[UITextField alloc] initWithFrame:CGRectMake(14, 45, 256, 30)];
+    passwordField.contentHorizontalAlignment = UIControlContentVerticalAlignmentCenter;
     passwordField.secureTextEntry = YES;
     passwordField.placeholder = @"password";
-    passwordField.backgroundColor = [UIColor whiteColor];
+    passwordField.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg-txt-alert.png"]];
     
     // Pad out the left side of the view to properly inset the text
     UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 19)];
@@ -200,7 +217,7 @@ onDismissalWithoutPassword:(void(^)())dismissalWithoutPasswordBlock {
             
             // Dismiss with success
             [alertView dismissWithClickedButtonIndex:ShakingAlertViewButtonIndexSuccess animated:YES];
-            [self safeCallBlock:self.self.onCorrectPassword];
+            [self safeCallBlock:self.onCorrectPassword];
             
         }
         
@@ -220,11 +237,11 @@ onDismissalWithoutPassword:(void(^)())dismissalWithoutPasswordBlock {
     switch (buttonIndex) {
         case ShakingAlertViewButtonIndexSuccess:
             [super dismissWithClickedButtonIndex:ShakingAlertViewButtonIndexDismiss animated:animated];
-            [self safeCallBlock:self.self.onCorrectPassword];
+            //[self safeCallBlock:self.self.onCorrectPassword];
             break;
         case ShakingAlertViewButtonIndexDismiss:
             [super dismissWithClickedButtonIndex:ShakingAlertViewButtonIndexDismiss animated:animated];
-            [self safeCallBlock:self.onDismissalWithoutPassword];
+            //[self safeCallBlock:self.onDismissalWithoutPassword];
             break;
         default:
             break;

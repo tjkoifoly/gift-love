@@ -249,7 +249,7 @@
         [self.navigationController setNavigationBarHidden:YES animated:YES];
     }
     
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [self.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:[NSNumber numberWithBool:YES] afterDelay:0.25];
     
 }
@@ -260,12 +260,33 @@
 
 -(BOOL)checkInput
 {
-    if (![self NSStringIsValidEmail:emailTextField_.text]) {
+    if ([self.nameTextField.text length] ==0) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Display name is not allowed blank!"];
+        return NO;
+    }
+    if ([self.lastNameTextField.text length] < 3) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Username is too short!"];
+        return NO;
+    }
+    
+    if(![self NSStringIsValidEmail:emailTextField_.text]) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Email is not correct!"];
+        return NO;
+    }
+    if ([self.emailTextField.text length] == 0) {
         [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Email is not correct!"];
         return NO;
     }
     if ([passwordTextField_.text length] < 6) {
         [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Password is too short! Please enter least 6 characters."];
+        return NO;
+    }
+    if ([self.birthdayTextField.text length] ==0) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Birthday is not allowed blank!"];
+        return NO;
+    }
+    if ([self.genderTextField.text length] == 0) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Gender is not allowed blank!"];
         return NO;
     }
     return YES;
@@ -274,7 +295,13 @@
 -(void) saveProfiles: (id) sender
 {
     if ([self checkInput]) {
-        [self saveWithMethodUsage:@"update_info"];
+        ShakingAlertView *shakingAlert = [[ShakingAlertView alloc] initWithAlertTitle:@"Enter Password"
+                                                                     checkForPassword:passwordTextField_.text];
+        [shakingAlert setOnCorrectPassword:^{
+            // Show a modal view
+            [self saveWithMethodUsage:@"update_info"];
+        }];
+        [shakingAlert show];
     }
 }
 
@@ -300,6 +327,7 @@
                         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
                         HUD.mode = MBProgressHUDModeCustomView;
                         HUD.labelText = msgNotif;
+                        [self autoRememPassword];
                         [self performSelector:@selector(backPreviousView:) withObject:nil afterDelay:0.5];
                     }else
                     {
@@ -326,6 +354,7 @@
                 HUD.labelText = msgNotif;
                 NSLog(@"HUD = %@", HUD);
                 
+                [self autoRememPassword];
                 [self performSelector:@selector(backPreviousView:) withObject:nil afterDelay:0.5];
             }else
             {
@@ -340,6 +369,14 @@
 
 }
 
+-(void) autoRememPassword
+{
+    BOOL autoRemember = [[NSUserDefaults standardUserDefaults] boolForKey:@"auto_remember_preference"];
+    if(autoRemember)
+    {
+        [[NSUserDefaults standardUserDefaults] setValue:self.passwordTextField.text forKey:@"password_preference"];
+    }
+}
 
 #pragma mark - Others
 
@@ -356,6 +393,8 @@
             [self saveWithMethodUsage:@"sign_up"];
         }];
         [shakingAlert show];
+        
+        //[self saveWithMethodUsage:@"sign_up"];
     }
 }
 
@@ -699,7 +738,8 @@
                 }
             }else
             {
-                [[TKAlertCenter defaultCenter] postAlertWithMessage:@"the username is already exist."];
+                [self hudWasHidden:HUD];
+                [[TKAlertCenter defaultCenter] performSelector:@selector(postAlertWithMessage:) withObject:@"The username is already exist." afterDelay:0.35];
                 completionBlock(NO, nil);
             }
         }else
