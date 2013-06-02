@@ -13,6 +13,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "GiftsManager.h"
 #import "AJNotificationView.h"
+#import "RequestsManager.h"
+#import "NSArray+findObject.h"
 
 @interface NewsViewController ()
 {
@@ -138,7 +140,13 @@
             break;
     }
     item.titleLabel.text = [dictGift valueForKey:@"gfTitle"];
-    item.nameLabel.text = name;;
+    if (name) {
+        item.nameLabel.text = name;
+    }else
+    {
+        item.nameLabel.text = @"<Unknown>";
+    }
+    
     NSDate *date = [[FunctionObject sharedInstance] dateFromStringDateTime:[dictGift valueForKey:@"gfDateSent"]];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterLongStyle];
@@ -293,7 +301,21 @@
         NSLog(@"PATH = %@", pathToOpen);
         ViewGiftViewController *cvcv = [[ViewGiftViewController alloc] initWithNibName:@"ViewGiftViewController" bundle:nil];
         cvcv.giftPath = pathToOpen;
-        cvcv.sender = [[FriendsManager sharedManager] friendByID:[_currentGift objectForKey:@"gfSenderID"]];
+        Friend *cF = [[FriendsManager sharedManager] friendByID:[_currentGift objectForKey:@"gfSenderID"]];
+        if (!cF) {
+            
+            id personRequest = [[[RequestsManager sharedManager] listRequests ] findObjectWithKey:@"accID" andValue:[_currentGift objectForKey:@"gfSenderID"]];
+                                ;
+            if (personRequest) {
+                cF = [[Friend alloc] initWithDictionary:personRequest];
+            }
+        }
+        if (!cF) {
+            cF = [[Friend alloc] init];
+            cF.fID = [_currentGift objectForKey:@"gfSenderID"];
+            cF.displayName = @"Unknown";
+        }
+        cvcv.sender = cF;
         cvcv.delegate = self;
         
         [[HMGLTransitionManager sharedTransitionManager] setTransition:[[DoorsTransition alloc] init]];
