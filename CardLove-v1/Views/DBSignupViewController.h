@@ -18,7 +18,7 @@ typedef enum {
     ProfileViewTypeEdit
 }ProfileViewType;
 
-@interface DBSignupViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MBProgressHUDDelegate> {
+@interface DBSignupViewController : UIViewController < UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MBProgressHUDDelegate> {
     UITextField *nameTextField_;
     UITextField *lastNameTextField_;
     UITextField *emailTextField_;

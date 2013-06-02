@@ -10,6 +10,7 @@
 #import "UserManager.h"
 #import "FunctionObject.h"
 #import "JSONKit.h"
+#import "ShakingAlertView.h"
 
 // Safe releases
 #define RELEASE_SAFELY(__POINTER) { [__POINTER release]; __POINTER = nil; }
@@ -247,6 +248,8 @@
     if (_viewMode == ProfileViewTypeSignUp) {
         [self.navigationController setNavigationBarHidden:YES animated:YES];
     }
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     [self.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:[NSNumber numberWithBool:YES] afterDelay:0.25];
     
 }
@@ -258,11 +261,11 @@
 -(BOOL)checkInput
 {
     if (![self NSStringIsValidEmail:emailTextField_.text]) {
-        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Email is not correct !"];
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Email is not correct!"];
         return NO;
     }
     if ([passwordTextField_.text length] < 6) {
-        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Password is too short !"];
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Password is too short! Please enter least 6 characters."];
         return NO;
     }
     return YES;
@@ -277,8 +280,10 @@
 
 -(void) saveWithMethodUsage: (NSString *)usage
 {
-    HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-	HUD.delegate = self;
+    HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    HUD.delegate = self;
+	
+    NSLog(@"HUD = %@", HUD);
     
     if (changeAvatar) {
         NSData *imgData = UIImagePNGRepresentation(self.photo);
@@ -295,16 +300,17 @@
                         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
                         HUD.mode = MBProgressHUDModeCustomView;
                         HUD.labelText = msgNotif;
-                        
                         [self performSelector:@selector(backPreviousView:) withObject:nil afterDelay:0.5];
                     }else
                     {
-                        NSLog(@"Update failed!");
+                        NSLog(@"Update failed! = %@", error);
+                        [MBProgressHUD hideHUDForView:self.view animated:YES];
                     }
-                    [HUD hide:YES afterDelay:0.5];
+                    
                 }];
             }else{
                 NSLog(@"Update failed!");
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
             }
         }];
         
@@ -318,14 +324,16 @@
                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
                 HUD.mode = MBProgressHUDModeCustomView;
                 HUD.labelText = msgNotif;
-                
+                NSLog(@"HUD = %@", HUD);
                 
                 [self performSelector:@selector(backPreviousView:) withObject:nil afterDelay:0.5];
             }else
             {
-                NSLog(@"HTTP failed!");
+                NSLog(@"ERROR SIGN UP!= %@", error);
+                [HUD hide:YES afterDelay:0.3];
+                
             }
-            [HUD hide:YES afterDelay:0.5];
+           
         }];
         
     }
@@ -341,8 +349,14 @@
     
     // Check fields
     if ([self checkInput]) {
-         [self saveWithMethodUsage:@"sign_up"];
-    }    
+        ShakingAlertView *shakingAlert = [[ShakingAlertView alloc] initWithAlertTitle:@"Enter Password"
+                                                                    checkForPassword:passwordTextField_.text];
+        [shakingAlert setOnCorrectPassword:^{
+            // Show a modal view
+            [self saveWithMethodUsage:@"sign_up"];
+        }];
+        [shakingAlert show];
+    }
 }
 
 - (void)resignKeyboard:(id)sender
@@ -677,11 +691,17 @@
             id jsonObject = [[JSONDecoder decoder] objectWithData:responseObject];
             NSLog(@"JSON = %@", jsonObject);
             [[UserManager sharedInstance] updateInfoWithDictionary:[jsonObject objectAtIndex:0]];
-            completionBlock(YES, nil);
-            if (_viewMode == ProfileViewTypeSignUp) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationSignUpSuccessful object:nil];
+            
+            if (jsonObject) {
+                completionBlock(YES, nil);
+                if (_viewMode == ProfileViewTypeSignUp) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationSignUpSuccessful object:nil];
+                }
+            }else
+            {
+                [[TKAlertCenter defaultCenter] postAlertWithMessage:@"the username is already exist."];
+                completionBlock(NO, nil);
             }
-           
         }else
         {
             completionBlock(NO, nil);
@@ -690,7 +710,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"[HTTPClient Error]: %@", error.localizedDescription);
          [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Network Error\nServer is Offline"];
-        completionBlock(NO, nil);
+        completionBlock(NO, error);
     }];
 
 }

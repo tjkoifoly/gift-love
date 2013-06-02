@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66018576175AFAEB00D8D709 /* b64.m in Sources */ = {isa = PBXBuildFile; fileRef = 66018571175AFAEB00D8D709 /* b64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66018577175AFAEB00D8D709 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 66018573175AFAEB00D8D709 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66018578175AFAEB00D8D709 /* ShakingAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66018575175AFAEB00D8D709 /* ShakingAlertView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6604EFA117191B63005B6135 /* bg-cell120.png in Resources */ = {isa = PBXBuildFile; fileRef = 6604EFA017191B63005B6135 /* bg-cell120.png */; };
 		6604FA3616DBC1B300295209 /* add-gift.png in Resources */ = {isa = PBXBuildFile; fileRef = 6604FA3416DBC1B300295209 /* add-gift.png */; };
 		6604FA3716DBC1B300295209 /* add-gift@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6604FA3516DBC1B300295209 /* add-gift@2x.png */; };
@@ -812,6 +815,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		66018570175AFAEB00D8D709 /* b64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b64.h; sourceTree = "<group>"; };
+		66018571175AFAEB00D8D709 /* b64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = b64.m; sourceTree = "<group>"; };
+		66018572175AFAEB00D8D709 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		66018573175AFAEB00D8D709 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		66018574175AFAEB00D8D709 /* ShakingAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShakingAlertView.h; sourceTree = "<group>"; };
+		66018575175AFAEB00D8D709 /* ShakingAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShakingAlertView.m; sourceTree = "<group>"; };
 		6604EFA017191B63005B6135 /* bg-cell120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-cell120.png"; sourceTree = "<group>"; };
 		6604FA3416DBC1B300295209 /* add-gift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add-gift.png"; path = "Resources/add-gift.png"; sourceTree = "<group>"; };
 		6604FA3516DBC1B300295209 /* add-gift@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add-gift@2x.png"; path = "Resources/add-gift@2x.png"; sourceTree = "<group>"; };
@@ -1963,6 +1972,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6601856F175AFAEB00D8D709 /* ShakingAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				66018570175AFAEB00D8D709 /* b64.h */,
+				66018571175AFAEB00D8D709 /* b64.m */,
+				66018572175AFAEB00D8D709 /* NSData+Base64.h */,
+				66018573175AFAEB00D8D709 /* NSData+Base64.m */,
+				66018574175AFAEB00D8D709 /* ShakingAlertView.h */,
+				66018575175AFAEB00D8D709 /* ShakingAlertView.m */,
+			);
+			path = ShakingAlertView;
+			sourceTree = "<group>";
+		};
 		6604FA6616DBCD4200295209 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -3027,6 +3049,7 @@
 		6653731F16EB457D000648B3 /* AlertView */ = {
 			isa = PBXGroup;
 			children = (
+				6601856F175AFAEB00D8D709 /* ShakingAlertView */,
 				668AE8621747318A00BEF685 /* AJNotificationView */,
 				66B580B71745444C00B3E276 /* TSMessageView */,
 				6653732A16EB49F5000648B3 /* MBProgressHUD.h */,
@@ -4992,6 +5015,9 @@
 				669C5CC51750A32D006D99B6 /* RequestsManager.m in Sources */,
 				669C5CC81750A33C006D99B6 /* GroupsManager.m in Sources */,
 				669CEE871752234500F36F42 /* EGORefreshTableHeaderView.m in Sources */,
+				66018576175AFAEB00D8D709 /* b64.m in Sources */,
+				66018577175AFAEB00D8D709 /* NSData+Base64.m in Sources */,
+				66018578175AFAEB00D8D709 /* ShakingAlertView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
