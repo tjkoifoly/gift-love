@@ -28,4 +28,6 @@
 -(Friend *) friendByID: (NSString *)fID;
 -(NSString *) friendNameByID: (NSString *)fID;
 
+-(NSArray *) listFriendLikeName: (NSString *)fSearch;
+
 @end

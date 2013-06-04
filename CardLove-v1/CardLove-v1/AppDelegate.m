@@ -25,6 +25,7 @@
 #import "GiftsManager.h"
 #import "RequestsManager.h"
 #import "GroupsManager.h"
+#import "FriendsManager.h"
 
 @interface AppDelegate() 
 @end
@@ -192,7 +193,8 @@
 
 #pragma mark GHSidebarSearchViewControllerDelegate
 - (void)searchResultsForText:(NSString *)text withScope:(NSString *)scope callback:(SearchResultsBlock)callback {
-	callback(@[@"Foo", @"Bar", @"Baz"]);
+    NSArray *arrayFriends = [[FriendsManager sharedManager] listFriendLikeName:text];
+	callback(arrayFriends);
 }
 
 - (void)searchResult:(id)result selectedAtIndexPath:(NSIndexPath *)indexPath {
@@ -204,9 +206,20 @@
 	GHMenuCell* cell = [tableView dequeueReusableCellWithIdentifier:identifier];
 	if (!cell) {
 		cell = [[GHMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
 	}
-	cell.textLabel.text = (NSString *)entry;
-	cell.imageView.image = [UIImage imageNamed:@"user"];
+    cell.imageView.image = [UIImage imageNamed:@"user"];
+    if ([entry isKindOfClass:[Friend class]]) {
+        cell.textLabel.text = ((Friend *) entry).userName;
+        NSString *avatarLink = ((Friend *) entry).fAvatarLink;
+        if (avatarLink!= (id)[NSNull null] && avatarLink.length != 0) {
+            [cell.imageView setImageWithURL:[NSURL URLWithString:avatarLink] placeholderImage:[UIImage imageNamed:@"user"]];
+        }
+    }else{
+        cell.textLabel.text = (NSString *)entry;
+        
+    }
+	
 	return cell;
 }
 

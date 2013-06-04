@@ -184,5 +184,22 @@
 
 }
 
+-(NSArray *) listFriendLikeName: (NSString *)fSearch
+{
+    NSMutableArray *temArray = [[NSMutableArray alloc] init];
+    for (Friend *f in _friendsList)
+    {
+        
+        if ([f.userName hasPrefix:fSearch]) {
+            [temArray addObject:f];
+            
+        }else{
+            continue;
+        }
+    }
+    return temArray;
+    
+}
+
 
 @end

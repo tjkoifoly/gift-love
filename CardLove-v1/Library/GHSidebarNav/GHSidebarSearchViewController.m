@@ -47,7 +47,7 @@ const NSTimeInterval kGHSidebarDefaultSearchDelay = 0.8;
 		_searchQueue.maxConcurrentOperationCount = 1;
 		
 		self.searchDelay = kGHSidebarDefaultSearchDelay;
-		self.mutableEntries = [[NSMutableArray alloc] initWithCapacity:10];
+		self.mutableEntries = [[NSMutableArray alloc] init];
 		
 		self.searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:[[UISearchBar alloc] init] contentsController:self];
 		searchDisplayController.delegate = self;
