@@ -1229,8 +1229,6 @@
 		66310AA816D9A27F00AC9DC8 /* CardLove-v1-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CardLove-v1-Prefix.pch"; sourceTree = "<group>"; };
 		66310AA916D9A27F00AC9DC8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		66310AAA16D9A27F00AC9DC8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		66310AAC16D9A27F00AC9DC8 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		66310AAE16D9A27F00AC9DC8 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		66310AB016D9A27F00AC9DC8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		66310AB316D9A27F00AC9DC8 /* CardLove_v1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CardLove_v1.xcdatamodel; sourceTree = "<group>"; };
 		66310ABB16D9A2BB00AC9DC8 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendsViewController.h; path = Views/FriendsViewController.h; sourceTree = "<group>"; };
@@ -2828,8 +2826,6 @@
 				66310AA316D9A27F00AC9DC8 /* InfoPlist.strings */,
 				66310AA616D9A27F00AC9DC8 /* main.m */,
 				66310AA816D9A27F00AC9DC8 /* CardLove-v1-Prefix.pch */,
-				66310AAC16D9A27F00AC9DC8 /* Default.png */,
-				66310AAE16D9A27F00AC9DC8 /* Default@2x.png */,
 				66310AB016D9A27F00AC9DC8 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
