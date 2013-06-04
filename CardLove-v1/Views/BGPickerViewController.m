@@ -95,6 +95,8 @@
 -(void) loadPapers
 {
     _dataSource = [NSArray arrayWithObjects:
+                   @"pattern.png",
+                   @"bluebackground.png",
                    @"Gift_Paper_Habitat_1.png" ,
                    @"Gift_Paper_Habitat_2.png" ,
                    @"bg-sc-1.png" ,
