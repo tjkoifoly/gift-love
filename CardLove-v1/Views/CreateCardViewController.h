@@ -47,5 +47,7 @@
 
 @property (strong, nonatomic) NSString *giftName;
 @property (strong, nonatomic) NSString *giftPath;
+@property (nonatomic) BOOL edit;
+
 
 @end

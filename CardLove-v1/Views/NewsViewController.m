@@ -255,8 +255,6 @@
                     HUD.progress = progress;
                 } completion:^(BOOL success, NSError *error) {
                     
-                    
-                    
                     HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
                     HUD.mode = MBProgressHUDModeCustomView;
                     HUD.labelText = @"Download gift successful";
@@ -296,7 +294,7 @@
     [[FunctionObject sharedInstance] createNewFolder:kGift];
     NSString *docUnzip = [[FunctionObject sharedInstance] dataFilePath:kGift];
     
-    NSString *pathUnzip = [docUnzip stringByAppendingPathComponent:[[path lastPathComponent] substringToIndex:[path lastPathComponent].length-3]];
+    NSString *pathUnzip = [docUnzip stringByAppendingPathComponent:[[path lastPathComponent] substringToIndex:[path lastPathComponent].length-4]];
     [[FunctionObject sharedInstance] unzipFileAtPath:path toPath:pathUnzip withCompetionBlock:^(NSString *pathToOpen) {
         NSLog(@"PATH = %@", pathToOpen);
         ViewGiftViewController *cvcv = [[ViewGiftViewController alloc] initWithNibName:@"ViewGiftViewController" bundle:nil];
@@ -360,6 +358,7 @@
         
         CreateCardViewController *ccvc = [[CreateCardViewController alloc] initWithNibName:@"CreateCardViewController" bundle:nil];
         ccvc.giftPath = gifPath;
+        ccvc.edit = YES;
         [weakSelf.navigationController pushViewController:ccvc animated:YES];
     };
     

@@ -282,7 +282,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 -(void) saveCard
 {
-    if ([kNewProject isEqualToString:_giftName]) {
+    if ([kNewProject isEqualToString:_giftName] || (_edit == YES)) {
         //Show popUp to rename
         [self showNameAlertWithTitle:@"Enter a name for gift" andOther:@"Cancel"];
     }else
@@ -1330,7 +1330,12 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
             NSString *oldFilePath = [oldDirectoryPath stringByAppendingPathComponent:[tempArrayForContentsOfDirectory objectAtIndex:i]];
             
             NSError *error = nil;
-            [[NSFileManager defaultManager] moveItemAtPath:oldFilePath toPath:newFilePath error:&error];
+            if (_edit) {
+                [[NSFileManager defaultManager] copyItemAtPath:oldFilePath toPath:newFilePath error:&error];
+            }else
+            {
+                [[NSFileManager defaultManager] moveItemAtPath:oldFilePath toPath:newFilePath error:&error];
+            }
             
             if (error) {
                 // handle error
@@ -1339,6 +1344,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
             }else
             {
                 _giftName = nameOfGift;
+                self.navigationItem.title = _giftName;
                 _pathResources = pathOfThisGift;
                 _pathConf = [_pathResources stringByAppendingPathComponent:[NSString stringWithFormat:kIndex]];
                 [[GiftItemManager sharedManager] setPathData:_pathConf];
@@ -1370,6 +1376,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
             }//END if
             
         }//END for
+        _edit = NO;
         
         [self saveDataWithCompletion:^{
             [self performSelector:@selector(showMessageWithCompletedView:) withObject:@"Saved" afterDelay:0.5];
