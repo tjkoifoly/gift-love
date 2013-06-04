@@ -379,6 +379,8 @@
 		6666152E1721BAF8009ACC1E /* SYEmojiPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 6666152B1721BAF8009ACC1E /* SYEmojiPopover.m */; };
 		666615301721C042009ACC1E /* emo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6666152F1721C042009ACC1E /* emo.png */; };
 		667C25B917130B3E0081BC38 /* card-icon2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 667C25B817130B3E0081BC38 /* card-icon2.jpg */; };
+		6680B879175D8E3B00310BE9 /* NSData+NSHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 6680B876175D8E3B00310BE9 /* NSData+NSHash.m */; };
+		6680B87A175D8E3B00310BE9 /* NSString+NSHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 6680B878175D8E3B00310BE9 /* NSString+NSHash.m */; };
 		6684B72A170B1C5700987AF7 /* SoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6684B729170B1C5700987AF7 /* SoundManager.m */; };
 		6684B72F170B1C8A00987AF7 /* sound1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 6684B72B170B1C8A00987AF7 /* sound1.caf */; };
 		6684B730170B1C8A00987AF7 /* sound2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 6684B72C170B1C8A00987AF7 /* sound2.caf */; };
@@ -1396,6 +1398,10 @@
 		6666152B1721BAF8009ACC1E /* SYEmojiPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYEmojiPopover.m; sourceTree = "<group>"; };
 		6666152F1721C042009ACC1E /* emo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emo.png; sourceTree = "<group>"; };
 		667C25B817130B3E0081BC38 /* card-icon2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "card-icon2.jpg"; sourceTree = "<group>"; };
+		6680B875175D8E3B00310BE9 /* NSData+NSHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+NSHash.h"; sourceTree = "<group>"; };
+		6680B876175D8E3B00310BE9 /* NSData+NSHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+NSHash.m"; sourceTree = "<group>"; };
+		6680B877175D8E3B00310BE9 /* NSString+NSHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+NSHash.h"; sourceTree = "<group>"; };
+		6680B878175D8E3B00310BE9 /* NSString+NSHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+NSHash.m"; sourceTree = "<group>"; };
 		6684B728170B1C5700987AF7 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
 		6684B729170B1C5700987AF7 /* SoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundManager.m; sourceTree = "<group>"; };
 		6684B72B170B1C8A00987AF7 /* sound1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound1.caf; sourceTree = "<group>"; };
@@ -1992,6 +1998,7 @@
 		6604FA6616DBCD4200295209 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				6680B874175D8E3B00310BE9 /* NSHash */,
 				6692F02A174F1CD200D50813 /* UIView+Badge.h */,
 				6692F02B174F1CD200D50813 /* UIView+Badge.m */,
 				66DDC3A71739285A00595838 /* UIViewController+NibCells.h */,
@@ -3158,6 +3165,17 @@
 				6666152B1721BAF8009ACC1E /* SYEmojiPopover.m */,
 			);
 			path = SYEmojiPopover;
+			sourceTree = "<group>";
+		};
+		6680B874175D8E3B00310BE9 /* NSHash */ = {
+			isa = PBXGroup;
+			children = (
+				6680B875175D8E3B00310BE9 /* NSData+NSHash.h */,
+				6680B876175D8E3B00310BE9 /* NSData+NSHash.m */,
+				6680B877175D8E3B00310BE9 /* NSString+NSHash.h */,
+				6680B878175D8E3B00310BE9 /* NSString+NSHash.m */,
+			);
+			path = NSHash;
 			sourceTree = "<group>";
 		};
 		6684B727170B1C5700987AF7 /* SoundManager */ = {
@@ -5026,6 +5044,8 @@
 				66018576175AFAEB00D8D709 /* b64.m in Sources */,
 				66018577175AFAEB00D8D709 /* NSData+Base64.m in Sources */,
 				66018578175AFAEB00D8D709 /* ShakingAlertView.m in Sources */,
+				6680B879175D8E3B00310BE9 /* NSData+NSHash.m in Sources */,
+				6680B87A175D8E3B00310BE9 /* NSString+NSHash.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

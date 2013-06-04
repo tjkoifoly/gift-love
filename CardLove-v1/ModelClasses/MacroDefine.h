@@ -14,6 +14,7 @@
 #define ALPHA                   @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 #define NUMERIC                 @"1234567890"
 #define ALPHA_NUMERIC           ALPHA NUMERIC
+#define USERNAME_PATTERN        @"^[a-zA-Z][-\\w.]{0,22}([a-zA-Z\\d]|(?<![-.])_)$";
 
 #define kLoadingImageURL        @"http://localhost:8888/gift-love/loading01.gif"
 

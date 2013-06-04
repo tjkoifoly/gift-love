@@ -73,11 +73,12 @@
 
 -(void) viewWillAppear:(BOOL)animated
 {
-    NSString *userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"username_preference"];
-    NSString *passWord = [[NSUserDefaults standardUserDefaults] stringForKey:@"password_preference"];
-    _txtUserName.text = userName;
-    _txtPassword.text = passWord;
-    
+//    if (_startFlag) {
+//        NSString *userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"username_preference"];
+//        NSString *passWord = [[NSUserDefaults standardUserDefaults] stringForKey:@"password_preference"];
+//        _txtUserName.text = userName;
+//        _txtPassword.text = passWord;
+//    }
     [super viewWillAppear:animated];
 }
 
@@ -240,8 +241,9 @@
 
 -(void) signupAccountSuccessful: (NSNotification *) notification
 {
-    self.txtUserName.text = [[UserManager sharedInstance] username];
-    self.txtPassword.text = [[UserManager sharedInstance] password];
+    NSDictionary *dict = notification.object;
+    self.txtUserName.text = [dict valueForKey:kAccName];
+    self.txtPassword.text = [dict valueForKey:kAccPassword];
 }
 
 

@@ -265,7 +265,11 @@
         return NO;
     }
     if ([self.lastNameTextField.text length] < 3) {
-        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Username is too short!"];
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Username is too short! Please enter 3 characters."];
+        return NO;
+    }
+    if (![self validateUserName:[lastNameTextField_.text lowercaseString]]) {
+        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Username is not correct format. Only use 'a-z', '0-9', '_', '-' and '.' and begin by a letter, not end by '-' or '.'"];
         return NO;
     }
     
@@ -295,8 +299,15 @@
 -(void) saveProfiles: (id) sender
 {
     if ([self checkInput]) {
-        ShakingAlertView *shakingAlert = [[ShakingAlertView alloc] initWithAlertTitle:@"Enter Password"
-                                                                     checkForPassword:passwordTextField_.text];
+        
+        ShakingAlertView *shakingAlert = nil;
+        if ([self checkChangePassword]) {
+            shakingAlert = [[ShakingAlertView alloc] initWithAlertTitle:@"Enter Password"
+                                                       checkForPassword:passwordTextField_.text];
+        }else{
+            shakingAlert = [[ShakingAlertView alloc] initWithAlertTitle:@"Enter Password"
+                                                      checkForPassword:[[UserManager sharedInstance] password] usingHashingTechnique:HashTechniqueMD5];
+        }
         [shakingAlert setOnCorrectPassword:^{
             // Show a modal view
             [self saveWithMethodUsage:@"update_info"];
@@ -354,7 +365,10 @@
                 HUD.labelText = msgNotif;
                 NSLog(@"HUD = %@", HUD);
                 
-                [self autoRememPassword];
+                if ([self checkChangePassword]) {
+                    [self autoRememPassword];
+                }
+
                 [self performSelector:@selector(backPreviousView:) withObject:nil afterDelay:0.5];
             }else
             {
@@ -602,6 +616,12 @@
     return [emailTest evaluateWithObject:checkString];
 }
 
+-(BOOL) validateUserName:(NSString * ) username
+{
+    NSString *usernameRegex = USERNAME_PATTERN;
+    NSPredicate *usernamePredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", usernameRegex];
+    return [usernamePredicate evaluateWithObject:username];
+}
 
 #pragma mark - UIPickerViewDataSource
 
@@ -693,7 +713,7 @@
 {
     self.nameTextField.text = [[UserManager sharedInstance] displayName];
     self.lastNameTextField.text = [[UserManager sharedInstance] username];
-    self.passwordTextField.text = [[UserManager sharedInstance] password];
+    self.passwordTextField.text = [[[UserManager sharedInstance] password] substringToIndex:8];
     self.emailTextField.text = [[UserManager sharedInstance] email];
     [self setGenderWithSex:[[UserManager sharedInstance] sex]];
     self.phoneTextField.text = [[[UserManager sharedInstance] phone] isEqual:[NSNull null]]?@"": [[UserManager sharedInstance] phone];
@@ -732,10 +752,16 @@
             [[UserManager sharedInstance] updateInfoWithDictionary:[jsonObject objectAtIndex:0]];
             
             if (jsonObject) {
-                completionBlock(YES, nil);
+                
                 if (_viewMode == ProfileViewTypeSignUp) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationSignUpSuccessful object:nil];
+                    
+                    NSMutableDictionary *mDict = [[NSMutableDictionary alloc] init];
+                    [mDict setValue:self.passwordTextField.text forKey:kAccPassword];
+                    [mDict setValue:self.lastNameTextField.text forKey:kAccName];
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationSignUpSuccessful object:mDict];
                 }
+                completionBlock(YES, nil);
             }else
             {
                 [self hudWasHidden:HUD];
@@ -803,14 +829,34 @@
     [[NKApiClient shareInstace] enqueueHTTPRequestOperation:operation];
 };
 
+-(BOOL) checkChangePassword
+{
+    NSString *newPassword = passwordTextField_.text;
+    NSString *hashPassword = [[[UserManager sharedInstance] password] substringToIndex:8];
+    
+    if (![newPassword isEqualToString:hashPassword]) {
+        return YES;
+    }else
+    {
+        return NO;
+    }
+}
+
 -(NSDictionary *)dictionaryWithURL: (NSString *)urlIMG andUsage: (NSString *) usage
 {
+    
     NSString *strBirthday = [[FunctionObject sharedInstance] stringFromDate:self.birthday];
     NSMutableDictionary *mDict = [[NSMutableDictionary alloc] init];
-    [mDict setValue:self.lastNameTextField.text forKey:kAccName];
+    [mDict setValue:[self.lastNameTextField.text lowercaseString] forKey:kAccName];
     [mDict setValue:self.nameTextField.text forKey:kAccDisplayName];
     [mDict setValue:self.emailTextField.text forKey:kAccEmail];
-    [mDict setValue:self.passwordTextField.text forKey:kAccPassword];
+    
+    if ([self checkChangePassword]) {
+        [mDict setValue:self.passwordTextField.text forKey:kAccPassword];
+    }else{
+        [mDict setValue:[[UserManager sharedInstance] password] forKey:kAccPassword];
+    }
+  
     [mDict setValue:strBirthday forKey:kAccBirthday];
     [mDict setValue:[NSNumber numberWithInt:([self.gender isEqualToString:@"M"]?0:1)] forKey:kAccGender];
     [mDict setValue:self.phoneTextField.text forKey:kAccPhone];

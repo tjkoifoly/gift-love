@@ -32,6 +32,7 @@
 #import "ShakingAlertView.h"
 #include <CommonCrypto/CommonDigest.h>
 #import "NSData+Base64.h"
+#import "NSString+NSHash.h"
 
 
 @interface ShakingAlertView ()
@@ -305,15 +306,15 @@ onDismissalWithoutPassword:(void(^)())dismissalWithoutPasswordBlock {
         // MD5 used    
         case HashTechniqueMD5: {
             
-            unsigned char digest[CC_MD5_DIGEST_LENGTH];
-            NSData *stringBytes = [_passwordField.text dataUsingEncoding: NSUTF8StringEncoding];
-            CC_MD5([stringBytes bytes], [stringBytes length], digest);
+//            unsigned char digest[CC_MD5_DIGEST_LENGTH];
+//            NSData *stringBytes = [_passwordField.text dataUsingEncoding: NSUTF8StringEncoding];
+//            CC_MD5([stringBytes bytes], [stringBytes length], digest);
+//            
+//            NSData *pwHashData = [[NSData alloc] initWithBytes:digest length:CC_MD5_DIGEST_LENGTH];
+//            NSString *hashedEnteredPassword = [pwHashData base64EncodedString];
+//            [pwHashData release];
             
-            NSData *pwHashData = [[NSData alloc] initWithBytes:digest length:CC_MD5_DIGEST_LENGTH];
-            NSString *hashedEnteredPassword = [pwHashData base64EncodedString];
-            [pwHashData release];
-            
-            return [hashedEnteredPassword isEqualToString:_password];
+            return [[_passwordField.text MD5] isEqualToString:_password];
             
         }
             break;
