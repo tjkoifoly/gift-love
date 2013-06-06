@@ -64,6 +64,12 @@
     [super viewWillAppear:animated];
 }
 
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+     [self.tableView reloadData];
+}
+
 -(void) viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
@@ -238,7 +244,6 @@
             NSMutableDictionary* person = [_listNewMsgs objectAtIndex:indexPath.row];
             TDBadgedCell *cell = (TDBadgedCell *)[_tableView cellForRowAtIndexPath:indexPath];
             cell.badgeString = @"0";
-            [person setValue:@"0" forKey:@"newMsgs"];
             
             Friend *newFriend = [[Friend alloc] initWithDictionary:person];
             ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];

@@ -38,6 +38,7 @@
 -(NSMutableArray *) filterGift:(NSArray *)list bySender:(NSString *) senderID;
 -(NSMutableArray *) filterGift:(NSArray *)list byReciver:(NSString *) reciverID;
 
+-(void) readMessagesOfPerson:(NSString *) senderID completion:(void (^)(BOOL success, NSError *error))completionBlock;
 
 //ZIP
 -(void) unzipFileAtPath:(NSString *)pathFile toPath:(NSString *)unzipPath withCompetionBlock:(void(^)(NSString *pathToOpen))completionBlock;

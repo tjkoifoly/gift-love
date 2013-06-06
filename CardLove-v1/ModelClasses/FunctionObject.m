@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "NKApiClient.h"
 #import "JSONKit.h"
+#import "UserManager.h"
 
 @implementation FunctionObject
 
@@ -157,6 +158,25 @@
     }];
     
     [[NKApiClient shareInstace] enqueueHTTPRequestOperation:operation];
+}
+
+-(void) readMessagesOfPerson:(NSString *) senderID completion:(void (^)(BOOL success, NSError *error))completionBlock
+{
+    
+    NSDictionary *dictParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [[UserManager sharedInstance] accID],@"recieverID",
+                                senderID,@"senderID",
+                                nil];
+    
+    [[NKApiClient shareInstace] postPath:@"read_message.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
+        NSLog(@"JSON Add friend to group = %@", jsonObject);
+        
+        completionBlock (YES, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"HTTP ERROR = %@", error);
+        completionBlock(NO, nil);
+    }];
 }
 
 -(void) dowloadFromURL: (NSString *) urlString toPath:(NSString *) pathSave withProgress:(void (^)(CGFloat progress))progressBlock completion:(void (^)(BOOL success, NSError *error))completionBlock

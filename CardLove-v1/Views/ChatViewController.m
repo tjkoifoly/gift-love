@@ -1221,7 +1221,11 @@
         case ChatModeSigle:
         {
             [self getNewMessagesFromFriend:_friendChatting completion:^(BOOL success, NSError *error) {
-                
+                    [[FunctionObject sharedInstance] readMessagesOfPerson:_friendChatting.fID completion:^(BOOL success, NSError *error) {
+                        if (success) {
+                            
+                        }
+                    }];
             }];
         }
             break;

@@ -22,7 +22,7 @@
 #import "ChatViewController.h"
 #import "MacroDefine.h"
 
-@interface NewsViewController : SSCollectionViewController<UIAlertViewDelegate, ViewGiftControllerDelegate>
+@interface NewsViewController : SSCollectionViewController<UIAlertViewDelegate, ViewGiftControllerDelegate, SendGiftViewControllerDelegate>
 
 @property (strong, nonatomic) ActionGiftBlock actionBlock;
 @property (unsafe_unretained, nonatomic) NSMutableArray *sentArray;

@@ -239,9 +239,11 @@
             
             NSLog(@"OPEN %@", [_currentGift valueForKey:@"gfID"]);
             
-            [[FunctionObject sharedInstance] openGift:[_currentGift valueForKey:@"gfID"] completion:^(BOOL success, NSError *error) {
-                
-            }];
+            if (![[[UserManager sharedInstance] accID] isEqualToString:[_currentGift valueForKey:@"gfSenderID"]]) {
+                [[FunctionObject sharedInstance] openGift:[_currentGift valueForKey:@"gfID"] completion:^(BOOL success, NSError *error) {
+                    NSLog(@"Marked Open !");
+                }];
+            }
             
             if ([[FunctionObject sharedInstance] fileHasBeenCreatedAtPath:pathDownload]) {
                 [HUD hide:YES afterDelay:0.5];
@@ -339,6 +341,7 @@
     _actionBlock = ^{
         
         SendGiftViewController *sgvc = [[SendGiftViewController alloc] initWithNibName:@"SendGiftViewController" bundle:nil];
+        sgvc.delegate = weakSelf;
         sgvc.toFriend = sF;
         sgvc.pathGift = giftPath;
         [weakSelf.navigationController pushViewController:sgvc animated:YES];
@@ -389,7 +392,26 @@
     actionBlock();
 }
 
-
+-(void) sendGiftViewController:(SendGiftViewController *)sgvc didSendGift:(NSString *)path withParams:(NSDictionary *)dictParams
+{
+    
+    NSData *giftData = [NSData dataWithContentsOfFile:path];
+    [[FunctionObject sharedInstance] uploadGift:giftData withProgress:^(CGFloat progress) {
+       
+    } completion:^(BOOL success, NSError *error, NSString *urlUpload) {
+        
+        [[FunctionObject sharedInstance] sendGift:urlUpload withParams:dictParams completion:^(BOOL success, NSError *error) {
+            
+            if (success) {
+                [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Send gift successful" image:[UIImage imageNamed:@"37x-Checkmark.png"]];
+            }else{
+                [[TKAlertCenter defaultCenter] postAlertWithMessage:@"Error send gift !"];
+                NSLog(@"ERROR = %@", error);
+            }
+            
+        }];
+    }];
+}
 
 
 @end

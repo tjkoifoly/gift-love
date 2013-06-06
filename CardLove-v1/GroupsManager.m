@@ -95,6 +95,7 @@
                 
                 int numOld = [[xxx valueForKey:@"newMsgs"] intValue];
                 int numNew = [[dict valueForKey:@"newMsgs"] intValue];
+                [xxx setValue:[dict valueForKey:@"newMsgs"] forKey:@"newMsgs"];
                 if (numOld < numNew) {
                     NSString *msg = [NSString stringWithFormat:@"%i new message(s) from %@",(numNew-numOld) ,[dict valueForKey:@"accName"]];
                     [AJNotificationView showNoticeInView:self.viewContainer
@@ -109,7 +110,7 @@
                      ];
                 }
                 
-                [xxx setValue:[dict valueForKey:@"newMsgs"] forKey:@"newMsgs"];
+                
             }else{
                 [_listMessages addObject:[NSMutableDictionary dictionaryWithDictionary:dict]];
                 
