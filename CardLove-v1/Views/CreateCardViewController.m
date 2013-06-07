@@ -418,7 +418,7 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
                                                           [self runDemo];
                                                       }];
     
-    REMenuItem *exploreItem = [[REMenuItem alloc] initWithTitle:@"Export as image"
+    REMenuItem *exploreItem = [[REMenuItem alloc] initWithTitle:@"Send via email"
                                                        subtitle:@"Rending gift as image"
                                                           image:[UIImage imageNamed:@"Icon_Explore"]
                                                highlightedImage:nil
@@ -545,8 +545,25 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
     
     NSData *dataImage = [NSData dataWithData:UIImagePNGRepresentation(finalImage)];
     [dataImage writeToFile:filePath atomically:YES];
+    finalImage = [UIImage imageWithContentsOfFile:filePath];
     
     UIImageWriteToSavedPhotosAlbum(finalImage, nil, nil, nil);
+    
+    //Send email
+    NSString *eTitle =  @"Happy Nice Day";
+    NSString *eBody = @"Best Wish For You";
+    NSArray *toRecipents = [NSArray arrayWithObject:@"support@appcoda.com"];
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    
+    [mc setSubject:eTitle];
+    [mc setMessageBody:eBody isHTML:NO];
+    [mc setToRecipients:toRecipents];
+    [mc addAttachmentData:dataImage mimeType:@"image/png" fileName:@"Gift_love_card.png"];
+    
+    // Present mail view controller on screen
+    [self presentViewController:mc animated:YES completion:NULL];
 
 }
 
@@ -1920,5 +1937,30 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 	UADebugLog(@"didCloseModalPanel called with modalPanel: %@", modalPanel);
 }
 
+#pragma mark - Email Delegate
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Mail sent");
+            [[TKAlertCenter defaultCenter]  performSelector:@selector(postAlertWithMessage:) withObject:@"Your email sent !" afterDelay:1.0f];
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+            break;
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 
 @end

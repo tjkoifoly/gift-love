@@ -32,9 +32,10 @@
 #import "FunctionObject.h"
 #import "ModalPanelPickerView.h"
 #import "SendGiftViewController.h"
+#import <MessageUI/MessageUI.h> 
 
 
-@interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate, GestureLabelDelegate, MusicViewControllerDelegate, AnimationViewControllerDelegate, GiftElementsDelegate, ViewGiftControllerDelegate, ViewStyleDelegate, ModalPanelDelegate, SendGiftViewControllerDelegate>
+@interface CreateCardViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, GesturePhotoDelegate, GestureViewDelegate, AFPhotoEditorControllerDelegate, MBProgressHUDDelegate, CMTextStylePickerViewControllerDelegate, GestureLabelDelegate, MusicViewControllerDelegate, AnimationViewControllerDelegate, GiftElementsDelegate, ViewGiftControllerDelegate, ViewStyleDelegate, ModalPanelDelegate, SendGiftViewControllerDelegate, MFMailComposeViewControllerDelegate>
 {
     MBProgressHUD *HUD;
 }
