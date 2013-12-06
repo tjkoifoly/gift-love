@@ -52,7 +52,7 @@
     [[NKApiClient shareInstace] postPath:@"get_gift.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
-        //NSLog(@"JSON Gift LIST = %@", jsonObject);
+//        NSLog(@"JSON Gift LIST = %@", jsonObject);
         
         NSMutableArray *listSent = [[FunctionObject sharedInstance] filterGift:jsonObject bySender:userID];
         for(id dict in listSent)

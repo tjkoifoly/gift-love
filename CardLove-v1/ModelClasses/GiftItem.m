@@ -58,8 +58,8 @@
         self.shadowColor = [NSString stringWithFormat:@"%@", [UIColor colorWithCGColor:imv.shadowLayer.shadowColor]] ;
         
         NSLog(@"TRANSFORM = %@", self.transform);
-        
         self.photo = imv.imgURL;
+        NSLog(@"IMAGE URL = %@",imv.imgURL);
     }
     return self;
 }

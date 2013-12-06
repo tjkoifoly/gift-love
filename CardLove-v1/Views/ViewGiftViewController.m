@@ -176,7 +176,10 @@
 -(void) addViewPhotoWithItem: (GiftItem *) item
 {
     GestureView *imvPhoto = [[GestureView alloc] initWithType:GestureViewToView];
-    UIImage *image = [UIImage imageWithContentsOfFile:item.photo];
+    NSString *giftName = [item.photo lastPathComponent];
+    //    NSLog(@"URL = %@", urlString);
+    NSString *imagePath = [_giftPath stringByAppendingPathComponent:giftName];
+    UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
     
     imvPhoto.bounds = CGRectFromString(item.bounds);
     imvPhoto.center = CGPointFromString(item.center);

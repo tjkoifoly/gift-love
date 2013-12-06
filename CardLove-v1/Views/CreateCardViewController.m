@@ -874,7 +874,12 @@ const NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 -(GestureView *) addViewPhotoWithItem: (GiftItem *) item
 {
     GestureView *imvPhoto = [[GestureView alloc] initWithType:GestureViewToEdit];
-    UIImage *image = [UIImage imageWithContentsOfFile:item.photo];
+    
+    NSString *imageName = [item.photo lastPathComponent];
+    NSString *imagePath = [_pathResources stringByAppendingPathComponent:imageName];
+    UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
+    
+    NSLog(@"Path = %@", imagePath);
     
     imvPhoto.bounds = CGRectFromString(item.bounds);
     imvPhoto.center = CGPointFromString(item.center);
