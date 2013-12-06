@@ -48,6 +48,7 @@ typedef enum {
 
 @property (nonatomic) ProfileViewType viewMode;
 
+@property (weak, nonatomic) IBOutlet UIImageView *imvAvatar;
 @property(nonatomic, retain) IBOutlet UITextField *nameTextField;
 @property(nonatomic, retain) IBOutlet UITextField *lastNameTextField;
 @property(nonatomic, retain) IBOutlet UITextField *emailTextField;

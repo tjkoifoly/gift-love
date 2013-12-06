@@ -57,5 +57,16 @@
     self.sex = [[dict valueForKey:kAccGender] boolValue];
 }
 
+-(void) resetData
+{
+    self.displayName = nil;
+    self.username = nil;
+    self.password = nil;
+    self.imgAvata = nil;
+    self.email= nil;
+    self.phone = nil;
+    self.birthday = nil;
+}
+
 
 @end

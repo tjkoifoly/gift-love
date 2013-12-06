@@ -19,6 +19,7 @@
 #import "GiftsManager.h"
 #import "RequestsManager.h"
 #import "GroupsManager.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface ProfilesViewController ()
 
@@ -49,40 +50,15 @@
     
     UIBarButtonItem *btnEditProfile = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editProfiles)];
     self.navigationItem.rightBarButtonItem = btnEditProfile;
-    
-    [self loadInfo];
 }
 
 -(void) viewWillAppear:(BOOL)animated
 {
-    NSString *strURL = [[UserManager sharedInstance] imgAvata];
+    self.imvAvarta.image = [UIImage imageNamed:@"noavata.png"];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [self loadInfo];
+    });
     
-    if (strURL != (id)[NSNull null] && strURL.length != 0) {
-        NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
-        UIImage *photo = [UIImage imageWithData:dataImage];
-        if (photo) {
-            [UIView animateWithDuration:0.1 animations:^{
-                self.imvAvarta.alpha = 0;
-            }completion:^(BOOL finished) {
-                self.imvAvarta.image = photo;
-                [UIView animateWithDuration:0.1 animations:^{
-                    self.imvAvarta.alpha = 1;
-                } completion:^(BOOL finished) {
-                    
-                }];
-            }];
-            
-        }else
-        {
-            self.imvAvarta.image = [UIImage imageNamed:@"noavata.png"];
-        }
-
-    }else{
-        self.imvAvarta.image = [UIImage imageNamed:@"noavata.png"];
-        
-    }
-        
-    self.lbUserName.text = [[UserManager sharedInstance] displayName];
     [super viewWillAppear:animated];
 }
 
@@ -92,7 +68,7 @@
 }
 -(void) viewDidDisappear:(BOOL)animated
 {
-    self.imvAvarta.image = [UIImage imageNamed:@"noavata.png"];
+    
     [super viewDidDisappear:animated];
 }
 
@@ -110,9 +86,6 @@
     epvc.viewMode = ProfileViewTypeEdit;
     
     [self.navigationController pushViewController:epvc animated:YES];
-    
-    
-    
 }
 
 - (void)viewDidUnload {
@@ -136,11 +109,24 @@
     [[GiftsManager sharedManager] resetData];
     [[RequestsManager sharedManager] resetData];
     [[GroupsManager sharedManager] resetData];
+    [[UserManager sharedInstance] resetData];
 }
 
 -(void) loadInfo
 {
+    NSString *strURL = [[UserManager sharedInstance] imgAvata];
     
+    if (strURL != (id)[NSNull null] && strURL.length != 0) {
+        //        NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
+        //        UIImage *photo = [UIImage imageWithData:dataImage];
+        [self.imvAvarta setImageWithURL:[NSURL URLWithString:strURL] placeholderImage:[UIImage imageNamed:@"noavata.png"]];
+        
+    }else{
+        self.imvAvarta.image = [UIImage imageNamed:@"noavata.png"];
+        
+    }
+    
+    self.lbUserName.text = [[UserManager sharedInstance] displayName];
 }
 
 

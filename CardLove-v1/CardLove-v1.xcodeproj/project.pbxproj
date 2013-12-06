@@ -409,7 +409,6 @@
 		668AE8651747318A00BEF685 /* AJNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 668AE8641747318A00BEF685 /* AJNotificationView.m */; };
 		66923A2916FAE928003F589D /* resize.png in Resources */ = {isa = PBXBuildFile; fileRef = 66923A2716FAE928003F589D /* resize.png */; };
 		66923A2A16FAE928003F589D /* resize@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66923A2816FAE928003F589D /* resize@2x.png */; };
-		66923A2E16FB00BF003F589D /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 66923A2D16FB00BF003F589D /* mask.png */; };
 		6692F02C174F1CD200D50813 /* UIView+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 6692F02B174F1CD200D50813 /* UIView+Badge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6694D1C2173C2C0C002D04F2 /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6694D1C1173C2C0C002D04F2 /* UIView+Layout.m */; };
 		669B787E16E9F95A00F4437F /* SSCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 669B787D16E9F95A00F4437F /* SSCollectionViewItem.xib */; };
@@ -1435,7 +1434,6 @@
 		668AE8641747318A00BEF685 /* AJNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJNotificationView.m; sourceTree = "<group>"; };
 		66923A2716FAE928003F589D /* resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = resize.png; path = Resources/resize.png; sourceTree = "<group>"; };
 		66923A2816FAE928003F589D /* resize@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "resize@2x.png"; path = "Resources/resize@2x.png"; sourceTree = "<group>"; };
-		66923A2D16FB00BF003F589D /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mask.png; path = ../../PSD/mask.png; sourceTree = "<group>"; };
 		6692F02A174F1CD200D50813 /* UIView+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Badge.h"; sourceTree = "<group>"; };
 		6692F02B174F1CD200D50813 /* UIView+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Badge.m"; sourceTree = "<group>"; };
 		6694D1C0173C2C0C002D04F2 /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
@@ -2395,7 +2393,6 @@
 		661EBD6E16F7357E006436C9 /* General */ = {
 			isa = PBXGroup;
 			children = (
-				66923A2D16FB00BF003F589D /* mask.png */,
 				66923A2716FAE928003F589D /* resize.png */,
 				66923A2816FAE928003F589D /* resize@2x.png */,
 				6622CC5116F974DB002FC8EC /* btn-delete.png */,
@@ -4467,7 +4464,6 @@
 				6622CC5416F974DB002FC8EC /* btn-delete@2x.png in Resources */,
 				66923A2916FAE928003F589D /* resize.png in Resources */,
 				66923A2A16FAE928003F589D /* resize@2x.png in Resources */,
-				66923A2E16FB00BF003F589D /* mask.png in Resources */,
 				66F892B316FC16DD002EAA28 /* CMColourSelectTableViewController.xib in Resources */,
 				66F892B516FC16DD002EAA28 /* CMFontSelectTableViewController.xib in Resources */,
 				66F892B716FC16DD002EAA28 /* CMFontStyleSelectTableViewController.xib in Resources */,
@@ -5075,7 +5071,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dinh Anh Quan (H5SVYNR6QH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Dinh Anh Quan (H5SVYNR6QH)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -5090,6 +5087,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "F4DBA67B-2D0B-43A0-9EFD-56D108F5C311";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F4DBA67B-2D0B-43A0-9EFD-56D108F5C311";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -5106,7 +5105,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

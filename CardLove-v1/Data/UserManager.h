@@ -23,6 +23,6 @@
 
 +(id) sharedInstance;
 -(void) updateInfoWithDictionary: (NSDictionary *) dict;
-
+-(void) resetData;
 
 @end

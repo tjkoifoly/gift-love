@@ -11,6 +11,7 @@
 #import "FunctionObject.h"
 #import "JSONKit.h"
 #import "ShakingAlertView.h"
+#import "UIImageView+AFNetworking.h"
 
 // Safe releases
 #define RELEASE_SAFELY(__POINTER) { [__POINTER release]; __POINTER = nil; }
@@ -209,6 +210,7 @@
 
 - (void)viewDidUnload
 {
+    [self setImvAvatar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -725,15 +727,10 @@
        strURL = @"";
     }
     if (strURL != (id)[NSNull null] && strURL.length != 0) {
-        NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
-        UIImage *photo = [UIImage imageWithData:dataImage];
-        if (photo) {
-            self.photo = photo;
-            [self.photoButton setImage:self.photo forState:UIControlStateNormal];
-        }else
-        {
-            
-        }
+//        NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
+//        UIImage *photo = [UIImage imageWithData:dataImage];
+        
+        [self.imvAvatar setImageWithURL:[NSURL URLWithString:strURL] placeholderImage:nil];
         
     }else{
         
