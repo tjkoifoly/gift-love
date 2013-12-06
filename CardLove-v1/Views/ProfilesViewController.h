@@ -12,7 +12,7 @@
 @interface ProfilesViewController : GHRootViewController
 
 @property (weak, nonatomic) IBOutlet UIImageView *imvAvarta;
-@property (weak, nonatomic) IBOutlet UILabel *lbUserName;
+@property (weak, nonatomic) IBOutlet UILabel *lbDisplayName;
 - (IBAction)logout:(id)sender;
 
 @end

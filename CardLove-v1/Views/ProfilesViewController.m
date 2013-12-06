@@ -55,7 +55,10 @@
 -(void) viewWillAppear:(BOOL)animated
 {
     self.imvAvarta.image = [UIImage imageNamed:@"noavata.png"];
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    NSString *strName = [[UserManager sharedInstance] displayName];
+    NSLog(@"Name: %@", [[UserManager sharedInstance] displayName]);
+    self.lbDisplayName.text = strName;
+    dispatch_async(dispatch_get_main_queue(), ^{
         [self loadInfo];
     });
     
@@ -90,7 +93,7 @@
 
 - (void)viewDidUnload {
     [self setImvAvarta:nil];
-    [self setLbUserName:nil];
+    [self setLbDisplayName:nil];
     [super viewDidUnload];
 }
 - (IBAction)logout:(id)sender {
@@ -125,8 +128,6 @@
         self.imvAvarta.image = [UIImage imageNamed:@"noavata.png"];
         
     }
-    
-    self.lbUserName.text = [[UserManager sharedInstance] displayName];
 }
 
 
