@@ -44,7 +44,7 @@
 {
     NSDateFormatter* df_local = [[NSDateFormatter alloc] init];
     [df_local setTimeZone:[NSTimeZone systemTimeZone]];
-    [df_local setDateFormat:@"yyyy-MM-dd' 'HH:mm:ss"];
+    [df_local setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
 
     NSString *dateOput = [df_local stringFromDate:date];
     return dateOput;
@@ -54,7 +54,7 @@
 {
     NSDateFormatter* df_local = [[NSDateFormatter alloc] init];
     [df_local setTimeZone:[NSTimeZone systemTimeZone]];
-    [df_local setDateFormat:@"yyyy-MM-dd' 'HH:mm:ss"];
+    [df_local setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
     NSDate *dateOput = [df_local dateFromString:dateString];
     return dateOput;
@@ -170,7 +170,7 @@
     
     [[NKApiClient shareInstace] postPath:@"read_message.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
-        NSLog(@"JSON Add friend to group = %@", jsonObject);
+//        NSLog(@"JSON Add friend to group = %@", jsonObject);
         
         completionBlock (YES, nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

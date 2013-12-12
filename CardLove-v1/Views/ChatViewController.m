@@ -26,7 +26,7 @@
 
 @interface ChatViewController ()
 {
-    NSMutableArray *bubbleData;
+   __block NSMutableArray *bubbleData;
     UIImage *avataMe;
     UIImage *avataFriend;
     NSTimer *timerSchedule;
@@ -34,6 +34,8 @@
     NSString *lastDate;
     BOOL firstLoad;
     CGFloat moveAnchor;
+    
+    BOOL breakLoop;
 }
 
 @end
@@ -274,11 +276,15 @@
             break;
     }
     
-    if (!timerSchedule) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            timerSchedule = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(reloadMessages) userInfo:nil repeats:YES];
-        });
-    }
+//    if (!timerSchedule) {
+//      
+//        timerSchedule = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(reloadMessages) userInfo:nil repeats:NO];
+//      
+//    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self reloadMessages];
+    });
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -323,9 +329,13 @@
 
 -(void) backPreviousView
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    
     [timerSchedule invalidate];
     timerSchedule = nil;
+    
+    breakLoop = YES;
+    
+    
 }
 
 
@@ -344,6 +354,11 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 
     [super viewDidUnload];
+}
+
+-(void) dealloc
+{
+    NSLog(@"CHAT DEALLOC");
 }
 
 #pragma mark - Token field
@@ -453,6 +468,7 @@
 -(void) tapTokenDetected: (UITapGestureRecognizer *) reg
 {
     [timerSchedule invalidate];
+    timerSchedule = nil;
     [self removeFriend:[[UserManager sharedInstance] accID] fromGroup:[_group valueForKey:@"gmID"] completion:^(BOOL success, NSError *error) {
         TIToken *tk = (TIToken *)[reg view];
         [tokenFieldView.tokenField removeToken:tk];
@@ -743,11 +759,10 @@
     _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
     NSBubbleData *sayBubble = [NSBubbleData dataWithText:_tfMessage.text date:[NSDate dateWithTimeIntervalSinceNow:0] type:BubbleTypeMine];
     sayBubble.avatar = avataMe;
-    [bubbleData addObject:sayBubble];
+    NSInteger lastIndex = [bubbleData count] - 1;
+    [bubbleData insertObject:sayBubble atIndex:lastIndex];
     
-    [_bubbleTable beginUpdates];
-    [_bubbleTable reloadData];
-    [_bubbleTable endUpdates];
+    [_bubbleTable reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
     
     NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([_bubbleTable numberOfRowsInSection:(_bubbleTable.numberOfSections - 1)] - 1) inSection:(_bubbleTable.numberOfSections - 1)];
     [_bubbleTable scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
@@ -923,16 +938,16 @@
     switch (_mode) {
         case ChatModeSigle:
         {
-            _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
-            NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0] ;
-            lastDate = [[FunctionObject sharedInstance] stringFromDateTime:date];
-            NSBubbleData *sayBubble = [NSBubbleData dataWithText:inputText date:date type:BubbleTypeMine];
-            sayBubble.avatar = avataMe;
-            [bubbleData addObject:sayBubble];
-            [_bubbleTable reloadData];
-            [self scrollToBottom:YES];
             [self postMessage:inputText withType:MessageText toFriend:_friendChatting completion:^(BOOL success, NSError *error, id result) {
                 NSLog(@"POST message: %@", inputText);
+                _bubbleTable.typingBubble = NSBubbleTypingTypeNobody;
+                NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0] ;
+                lastDate = [[FunctionObject sharedInstance] stringFromDateTime:date];
+                NSBubbleData *sayBubble = [NSBubbleData dataWithText:inputText date:date type:BubbleTypeMine];
+                sayBubble.avatar = avataMe;
+                [bubbleData addObject:sayBubble];
+                [_bubbleTable reloadData];
+                [self scrollToBottom:YES];
             }];
         }
             break;
@@ -1100,6 +1115,8 @@
             
             NSBubbleData *data = nil;
             
+            NSLog(@"Date = %@", [[FunctionObject sharedInstance] dateFromStringDateTime:[dictMsg valueForKey:@"msDateSent"]]);
+            
             if ([[dictMsg valueForKey:@"msType"] intValue] == MessageEmoticon) {
                 UIFont *customFont = [UIFont fontWithName:@"AppleColorEmoji" size:50.0f];
                 
@@ -1122,10 +1139,15 @@
                 data.avatar = avataFriend;
             }
             
+            NSBubbleData *lastObject = [bubbleData lastObject];
+            NSLog(@"Last = %@", lastObject);
+            
             [bubbleData addObject:data];
+            
             [_bubbleTable reloadData];
             [self scrollToBottom:YES];
         }
+        
         completionBlock(YES, nil);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -1211,19 +1233,26 @@
 
 -(void) reloadMessages
 {
+    if (breakLoop) {
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
+    
     switch (_mode) {
         case ChatModeGroup:
         {
             [self getMessageFromGroup:[_group valueForKey:@"gmID"] withLastDate:lastDate completion:^(BOOL success, NSError *error) {
+                [self reloadMessages];
             }];
         }
             break;
         case ChatModeSigle:
         {
             [self getNewMessagesFromFriend:_friendChatting completion:^(BOOL success, NSError *error) {
-                    [[FunctionObject sharedInstance] readMessagesOfPerson:_friendChatting.fID completion:^(BOOL success, NSError *error) {
+                
+                [[FunctionObject sharedInstance] readMessagesOfPerson:_friendChatting.fID completion:^(BOOL success, NSError *error) {
                         if (success) {
-                            
+                            [self reloadMessages];
                         }
                     }];
             }];
@@ -1339,7 +1368,7 @@
     [[NKApiClient shareInstace] postPath:@"add_friend_to_group.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
-        NSLog(@"JSON Add friend to group = %@", jsonObject);
+//        NSLog(@"JSON Add friend to group = %@", jsonObject);
         
         completionBlock (YES, nil);
         

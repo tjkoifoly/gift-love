@@ -414,7 +414,7 @@
     
     [[NKApiClient shareInstace] postPath:@"read_message.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
-        NSLog(@"JSON Add friend to group = %@", jsonObject);
+//        NSLog(@"JSON Add friend to group = %@", jsonObject);
         
         completionBlock (YES, nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -432,7 +432,7 @@
     [[NKApiClient shareInstace] postPath:@"add_friend_to_group.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
-        NSLog(@"JSON Add friend to group = %@", jsonObject);
+//        NSLog(@"JSON Add friend to group = %@", jsonObject);
         
         completionBlock (YES, nil);
         
@@ -451,7 +451,7 @@
     [[NKApiClient shareInstace] postPath:@"add_friend_to_group.php" parameters:dictParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         id jsonObject= [[JSONDecoder decoder] objectWithData:responseObject];
-        NSLog(@"JSON Add friend to group = %@", jsonObject);
+//        NSLog(@"JSON Add friend to group = %@", jsonObject);
         
         completionBlock (YES, nil);
         
