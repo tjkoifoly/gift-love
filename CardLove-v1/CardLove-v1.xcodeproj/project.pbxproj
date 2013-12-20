@@ -5122,6 +5122,8 @@
 		66310AB816D9A27F00AC9DC8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dinh Anh Quan (H5SVYNR6QH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Dinh Anh Quan (H5SVYNR6QH)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
@@ -5140,6 +5142,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4FD16E99-2FA7-4E09-BD4E-0F5A536FE776";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4FD16E99-2FA7-4E09-BD4E-0F5A536FE776";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
@@ -5148,6 +5152,8 @@
 		66310AB916D9A27F00AC9DC8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dinh Anh Quan (H5SVYNR6QH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Dinh Anh Quan (H5SVYNR6QH)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
@@ -5161,11 +5167,14 @@
 					"\"$(SRCROOT)/Library/Aviary\"",
 					"\"$(SRCROOT)/Library/AviarySDK\"",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4FD16E99-2FA7-4E09-BD4E-0F5A536FE776";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4FD16E99-2FA7-4E09-BD4E-0F5A536FE776";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
